@@ -1,7 +1,7 @@
 - REGRAS DE NEGÓCIOS
 
 RN01 - teste teste teste
-Descrição:
+Descrição: O aplicativo deve atender corretamente o cliente 
 RN relacionadas: 
 RF relacionados: 
 RNF relacionados: 
