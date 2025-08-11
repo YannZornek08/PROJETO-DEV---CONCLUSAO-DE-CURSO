@@ -1,8 +1,29 @@
-✨Regras de Negócio
+Regras de Negócio
 RN03 - O pedido só pode ser finalizado se o carrinho de compras não estiver vazio.
 RN04 - O status do pedido deve ser atualizado pelo administrador, e essa alteração deve ser visível 
 RN05 -   Cada usuário deve ter um cadastro - RF01 
 
 Requisitos Funcionais
+RF11 - Detalhes Mesa
+Descrição: Permitir o acesso para todos os detalhes da Mesa
+RN Relacionais: RN01
+RF12 - Criar Produto
+Descrição: Adicionar um produto no sistema
+RN Relacionais: RN02
+RF13 - Visualizar Pedidos
+Descrição: Visualizar a lista de orders
+RN Relacionais: RN07
 
 Requisitos Não Funcionais
+RNF01 - Verificação
+Descrição: Verificar autenticação para rotas privadas
+RN Relacionais: 
+RNF02 - Segurança
+Descrição: Criptografar as senhas dos usuários e proteger seus dados de forma segura (hashing)
+RN Relacionais: 
+RNF03 - Rotas
+Descrição: Fazer a ligação das rotas
+RN Relacionais: RN09
+RNF04 - Ligação com a Nuvem
+Descrição: As imagens estão conectadas com a nuvem
+RN Relacionais: RN10
