@@ -27,19 +27,112 @@ RNF relacionados:
 RN05 - Informar pedido
 Descrição: O aplicativo deve informar o cliente de seus pedidos corretamente. 
 RN relacionadas: 
-RF relacionados: 
-RNF relacionados: 
+
+RN02 - Cancelamento de pedido
+Descrição: O pedido pode ser cancelado caso o cliente deseje
+RN relacionadas: 
+
+RN03 - Modificação de produtos e categorias
+Descrição: Apenas o administrador pode modificar (remover, adicionar) produtos e categorias de produtos
+RN relacionadas: 
+
+RN04 - Informação dos preços
+Descrição: O preço dos produtos deve ser informado ao cliente
+RN relacionadas: 
+
+RN05 - Requisitos mínimos do pedido
+Descrição: O cliente deve pedir ao menos um produto para o pedido ser finalizado
+RN relacionadas:  
 
 - REQUISITOS FUNCIONAIS
 
-RF01 - 
-Descrição:  
+RF01 – Cadastrar Produto
+Descrição: O sistema deve permitir que o usuário (Funcionário) cadastre um novo produto informando nome, preço, descrição, categoria e imagem.
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados:
+
+RF02 - Catalógo de produtos
+Descrição: Exibição dos produtos (Pizzas, Bebidas e sobremesas) com  nome, descrição, ingredientes, tamanho, preço e foto de cada pizza
 RN relacionadas: 
 RF relacionados: 
 RNF relacionados: 
 
-RF02 - Catalógo de produtos
-Descrição: Exibição dos produtos (Pizzas, Bebidas e sobremesas) com  nome, descrição, ingredientes, tamanho, preço e foto de cada pizza
+RF03 – Listar Produtos por Categoria
+Descrição: O sistema deve permitir que o usuário consulte produtos filtrando por categoria, informando o identificador da categoria.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+RF04– Cadastrar Categoria
+Descrição: O sistema deve permitir o cadastro de uma nova categoria, recebendo o nome da categoria.
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados:
+
+RF05 – Listar Produtos por Categoria
+Descrição: O sistema deve permitir que o usuário consulte produtos filtrando por categoria, informando o identificador da categoria.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+
+RF06 – Cadastrar Usuário
+Descrição: O sistema deve permitir que o usuário (administrador ou responsável) cadastre um novo usuário informando nome, e-mail e senha.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+RF07 – Consultar Detalhes do Usuário
+Descrição: O sistema deve permitir que o usuário consulte seus próprios dados detalhados, utilizando o identificador do usuário autenticado.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+RF08 – Remover Item do Pedido
+Descrição: O sistema deve permitir que o usuário (Funcionário) remova um item específico de um pedido, informando o identificador do item.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+RF09 – Remover Pedido
+Descrição: O sistema deve permitir que o usuário (Funcionário) remova um pedido informando o identificador do pedido.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+RF10 - adicionar item ao pedido 
+descrição: permitir que um item seja adicionado a um pedido existente, informando ID do pedido, ID do produto e quantidade.
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados: 
+
+RF11 - Criar ORDER 
+descrição: permitir que o usuário crie uma ORDER com o status de "false" (o pedido está finalizado? "false")
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados: 
+
+RF12 - Detalhar ORDER 
+descrição: permitir a consulta de uma order, exibindo produtos pedidos e status
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados: 
+
+RF13 - Finalizar ORDER
+descrição: permitir que o status de uma order seja "true", onde ele vai impedir a mudança dos pedidos finalizados
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados: 
+
+RF14 - Listar ORDERS
+descrição: permitir a listagem de todos os pedidos (sendo eles com status: "true" e "false")
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados: 
+
+RF15 - Enviar ORDER 
+descrição: permitir que o pedido seja enviado para a cozinha
 RN relacionadas: 
 RF relacionados: 
 RNF relacionados: 
@@ -87,3 +180,62 @@ Descrição: O aplicativo ter icones padronizados
 RN relacionadas:
 RF relacionados:
 RNF relacionados:
+
+
+Requisitos Funcionais
+
+RF01 - Catalógo de produtos
+Descrição: Exibição dos produtos (Pizzas, Bebidas e sobremesas) com  nome, descrição, ingredientes, tamanho, preço e foto de cada pizza
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados: 
+
+RF02 – Cadastrar Produto
+Descrição: O sistema deve permitir que o usuário (Funcionário) cadastre um novo produto informando nome, preço, descrição, categoria e imagem.
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados:
+
+RF03 – Listar Produtos por Categoria
+Descrição: O sistema deve permitir que o usuário consulte produtos filtrando por categoria, informando o identificador da categoria.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+RF03– Cadastrar Categoria
+Descrição: O sistema deve permitir o cadastro de uma nova categoria, recebendo o nome da categoria.
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados:
+
+RF04– Listar Produtos por Categoria
+Descrição: O sistema deve permitir que o usuário consulte produtos filtrando por categoria, informando o identificador da categoria.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+
+RF05 – Cadastrar Usuário
+Descrição: O sistema deve permitir que o usuário (administrador ou responsável) cadastre um novo usuário informando nome, e-mail e senha.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+RF06 – Consultar Detalhes do Usuário
+Descrição: O sistema deve permitir que o usuário consulte seus próprios dados detalhados, utilizando o identificador do usuário autenticado.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+RF07 – Remover Item do Pedido
+Descrição: O sistema deve permitir que o usuário (Funcionário) remova um item específico de um pedido, informando o identificador do item.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+RF08 – Remover Pedido
+Descrição: O sistema deve permitir que o usuário (Funcionário) remova um pedido informando o identificador do pedido.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
