@@ -1,8 +1,47 @@
-✨Regras de Negócio
-RN03 - O pedido só pode ser finalizado se o carrinho de compras não estiver vazio.
-RN04 - O status do pedido deve ser atualizado pelo administrador, e essa alteração deve ser visível 
-RN05 -   Cada usuário deve ter um cadastro - RF01 
+- Regras de Negócios
 
-Requisitos Funcionais
+RN01 - Relação de Orders
+Descrição: Toda order tem que estar relacionado com uma mesa
+RN relacionadas: 
+RF relacionados: RF09
+RNF relacionados:
 
-Requisitos Não Funcionais
+RN02 - Requisitos do Produto
+Descrição: O produto precisa ter no mínimo nome, preço, categoria e descrição
+RN relacionadas:
+RF relacionados: RF12
+RNF relacionados:
+
+RN03 - Requisitos de Finalização da Order
+Descrição: A order só pode ser finalizado se o carrinho de compras não estiver vazio.
+RN relacionadas:
+RF relacionados: RF07
+RNF relacionados:
+
+RN04 - Atualização de Status da Order
+Descrição: O status do order deve ser atualizado pelo administrador, e essa alteração deve ser visível 
+RN relacionadas:
+RF relacionados: RF11
+RNF relacionados:
+
+RN05 - Cadastros de Usuário 
+Descrição: Cada usuário deve ter um cadastro
+RN relacionadas:
+RF relacionados: RF01, RF02
+RNF relacionados:
+
+- Requisitos Funcionais
+
+RF01 - Nome da Requisito Funcional
+Descrição: descritivo
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+- Requisitos Não Funcionais
+
+RNF01 - Nome da Requisito Não Funcional
+Descrição: descritivo
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
