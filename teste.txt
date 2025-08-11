@@ -8,17 +8,60 @@ RNF relacionados:
 
 - REQUISITOS FUNCIONAIS
 
-RF01 - 
-Descrição:  
+RF01 – Cadastrar Produto
+Descrição: O sistema deve permitir que o usuário (Funcionário) cadastre um novo produto informando nome, preço, descrição, categoria e imagem.
 RN relacionadas: 
 RF relacionados: 
-RNF relacionados: 
+RNF relacionados:
 
 RF02 - Catalógo de produtos
 Descrição: Exibição dos produtos (Pizzas, Bebidas e sobremesas) com  nome, descrição, ingredientes, tamanho, preço e foto de cada pizza
 RN relacionadas: 
 RF relacionados: 
 RNF relacionados: 
+
+RF03 – Listar Produtos por Categoria
+Descrição: O sistema deve permitir que o usuário consulte produtos filtrando por categoria, informando o identificador da categoria.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+RF04– Cadastrar Categoria
+Descrição: O sistema deve permitir o cadastro de uma nova categoria, recebendo o nome da categoria.
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados:
+
+RF05 – Listar Produtos por Categoria
+Descrição: O sistema deve permitir que o usuário consulte produtos filtrando por categoria, informando o identificador da categoria.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+
+RF06 – Cadastrar Usuário
+Descrição: O sistema deve permitir que o usuário (administrador ou responsável) cadastre um novo usuário informando nome, e-mail e senha.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+RF07 – Consultar Detalhes do Usuário
+Descrição: O sistema deve permitir que o usuário consulte seus próprios dados detalhados, utilizando o identificador do usuário autenticado.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+RF08 – Remover Item do Pedido
+Descrição: O sistema deve permitir que o usuário (Funcionário) remova um item específico de um pedido, informando o identificador do item.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+RF09 – Remover Pedido
+Descrição: O sistema deve permitir que o usuário (Funcionário) remova um pedido informando o identificador do pedido.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
 
 - REQUISITOS NÃO FUNCIONAIS
 
@@ -63,3 +106,62 @@ Descrição: O aplicativo ter icones padronizados
 RN relacionadas:
 RF relacionados:
 RNF relacionados:
+
+
+Requisitos Funcionais
+
+RF01 - Catalógo de produtos
+Descrição: Exibição dos produtos (Pizzas, Bebidas e sobremesas) com  nome, descrição, ingredientes, tamanho, preço e foto de cada pizza
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados: 
+
+RF02 – Cadastrar Produto
+Descrição: O sistema deve permitir que o usuário (Funcionário) cadastre um novo produto informando nome, preço, descrição, categoria e imagem.
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados:
+
+RF03 – Listar Produtos por Categoria
+Descrição: O sistema deve permitir que o usuário consulte produtos filtrando por categoria, informando o identificador da categoria.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+RF03– Cadastrar Categoria
+Descrição: O sistema deve permitir o cadastro de uma nova categoria, recebendo o nome da categoria.
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados:
+
+RF04– Listar Produtos por Categoria
+Descrição: O sistema deve permitir que o usuário consulte produtos filtrando por categoria, informando o identificador da categoria.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+
+RF05 – Cadastrar Usuário
+Descrição: O sistema deve permitir que o usuário (administrador ou responsável) cadastre um novo usuário informando nome, e-mail e senha.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+RF06 – Consultar Detalhes do Usuário
+Descrição: O sistema deve permitir que o usuário consulte seus próprios dados detalhados, utilizando o identificador do usuário autenticado.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+RF07 – Remover Item do Pedido
+Descrição: O sistema deve permitir que o usuário (Funcionário) remova um item específico de um pedido, informando o identificador do item.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+RF08 – Remover Pedido
+Descrição: O sistema deve permitir que o usuário (Funcionário) remova um pedido informando o identificador do pedido.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
