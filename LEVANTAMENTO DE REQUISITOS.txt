@@ -1,0 +1,29 @@
+- REGRAS DE NEGÓCIOS
+
+RN01 - 
+Descrição:
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados: 
+
+- REQUISITOS FUNCIONAIS
+
+RF01 - 
+Descrição:  
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados: 
+
+RF02 - 
+Descrição: 
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados: 
+
+- REQUISITOS NÃO FUNCIONAIS
+
+RNF01 - 
+Descrição: 
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados: 
