@@ -1,9 +1,29 @@
-REGRAS DE NEGÓCIOS
+- REGRAS DE NEGÓCIOS
+
 RN01 - 
+Descrição: 
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados: 
 
-REQUISITOS FUNCIONAIS
+- REQUISITOS FUNCIONAIS
+
 RF01 - Cadastro e login
-RF02 - Catalógo de produtos
+Descrição: 
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados: 
 
-REQUISITOS NÃO FUNCIONAIS
+RF02 - Catalógo de produtos
+Descrição: 
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados: 
+
+- REQUISITOS NÃO FUNCIONAIS
+
 RNF01 - Autenticação de login.
+Descrição: 
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados: 
