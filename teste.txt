@@ -22,8 +22,44 @@ RNF relacionados:
 
 - REQUISITOS NÃO FUNCIONAIS
 
-RNF01 - 
-Descrição: 
+RNF01 - Autenticação de login.
+Descrição: O sistema autentica o usuário para ser feito o login
 RN relacionadas: 
 RF relacionados: 
-RNF relacionados: 
+RNF relacionados:
+
+RNF02 - Criptografia da senha para login.
+Descrição: O sistema deixa a senha criptografada, deixando mais segura
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados:
+
+RNF03 - Página responsiva.
+Descrição: A página é responsiva, ou seja, ela se ajusta com as diferentes telas
+RN relacionadas: 
+RF relacionados:
+RNF relacionados:
+
+RNF04 - Compatibilidade com navegadores.
+Descrição: O sistema é compatível com outros navegadores
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+RNF05 - Vinculação de imagem do produto.
+Descrição: Ao cadastrar o produto pode haver a vinculação de imagem para o produto
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+RNF06 - Acesso a internet.
+Descrição: O sistema deve ter acesso a internet.
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
+
+RNF07 - Padronização do aplicativo.
+Descrição: O aplicativo ter icones padronizados 
+RN relacionadas:
+RF relacionados:
+RNF relacionados:
