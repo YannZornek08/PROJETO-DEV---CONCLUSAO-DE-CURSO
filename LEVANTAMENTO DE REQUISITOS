@@ -9,10 +9,10 @@ RNF relacionados:
 - REQUISITOS FUNCIONAIS
 
 RF01 - Cadastro e login
-Descrição: 
+Descrição:  O sistema necessita de login e senha de cadastro para o funcionário (Garçom).
 RN relacionadas: 
 RF relacionados: 
-RNF relacionados: 
+RNF relacionados: RNF-01
 
 RF02 - Catalógo de produtos
 Descrição: 
