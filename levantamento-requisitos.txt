@@ -2,31 +2,31 @@
 
 RN01 - Atendimento ao cliente
 Descrição: O aplicativo deve atender corretamente o cliente.
-RN relacionadas: 
-RF relacionados: 
-RNF relacionados: 
+RN relacionadas: RN03, RN04, RN05, RN08, RN10
+RF relacionados: RF01
+RNF relacionados: RNF08
 
 RN02 - Número de mesa
 Descrição: O cliente deve possuir um número da mesa. 
 RN relacionadas: 
 RF relacionados: 
-RNF relacionados: 
+RNF relacionados: RNF08
 
 RN03 - Aplicativo funcional
 Descrição: A equipe de desenvolvimento deve certificar de que o aplicativo esteja funcional e atendendo as demandas.
-RN relacionadas: 
+RN relacionadas: RN01
 RF relacionados: 
 RNF relacionados: 
 
 RN04 - Pedido concluído
 Descrição: Certificar-se de que o pedido do cliente foi concluído.
-RN relacionadas: 
+RN relacionadas: RN05, RN01
 RF relacionados: 
 RNF relacionados: 
 
 RN05 - Informar pedido
 Descrição: O aplicativo deve informar o cliente de seus pedidos corretamente. 
-RN relacionadas: 
+RN relacionadas: RN04, RN01
 
 RN06 - Cancelamento de pedido
 Descrição: O pedido pode ser cancelado caso o cliente deseje
@@ -46,15 +46,15 @@ RN relacionadas:
 
 RN10 - Comida de acordo com pedido
 Descrição: A comida deve ser providenciada de acordo com o pedido do cliente dentro do aplicativo
-RN relacionadas: 
+RN relacionadas: RN01
 
 - REQUISITOS FUNCIONAIS
 
 RF01 – Cadastrar Produto
 Descrição: O sistema deve permitir que o usuário (Funcionário) cadastre um novo produto informando nome, preço, descrição, categoria e imagem.
-RN relacionadas: 
+RN relacionadas: RN03,RN08
 RF relacionados: 
-RNF relacionados:
+RNF relacionados: RNF01,RNF02
 
 RF02 - Catalógo de produtos
 Descrição: Exibição dos produtos (Pizzas, Bebidas e sobremesas) com  nome, descrição, ingredientes, tamanho, preço e foto de cada pizza
@@ -105,9 +105,9 @@ RN relacionadas:
 RF relacionados:
 RNF relacionados:
 
-RF10 - adicionar item ao pedido 
+RF10 - Adicionar item ao pedido 
 descrição: permitir que um item seja adicionado a um pedido existente, informando ID do pedido, ID do produto e quantidade.
-RN relacionadas: 
+RN relacionadas:
 RF relacionados: 
 RNF relacionados: 
 
