@@ -63,6 +63,42 @@ RN relacionadas:
 RF relacionados:
 RNF relacionados:
 
+RF10 - adicionar item ao pedido 
+descrição: permitir que um item seja adicionado a um pedido existente, informando ID do pedido, ID do produto e quantidade.
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados: 
+
+RF11 - Criar ORDER 
+descrição: permitir que o usuário crie uma ORDER com o status de "false" (o pedido está finalizado? "false")
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados: 
+
+RF12 - Detalhar ORDER 
+descrição: permitir a consulta de uma order, exibindo produtos pedidos e status
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados: 
+
+RF13 - Finalizar ORDER
+descrição: permitir que o status de uma order seja "true", onde ele vai impedir a mudança dos pedidos finalizados
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados: 
+
+RF14 - Listar ORDERS
+descrição: permitir a listagem de todos os pedidos (sendo eles com status: "true" e "false")
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados: 
+
+RF15 - Enviar ORDER 
+descrição: permitir que o pedido seja enviado para a cozinha
+RN relacionadas: 
+RF relacionados: 
+RNF relacionados: 
+
 - REQUISITOS NÃO FUNCIONAIS
 
 RNF01 - Autenticação de login.
