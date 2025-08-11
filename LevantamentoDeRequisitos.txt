@@ -1,29 +1,76 @@
 Regras de Negócio
-RN03 - O pedido só pode ser finalizado se o carrinho de compras não estiver vazio.
-RN04 - O status do pedido deve ser atualizado pelo administrador, e essa alteração deve ser visível 
-RN05 -   Cada usuário deve ter um cadastro - RF01 
+RN01 - Relação de Orders
+Descrição: Toda order tem que estar relacionado com uma mesa
+RN relacionadas: 
+RF relacionados: RF09
+RNF relacionados:
+
+RN02 - Requisitos do Produto
+Descrição: O produto precisa ter no mínimo nome, preço, categoria e descrição
+RN relacionadas:
+RF relacionados: RF12
+RNF relacionados:
+
+RN03 - Requisitos de Finalização da Order
+Descrição: A order só pode ser finalizado se o carrinho de compras não estiver vazio.
+RN relacionadas:
+RF relacionados: RF07
+RNF relacionados:
+
+RN04 - Atualização de Status da Order
+Descrição: O status do order deve ser atualizado pelo administrador, e essa alteração deve ser visível 
+RN relacionadas:
+RF relacionados: RF11
+RNF relacionados:
+
+RN05 - Cadastros de Usuário 
+Descrição: Cada usuário deve ter um cadastro
+RN relacionadas:
+RF relacionados: RF01, RF02
+RNF relacionados: 
 
 Requisitos Funcionais
+
 RF11 - Detalhes Mesa
 Descrição: Permitir o acesso para todos os detalhes da Mesa
 RN Relacionais: RN01
+RF relacionados: 
+RNF relacionados:
+
 RF12 - Criar Produto
 Descrição: Adicionar um produto no sistema
 RN Relacionais: RN02
+RF relacionados: 
+RNF relacionados:
+
 RF13 - Visualizar Pedidos
 Descrição: Visualizar a lista de orders
 RN Relacionais: RN07
+RF relacionados: 
+RNF relacionados:
 
 Requisitos Não Funcionais
+
 RNF01 - Verificação
 Descrição: Verificar autenticação para rotas privadas
 RN Relacionais: 
+RF relacionados: 
+RNF relacionados:
+
 RNF02 - Segurança
 Descrição: Criptografar as senhas dos usuários e proteger seus dados de forma segura (hashing)
 RN Relacionais: 
+RF relacionados: 
+RNF relacionados:
+
 RNF03 - Rotas
 Descrição: Fazer a ligação das rotas
 RN Relacionais: RN09
+RF relacionados: 
+RNF relacionados:
+
 RNF04 - Ligação com a Nuvem
 Descrição: As imagens estão conectadas com a nuvem
 RN Relacionais: RN10
+RF relacionados: 
+RNF relacionados:
