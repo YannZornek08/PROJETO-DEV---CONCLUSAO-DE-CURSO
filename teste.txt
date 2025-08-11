@@ -146,14 +146,14 @@ RNF relacionados:
 RNF01 - Autenticação de login.
 Descrição: O sistema autentica o usuário para ser feito o login
 RN relacionadas: 
-RF relacionados: 
-RNF relacionados:
+RF relacionados: RF06
+RNF relacionados: RNF02
 
 RNF02 - Criptografia da senha para login.
 Descrição: O sistema deixa a senha criptografada, deixando mais segura
 RN relacionadas: 
-RF relacionados: 
-RNF relacionados:
+RF relacionados: RF06
+RNF relacionados: RNF01
 
 RNF03 - Página responsiva.
 Descrição: A página é responsiva, ou seja, ela se ajusta com as diferentes telas
@@ -185,61 +185,8 @@ RN relacionadas:
 RF relacionados:
 RNF relacionados:
 
-
-Requisitos Funcionais
-
-RF01 - Catalógo de produtos
-Descrição: Exibição dos produtos (Pizzas, Bebidas e sobremesas) com  nome, descrição, ingredientes, tamanho, preço e foto de cada pizza
-RN relacionadas: 
-RF relacionados: 
-RNF relacionados: 
-
-RF02 – Cadastrar Produto
-Descrição: O sistema deve permitir que o usuário (Funcionário) cadastre um novo produto informando nome, preço, descrição, categoria e imagem.
-RN relacionadas: 
-RF relacionados: 
+RNF08 - Atualização automática.
+Descrição: O sistema atualiza os pedidos automaticamente com a mudança.
+RN relacionadas: RN01, RN02
+RF relacionados: RF08, RF09, RF10, RF11, RF15
 RNF relacionados:
-
-RF03 – Listar Produtos por Categoria
-Descrição: O sistema deve permitir que o usuário consulte produtos filtrando por categoria, informando o identificador da categoria.
-RN relacionadas:
-RF relacionados:
-RNF relacionados:
-
-RF03– Cadastrar Categoria
-Descrição: O sistema deve permitir o cadastro de uma nova categoria, recebendo o nome da categoria.
-RN relacionadas: 
-RF relacionados: 
-RNF relacionados:
-
-RF04– Listar Produtos por Categoria
-Descrição: O sistema deve permitir que o usuário consulte produtos filtrando por categoria, informando o identificador da categoria.
-RN relacionadas:
-RF relacionados:
-RNF relacionados:
-
-
-RF05 – Cadastrar Usuário
-Descrição: O sistema deve permitir que o usuário (administrador ou responsável) cadastre um novo usuário informando nome, e-mail e senha.
-RN relacionadas:
-RF relacionados:
-RNF relacionados:
-
-RF06 – Consultar Detalhes do Usuário
-Descrição: O sistema deve permitir que o usuário consulte seus próprios dados detalhados, utilizando o identificador do usuário autenticado.
-RN relacionadas:
-RF relacionados:
-RNF relacionados:
-
-RF07 – Remover Item do Pedido
-Descrição: O sistema deve permitir que o usuário (Funcionário) remova um item específico de um pedido, informando o identificador do item.
-RN relacionadas:
-RF relacionados:
-RNF relacionados:
-
-RF08 – Remover Pedido
-Descrição: O sistema deve permitir que o usuário (Funcionário) remova um pedido informando o identificador do pedido.
-RN relacionadas:
-RF relacionados:
-RNF relacionados:
-
