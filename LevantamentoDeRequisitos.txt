@@ -1,5 +1,4 @@
-- Regras de Negócios
-
+Regras de Negócio
 RN01 - Relação de Orders
 Descrição: Toda order tem que estar relacionado com uma mesa
 RN relacionadas: 
@@ -28,7 +27,7 @@ RN05 - Cadastros de Usuário
 Descrição: Cada usuário deve ter um cadastro
 RN relacionadas:
 RF relacionados: RF01, RF02
-RNF relacionados:
+RNF relacionados: 
 
 RN06 - Criação de Categorias
 Descrição: Somente os funcionários podem criar uma nova categoria
@@ -60,6 +59,12 @@ RN relacionadas:
 RF relacionados: 
 RNF relacionados: RNF04
 
+RF11 - Detalhes Mesa
+Descrição: Permitir o acesso para todos os detalhes da Mesa
+RN Relacionais: RN01
+RF relacionados: 
+RNF relacionados:
+
 - Requisitos Funcionais
 
 RF01 - Criação de usuário
@@ -90,12 +95,41 @@ RF05 - Número Mesa
 Descrição: Colocar número da mesa
 RN relacionadas: RN01
 RF relacionados:
+
+RF12 - Criar Produto
+Descrição: Adicionar um produto no sistema
+RN Relacionais: RN02
+RF relacionados: 
 RNF relacionados:
 
-- Requisitos Não Funcionais
+RF13 - Visualizar Pedidos
+Descrição: Visualizar a lista de orders
+RN Relacionais: RN07
+RF relacionados: 
+RNF relacionados:
 
-RNF01 - Nome da Requisito Não Funcional
-Descrição: descritivo
-RN relacionadas:
-RF relacionados:
+Requisitos Não Funcionais
+
+RNF01 - Verificação
+Descrição: Verificar autenticação para rotas privadas
+RN Relacionais: 
+RF relacionados: 
+RNF relacionados:
+
+RNF02 - Segurança
+Descrição: Criptografar as senhas dos usuários e proteger seus dados de forma segura (hashing)
+RN Relacionais: 
+RF relacionados: 
+RNF relacionados:
+
+RNF03 - Rotas
+Descrição: Fazer a ligação das rotas
+RN Relacionais: RN09
+RF relacionados: 
+RNF relacionados:
+
+RNF04 - Ligação com a Nuvem
+Descrição: As imagens estão conectadas com a nuvem
+RN Relacionais: RN10
+RF relacionados: 
 RNF relacionados:
