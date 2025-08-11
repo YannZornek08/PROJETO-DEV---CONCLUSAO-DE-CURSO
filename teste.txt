@@ -14,8 +14,8 @@ RN relacionadas:
 RF relacionados: 
 RNF relacionados: 
 
-RF02 - Catalógo de produtos
-Descrição: Exibição dos produtos (Pizzas, Bebidas e sobremesas) com  nome, descrição, ingredientes, tamanho, preço e foto de cada pizza
+RF02 - 
+Descrição: 
 RN relacionadas: 
 RF relacionados: 
 RNF relacionados: 
