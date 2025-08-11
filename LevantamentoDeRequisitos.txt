@@ -30,11 +30,65 @@ RN relacionadas:
 RF relacionados: RF01, RF02
 RNF relacionados:
 
+RN06 - Criação de Categorias
+Descrição: Somente os funcionários podem criar uma nova categoria
+RN relacionadas:
+RF relacionados: RF06
+RNF relacionados:
+
+RN07 - Permissão de Vizualização da Lista de Orders
+Descrição: Só é possível visualizar a lista de pedidos em aberto pelo desktop
+RN relacionadas:
+RF relacionados: RF13
+RNF relacionados:
+
+RN08 - Permissão de Manipulação de Orders
+Descrição: Somente o garçom pode manipular os order
+RN relacionadas:
+RF relacionados: RF03, RF11
+RNF relacionados:
+
+RN09 - Segurança das Páginas
+Descrição: Verificar autenticação em páginas privadas
+RN relacionadas:
+RF relacionados: 
+RNF relacionados: RNF01
+
+RN10 - Armazenamento de Imagens
+Descrição: As imagens devem estar armazenadas na nuvem
+RN relacionadas:
+RF relacionados: 
+RNF relacionados: RNF04
+
 - Requisitos Funcionais
 
-RF01 - Nome da Requisito Funcional
-Descrição: descritivo
-RN relacionadas:
+RF01 - Criação de usuário
+Descrição: Cadastrar um novo usuário
+RN relacionadas: RN05
+RF relacionados:
+RNF relacionados:
+
+RF02 - Login
+Descrição: Logar um usuário
+RN relacionadas: RN05
+RF relacionados: RNF01
+RNF relacionados:
+
+RF03 - Atualizar
+Descrição: Atualizar a lista de orders pendentes
+RN relacionadas: RN04 
+RF relacionados:
+RNF relacionados:
+
+RF04 - Manipulação de Categorias
+Descrição: Criar e listar categorias dos produtos
+RN relacionadas: RN06 
+RF relacionados:
+RNF relacionados:
+
+RF05 - Número Mesa
+Descrição: Colocar número da mesa
+RN relacionadas: RN01
 RF relacionados:
 RNF relacionados:
 
