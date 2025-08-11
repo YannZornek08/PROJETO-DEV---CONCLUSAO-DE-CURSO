@@ -113,33 +113,33 @@ RNF relacionados:
 
 RF11 - Criar ORDER 
 descrição: permitir que o usuário crie uma ORDER com o status de "false" (o pedido está finalizado? "false")
-RN relacionadas: 
-RF relacionados: 
-RNF relacionados: 
+RN relacionadas: RN01, RN02
+RF relacionados: RF10, RF09
+RNF relacionados: RNF08
 
 RF12 - Detalhar ORDER 
 descrição: permitir a consulta de uma order, exibindo produtos pedidos e status
-RN relacionadas: 
+RN relacionadas: RN05, RN08
 RF relacionados: 
 RNF relacionados: 
 
 RF13 - Finalizar ORDER
 descrição: permitir que o status de uma order seja "true", onde ele vai impedir a mudança dos pedidos finalizados
-RN relacionadas: 
+RN relacionadas: RN04, RN09
 RF relacionados: 
 RNF relacionados: 
 
 RF14 - Listar ORDERS
 descrição: permitir a listagem de todos os pedidos (sendo eles com status: "true" e "false")
-RN relacionadas: 
+RN relacionadas: RN05, RN08
 RF relacionados: 
 RNF relacionados: 
 
 RF15 - Enviar ORDER 
 descrição: permitir que o pedido seja enviado para a cozinha
-RN relacionadas: 
+RN relacionadas: RN10
 RF relacionados: 
-RNF relacionados: 
+RNF relacionados: RNF08
 
 - REQUISITOS NÃO FUNCIONAIS
 
