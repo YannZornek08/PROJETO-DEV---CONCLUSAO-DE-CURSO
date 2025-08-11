@@ -1,0 +1,8 @@
+✨Regras de Negócio
+RN03 - O pedido só pode ser finalizado se o carrinho de compras não estiver vazio.
+RN04 - O status do pedido deve ser atualizado pelo administrador, e essa alteração deve ser visível 
+RN05 -   Cada usuário deve ter um cadastro - RF01 
+
+Requisitos Funcionais
+
+Requisitos Não Funcionais
