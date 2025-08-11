@@ -1,10 +1,24 @@
 - REGRAS DE NEGÓCIOS
 
-RN01 - teste teste teste
-Descrição: O aplicativo deve atender corretamente o cliente 
+RN01 - Comida de acordo com pedido
+Descrição: A comida deve ser providenciada de acordo com o pedido do cliente dentro do aplicativo
 RN relacionadas: 
-RF relacionados: 
-RNF relacionados: 
+
+RN02 - Cancelamento de pedido
+Descrição: O pedido pode ser cancelado caso o cliente deseje
+RN relacionadas: 
+
+RN03 - Modificação de produtos e categorias
+Descrição: Apenas o administrador pode modificar (remover, adicionar) produtos e categorias de produtos
+RN relacionadas: 
+
+RN04 - Informação dos preços
+Descrição: O preço dos produtos deve ser informado ao cliente
+RN relacionadas: 
+
+RN05 - Requisitos mínimos do pedido
+Descrição: O cliente deve pedir ao menos um produto para o pedido ser finalizado
+RN relacionadas:  
 
 - REQUISITOS FUNCIONAIS
 
