@@ -1,8 +1,14 @@
 BACKLOG - G3
 
-Andamento do pedido
-Avaliação/Feedback
-Central de Ajuda
+Andamento do pedido - Prioridade Alta
+Como usuário, eu quero saber como está o andamento do meu pedido para que eu possa me situar enquanto ao tempo de demora para ele estar pronto.
+
+Avaliação/Feedback - Prioridade Média
+Como usuário, eu quero poder avaliar o serviço do local que eu estou comendo para que eu possa ajudar a melhorar o serviço e a qualidade para a próxima vez que eu for pedir.
+
+Central de Ajuda - Prioridade Média
+Como usuário, eu quero poder ser atendido caso haja algum erro no meu pedido ou no aplicativo para que a pizzaria corrija e melhore meu atendimento.
+
 Recomendação de Pedidos/Histórico
 Barra de Pesquisa
 Filtro
