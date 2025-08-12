@@ -1,0 +1,18 @@
+BACKLOG - G3
+
+Andamento do pedido
+Avaliação/Feedback
+Central de Ajuda
+Recomendação de Pedidos/Histórico
+Barra de Pesquisa
+Filtro
+Tela de Login
+Carrinho
+Gorjeta
+Pagamentos
+Cardápio
+Escolha de Produtos
+Observações do pedido
+NAV
+Opção Delivery
+Localização
