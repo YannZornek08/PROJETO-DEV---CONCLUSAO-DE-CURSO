@@ -36,7 +36,14 @@ Como cliente desejo ter a visualização dos produtos no cardápio, tendo imagem
 Escolha de Produtos - Prioridade Alta
 Como cliente quero escolher sabores, tamanhos e opção de pedir bebidas em uma tela intuitiva para que o meu agrado seja satisfeito em escolher diferentes preferências sem me confundir com a interface.
 
-Observações do pedido
-NAV
-Opção Delivery
-Localização
+Observações do pedido - Prioridade Média
+Como cliente, posso adicionar observações no pedido, que são comentários que necessitam de atenção seja no momento da produção ou da entrega da comida, como "pepperoni extra", "sem cogumelo" ou "favor tocar campainha".
+
+NAV - Prioridade Alta
+O site necessita de um menu com as principais opções no topo da tela de forma organizada, como "cardápio", "contato", "restaurantes", "carrinho". Dessa forma, posso acessar as principais funcionalidades sem precisar olhar em lugares diferentes.
+
+Opção Delivery - Prioridade Alta
+Como cliente, posso ter a opção de delivery para comer pizza onde eu quiser, desde que eu a peça por ligação ou online. 
+
+Localização - Prioridade Leve
+Como cliente, posso encontrar a localização exata de todos os restaurantes dentro do site de forma fácil, caso queira visitá-los.
