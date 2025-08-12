@@ -1,11 +1,22 @@
 BACKLOG - G3
 
-Andamento do pedido
-Avaliação/Feedback
-Central de Ajuda
-Recomendação de Pedidos/Histórico
-Barra de Pesquisa
-Filtro
+Andamento do pedido - Prioridade Alta
+Como usuário, eu quero saber como está o andamento do meu pedido para que eu possa me situar enquanto ao tempo de demora para ele estar pronto.
+
+Avaliação/Feedback - Prioridade Média
+Como usuário, eu quero poder avaliar o serviço do local que eu estou comendo para que eu possa ajudar a melhorar o serviço e a qualidade para a próxima vez que eu for pedir.
+
+Central de Ajuda - Prioridade Média
+Como usuário, eu quero poder ser atendido caso haja algum erro no meu pedido ou no aplicativo para que a pizzaria corrija e melhore meu atendimento.
+
+Recomendação de Pedidos/Histórico - Prioridade Leve
+Como usuário, eu desejo lembrar os meus pedidos antigos para que eu possa escolher mais rápido os sabores parecidos que correspondem aos meus gostos.
+
+Barra de Pesquisa - Prioridade Média
+Como cliente, eu gostaria de pesquisar os produtos disponíveis, pois assim seria mais fácil de buscar os meus produtos preferidos ou algo que eu esteja buscando.
+
+Filtro - Prioridade Média
+Como usuário, eu quero filtrar os produtos disponíveis em categorias e classificações para que eu possa ver todos os itens listados de acordo com minhas especificações.
 
 Tela de Login - Prioridade importante
 Como usuário, eu gostaria de ter um boa tela de login, que seja intuitiva e fácil, para que assim eu possa fazer o login mais rápido e ter uma melhor noção de como mexer.
@@ -15,7 +26,6 @@ Como cliente, eu quero adicionar produtos ao meu carrinho, para que eu possa rev
 
 Gorjeta - Prioridade leve
 Como cliente, eu quero poder adicionar uma gorjeta no momento do pagamento, para que eu possa entregar um feedback pessoal e uma recompensa pelo bom atendimento.
-
 
 Pagamentos
 Cardápio
