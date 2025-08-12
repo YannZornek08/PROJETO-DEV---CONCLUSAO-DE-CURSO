@@ -6,9 +6,16 @@ Central de Ajuda
 Recomendação de Pedidos/Histórico
 Barra de Pesquisa
 Filtro
-Tela de Login
-Carrinho
-Gorjeta
+
+Tela de Login - Prioridade importante
+Como usuário, eu gostaria de ter um boa tela de login, que seja intuitiva e fácil, para que assim eu possa fazer o login mais rápido e ter uma melhor noção de como mexer.
+
+Carrinho - Prioridade importante
+Como cliente, eu quero adicionar produtos ao meu carrinho, para que eu possa revisar e finalizar minha compra com facilidade.
+
+Gorjeta - Prioridade leve
+Como cliente, eu quero poder adicionar uma gorjeta no momento do pagamento, para que eu possa entregar um feedback pessoal e uma recompensa pelo bom atendimento.
+
 Pagamentos
 Cardápio
 Escolha de Produtos
