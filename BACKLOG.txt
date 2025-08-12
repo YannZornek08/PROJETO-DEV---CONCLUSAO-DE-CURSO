@@ -16,6 +16,7 @@ Como cliente, eu quero adicionar produtos ao meu carrinho, para que eu possa rev
 Gorjeta - Prioridade leve
 Como cliente, eu quero poder adicionar uma gorjeta no momento do pagamento, para que eu possa entregar um feedback pessoal e uma recompensa pelo bom atendimento.
 
+
 Pagamentos
 Cardápio
 Escolha de Produtos
