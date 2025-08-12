@@ -9,9 +9,15 @@ Como usuário, eu quero poder avaliar o serviço do local que eu estou comendo p
 Central de Ajuda - Prioridade Média
 Como usuário, eu quero poder ser atendido caso haja algum erro no meu pedido ou no aplicativo para que a pizzaria corrija e melhore meu atendimento.
 
-Recomendação de Pedidos/Histórico
-Barra de Pesquisa
-Filtro
+Recomendação de Pedidos/Histórico - Prioridade Leve
+Como usuário, eu desejo lembrar os meus pedidos antigos para que eu possa escolher mais rápido os sabores parecidos que correspondem aos meus gostos.
+
+Barra de Pesquisa - Prioridade Média
+Como cliente, eu gostaria de pesquisar os produtos disponíveis, pois assim seria mais fácil de buscar os meus produtos preferidos ou algo que eu esteja buscando.
+
+Filtro - Prioridade Média
+Como usuário, eu quero filtrar os produtos disponíveis em categorias e classificações para que eu possa ver todos os itens listados de acordo com minhas especificações.
+
 Tela de Login
 Carrinho
 Gorjeta
