@@ -90,6 +90,7 @@ RN relacionadas: RN01
 RF relacionados: RF11, RF12
 RNF relacionados:
 
+
 - REQUISITOS FUNCIONAIS
 
 RF01 – Cadastrar Produto
@@ -193,6 +194,7 @@ descrição: O pagamento pode ser feito com débito, crédito ou dinheiro.
 RN relacionadas: RN13
 RF relacionados: 
 RNF relacionados:
+
 
 - REQUISITOS NÃO FUNCIONAIS
 
