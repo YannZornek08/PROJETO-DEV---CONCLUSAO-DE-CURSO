@@ -19,8 +19,8 @@ function Div() {
     <TextInput placeholder="Exemplo: exemplo@gmail.com" style={styles.text_placeholder}/>
     <Text style={styles.text_title}>Senha:</Text>
     <TextInput placeholder="Senha@Secreta2" style={styles.text_placeholder} secureTextEntry={true}/>
+    <Text style={styles.space_google}> Continuar Com o Google</Text>
       </View>
-    <Text style={styles.space_google}/>
     </View>
   )
 }
@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     },
     space_google: {
       backgroundColor: '#FFFFFF',
-      
+      padding: 20,
+      textAlign: 'center',
     }
 });
