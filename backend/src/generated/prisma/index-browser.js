@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.7.0
- * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
+ * Prisma Client JS version: 6.9.0
+ * Query Engine version: 81e4af48011447c3cc503a190e86995b66d2a28e
  */
 Prisma.prismaVersion = {
-  client: "6.7.0",
-  engine: "3cff47a7f5d65c3ea74883f1d736e41d68ce91ed"
+  client: "6.9.0",
+  engine: "81e4af48011447c3cc503a190e86995b66d2a28e"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -120,9 +120,74 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  password: 'password',
+  created_at: 'created_at',
+  update_at: 'update_at'
+};
+
+exports.Prisma.CategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  created_at: 'created_at',
+  update_at: 'update_at'
+};
+
+exports.Prisma.ProductScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  price: 'price',
+  description: 'description',
+  banner: 'banner',
+  created_at: 'created_at',
+  update_at: 'update_at',
+  category_id: 'category_id'
+};
+
+exports.Prisma.OrderScalarFieldEnum = {
+  id: 'id',
+  table: 'table',
+  status: 'status',
+  draft: 'draft',
+  name: 'name',
+  created_at: 'created_at',
+  update_at: 'update_at'
+};
+
+exports.Prisma.ItemScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  created_at: 'created_at',
+  update_at: 'update_at',
+  order_id: 'order_id',
+  product_id: 'product_id'
+};
+
+exports.Prisma.SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
-
+  User: 'User',
+  Category: 'Category',
+  Product: 'Product',
+  Order: 'Order',
+  Item: 'Item'
 };
 
 /**
