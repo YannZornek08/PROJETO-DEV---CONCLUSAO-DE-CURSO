@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { verify } from "jsonwebtoken";
+import { verify } from "jsonwebtoken"
 
-interface Payload{
+interface Payload {
     sub: string;
 }
 
@@ -14,8 +14,8 @@ export function isAuthenticated(
     // Receber o token
     const authToken = req.headers.authorization;
 
-    if(!authToken){
-        res.status(401).end();
+    if(!authToken) {
+        res.status(401).end()
     }
 
     const [, token] = authToken.split(" ")
@@ -28,11 +28,13 @@ export function isAuthenticated(
         ) as Payload;
 
         // recuperar o id do token e colocar dentro de uma variável user_id dentro do Request
-        req.user_id = sub;
-         
-        next();
-        
-    }catch(err){
-        res.status(401).end();
-    };
+        req.user_id = sub
+
+        next()
+    
+    }catch(err) {
+        res.status(401).end()
+    }
+
+
 }

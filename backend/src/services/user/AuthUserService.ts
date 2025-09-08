@@ -1,6 +1,6 @@
-import prismaClient from "../../prisma";
+import prismaClient from "../../prisma"
 import { compare } from "bcryptjs"
-import { sign } from 'jsonwebtoken';
+import { sign } from 'jsonwebtoken'
 
 interface AuthRequest {
     email: string;
@@ -9,7 +9,6 @@ interface AuthRequest {
 
 class AuthUserService {
     async execute({ email, password}: AuthRequest) {
-        console.log(email);
 
         //verificar se o email existe.
         const user = await prismaClient.user.findFirst({
@@ -17,16 +16,16 @@ class AuthUserService {
                 email: email
             }
         })
-        
-        if(!user){
+
+        if(!user) {
             throw new Error("User/password incorrect")
         }
-        
-        //verificar se a senha que ele enviou está correta.
-        const passwordHash = await compare(password, user.password)
 
-        if(!passwordHash){
-            throw new Error("User/password incorrect")
+        // verificar se a senha que ele enviou está correta.
+        const passwordMatch = await compare(password, user.password)
+
+        if(!passwordMatch) {
+            throw new Error("User/password-incorrect")
         }
 
         // Se funcionou sem imprevistos, geraremos o token para o usuário.
@@ -42,14 +41,13 @@ class AuthUserService {
             }
         )
 
-        
         return{
             id: user.id,
             name: user.name,
             email: user.email,
-            token: token
+            token : token
         }
     }
 }
 
-export { AuthUserService}
+export { AuthUserService }

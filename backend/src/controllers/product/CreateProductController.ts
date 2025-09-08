@@ -1,6 +1,6 @@
 import { Request, response, Response } from "express";
 import { CreateProductService } from "../../services/product/CreateProductService";
-import { UploadedFile } from "express-fileupload"
+import { UploadedFile } from "express-fileupload";
 
 import { v2 as cloudinary, UploadApiResponse } from 'cloudinary'
 
@@ -10,13 +10,13 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_SECRET,
 })
 
-class  CreateProductController {
-    async handle(req: Request, res: Response){
+class CreateProductController {
+    async handle(req: Request, res: Response) {
         const { name, price, description, category_id } = req.body
-        
+
         const createProductService = new CreateProductService();
 
-        if(!req.files || Object.keys(req.files).length === 0){
+        if(!req.files || Object.keys(req.files).length === 0) {
             throw new Error("error upload file image")
         } else {
 
@@ -24,7 +24,7 @@ class  CreateProductController {
 
             const resultFile: UploadApiResponse = await new Promise((resolve, reject) => {
                 cloudinary.uploader.upload_stream({}, function (error, result) {
-                    if(error){
+                    if(error) {
                         reject(error);
                         return;
                     }
@@ -32,7 +32,7 @@ class  CreateProductController {
                     resolve(result)
                 }).end(file.data)
             })
-            
+
             const product = await createProductService.execute({
                 name,
                 price,
@@ -40,9 +40,8 @@ class  CreateProductController {
                 banner: resultFile.url,
                 category_id
             });
-            
-            res.json(product);
-            
+
+            res.json(product)
         }
     }
 }
