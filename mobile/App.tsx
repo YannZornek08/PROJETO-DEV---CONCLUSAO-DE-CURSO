@@ -14,6 +14,6 @@ export default function App() {
     //   <Routes />
     // </AuthProvider>
     // </NavigationContainer>
-    <SignIn />
+    <SignIn /> //testando a tela de login
   );
 }
