@@ -8,16 +8,15 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^3.0.0",
-    "@types/cors": "^2.8.18",
     "@types/express": "^5.0.1",
-    "@types/express-fileupload": "^1.5.1",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/multer": "^1.4.12",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@prisma/client": "6.9.0",
+    "@prisma/client": "^6.8.2",
+    "@types/cors": "^2.8.18",
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.6.1",
     "cors": "^2.8.5",
@@ -27,6 +26,6 @@
     "express-fileupload": "^1.5.1",
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.2",
-    "prisma": "^6.7.0"
+    "prisma": "^6.8.2"
   }
 }
