@@ -24,7 +24,10 @@ function Div() {
       <Text style={styles.text_button}> Entrar </Text>
     </TouchableOpacity>
       </View>
-      <Text> Não possui conta? Cadastre-se!</Text>
+      <Text style={styles.login}> Não possui conta? </Text>
+      <TouchableOpacity>
+        <Text style={styles.link}>Cadastre-se!</Text>
+      </TouchableOpacity>
     </View>
   )
 }
@@ -80,5 +83,23 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: 14,
         fontWeight: 'bold',
+    },
+    login: {
+      textAlign: 'center',
+      fontSize: 16,
+      marginRight: '28%',
+      fontWeight: 'bold',
+      color: '#5F4100',
+    },
+    link: {
+      textAlign: 'center',
+      // backgroundColor: '#f7f3ee',
+      fontSize: 16,
+      fontWeight: 'bold',
+      marginLeft: '51%',
+      textDecorationLine: 'underline',
+      color: '#5F4100',
+      bottom: 22,
+      width: '28%',
     }
 });
