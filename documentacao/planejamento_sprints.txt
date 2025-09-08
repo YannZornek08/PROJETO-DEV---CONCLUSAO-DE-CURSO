@@ -1,0 +1,211 @@
+TCC - SPRINT - GRUPO 3
+
+Semana 1 - (01 e 02/09)
+    Objetivo: Começar a desenvolver a tela de login, NAV e configurar os ambientes de trabalho.
+
+	- Configuração do ambiente de trabalho
+		- Descrição: Instalar todas as dependências e preparar as pastas
+	
+	Responsável: Vinicius, Yann
+	
+    - Tela de Login 1/2
+        -Descrição: Tela principal para logar o usuário e cadastrar
+		
+	Responsável: Fantato, João
+	
+	- Configuração do banco de dados
+		-Descrição: Configurar o ambiente de trabalho do banco de dados
+		
+	Responsável: Leonardo, Yann
+	
+	- NAV (Barra de Navegação) 1/2
+			-Descrição: Fazer a barra de navegação com os links principais
+		
+	Responsável: Vinícius
+	
+=====================================================================
+=====================================================================
+
+	
+Semana 2 - (08 e 09/09)
+    Objetivo: Terminar a tela de login, NAV e inserir produtos no banco de dados
+	
+	- Tela de Login 2/2
+        -Descrição: Tela principal para logar o usuário e cadastrar
+		
+	Responsável: Fantato, João
+	
+	- NAV (Barra de Navegação) 2/2
+			-Descrição: Fazer a barra de navegação com os links principais
+		
+	Responsável: Vinícius, João, Fantato
+	
+	- Inserir produtos no banco de dados
+        -Descrição: Inserir os valores e definir as categorias dos produtos.
+		
+	Responsável: Yann, Leonardo
+
+	- Conectar o Login e Cadastro com o BD
+			-Descrição: Como cliente da pizzaria, eu quero me cadastrar ou fazer o login no app, utilizando email, cpf obrigatório e senha
+		
+	Responsável: Vinícius, Leonardo
+	
+=====================================================================
+=====================================================================
+
+
+Semana 3 - (16 e 017/09)
+    Objetivo: Integrar os produtos com o código, começar o cardápio e a tela ao escolher o produto
+	
+	- Integração dos produtos no banco de dados
+        -Descrição: Conectar os produtos ao banco de dados.
+		
+	Responsável: Leonardo, Yann
+	
+	- Cardápio 1/2
+        -Descrição: Exibição dos produtos na tela inicial
+		
+	Responsável: João, Vinicius, Fantato
+	
+	- Escolha de produtos (Tela do produto) 1/2
+        -Descrição: Tela que aparece com as informações do produto e seu preço
+		
+	Responsável: Fantato, Yann
+	
+=====================================================================
+=====================================================================
+
+	
+Semana 4 - (22 e 23/09)
+    Objetivo: Terminar o cardapio, o a tela dos produtos e começar a barra de pesquisa
+
+	- Cardápio 2/2
+        -Descrição: Exibição dos produtos na tela inicial
+		
+	Responsável: João, Vinicius, Fantato
+	
+	- Escolha de produtos 2/2
+        -Descrição: Tela que aparece com as informações do pedido e seu preço
+		
+	Responsável: Fantato, Yann
+	
+	- Observações do pedido
+        -Descrição: Adicionar observações do produto e/ou pedido
+		
+	Responsável: Leonardo, Vinicius
+	
+=====================================================================
+=====================================================================
+	
+Semana 5 - (29 e 30/09)
+    Objetivo:  Criar a barra de categorias e o menu de configurações com o perfil do usuário
+
+	- Categorias
+		-Descrição: Inserir as categorias no banco de dados e na NAV
+		
+	Responsável: Fantato
+	
+	- Configurações
+		-Descrição: Fazer a tela de configurações com as opções
+		
+	Responsável: João, Leonardo
+
+	- Perfil do usuário
+		-Descrição: Exibir o perfil do usuário e permitir mudar algumas informações
+		
+	Responsável: Yann, Vinicius
+	
+
+=====================================================================
+=====================================================================
+
+Semana 6 - (06 e 07/10)
+    Objetivo: Começar o carrinho e a barra de pesquisa.
+
+	- Barra de Pesquisa
+		-Descrição: Buscar por produtos através do nome
+		
+	Responsável: Leonardo, Fantato
+	
+	- Carrinho 1/2
+		-Descrição: Reunir os pedidos de um cliente dento do carrinho
+		
+	Responsável: João, Vinicius, Yann 
+	
+	
+=====================================================================
+=====================================================================
+	
+Semana 7 - (13 e 14/10)
+    Objetivo: Terminar o carrinho e adicionar gorjeta
+	
+	- Carrinho 2/2
+		-Descrição: Reunir os pedidos de um cliente dento do carrinho
+		
+	Responsável: João, Vinicius, Yann
+		
+	- Gorjeta
+		-Descrição: Fazer a tela de configurações com as opções
+		
+	Responsável: Leonardo, Fantato
+	
+	
+=====================================================================
+=====================================================================
+
+
+Semana 8 - (20 e 21/10)
+    Objetivo: Verificar o andamento do pedido e as opções de pagamento
+	
+	- Andamento do pedido
+		-Descrição: Fazer uma tela com o andamento do pedido
+		
+	Responsável: Leonardo, Yann, João
+	
+	- Pagamentos
+		-Descrição: Fazer a tela com as opções de pagamento
+		
+	Responsável: Vinicius, Fantato
+	
+=====================================================================
+=====================================================================
+
+Semana 9 - (27 e 28/10)
+    Objetivo: Produzir uma tela para avaliar os pedidos e/ou ver o histórico de pedidos
+	
+	- Avaliação do pedido
+		-Descrição: Permitir dar um feedback do pedido e avaliar o mesmo
+		
+	Responsável: Leonardo, João
+
+	- Histórico de Pedidos
+		-Descrição: Registrar os pedidos já feitos em um histórico
+		
+	Responsável: Vinicius, Fantato, Yann
+
+=====================================================================
+=====================================================================
+
+Semana 10 - (03 e 04/09)
+    Objetivo: Criar o cardápio para exibição dos produtos e o carrinho.
+	
+	- Central de Ajuda
+		-Descrição: Como cliente da pizzaria, eu quero me cadastrar ou fazer o login no app, utilizando email, cpf obrigatório e senha
+		
+	Responsável: Yann, Vinicius
+	
+	- Localização
+		-Descrição: Especificar a localização do pizzaria
+		
+	Responsável: João, Leonardo, Fantato
+	
+=====================================================================
+=====================================================================
+
+Semana 11 - (10 e 11/09)
+    Objetivo: Criar o cardápio para exibição dos produtos e o carrinho.
+	
+	- Finalizar a documentação (upar no github)
+			-Descrição: Como cliente da pizzaria, eu quero me cadastrar ou fazer o login no app, utilizando email, cpf obrigatório e senha
+		
+	Responsável: Vinicius, Yann, Fantato, João, Leonardo
