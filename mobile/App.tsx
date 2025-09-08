@@ -1,15 +1,19 @@
 import { View, StatusBar } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Routes from './src/routes';
 
 import { AuthProvider } from './src/contexts/AuthContext';
 import Cadastro from './src/pages/Cadastro';
 import SignIn from './src/pages/SignIn';
 
+const Stack = createNativeStackNavigator();
+
 export default function App() {
   return (
     <NavigationContainer>
+
       <AuthProvider>
       <StatusBar backgroundColor="#1d1d2e" barStyle="light-content" translucent={false}/>
       <Routes />
