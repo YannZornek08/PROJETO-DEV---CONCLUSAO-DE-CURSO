@@ -93,17 +93,16 @@ model Role {
   @@map("roles")
 }
 
-model Client {
+model Costumer {
   id         String   @id @default(uuid())
-  nome       String
+  name       String
   dt_nasc    DateTime
   email      String
-  senha      String
-  historico  String
+  password   String
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  @@map("clients")
+  @@map("costumers")
 }
 
 model Payment {
