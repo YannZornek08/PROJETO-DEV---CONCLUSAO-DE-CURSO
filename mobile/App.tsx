@@ -10,6 +10,7 @@ import SignIn from './src/pages/SignIn';
 import Menu from './src/pages/Menu';
 import Pagamento from './src/pages/Pagamento';
 import Conta from './src/pages/Conta';
+import DetalhesPedido from './src/pages/DetalhesPedido';
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
       <Routes />
     </AuthProvider>
     </NavigationContainer>
+    // <DetalhesPedido/>  testando tela de produto
     // <SignIn /> // testando a tela de login
     // <Cadastro /> // testando a tela de cadastro
   );
