@@ -1,37 +1,12 @@
-import React, { useState } from "react";
-import {
-  SafeAreaView,
-  View,
-  ScrollView,
-  Image,
-  Text,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
+import React from "react";
+import { SafeAreaView, View, ScrollView, Image, Text, TouchableOpacity } from "react-native";
 
-export default () => {
-  const [qtdAbacaxi, setQtdAbacaxi] = useState(1);
-  const [qtdPepperoni, setQtdPepperoni] = useState(1);
-  const [obs, setObs] = useState("");
-
-  const precoAbacaxi = 35;
-  const precoPepperoni = 42;
-  const total = qtdAbacaxi * precoAbacaxi + qtdPepperoni * precoPepperoni;
-
+export default function Pedido() {
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: "#FFFFFF",
-      }}
-    >
-      <ScrollView
-        style={{
-          flex: 1,
-          backgroundColor: "#FFFFFF",
-        }}
-      >
-        {/* Ícone voltar */}
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+      <ScrollView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+        
+        {/* Logo ou ícone da pizzaria */}
         <Image
           source={{
             uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ogwEx3xhdY/rco2jqx2_expires_30_days.png",
@@ -54,18 +29,18 @@ export default () => {
             textAlign: "center",
             marginBottom: 24,
             marginHorizontal: 26,
+            fontWeight: "bold",
           }}
         >
-          {"Pedido"}
+          Pedido
         </Text>
 
         {/* Item 1 */}
         <View
           style={{
             flexDirection: "row",
-            marginBottom: 20,
+            marginBottom: 10,
             marginHorizontal: 33,
-            alignItems: "center",
           }}
         >
           <Image
@@ -76,33 +51,29 @@ export default () => {
             style={{
               width: 90,
               height: 90,
-              marginRight: 20,
+              marginRight: 27,
             }}
           />
-          <View style={{ flex: 1 }}>
-            <Text style={{ color: "#000000", fontSize: 14 }}>
-              Pizza de Abacaxi{"\n"}Tamanho: S
-            </Text>
-            {/* Controle de quantidade */}
-            <View style={{ flexDirection: "row", alignItems: "center", marginTop: 8 }}>
-              <TouchableOpacity onPress={() => setQtdAbacaxi(Math.max(1, qtdAbacaxi - 1))}>
-                <Text style={{ fontSize: 20 }}> - </Text>
-              </TouchableOpacity>
-              <Text style={{ fontSize: 16, marginHorizontal: 10 }}>{qtdAbacaxi}</Text>
-              <TouchableOpacity onPress={() => setQtdAbacaxi(qtdAbacaxi + 1)}>
-                <Text style={{ fontSize: 20 }}> + </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+          <Text
+            style={{
+              color: "#000000",
+              fontSize: 14,
+              marginTop: 14,
+              flex: 1,
+            }}
+          >
+            Pizza de Abacaxi{"\n"}Tamanho: S
+          </Text>
           <Text
             style={{
               color: "#000000",
               fontSize: 14,
               textAlign: "right",
+              marginVertical: 6,
               width: 94,
             }}
           >
-            R$ {precoAbacaxi * qtdAbacaxi},00
+            R$ 35,00
           </Text>
         </View>
 
@@ -110,9 +81,8 @@ export default () => {
         <View
           style={{
             flexDirection: "row",
-            marginBottom: 20,
+            marginBottom: 85,
             marginHorizontal: 33,
-            alignItems: "center",
           }}
         >
           <Image
@@ -123,73 +93,80 @@ export default () => {
             style={{
               width: 90,
               height: 90,
-              marginRight: 20,
+              marginRight: 27,
             }}
           />
-          <View style={{ flex: 1 }}>
-            <Text style={{ color: "#000000", fontSize: 14 }}>
-              Pizza de Pepperoni{"\n"}Tamanho: M
-            </Text>
-            {/* Controle de quantidade */}
-            <View style={{ flexDirection: "row", alignItems: "center", marginTop: 8 }}>
-              <TouchableOpacity onPress={() => setQtdPepperoni(Math.max(1, qtdPepperoni - 1))}>
-                <Text style={{ fontSize: 20 }}> - </Text>
-              </TouchableOpacity>
-              <Text style={{ fontSize: 16, marginHorizontal: 10 }}>{qtdPepperoni}</Text>
-              <TouchableOpacity onPress={() => setQtdPepperoni(qtdPepperoni + 1)}>
-                <Text style={{ fontSize: 20 }}> + </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+          <Text
+            style={{
+              color: "#000000",
+              fontSize: 14,
+              marginTop: 14,
+              flex: 1,
+            }}
+          >
+            Pizza de Pepperoni{"\n"}Tamanho: M
+          </Text>
           <Text
             style={{
               color: "#000000",
               fontSize: 14,
               textAlign: "right",
+              marginVertical: 6,
               width: 94,
             }}
           >
-            R$ {precoPepperoni * qtdPepperoni},00
+            R$ 42,00
           </Text>
         </View>
 
         {/* Observações */}
-        <TextInput
-          placeholder="Toque para adicionar observações:"
-          value={obs}
-          onChangeText={setObs}
+        <View
           style={{
             backgroundColor: "#FFFFFF",
             borderColor: "#52443C",
             borderRadius: 18,
-            borderWidth: 2,
-            height: 100,
+            borderWidth: 4,
+            paddingBottom: 101,
             marginBottom: 27,
             marginHorizontal: 26,
-            padding: 10,
-            textAlignVertical: "top",
           }}
-          multiline={true}
-        />
+        >
+          <Text
+            style={{
+              color: "#000000",
+              fontSize: 14,
+              textAlign: "center",
+            }}
+          >
+            Toque para adicionar observações:
+          </Text>
+        </View>
 
         {/* Total */}
         <Text
           style={{
             color: "#000000",
-            fontSize: 20,
+            fontSize: 32,
             textAlign: "right",
-            marginBottom: 10,
+            marginBottom: 21,
             marginHorizontal: 26,
           }}
         >
-          Total: R$ {total},00
+          R$ 77,00
         </Text>
 
-        {/* Mesa e Nome */}
-        <View style={{ marginHorizontal: 26, marginBottom: 37 }}>
-          <Text style={{ fontSize: 16, color: "#000000" }}>Mesa: 05</Text>
-          <Text style={{ fontSize: 16, color: "#000000" }}>Nome: João M.</Text>
-        </View>
+        {/* Mesa + Nome do Cliente */}
+        <Text
+          style={{
+            color: "#000000",
+            fontSize: 16,
+            textAlign: "right",
+            marginBottom: 37,
+            marginHorizontal: 26,
+          }}
+        >
+          Mesa 05{"\n"}João M.
+        </Text>
 
         {/* Botão Pagar */}
         <TouchableOpacity
@@ -201,18 +178,19 @@ export default () => {
             marginBottom: 35,
             marginHorizontal: 26,
           }}
-          onPress={() => alert("Pagamento processado!")}
+          onPress={() => alert("Pagamento realizado!")}
         >
           <Text
             style={{
               color: "#FFFFFF",
               fontSize: 24,
+              fontWeight: "bold",
             }}
           >
-            {"Pagar"}
+            Pagar
           </Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
-};
+}
