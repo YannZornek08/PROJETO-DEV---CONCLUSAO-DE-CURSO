@@ -23,7 +23,10 @@ model User {
   created_at DateTime? @default(now())
   update_at DateTime? @default(now())
 
+  role Role @relation(fields: [role_id], references: [id])
+
   @@map("users")
+  role_id String
 }
 
 model Category {
@@ -77,4 +80,14 @@ model Item {
   @@map("items")
   order_id String
   product_id String
+}
+
+model Role {
+  id String @id @default(uuid())
+  name String
+  created_at DateTime? @default(now())
+  update_at DateTime? @default(now())
+
+  @@map("roles")
+  users User[]
 }
