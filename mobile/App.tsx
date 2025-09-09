@@ -3,9 +3,11 @@ import { View, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import Routes from './src/routes';
 
+
 import { AuthProvider } from './src/contexts/AuthContext';
 import Cadastro from './src/pages/Cadastro';
 import SignIn from './src/pages/SignIn';
+import Menu from './src/pages/Menu';
 
 export default function App() {
   return (
