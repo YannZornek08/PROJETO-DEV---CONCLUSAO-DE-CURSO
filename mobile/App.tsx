@@ -8,6 +8,8 @@ import { AuthProvider } from './src/contexts/AuthContext';
 import Cadastro from './src/pages/Cadastro';
 import SignIn from './src/pages/SignIn';
 import Menu from './src/pages/Menu';
+import Pagamento from './src/pages/Pagamento';
+import Conta from './src/pages/Conta';
 
 export default function App() {
   return (
