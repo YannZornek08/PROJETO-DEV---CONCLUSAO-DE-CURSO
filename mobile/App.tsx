@@ -4,9 +4,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Routes from './src/routes';
 
+
 import { AuthProvider } from './src/contexts/AuthContext';
 import Cadastro from './src/pages/Cadastro';
 import SignIn from './src/pages/SignIn';
+import Menu from './src/pages/Menu';
 
 const Stack = createNativeStackNavigator();
 
