@@ -12,8 +12,10 @@ import {
 export default function DetalhesProdutos() {
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState<string>("M");
   const [quantidade, setQuantidade] = useState<number>(1);
+  const [adicionais, setAdicionais] = useState<string[]>([]);
 
   const tamanhos = ["P", "M", "G"];
+  const opcoesAdicionais = ["Cebola", "Pepperoni", "Mussarela"];
 
   const aumentarQuantidade = () => {
     setQuantidade(quantidade + 1);
@@ -22,6 +24,14 @@ export default function DetalhesProdutos() {
   const diminuirQuantidade = () => {
     if (quantidade > 1) {
       setQuantidade(quantidade - 1);
+    }
+  };
+
+  const toggleAdicional = (adicional: string) => {
+    if (adicionais.includes(adicional)) {
+      setAdicionais(adicionais.filter((item) => item !== adicional));
+    } else {
+      setAdicionais([...adicionais, adicional]);
     }
   };
 
@@ -62,9 +72,33 @@ export default function DetalhesProdutos() {
         {/* Divisória */}
         <View style={styles.divider} />
 
+        {/* Adicionais */}
+        <Text style={styles.sectionTitle}>Adicionais:</Text>
+        <View style={styles.adicionaisContainer}>
+          {opcoesAdicionais.map((item) => {
+            const selecionado = adicionais.includes(item);
+            return (
+              <TouchableOpacity
+                key={item}
+                style={styles.adicionalItem}
+                onPress={() => toggleAdicional(item)}
+              >
+                <View
+                  style={[
+                    styles.checkbox,
+                    selecionado && styles.checkboxSelecionado,
+                  ]}
+                >
+                  {selecionado && <Text style={styles.checkmark}>✓</Text>}
+                </View>
+                <Text style={styles.adicionalText}>{item}</Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+
         {/* Seletor de tamanho */}
         <Text style={styles.sectionTitle}>Tamanho:</Text>
-
         <View style={styles.sizeContainer}>
           {tamanhos.map((tamanho) => (
             <TouchableOpacity
@@ -72,13 +106,14 @@ export default function DetalhesProdutos() {
               onPress={() => setTamanhoSelecionado(tamanho)}
               style={[
                 styles.sizeButton,
-                tamanhoSelecionado === tamanho && styles.selectedSizeButton
+                tamanhoSelecionado === tamanho && styles.selectedSizeButton,
               ]}
             >
               <Text
                 style={[
                   styles.sizeButtonText,
-                  tamanhoSelecionado === tamanho && styles.selectedSizeButtonText
+                  tamanhoSelecionado === tamanho &&
+                    styles.selectedSizeButtonText,
                 ]}
               >
                 {tamanho}
@@ -98,7 +133,7 @@ export default function DetalhesProdutos() {
               onPress={diminuirQuantidade}
               style={[
                 styles.quantityButton,
-                quantidade <= 1 && styles.disabledButton
+                quantidade <= 1 && styles.disabledButton,
               ]}
               disabled={quantidade <= 1}
             >
@@ -121,7 +156,9 @@ export default function DetalhesProdutos() {
           style={styles.addButton}
           onPress={() =>
             alert(
-              `Pizza adicionada! Tamanho: ${tamanhoSelecionado}, Quantidade: ${quantidade}`
+              `Pizza adicionada! Tamanho: ${tamanhoSelecionado}, Quantidade: ${quantidade}, Adicionais: ${adicionais.join(
+                ", "
+              ) || "Nenhum"}`
             )
           }
         >
@@ -133,67 +170,73 @@ export default function DetalhesProdutos() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FFFFFF"
-  },
-  scrollView: {
-    flex: 1,
-    backgroundColor: "#FFFFFF"
-  },
-  imageContainer: {
-    marginTop: 65,
-    marginBottom: 2,
-    marginHorizontal: 26
-  },
-  smallImage: {
-    width: 32,
-    height: 32
-  },
-  largeImage: {
-    height: 360
-  },
+  container: { flex: 1, backgroundColor: "#FFFFFF" },
+  scrollView: { flex: 1, backgroundColor: "#FFFFFF" },
+  imageContainer: { marginTop: 65, marginBottom: 2, marginHorizontal: 26 },
+  smallImage: { width: 32, height: 32 },
+  largeImage: { height: 360 },
   productName: {
     color: "#000000",
     fontSize: 32,
     fontWeight: "bold",
     textAlign: "center",
-    marginTop: 20
+    marginTop: 20,
   },
-  priceContainer: {
-    alignItems: "center",
-    marginVertical: 10
-  },
-  price: {
-    color: "#000000",
-    fontSize: 22,
-    fontWeight: "bold"
-  },
+  priceContainer: { alignItems: "center", marginVertical: 10 },
+  price: { color: "#000000", fontSize: 22, fontWeight: "bold" },
   description: {
     color: "#666666",
     fontSize: 16,
     marginBottom: 25,
     marginHorizontal: 26,
     textAlign: "center",
-    lineHeight: 22
+    lineHeight: 22,
   },
   divider: {
     height: 1,
     backgroundColor: "#D7C2B8",
     marginVertical: 25,
-    marginHorizontal: 46
+    marginHorizontal: 46,
   },
   sectionTitle: {
     color: "#000000",
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 8,
-    marginLeft: 23
+    marginLeft: 23,
   },
+  adicionaisContainer: {
+    marginBottom: 25,
+    marginLeft: 23,
+  },
+  adicionalItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 12,
+  },
+  checkbox: {
+    width: 24,
+    height: 24,
+    borderWidth: 2,
+    borderColor: "#8D4F28",
+    borderRadius: 6,
+    marginRight: 12,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  checkboxSelecionado: {
+    backgroundColor: "#8D4F28",
+  },
+  checkmark: {
+    color: "#FFFFFF",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  adicionalText: { color: "#000000", fontSize: 16 },
   sizeContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginBottom: 25
+    marginBottom: 25,
   },
   sizeButton: {
     borderWidth: 2,
@@ -202,20 +245,14 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 30,
-    marginHorizontal: 8
+    marginHorizontal: 8,
   },
   selectedSizeButton: {
     borderColor: "#8D4F28",
-    backgroundColor: "#8D4F28"
+    backgroundColor: "#8D4F28",
   },
-  sizeButtonText: {
-    color: "#000000",
-    fontSize: 16,
-    fontWeight: "bold"
-  },
-  selectedSizeButtonText: {
-    color: "#FFFFFF"
-  },
+  sizeButtonText: { color: "#000000", fontSize: 16, fontWeight: "bold" },
+  selectedSizeButtonText: { color: "#FFFFFF" },
   bottomContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -223,22 +260,20 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: "#FFFFFF",
     borderTopWidth: 1,
-    borderTopColor: "#EEEEEE"
+    borderTopColor: "#EEEEEE",
   },
-  quantityContainer: {
-    flexDirection: "column"
-  },
+  quantityContainer: { flexDirection: "column" },
   quantityLabel: {
     color: "#000000",
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 8,
-    marginLeft: 24
+    marginLeft: 24,
   },
   quantitySelector: {
     flexDirection: "row",
     alignItems: "center",
-    marginLeft: 23
+    marginLeft: 23,
   },
   quantityButton: {
     borderWidth: 1,
@@ -248,16 +283,14 @@ const styles = StyleSheet.create({
     height: 36,
     borderRadius: 18,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
-  disabledButton: {
-    backgroundColor: "#D7C2B8"
-  },
+  disabledButton: { backgroundColor: "#D7C2B8" },
   quantityButtonText: {
     color: "#FFFFFF",
     fontSize: 18,
     fontWeight: "bold",
-    lineHeight: 36
+    lineHeight: 36,
   },
   quantityText: {
     color: "#000000",
@@ -265,7 +298,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     minWidth: 30,
     textAlign: "center",
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   addButton: {
     backgroundColor: "#8D4F28",
@@ -273,11 +306,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderRadius: 30,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
-  addButtonText: {
-    color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "bold"
-  }
+  addButtonText: { color: "#FFFFFF", fontSize: 16, fontWeight: "bold" },
 });
