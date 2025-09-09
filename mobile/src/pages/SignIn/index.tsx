@@ -1,105 +1,196 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { SafeAreaView, View, ScrollView, Image, Text, TouchableOpacity } from "react-native";
 
-export default function SignIn() {
+export default function Pedido() {
   return (
-    <View>
-    <Text style={styles.container}>Login</Text>
-    <Div />
-    </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+      <ScrollView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+        
+        {/* Logo ou ícone da pizzaria */}
+        <Image
+          source={{
+            uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ogwEx3xhdY/rco2jqx2_expires_30_days.png",
+          }}
+          resizeMode={"stretch"}
+          style={{
+            width: 32,
+            height: 32,
+            marginTop: 65,
+            marginBottom: 5,
+            marginLeft: 26,
+          }}
+        />
+
+        {/* Título */}
+        <Text
+          style={{
+            color: "#000000",
+            fontSize: 32,
+            textAlign: "center",
+            marginBottom: 24,
+            marginHorizontal: 26,
+            fontWeight: "bold",
+          }}
+        >
+          Pedido
+        </Text>
+
+        {/* Item 1 */}
+        <View
+          style={{
+            flexDirection: "row",
+            marginBottom: 10,
+            marginHorizontal: 33,
+          }}
+        >
+          <Image
+            source={{
+              uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ogwEx3xhdY/qzmw1wml_expires_30_days.png",
+            }}
+            resizeMode={"stretch"}
+            style={{
+              width: 90,
+              height: 90,
+              marginRight: 27,
+            }}
+          />
+          <Text
+            style={{
+              color: "#000000",
+              fontSize: 14,
+              marginTop: 14,
+              flex: 1,
+            }}
+          >
+            Pizza de Abacaxi{"\n"}Tamanho: S
+          </Text>
+          <Text
+            style={{
+              color: "#000000",
+              fontSize: 14,
+              textAlign: "right",
+              marginVertical: 6,
+              width: 94,
+            }}
+          >
+            R$ 35,00
+          </Text>
+        </View>
+
+        {/* Item 2 */}
+        <View
+          style={{
+            flexDirection: "row",
+            marginBottom: 85,
+            marginHorizontal: 33,
+          }}
+        >
+          <Image
+            source={{
+              uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ogwEx3xhdY/egjzb6hm_expires_30_days.png",
+            }}
+            resizeMode={"stretch"}
+            style={{
+              width: 90,
+              height: 90,
+              marginRight: 27,
+            }}
+          />
+          <Text
+            style={{
+              color: "#000000",
+              fontSize: 14,
+              marginTop: 14,
+              flex: 1,
+            }}
+          >
+            Pizza de Pepperoni{"\n"}Tamanho: M
+          </Text>
+          <Text
+            style={{
+              color: "#000000",
+              fontSize: 14,
+              textAlign: "right",
+              marginVertical: 6,
+              width: 94,
+            }}
+          >
+            R$ 42,00
+          </Text>
+        </View>
+
+        {/* Observações */}
+        <View
+          style={{
+            backgroundColor: "#FFFFFF",
+            borderColor: "#52443C",
+            borderRadius: 18,
+            borderWidth: 4,
+            paddingBottom: 101,
+            marginBottom: 27,
+            marginHorizontal: 26,
+          }}
+        >
+          <Text
+            style={{
+              color: "#000000",
+              fontSize: 14,
+              textAlign: "center",
+            }}
+          >
+            Toque para adicionar observações:
+          </Text>
+        </View>
+
+        {/* Total */}
+        <Text
+          style={{
+            color: "#000000",
+            fontSize: 32,
+            textAlign: "right",
+            marginBottom: 21,
+            marginHorizontal: 26,
+          }}
+        >
+          R$ 77,00
+        </Text>
+
+        {/* Mesa + Nome do Cliente */}
+        <Text
+          style={{
+            color: "#000000",
+            fontSize: 16,
+            textAlign: "right",
+            marginBottom: 37,
+            marginHorizontal: 26,
+          }}
+        >
+          Mesa 05{"\n"}João M.
+        </Text>
+
+        {/* Botão Pagar */}
+        <TouchableOpacity
+          style={{
+            alignItems: "center",
+            backgroundColor: "#8D4F28",
+            borderRadius: 100,
+            paddingVertical: 24,
+            marginBottom: 35,
+            marginHorizontal: 26,
+          }}
+          onPress={() => alert("Pagamento realizado!")}
+        >
+          <Text
+            style={{
+              color: "#FFFFFF",
+              fontSize: 24,
+              fontWeight: "bold",
+            }}
+          >
+            Pagar
+          </Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
-
-function Div() {
-  return (
-    <View>
-      <View style={styles.div}>
-    <Text style={styles.text_title}>Email:</Text>
-    <TextInput placeholder="Exemplo: exemplo@gmail.com" style={styles.text_placeholder}/>
-    <Text style={styles.text_title}>Senha:</Text>
-    <TextInput placeholder="Senha@Secreta2" style={styles.text_placeholder} secureTextEntry={true}/>
-    <Text style={styles.space_google}> Entrar Com Google</Text>
-    <TouchableOpacity style={styles.button}>
-      <Text style={styles.text_button}> Entrar </Text>
-    </TouchableOpacity>
-      </View>
-      <Text style={styles.login}> Não possui conta? </Text>
-      <TouchableOpacity>
-        <Text style={styles.link}>Cadastre-se!</Text>
-      </TouchableOpacity>
-    </View>
-  )
-}
-
-const styles = StyleSheet.create({
-    container: {
-      fontSize: 32,
-      fontWeight: 'bold',
-      marginTop: 75,
-      marginBottom: 25,
-      textAlign: 'center',
-    },
-    div: {
-      backgroundColor: '#F1E0CA',
-      borderRadius: 10,
-      margin: 20,
-      padding: 20,
-      borderColor: '#D6C4AA',
-      borderWidth: 2,
-    },
-    text_title: {
-      fontSize: 22,
-      marginBottom: 20,
-    },
-    text_placeholder: {
-      fontSize: 14,
-      backgroundColor: '#FFFFFF',
-      marginBottom: 35,
-      borderBottomColor: '#423828',
-      borderBottomWidth: 1,
-    },
-    space_google: {
-      backgroundColor: '#FFFFFF',
-      marginTop: 25,
-      padding: 20,
-      fontSize: 24,
-      textAlign: 'center',
-      borderRadius: 25,
-      boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-    },
-    button: {
-      marginLeft: '80%',
-      marginTop: '10%',
-      marginBottom: '5%',
-      width: '20%',
-      height: 40,
-      backgroundColor: '#5F4100',
-      borderRadius: 10,
-      justifyContent:'center',
-      alignItems:'center'
-    },
-    text_button: {
-        color: '#FFFFFF',
-        fontSize: 14,
-        fontWeight: 'bold',
-    },
-    login: {
-      textAlign: 'center',
-      fontSize: 16,
-      marginRight: '28%',
-      fontWeight: 'bold',
-      color: '#5F4100',
-    },
-    link: {
-      textAlign: 'center',
-      // backgroundColor: '#f7f3ee',
-      fontSize: 16,
-      fontWeight: 'bold',
-      marginLeft: '51%',
-      textDecorationLine: 'underline',
-      color: '#5F4100',
-      bottom: 22,
-      width: '28%',
-    }
-});
