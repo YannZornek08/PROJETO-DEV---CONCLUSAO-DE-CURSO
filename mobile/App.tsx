@@ -19,11 +19,12 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <AppRoutes />
+      <AppRoutes/>
     </NavigationContainer>
     // <DetalhesPedido/>  testando tela de produto
     // <SignIn /> // testando a tela de login
     // <Cadastro /> // testando a tela de cadastro
     // <Cupons /> Cupons testado
+    // <Carrinho/>
   );
 }
