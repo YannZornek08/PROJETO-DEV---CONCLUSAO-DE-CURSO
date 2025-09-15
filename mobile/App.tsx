@@ -12,6 +12,7 @@ import Conta from './src/pages/Conta';
 import DetalhesPedido from './src/pages/DetalhesPedido';
 import DadosPagamento from './src/pages/DadosPagamento';
 import Cupons from './src/pages/Cupons';
+import Carrinho from './src/pages/Carrinho';
 import AppRoutes from './src/routes/app.routes';
 
 
@@ -20,11 +21,12 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <AppRoutes />
+      <AppRoutes/>
     </NavigationContainer>
     // <DetalhesPedido/>  testando tela de produto
     // <SignIn /> // testando a tela de login
     // <Cadastro /> // testando a tela de cadastro
     // <Cupons /> Cupons testado
+    // <Carrinho/>
   );
 }

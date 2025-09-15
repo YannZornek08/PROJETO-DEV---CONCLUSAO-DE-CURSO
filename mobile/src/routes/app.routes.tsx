@@ -15,6 +15,7 @@ export type StackParamsList = {
     Cupons: undefined;
     Favoritos: undefined;
     LerQR: undefined;
+    Carrinho: undefined;
     Order: {
         number: number | string;
         order_id: string;
