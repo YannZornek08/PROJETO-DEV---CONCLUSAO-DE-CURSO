@@ -25,6 +25,10 @@ import { FinishOrderController } from './controllers/order/FinishOrderController
 import { CreateRoleController } from './controllers/role/CreateRoleController';
 import { ListRoleController } from './controllers/role/ListCategoryController';
 
+import { CreateCostumerController } from './controllers/costumer/CreateCostumerController';
+import { AuthCostumerController } from './controllers/costumer/AuthCostumerController';
+import { DetailCostumerController } from './controllers/costumer/DetailCostumerController';
+
 import { isAuthenticated } from './middlewares/isAuthenticated'
 
 import uploadConfig from './config/multer'
@@ -67,5 +71,12 @@ router.put('/order/finish', isAuthenticated, new FinishOrderController().handle)
 router.post('/role', new CreateRoleController().handle)
 
 router.get('/role', new ListRoleController().handle)
+
+// -- ROTAS COSTUMERS --
+router.post('/costumers', new CreateCostumerController().handle)
+
+router.post('/session/costumers', new AuthCostumerController().handle)
+
+router.get('/me/costumers', isAuthenticated, new DetailCostumerController().handle)
 
 export { router }

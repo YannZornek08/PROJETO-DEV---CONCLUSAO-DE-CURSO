@@ -174,13 +174,12 @@ exports.Prisma.RoleScalarFieldEnum = {
   update_at: 'update_at'
 };
 
-exports.Prisma.ClientScalarFieldEnum = {
+exports.Prisma.CostumerScalarFieldEnum = {
   id: 'id',
-  nome: 'nome',
+  name: 'name',
   dt_nasc: 'dt_nasc',
   email: 'email',
-  senha: 'senha',
-  historico: 'historico',
+  password: 'password',
   created_at: 'created_at',
   updated_at: 'updated_at'
 };
@@ -216,7 +215,7 @@ exports.Prisma.ModelName = {
   Order: 'Order',
   Item: 'Item',
   Role: 'Role',
-  Client: 'Client',
+  Costumer: 'Costumer',
   Payment: 'Payment'
 };
 

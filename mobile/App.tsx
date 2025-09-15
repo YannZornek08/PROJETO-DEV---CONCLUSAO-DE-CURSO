@@ -9,6 +9,8 @@ import { AuthProvider } from './src/contexts/AuthContext';
 import Cadastro from './src/pages/Cadastro';
 import SignIn from './src/pages/SignIn';
 import Menu from './src/pages/Menu';
+import Pagamento from './src/pages/Pagamento';
+import Conta from './src/pages/Conta';
 import AppRoutes from './src/routes/app.routes';
 
 const Stack = createNativeStackNavigator();
@@ -18,5 +20,8 @@ export default function App() {
     <NavigationContainer>
       <AppRoutes />
     </NavigationContainer>
+    // <DetalhesPedido/>  testando tela de produto
+    // <SignIn /> // testando a tela de login
+    // <Cadastro /> // testando a tela de cadastro
   );
 }
