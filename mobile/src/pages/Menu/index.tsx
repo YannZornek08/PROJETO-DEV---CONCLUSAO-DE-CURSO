@@ -36,10 +36,6 @@ export default function HomeScreen() {
 
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
-  function Menu() {
-    navigation.navigate("Menu");
-  }
-
   function Cupons() {
     navigation.navigate("Cupons");
   }
