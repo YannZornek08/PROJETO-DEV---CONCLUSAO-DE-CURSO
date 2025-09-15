@@ -63,7 +63,7 @@ export default function HomeScreen() {
     },
   ];
 
-  // Dividir pizzas em linhas de 2
+  //Dividir pizzas em linhas de 2
   const pizzaRows = [];
   for (let i = 0; i < pizzas.length; i += 2) {
     pizzaRows.push(pizzas.slice(i, i + 2));
