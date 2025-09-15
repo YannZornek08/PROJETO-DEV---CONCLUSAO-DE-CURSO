@@ -11,11 +11,32 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { StackParamsList } from "../../routes/app.routes";
+import { StackParamsList } from "../../routes/app.routes"
+
+// IMAGENS DO NAV
+
+const home = require('../../assets/nav-icons/home.png')
+const fav = require('../../assets/nav-icons/star.png')
+const cupom = require('../../assets/nav-icons/cupom.png')
+const qrcode = require('../../assets/nav-icons/qrcode.png')
+
+/////////////////
 
 export default function HomeScreen() {
   const [textInput1, onChangeTextInput1] = useState<string>("");
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
+
+  function Carrinho() {
+    // Colocar página do carrinho!
+    // navigation.navigate("");
+    alert("página carrinho")
+  }
+
+  function Settings() {
+    // Colocar página do settings
+    // navigation.navigate("")
+    alert("Settings!")
+  }
 
   function Menu() {
     navigation.navigate("Menu");
@@ -55,20 +76,24 @@ export default function HomeScreen() {
               style={styles.searchInput}
             />
             <View style={styles.searchIconsRight}>
-              <Image
-                source={{
-                  uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/tmmocg1t_expires_30_days.png",
-                }}
-                resizeMode="stretch"
-                style={styles.iconRight}
-              />
-              <Image
-                source={{
-                  uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/bjnemhbr_expires_30_days.png",
-                }}
-                resizeMode="stretch"
-                style={styles.iconRight}
-              />
+              <TouchableOpacity onPress={Carrinho}>
+                <Image
+                  source={{
+                    uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/tmmocg1t_expires_30_days.png",
+                  }}
+                  resizeMode="stretch"
+                  style={styles.iconRight}
+                  />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={Settings}>
+                <Image
+                  source={{
+                    uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/bjnemhbr_expires_30_days.png",
+                  }}
+                  resizeMode="stretch"
+                  style={styles.iconRight}
+                />
+              </TouchableOpacity>
             </View>
           </View>
 
@@ -132,24 +157,54 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        <View style={styles.bottomMenu}>
-          <TouchableOpacity onPress={Menu}>
+        {/* ---------------- */}
+
+        {/* Bottom Nav */}
+        {/* Em cada página, tirar o onPress da página que está */}
+
+        <View style={styles.fullNav}>
+
+          <TouchableOpacity style={[styles.currentNav, styles.nav]}>
+            <Image
+              source={home}
+              style={styles.imagesNav}
+              />
             <Text>Home</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={Favoritos}>
+          <TouchableOpacity onPress={Favoritos} style={styles.nav}>
+            <Image
+              source={fav}
+              style={styles.imagesNav}
+              resizeMode="cover"
+              />
             <Text>Favoritos</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={Cupons}>
+          <TouchableOpacity onPress={Cupons} style={styles.nav}>
+            <Image
+              source={cupom}
+              style={styles.imagesNav}
+              resizeMode="cover"
+              />
             <Text>Cupons</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={LerQR}>
+          <TouchableOpacity onPress={LerQR} style={styles.nav}>
+            <Image
+              source={qrcode}
+              style={styles.imagesNav}
+              />
             <Text>Ler QR</Text>
           </TouchableOpacity>
+
         </View>
+        {/* --------------------------- */}
+      
       </ScrollView>
     </SafeAreaView>
   );
 }
+
+ 
+
 type PizzaCardProps = {
   title: string;
   price: string;
@@ -157,6 +212,7 @@ type PizzaCardProps = {
 };
 
 function PizzaCard({ title, price, image }: PizzaCardProps) {
+  
   return (
     <View style={styles.card}>
       <Image source={{ uri: image }} resizeMode="stretch" style={styles.cardImage} />
@@ -165,7 +221,7 @@ function PizzaCard({ title, price, image }: PizzaCardProps) {
       <TouchableOpacity
         style={styles.addButton}
         onPress={() => alert(`${title} adicionado!`)}
-      >
+        >
         <Image
           source={{
             uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/mijsyyvb_expires_30_days.png",
@@ -180,7 +236,7 @@ function PizzaCard({ title, price, image }: PizzaCardProps) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#FFFFFF" },
+    container: { flex: 1, backgroundColor: "#FFFFFF" },
   header: {
     backgroundColor: "#FFFFFF",
     paddingTop: 86,
@@ -255,4 +311,26 @@ const styles = StyleSheet.create({
     marginHorizontal: 26,
     justifyContent: "space-between",
   },
-});
+  fullNav: {
+    flexDirection: "row",
+    backgroundColor: "#FCEAE2",
+    borderRadius: 80,
+    paddingHorizontal: 17,
+    marginBottom: 42,
+    marginHorizontal: 26,
+    justifyContent: 'space-between'
+  },
+  currentNav: {
+    backgroundColor: '#f3cdbdff',
+    borderRadius: 100,
+  },
+  nav: {
+    padding: 10,
+  },
+  imagesNav: {
+    margin: 'auto',
+    width: 30,
+    height: 30,
+    borderRadius: 8
+  }
+})

@@ -96,7 +96,7 @@ model Role {
 model Costumer {
   id         String   @id @default(uuid())
   name       String
-  dt_nasc    DateTime
+  dt_nasc    String
   email      String
   password   String
   created_at DateTime @default(now())

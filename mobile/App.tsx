@@ -12,7 +12,6 @@ import Conta from './src/pages/Conta';
 import DetalhesPedido from './src/pages/DetalhesPedido';
 import DadosPagamento from './src/pages/DadosPagamento';
 import Cupons from './src/pages/Cupons';
-import Carrinho from './src/pages/Carrinho';
 import AppRoutes from './src/routes/app.routes';
 
 
