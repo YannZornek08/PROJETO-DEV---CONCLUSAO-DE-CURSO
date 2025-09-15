@@ -9,10 +9,10 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-export default function Cupom() {
+export default function Cupons() {
     return (
         <View>
-            <Text>Funcionando</Text>
+            <Text>Funcionando Favoritos</Text>
         </View>
     )
 }
