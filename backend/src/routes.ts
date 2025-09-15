@@ -11,6 +11,7 @@ import { ListCategoryController } from './controllers/category/ListCategoryContr
 import { CreateProductController } from './controllers/product/CreateProductController'
 import { ListByCategoryController } from './controllers/product/ListByCategoryController';
 
+
 import { CreateOrderController } from './controllers/order/CreateOrderController';
 import { RemoveOrderController } from './controllers/order/RemoveOrderController';
 
@@ -36,6 +37,7 @@ import { AddIngredientController } from './controllers/additional/AddIngredientC
 import { ListIngredientByProductController } from './controllers/additional/ListIngredientByProductController';
 
 import { isAuthenticated } from './middlewares/isAuthenticated'
+import { isAuthenticatedClient } from './middlewares/isAuthenticatedClient'
 
 import uploadConfig from './config/multer'
 
@@ -83,7 +85,7 @@ router.post('/costumers', new CreateCostumerController().handle)
 
 router.post('/session/costumers', new AuthCostumerController().handle)
 
-router.get('/me/costumers', isAuthenticated, new DetailCostumerController().handle)
+router.get('/me/costumers', isAuthenticatedClient, new DetailCostumerController().handle)
 
 // -- ROTAS ADDITIONAL --
 router.post('/ingredients', isAuthenticated, new CreateIngredientController().handle)

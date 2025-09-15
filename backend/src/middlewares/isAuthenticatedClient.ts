@@ -5,7 +5,7 @@ interface Payload {
     sub: string;
 }
 
-export function isAuthenticated(
+export function isAuthenticatedClient(
     req: Request,
     res: Response,
     next: NextFunction

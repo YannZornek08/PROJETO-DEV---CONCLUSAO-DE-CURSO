@@ -77,10 +77,10 @@ const styles = StyleSheet.create({
     paddingVertical: 48,
     justifyContent: "center",
     alignItems: "center",
-    marginHorizontal: 4,
+    marginHorizontal: 8,
   },
   fullWidthCard: {
-    marginTop: 16,
+    marginTop: 0,
     alignSelf: "stretch",
   },
   cardText: {

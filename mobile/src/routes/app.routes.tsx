@@ -4,10 +4,28 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Dashboard from "../pages/Menu";
 import Order from "../pages/Order";
 import FinishOrder from "../pages/FinishOrder";
+
+// NAV
+
 import Menu from "../pages/Menu";
 import Cupons from "../pages/Cupons";
 import Favoritos from "../pages/Favoritos"
 import LerQR from "../pages/Ler QR"
+
+//////
+
+// Botões da busca
+
+// import Carrinho from "páginaCarrinho"
+// import Settings from "páginaSettings"
+
+//////////////////
+
+// Cards
+
+import DetalhesProdutos from "../pages/DetalhesProduto";
+
+////////
 
 export type StackParamsList = {
     Dashboard: undefined;
@@ -15,6 +33,9 @@ export type StackParamsList = {
     Cupons: undefined;
     Favoritos: undefined;
     LerQR: undefined;
+    // Carrinho: undefined;
+    // Settings: undefined;
+    DetalhesProdutos: undefined;
     Order: {
         number: number | string;
         order_id: string;
@@ -63,6 +84,24 @@ function AppRoutes() {
             <Stack.Screen 
                 name="LerQR" 
                 component={LerQR} 
+                options={{headerShown: false}}
+            />
+
+            {/* <Stack.Screen 
+                name="Carrinho" 
+                component={Carrinho} 
+                options={{headerShown: false}}
+            /> */}
+
+            {/* <Stack.Screen 
+                name="Settings" 
+                component={Settings} 
+                options={{headerShown: false}}
+            /> */}
+
+            <Stack.Screen 
+                name="DetalhesProdutos" 
+                component={DetalhesProdutos} 
                 options={{headerShown: false}}
             />
 

@@ -7,152 +7,119 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  StyleSheet,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { StackParamsList } from "../../routes/app.routes";
+import { StackParamsList } from "../../routes/app.routes"
+
+// IMAGENS DO NAV
+
+const home = require('../../assets/nav-icons/home.png')
+const fav = require('../../assets/nav-icons/star.png')
+const cupom = require('../../assets/nav-icons/cupom.png')
+const qrcode = require('../../assets/nav-icons/qrcode.png')
+
+/////////////////
 
 export default function HomeScreen() {
   const [textInput1, onChangeTextInput1] = useState<string>("");
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
-  async function Menu() {
-    navigation.navigate('Menu')
+  function Carrinho() {
+    // Colocar página do carrinho!
+    // navigation.navigate("");
+    alert("página carrinho")
   }
 
-  async function Cupons() {
-    navigation.navigate('Cupons')
+  function Settings() {
+    // Colocar página do settings
+    // navigation.navigate("")
+    alert("Settings!")
   }
 
-  async function Favoritos() {
-    navigation.navigate('Favoritos')
+  function Menu() {
+    navigation.navigate("Menu");
   }
 
-  async function LerQR() {
-    navigation.navigate('LerQR')
+  function Cupons() {
+    navigation.navigate("Cupons");
+  }
+
+  function Favoritos() {
+    navigation.navigate("Favoritos");
+  }
+
+  function LerQR() {
+    navigation.navigate("LerQR");
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
-      <ScrollView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
-        <View
-          style={{
-            backgroundColor: "#FFFFFF",
-            paddingTop: 86,
-            paddingBottom: 7,
-            marginBottom: 2,
-          }}
-        >
-          <Text
-            style={{
-              color: "#000000",
-              fontSize: 32,
-              fontWeight: "bold",
-              textAlign: "center",
-              marginBottom: 26,
-            }}
-          >
-            {"Bom dia, João."}
-          </Text>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Bom dia, João.</Text>
 
           {/* Barra de busca */}
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              backgroundColor: "#F6E5DD",
-              borderRadius: 28,
-              padding: 4,
-              marginBottom: 10,
-              marginHorizontal: 26,
-            }}
-          >
+          <View style={styles.searchBar}>
             <Image
               source={{
                 uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/m1yrb272_expires_30_days.png",
               }}
-              resizeMode={"stretch"}
-              style={{ width: 48, height: 48, marginRight: 4 }}
+              resizeMode="stretch"
+              style={styles.searchIcon}
             />
             <TextInput
-              placeholder={"O que busca?"}
+              placeholder="O que busca?"
               value={textInput1}
               onChangeText={onChangeTextInput1}
-              style={{
-                color: "#52443C",
-                fontSize: 16,
-                flex: 1,
-                paddingVertical: 12,
-              }}
+              style={styles.searchInput}
             />
-            <View style={{ flexDirection: "row" }}>
-              <Image
-                source={{
-                  uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/tmmocg1t_expires_30_days.png",
-                }}
-                resizeMode={"stretch"}
-                style={{ width: 48, height: 48 }}
-              />
-              <Image
-                source={{
-                  uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/bjnemhbr_expires_30_days.png",
-                }}
-                resizeMode={"stretch"}
-                style={{ width: 48, height: 48 }}
-              />
+            <View style={styles.searchIconsRight}>
+              <TouchableOpacity onPress={Carrinho}>
+                <Image
+                  source={{
+                    uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/tmmocg1t_expires_30_days.png",
+                  }}
+                  resizeMode="stretch"
+                  style={styles.iconRight}
+                  />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={Settings}>
+                <Image
+                  source={{
+                    uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/bjnemhbr_expires_30_days.png",
+                  }}
+                  resizeMode="stretch"
+                  style={styles.iconRight}
+                />
+              </TouchableOpacity>
             </View>
           </View>
 
           {/* Botão filtros */}
-          <View style={{ alignItems: "center", paddingVertical: 8 }}>
+          <View style={styles.filtersWrapper}>
             <TouchableOpacity
-              style={{
-                flexDirection: "row",
-                backgroundColor: "#8D4F28",
-                borderRadius: 12,
-                paddingVertical: 6,
-                paddingHorizontal: 12,
-              }}
+              style={styles.filterButton}
               onPress={() => alert("Pressed!")}
             >
               <Image
                 source={{
                   uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/uip8oeqk_expires_30_days.png",
                 }}
-                resizeMode={"stretch"}
-                style={{ width: 20, height: 20, marginRight: 4 }}
+                resizeMode="stretch"
+                style={styles.filterIcon}
               />
-              <Text
-                style={{
-                  color: "#FFFFFF",
-                  fontSize: 14,
-                  fontWeight: "bold",
-                }}
-              >
-                {"Filtros"}
-              </Text>
+              <Text style={styles.filterText}>Filtros</Text>
             </TouchableOpacity>
           </View>
         </View>
 
-        <Text
-          style={{
-            color: "#000000",
-            fontSize: 16,
-            fontWeight: "bold",
-            marginBottom: 8,
-          }}
-        >
-          {"Sua mesa: 05"}
-        </Text>
+        <Text style={styles.tableText}>Sua mesa: 05</Text>
 
-        {/* ---------------- */}
-        {/* AQUI ESTÃO TODOS OS CARDS DAS PIZZAS */}
-        {/* ---------------- */}
-
-        <View style={{ marginBottom: 44, marginHorizontal: 26 }}>
-          {/* Linha 1 */}
-          <View style={{ flexDirection: "row", marginBottom: 30 }}>
+        {/* Cards */}
+        <View style={styles.cardsWrapper}>
+          <View style={styles.row}>
             <PizzaCard
               title="Pizza de Pepperoni"
               price="R$42,00"
@@ -164,9 +131,7 @@ export default function HomeScreen() {
               image="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/02jqnrgo_expires_30_days.png"
             />
           </View>
-
-          {/* Linha 2 */}
-          <View style={{ flexDirection: "row", marginBottom: 30 }}>
+          <View style={styles.row}>
             <PizzaCard
               title="Pizza de Pepperoni"
               price="R$42,00"
@@ -178,9 +143,7 @@ export default function HomeScreen() {
               image="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/50ff6gko_expires_30_days.png"
             />
           </View>
-
-          {/* Linha 3 */}
-          <View style={{ flexDirection: "row" }}>
+          <View style={styles.row}>
             <PizzaCard
               title="Pizza de Pepperoni"
               price="R$42,00"
@@ -194,42 +157,53 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        {/* Bottom Menu */}
-        <View
-          style={{
-            flexDirection: "row",
-            backgroundColor: "#FCEAE2",
-            borderRadius: 80,
-            paddingHorizontal: 17,
-            marginBottom: 42,
-            marginHorizontal: 26,
-          }}
-        >
-          <TouchableOpacity onPress={Menu}>
-            {/* <Image></Image> */}
+        {/* ---------------- */}
+
+        {/* Bottom Nav */}
+        {/* Em cada página, tirar o onPress da página que está */}
+
+        <View style={styles.fullNav}>
+
+          <TouchableOpacity style={[styles.currentNav, styles.nav]}>
+            <Image
+              source={home}
+              style={styles.imagesNav}
+              />
             <Text>Home</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={Favoritos}>
-            {/* <Image></Image> */}
+          <TouchableOpacity onPress={Favoritos} style={styles.nav}>
+            <Image
+              source={fav}
+              style={styles.imagesNav}
+              resizeMode="cover"
+              />
             <Text>Favoritos</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={Cupons}>
-            {/* <Image></Image> */}
+          <TouchableOpacity onPress={Cupons} style={styles.nav}>
+            <Image
+              source={cupom}
+              style={styles.imagesNav}
+              resizeMode="cover"
+              />
             <Text>Cupons</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={LerQR}>
-            {/* <Image></Image> */}
+          <TouchableOpacity onPress={LerQR} style={styles.nav}>
+            <Image
+              source={qrcode}
+              style={styles.imagesNav}
+              />
             <Text>Ler QR</Text>
           </TouchableOpacity>
+
         </View>
+        {/* --------------------------- */}
+      
       </ScrollView>
     </SafeAreaView>
   );
 }
 
-/* ---------------- */
-/* COMPONENTES AUXILIARES */
-/* ---------------- */
+ 
 
 type PizzaCardProps = {
   title: string;
@@ -238,90 +212,125 @@ type PizzaCardProps = {
 };
 
 function PizzaCard({ title, price, image }: PizzaCardProps) {
+  
   return (
-    <View style={{ flex: 1, alignItems: "center" }}>
-      <Image
-        source={{ uri: image }}
-        resizeMode={"stretch"}
-        style={{ height: 180, marginBottom: 8 }}
-      />
-      <Text
-        style={{
-          color: "#000000",
-          fontSize: 16,
-          textAlign: "center",
-          marginBottom: 12,
-        }}
-      >
-        {title}
-      </Text>
-      <Text style={{ color: "#000000", fontSize: 14, marginBottom: 7 }}>
-        {price}
-      </Text>
+    <View style={styles.card}>
+      <Image source={{ uri: image }} resizeMode="stretch" style={styles.cardImage} />
+      <Text style={styles.cardTitle}>{title}</Text>
+      <Text style={styles.cardPrice}>{price}</Text>
       <TouchableOpacity
-        style={{
-          flexDirection: "row",
-          backgroundColor: "#8D4F28",
-          borderRadius: 100,
-          paddingVertical: 6,
-          paddingHorizontal: 12,
-          marginVertical: 8,
-          marginHorizontal: 35,
-        }}
+        style={styles.addButton}
         onPress={() => alert(`${title} adicionado!`)}
-      >
+        >
         <Image
           source={{
             uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/mijsyyvb_expires_30_days.png",
           }}
-          resizeMode={"stretch"}
-          style={{ width: 20, height: 20, marginRight: 4 }}
+          resizeMode="stretch"
+          style={styles.addIcon}
         />
-        <Text
-          style={{
-            color: "#FFFFFF",
-            fontSize: 14,
-            fontWeight: "bold",
-            flex: 1,
-          }}
-        >
-          {"Adicionar"}
-        </Text>
+        <Text style={styles.addText}>Adicionar</Text>
       </TouchableOpacity>
     </View>
   );
 }
 
-type BottomTabProps = {
-  icon: string;
-  label: string;
-  active?: boolean;
-};
-
-function BottomTab({ icon, label, active }: BottomTabProps) {
-  return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        paddingVertical: 12,
-        marginRight: 12,
-      }}
-    >
-      <Image
-        source={{ uri: icon }}
-        resizeMode={"stretch"}
-        style={{ height: 32, marginBottom: 4 }}
-      />
-      <Text
-        style={{
-          color: active ? "#52443C" : "#221A15",
-          fontSize: 12,
-          fontWeight: active ? "bold" : "normal",
-        }}
-      >
-        {label}
-      </Text>
-    </View>
-  );
-}
+const styles = StyleSheet.create({
+    container: { flex: 1, backgroundColor: "#FFFFFF" },
+  header: {
+    backgroundColor: "#FFFFFF",
+    paddingTop: 86,
+    paddingBottom: 7,
+    marginBottom: 2,
+  },
+  headerText: {
+    color: "#000000",
+    fontSize: 32,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 26,
+  },
+  searchBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#F6E5DD",
+    borderRadius: 28,
+    padding: 4,
+    marginBottom: 10,
+    marginHorizontal: 26,
+  },
+  searchIcon: { width: 48, height: 48, marginRight: 4 },
+  searchInput: { color: "#52443C", fontSize: 16, flex: 1, paddingVertical: 12 },
+  searchIconsRight: { flexDirection: "row" },
+  iconRight: { width: 48, height: 48 },
+  filtersWrapper: { alignItems: "center", paddingVertical: 8 },
+  filterButton: {
+    flexDirection: "row",
+    backgroundColor: "#8D4F28",
+    borderRadius: 12,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+  },
+  filterIcon: { width: 20, height: 20, marginRight: 4 },
+  filterText: { color: "#FFFFFF", fontSize: 14, fontWeight: "bold" },
+  tableText: {
+    color: "#000000",
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 8,
+    marginHorizontal: 26,
+  },
+  cardsWrapper: { marginBottom: 44, marginHorizontal: 26 },
+  row: { flexDirection: "row", marginBottom: 30 },
+  card: { flex: 1, alignItems: "center" },
+  cardImage: { height: 180, marginBottom: 8, width: "100%" },
+  cardTitle: {
+    color: "#000000",
+    fontSize: 16,
+    textAlign: "center",
+    marginBottom: 12,
+  },
+  cardPrice: { color: "#000000", fontSize: 14, marginBottom: 7 },
+  addButton: {
+    flexDirection: "row",
+    backgroundColor: "#8D4F28",
+    borderRadius: 100,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    marginVertical: 8,
+    marginHorizontal: 35,
+  },
+  addIcon: { width: 20, height: 20, marginRight: 4 },
+  addText: { color: "#FFFFFF", fontSize: 14, fontWeight: "bold", flex: 1 },
+  bottomMenu: {
+    flexDirection: "row",
+    backgroundColor: "#FCEAE2",
+    borderRadius: 80,
+    paddingHorizontal: 17,
+    marginBottom: 42,
+    marginHorizontal: 26,
+    justifyContent: "space-between",
+  },
+  fullNav: {
+    flexDirection: "row",
+    backgroundColor: "#FCEAE2",
+    borderRadius: 80,
+    paddingHorizontal: 17,
+    marginBottom: 42,
+    marginHorizontal: 26,
+    justifyContent: 'space-between'
+  },
+  currentNav: {
+    backgroundColor: '#f3cdbdff',
+    borderRadius: 100,
+  },
+  nav: {
+    padding: 10,
+  },
+  imagesNav: {
+    margin: 'auto',
+    width: 30,
+    height: 30,
+    borderRadius: 8
+  }
+})

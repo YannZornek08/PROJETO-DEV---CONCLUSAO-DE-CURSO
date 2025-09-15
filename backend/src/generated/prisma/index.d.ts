@@ -8497,7 +8497,7 @@ export namespace Prisma {
   export type CostumerMinAggregateOutputType = {
     id: string | null
     name: string | null
-    dt_nasc: Date | null
+    dt_nasc: string | null
     email: string | null
     password: string | null
     created_at: Date | null
@@ -8507,7 +8507,7 @@ export namespace Prisma {
   export type CostumerMaxAggregateOutputType = {
     id: string | null
     name: string | null
-    dt_nasc: Date | null
+    dt_nasc: string | null
     email: string | null
     password: string | null
     created_at: Date | null
@@ -8632,7 +8632,7 @@ export namespace Prisma {
   export type CostumerGroupByOutputType = {
     id: string
     name: string
-    dt_nasc: Date
+    dt_nasc: string
     email: string
     password: string
     created_at: Date
@@ -8704,7 +8704,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
-      dt_nasc: Date
+      dt_nasc: string
       email: string
       password: string
       created_at: Date
@@ -9134,7 +9134,7 @@ export namespace Prisma {
   interface CostumerFieldRefs {
     readonly id: FieldRef<"Costumer", 'String'>
     readonly name: FieldRef<"Costumer", 'String'>
-    readonly dt_nasc: FieldRef<"Costumer", 'DateTime'>
+    readonly dt_nasc: FieldRef<"Costumer", 'String'>
     readonly email: FieldRef<"Costumer", 'String'>
     readonly password: FieldRef<"Costumer", 'String'>
     readonly created_at: FieldRef<"Costumer", 'DateTime'>
@@ -13308,7 +13308,7 @@ export namespace Prisma {
     NOT?: CostumerWhereInput | CostumerWhereInput[]
     id?: StringFilter<"Costumer"> | string
     name?: StringFilter<"Costumer"> | string
-    dt_nasc?: DateTimeFilter<"Costumer"> | Date | string
+    dt_nasc?: StringFilter<"Costumer"> | string
     email?: StringFilter<"Costumer"> | string
     password?: StringFilter<"Costumer"> | string
     created_at?: DateTimeFilter<"Costumer"> | Date | string
@@ -13331,7 +13331,7 @@ export namespace Prisma {
     OR?: CostumerWhereInput[]
     NOT?: CostumerWhereInput | CostumerWhereInput[]
     name?: StringFilter<"Costumer"> | string
-    dt_nasc?: DateTimeFilter<"Costumer"> | Date | string
+    dt_nasc?: StringFilter<"Costumer"> | string
     email?: StringFilter<"Costumer"> | string
     password?: StringFilter<"Costumer"> | string
     created_at?: DateTimeFilter<"Costumer"> | Date | string
@@ -13357,7 +13357,7 @@ export namespace Prisma {
     NOT?: CostumerScalarWhereWithAggregatesInput | CostumerScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Costumer"> | string
     name?: StringWithAggregatesFilter<"Costumer"> | string
-    dt_nasc?: DateTimeWithAggregatesFilter<"Costumer"> | Date | string
+    dt_nasc?: StringWithAggregatesFilter<"Costumer"> | string
     email?: StringWithAggregatesFilter<"Costumer"> | string
     password?: StringWithAggregatesFilter<"Costumer"> | string
     created_at?: DateTimeWithAggregatesFilter<"Costumer"> | Date | string
@@ -13933,7 +13933,7 @@ export namespace Prisma {
   export type CostumerCreateInput = {
     id?: string
     name: string
-    dt_nasc: Date | string
+    dt_nasc: string
     email: string
     password: string
     created_at?: Date | string
@@ -13943,7 +13943,7 @@ export namespace Prisma {
   export type CostumerUncheckedCreateInput = {
     id?: string
     name: string
-    dt_nasc: Date | string
+    dt_nasc: string
     email: string
     password: string
     created_at?: Date | string
@@ -13953,7 +13953,7 @@ export namespace Prisma {
   export type CostumerUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    dt_nasc?: DateTimeFieldUpdateOperationsInput | Date | string
+    dt_nasc?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13963,7 +13963,7 @@ export namespace Prisma {
   export type CostumerUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    dt_nasc?: DateTimeFieldUpdateOperationsInput | Date | string
+    dt_nasc?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13973,7 +13973,7 @@ export namespace Prisma {
   export type CostumerCreateManyInput = {
     id?: string
     name: string
-    dt_nasc: Date | string
+    dt_nasc: string
     email: string
     password: string
     created_at?: Date | string
@@ -13983,7 +13983,7 @@ export namespace Prisma {
   export type CostumerUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    dt_nasc?: DateTimeFieldUpdateOperationsInput | Date | string
+    dt_nasc?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13993,7 +13993,7 @@ export namespace Prisma {
   export type CostumerUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    dt_nasc?: DateTimeFieldUpdateOperationsInput | Date | string
+    dt_nasc?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
