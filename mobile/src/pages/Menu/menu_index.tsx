@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   View,
@@ -7,18 +7,47 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  FlatList
 } from "react-native";
 
 import { api } from "../../services/api";
 
-export default function HomeScreen() {
+type CategoryProps = {
+  id: string;
+  name: string;
+}
+
+type ProductProps = {
+  id: string;
+  name: string;
+  price: number;
+  description?: string;
+  banner: string;
+}
+
+export default function Menu() {
   const [textInput1, onChangeTextInput1] = useState<string>("");
+  const [categories, setCategories] = useState<CategoryProps[]>([]);
+  const [productsByCategory, setProductsByCategory] = useState<Record<string, ProductProps[]>>({});
 
-  async function verProdutos(){
-    const visualizacao = await api.get('/categproduct', {
-    })
-  }
+  useEffect(() => {
+    async function loadCategoriesAndProducts() {
+      const response = await api.get("/category");
+      setCategories(response.data);
 
+      // Para cada categoria, busca os produtos
+      const productsData: Record<string, ProductProps[]> = {};
+      for (const category of response.data) {
+        const prodResponse = await api.get("/category/product", {
+          params: { category_id: category.id }
+        });
+        productsData[category.id] = prodResponse.data;
+      }
+      setProductsByCategory(productsData);
+    }
+
+    loadCategoriesAndProducts();
+  }, []);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>

@@ -5,7 +5,7 @@ interface CostumerRequest {
     name: string;
     email: string;
     password: string;
-    dt_nasc: Date;
+    dt_nasc: string;
 }
 
 class CreateCostumerService {
@@ -34,7 +34,7 @@ class CreateCostumerService {
                 name: name,
                 email: email,
                 password: passwordHash,
-                dt_nasc
+                dt_nasc: dt_nasc
             },
             select: {
                 id: true,
