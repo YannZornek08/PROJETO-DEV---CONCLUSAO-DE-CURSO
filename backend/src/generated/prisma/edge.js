@@ -164,6 +164,22 @@ exports.Prisma.PaymentScalarFieldEnum = {
   updated_at: 'updated_at'
 };
 
+exports.Prisma.IngredientScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.Ingredient_productScalarFieldEnum = {
+  id: 'id',
+  adicionado: 'adicionado',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  ingredient_id: 'ingredient_id',
+  product_id: 'product_id'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -188,7 +204,9 @@ exports.Prisma.ModelName = {
   Item: 'Item',
   Role: 'Role',
   Costumer: 'Costumer',
-  Payment: 'Payment'
+  Payment: 'Payment',
+  Ingredient: 'Ingredient',
+  Ingredient_product: 'Ingredient_product'
 };
 /**
  * Create the Client
