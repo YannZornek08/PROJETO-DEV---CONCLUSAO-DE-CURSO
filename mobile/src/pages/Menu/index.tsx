@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   View,
@@ -16,7 +16,6 @@ import { StackParamsList } from "../../routes/app.routes";
 import { api } from "../../services/api";
 
 // IMAGENS DO NAV
-
 const home = require('../../assets/nav-icons/home.png')
 const fav = require('../../assets/nav-icons/star.png')
 const cupom = require('../../assets/nav-icons/cupom.png')
@@ -24,8 +23,17 @@ const qrcode = require('../../assets/nav-icons/qrcode.png')
 
 /////////////////
 
+type Produto = {
+  id: string;
+  name: string;
+  price: number;
+  banner: string;
+}
+
 export default function HomeScreen() {
   const [textInput1, onChangeTextInput1] = useState<string>("");
+  const [produtos, setProdutos] = useState<Produto[]>([]);
+
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
   function Menu() {
@@ -44,11 +52,18 @@ export default function HomeScreen() {
     navigation.navigate("LerQR");
   }
 
-  async function verProdutos(){
-    const visualizacao = await api.get('/categproduct', {
-    })
-  }
-
+  useEffect(() => {
+    async function verProdutos() {
+      try {
+        // 👉 Chama a rota que retorna TODOS os produtos
+        const response = await api.get('/product/all');
+        setProdutos(response.data);
+      } catch (err) {
+        console.log("Erro ao buscar produtos:", err);
+      }
+    }
+    verProdutos();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -93,7 +108,7 @@ export default function HomeScreen() {
           <View style={styles.filtersWrapper}>
             <TouchableOpacity
               style={styles.filterButton}
-              onPress={() => alert("Pressed!")}
+              onPress={() => console.log("pressed!")}
             >
               <Image
                 source={{
@@ -109,89 +124,50 @@ export default function HomeScreen() {
 
         <Text style={styles.tableText}>Sua mesa: 05</Text>
 
-        {/* Cards */}
+        {/* Cards dinâmicos */}
         <View style={styles.cardsWrapper}>
-          <View style={styles.row}>
-            <PizzaCard
-              title="Pizza de Pepperoni"
-              price="R$42,00"
-              image="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/ggqdmnfn_expires_30_days.png"
-            />
-            <PizzaCard
-              title="Pizza de Abacaxi"
-              price="R$42,00"
-              image="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/02jqnrgo_expires_30_days.png"
-            />
-          </View>
-          <View style={styles.row}>
-            <PizzaCard
-              title="Pizza de Pepperoni"
-              price="R$42,00"
-              image="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/sow9drm9_expires_30_days.png"
-            />
-            <PizzaCard
-              title="Pizza de Abacaxi"
-              price="R$42,00"
-              image="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/50ff6gko_expires_30_days.png"
-            />
-          </View>
-          <View style={styles.row}>
-            <PizzaCard
-              title="Pizza de Pepperoni"
-              price="R$42,00"
-              image="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/6zusf2rc_expires_30_days.png"
-            />
-            <PizzaCard
-              title="Pizza de Abacaxi"
-              price="R$42,00"
-              image="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/ec18wgmn_expires_30_days.png"
-            />
-          </View>
+          {produtos.reduce((rows: Produto[][], produto, index) => {
+            if (index % 2 === 0) rows.push([produto]);
+            else rows[rows.length - 1].push(produto);
+            return rows;
+          }, []).map((row, idx) => (
+            <View style={styles.row} key={idx}>
+              {row.map(prod => (
+                <PizzaCard
+                  key={prod.id}
+                  title={prod.name}
+                  price={`R$ ${prod.price}`}
+                  image={prod.banner}
+                />
+              ))}
+            </View>
+          ))}
         </View>
 
         {/* Bottom Menu */}
-        {/* Em cada página, tirar o onPress da página que está */}
-
         <View style={styles.fullNav}>
-
           <TouchableOpacity style={[styles.currentNav, styles.nav]}>
-            <Image
-              source={home}
-              style={styles.imagesNav}
-              />
+            <Image source={home} style={styles.imagesNav} />
             <Text>Home</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={Favoritos} style={styles.nav}>
-            <Image
-              source={fav}
-              style={styles.imagesNav}
-              resizeMode="cover"
-              />
+            <Image source={fav} style={styles.imagesNav} resizeMode="cover" />
             <Text>Favoritos</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={Cupons} style={styles.nav}>
-            <Image
-              source={cupom}
-              style={styles.imagesNav}
-              resizeMode="cover"
-              />
+            <Image source={cupom} style={styles.imagesNav} resizeMode="cover" />
             <Text>Cupons</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={LerQR} style={styles.nav}>
-            <Image
-              source={qrcode}
-              style={styles.imagesNav}
-              />
+            <Image source={qrcode} style={styles.imagesNav} />
             <Text>Ler QR</Text>
           </TouchableOpacity>
-
         </View>
-        {/* --------------------------- */}
-      
       </ScrollView>
     </SafeAreaView>
   );
 }
+
 type PizzaCardProps = {
   title: string;
   price: string;
@@ -222,7 +198,7 @@ function PizzaCard({ title, price, image }: PizzaCardProps) {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: "#FFFFFF" },
+  container: { flex: 1, backgroundColor: "#FFFFFF" },
   header: {
     backgroundColor: "#FFFFFF",
     paddingTop: 86,
