@@ -15,6 +15,15 @@ import { StackParamsList } from "../../routes/app.routes";
 
 import { api } from "../../services/api";
 
+// IMAGENS DO NAV
+
+const home = require('../../assets/nav-icons/home.png')
+const fav = require('../../assets/nav-icons/star.png')
+const cupom = require('../../assets/nav-icons/cupom.png')
+const qrcode = require('../../assets/nav-icons/qrcode.png')
+
+/////////////////
+
 export default function HomeScreen() {
   const [textInput1, onChangeTextInput1] = useState<string>("");
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
@@ -140,20 +149,45 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        <View style={styles.bottomMenu}>
-          <TouchableOpacity onPress={Menu}>
+        {/* Bottom Menu */}
+        {/* Em cada página, tirar o onPress da página que está */}
+
+        <View style={styles.fullNav}>
+
+          <TouchableOpacity style={[styles.currentNav, styles.nav]}>
+            <Image
+              source={home}
+              style={styles.imagesNav}
+              />
             <Text>Home</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={Favoritos}>
+          <TouchableOpacity onPress={Favoritos} style={styles.nav}>
+            <Image
+              source={fav}
+              style={styles.imagesNav}
+              resizeMode="cover"
+              />
             <Text>Favoritos</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={Cupons}>
+          <TouchableOpacity onPress={Cupons} style={styles.nav}>
+            <Image
+              source={cupom}
+              style={styles.imagesNav}
+              resizeMode="cover"
+              />
             <Text>Cupons</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={LerQR}>
+          <TouchableOpacity onPress={LerQR} style={styles.nav}>
+            <Image
+              source={qrcode}
+              style={styles.imagesNav}
+              />
             <Text>Ler QR</Text>
           </TouchableOpacity>
+
         </View>
+        {/* --------------------------- */}
+      
       </ScrollView>
     </SafeAreaView>
   );
@@ -188,7 +222,7 @@ function PizzaCard({ title, price, image }: PizzaCardProps) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#FFFFFF" },
+    container: { flex: 1, backgroundColor: "#FFFFFF" },
   header: {
     backgroundColor: "#FFFFFF",
     paddingTop: 86,
@@ -263,4 +297,26 @@ const styles = StyleSheet.create({
     marginHorizontal: 26,
     justifyContent: "space-between",
   },
-});
+  fullNav: {
+    flexDirection: "row",
+    backgroundColor: "#FCEAE2",
+    borderRadius: 80,
+    paddingHorizontal: 17,
+    marginBottom: 42,
+    marginHorizontal: 26,
+    justifyContent: 'space-between'
+  },
+  currentNav: {
+    backgroundColor: '#f3cdbdff',
+    borderRadius: 100,
+  },
+  nav: {
+    padding: 10,
+  },
+  imagesNav: {
+    margin: 'auto',
+    width: 30,
+    height: 30,
+    borderRadius: 8
+  }
+})
