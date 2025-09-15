@@ -11,9 +11,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { StackParamsList } from "../../routes/app.routes";
-
-import { api } from "../../services/api";
+import { StackParamsList } from "../../routes/app.routes"
 
 // IMAGENS DO NAV
 
@@ -27,6 +25,18 @@ const qrcode = require('../../assets/nav-icons/qrcode.png')
 export default function HomeScreen() {
   const [textInput1, onChangeTextInput1] = useState<string>("");
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
+
+  function Carrinho() {
+    // Colocar página do carrinho!
+    // navigation.navigate("");
+    alert("página carrinho")
+  }
+
+  function Settings() {
+    // Colocar página do settings
+    // navigation.navigate("")
+    alert("Settings!")
+  }
 
   function Menu() {
     navigation.navigate("Menu");
@@ -43,12 +53,6 @@ export default function HomeScreen() {
   function LerQR() {
     navigation.navigate("LerQR");
   }
-
-  async function verProdutos(){
-    const visualizacao = await api.get('/categproduct', {
-    })
-  }
-
 
   return (
     <SafeAreaView style={styles.container}>
@@ -72,20 +76,24 @@ export default function HomeScreen() {
               style={styles.searchInput}
             />
             <View style={styles.searchIconsRight}>
-              <Image
-                source={{
-                  uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/tmmocg1t_expires_30_days.png",
-                }}
-                resizeMode="stretch"
-                style={styles.iconRight}
-              />
-              <Image
-                source={{
-                  uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/bjnemhbr_expires_30_days.png",
-                }}
-                resizeMode="stretch"
-                style={styles.iconRight}
-              />
+              <TouchableOpacity onPress={Carrinho}>
+                <Image
+                  source={{
+                    uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/tmmocg1t_expires_30_days.png",
+                  }}
+                  resizeMode="stretch"
+                  style={styles.iconRight}
+                  />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={Settings}>
+                <Image
+                  source={{
+                    uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/bjnemhbr_expires_30_days.png",
+                  }}
+                  resizeMode="stretch"
+                  style={styles.iconRight}
+                />
+              </TouchableOpacity>
             </View>
           </View>
 
@@ -149,7 +157,9 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        {/* Bottom Menu */}
+        {/* ---------------- */}
+
+        {/* Bottom Nav */}
         {/* Em cada página, tirar o onPress da página que está */}
 
         <View style={styles.fullNav}>
@@ -192,6 +202,9 @@ export default function HomeScreen() {
     </SafeAreaView>
   );
 }
+
+ 
+
 type PizzaCardProps = {
   title: string;
   price: string;
@@ -199,6 +212,7 @@ type PizzaCardProps = {
 };
 
 function PizzaCard({ title, price, image }: PizzaCardProps) {
+  
   return (
     <View style={styles.card}>
       <Image source={{ uri: image }} resizeMode="stretch" style={styles.cardImage} />
@@ -207,7 +221,7 @@ function PizzaCard({ title, price, image }: PizzaCardProps) {
       <TouchableOpacity
         style={styles.addButton}
         onPress={() => alert(`${title} adicionado!`)}
-      >
+        >
         <Image
           source={{
             uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/mijsyyvb_expires_30_days.png",

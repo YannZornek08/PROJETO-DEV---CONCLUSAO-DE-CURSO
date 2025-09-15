@@ -6,12 +6,6 @@ import Routes from './src/routes';
 import { AuthProvider } from './src/contexts/AuthContext';
 import Cadastro from './src/pages/Cadastro';
 import SignIn from './src/pages/SignIn';
-import Menu from './src/pages/Menu';
-import Pagamento from './src/pages/Pagamento';
-import Conta from './src/pages/Conta';
-import DetalhesPedido from './src/pages/DetalhesPedido';
-import DadosPagamento from './src/pages/DadosPagamento';
-import Cupons from './src/pages/Cupons';
 import AppRoutes from './src/routes/app.routes';
 
 
