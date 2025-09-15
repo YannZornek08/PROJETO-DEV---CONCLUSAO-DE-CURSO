@@ -31,6 +31,12 @@ import { CreateCostumerController } from './controllers/costumer/CreateCostumerC
 import { AuthCostumerController } from './controllers/costumer/AuthCostumerController';
 import { DetailCostumerController } from './controllers/costumer/DetailCostumerController';
 
+import { CreateIngredientController } from './controllers/additional/CreateIngredientController';
+import { AddAdditionalController } from './controllers/additional/AddAdditionalController';
+import { RemoveIngredientController } from './controllers/additional/RemoveIngredientController';
+import { AddIngredientController } from './controllers/additional/AddIngredientController';
+import { ListIngredientByProductController } from './controllers/additional/ListIngredientByProductController';
+
 import { isAuthenticated } from './middlewares/isAuthenticated'
 import { isAuthenticatedClient } from './middlewares/isAuthenticatedClient'
 
@@ -84,5 +90,12 @@ router.post('/costumers', new CreateCostumerController().handle)
 router.post('/session/costumers', new AuthCostumerController().handle)
 
 router.get('/me/costumers', isAuthenticatedClient, new DetailCostumerController().handle)
+
+// -- ROTAS ADDITIONAL --
+router.post('/ingredients', isAuthenticated, new CreateIngredientController().handle)
+router.post('/additional', isAuthenticated, new AddAdditionalController().handle)
+router.delete('/ingredients/remove', isAuthenticated, new RemoveIngredientController().handle)
+router.delete('/ingredients/add', isAuthenticated, new AddIngredientController().handle)
+router.get('/product/ingredients', isAuthenticated, new ListIngredientByProductController().handle)
 
 export { router }

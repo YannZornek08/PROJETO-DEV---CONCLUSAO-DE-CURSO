@@ -10,9 +10,38 @@ import {
   StyleSheet,
   GestureResponderEvent,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { StackParamsList } from "../../routes/app.routes"
+
+// IMAGENS DO NAV
+
+const home = require('../../assets/nav-icons/home.png')
+const fav = require('../../assets/nav-icons/star.png')
+const cupom = require('../../assets/nav-icons/cupom.png')
+const qrcode = require('../../assets/nav-icons/qrcode.png')
+
+/////////////////
 
 export default function Cupons() {
   const [textInput1, setTextInput1] = useState<string>("");
+  const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>()
+  
+  function Menu() {
+    navigation.navigate("Menu");
+  }
+
+  function Cupons() {
+    navigation.navigate("Cupons");
+  }
+
+  function Favoritos() {
+    navigation.navigate("Favoritos");
+  }
+
+  function LerQR() {
+    navigation.navigate("LerQR");
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -107,6 +136,46 @@ export default function Cupons() {
             </TouchableOpacity>
           </View>
         </View>
+
+                {/* Bottom Nav */}
+        {/* Em cada página, tirar o onPress da página que está */}
+
+        <View style={styles.fullNav}>
+
+          <TouchableOpacity onPress={Menu} style={styles.nav}>
+            <Image
+              source={home}
+              style={styles.imagesNav}
+              />
+            <Text>Home</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={Favoritos} style={styles.nav}>
+            <Image
+              source={fav}
+              style={styles.imagesNav}
+              resizeMode="cover"
+              />
+            <Text>Favoritos</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.currentNav, styles.nav]}>
+            <Image
+              source={cupom}
+              style={styles.imagesNav}
+              resizeMode="cover"
+              />
+            <Text>Cupons</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={LerQR} style={styles.nav}>
+            <Image
+              source={qrcode}
+              style={styles.imagesNav}
+              />
+            <Text>Ler QR</Text>
+          </TouchableOpacity>
+
+        </View>
+        {/* --------------------------- */}
+      
       </ScrollView>
     </SafeAreaView>
   );
@@ -190,4 +259,26 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
+  fullNav: {
+    flexDirection: "row",
+    backgroundColor: "#FCEAE2",
+    borderRadius: 80,
+    paddingHorizontal: 17,
+    marginBottom: 42,
+    marginHorizontal: 26,
+    justifyContent: 'space-between'
+  },
+  currentNav: {
+    backgroundColor: '#f3cdbdff',
+    borderRadius: 100,
+  },
+  nav: {
+    padding: 10,
+  },
+  imagesNav: {
+    margin: 'auto',
+    width: 30,
+    height: 30,
+    borderRadius: 8
+  }
 });
