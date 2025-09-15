@@ -11,7 +11,9 @@ import SignIn from './src/pages/SignIn';
 import Menu from './src/pages/Menu';
 import Pagamento from './src/pages/Pagamento';
 import Conta from './src/pages/Conta';
+import Cupons from './src/pages/Cupons';
 import AppRoutes from './src/routes/app.routes';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -23,5 +25,6 @@ export default function App() {
     // <DetalhesPedido/>  testando tela de produto
     // <SignIn /> // testando a tela de login
     // <Cadastro /> // testando a tela de cadastro
+    // <Cupons /> Cupons testado
   );
 }
