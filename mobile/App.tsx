@@ -11,6 +11,7 @@ import Menu from './src/pages/Menu';
 import Pagamento from './src/pages/Pagamento';
 import Conta from './src/pages/Conta';
 import DetalhesPedido from './src/pages/DetalhesPedido';
+import DadosPagamento from './src/pages/DadosPagamento';
 
 export default function App() {
   return (
