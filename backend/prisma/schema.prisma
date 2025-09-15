@@ -51,6 +51,7 @@ model Product {
   category    Category @relation(fields: [category_id], references: [id])
   category_id String
   item        Item[]
+  ingredient_product Ingredient_product[] // relação muitos para muitos
 
   @@map("products")
 }
@@ -116,4 +117,28 @@ model Payment {
   updated_at DateTime @default(now())
 
   @@map("payments")
+}
+
+model Ingredient {
+  id         String @id @default(uuid())
+  name       String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  ingredient_product Ingredient_product[] // relação muitos para muitos
+
+  @@map("ingredients")
+}
+
+model Ingredient_product {
+  id         String @id @default(uuid())
+  adicionado Boolean @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  ingredient Ingredient @relation(fields: [ingredient_id], references: [id])
+  product    Product    @relation(fields: [product_id], references: [id])
+  ingredient_id String
+  product_id String
+
+  @@map("ingredients_products")
 }
