@@ -268,12 +268,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 8,
-    marginLeft: 24,
+    marginLeft: 15,
   },
   quantitySelector: {
     flexDirection: "row",
     alignItems: "center",
-    marginLeft: 23,
+    marginLeft: 15,
+    marginBottom: 20
   },
   quantityButton: {
     borderWidth: 1,
@@ -302,11 +303,13 @@ const styles = StyleSheet.create({
   },
   addButton: {
     backgroundColor: "#8D4F28",
-    paddingVertical: 15,
+    paddingVertical: 21,
     paddingHorizontal: 30,
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: 20,
+    marginRight: 13,
   },
   addButtonText: { color: "#FFFFFF", fontSize: 16, fontWeight: "bold" },
 });

@@ -8,11 +8,31 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { StackParamsList } from "../../routes/app.routes";
 
 import { api } from "../../services/api";
 
 export default function HomeScreen() {
   const [textInput1, onChangeTextInput1] = useState<string>("");
+  const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
+
+  async function Menu() {
+    navigation.navigate('Menu')
+  }
+
+  async function Cupons() {
+    navigation.navigate('Cupons')
+  }
+
+  async function Favoritos() {
+    navigation.navigate('Favoritos')
+  }
+
+  async function LerQR() {
+    navigation.navigate('LerQR')
+  }
 
   async function verProdutos(){
     const visualizacao = await api.get('/categproduct', {
@@ -193,25 +213,22 @@ export default function HomeScreen() {
             marginHorizontal: 26,
           }}
         >
-          <BottomTab
-            icon="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/vzx2cedy_expires_30_days.png"
-            label="Home"
-          />
-          <BottomTab
-            icon="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/ixwkww6v_expires_30_days.png"
-            label="Favoritos"
-            active
-          />
-          <BottomTab
-            icon="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/ccyhxb4v_expires_30_days.png"
-            label="Cupons"
-            active
-          />
-          <BottomTab
-            icon="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/mfob6bza_expires_30_days.png"
-            label="Ler QR"
-            active
-          />
+          <TouchableOpacity onPress={Menu}>
+            {/* <Image></Image> */}
+            <Text>Home</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={Favoritos}>
+            {/* <Image></Image> */}
+            <Text>Favoritos</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={Cupons}>
+            {/* <Image></Image> */}
+            <Text>Cupons</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={LerQR}>
+            {/* <Image></Image> */}
+            <Text>Ler QR</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
