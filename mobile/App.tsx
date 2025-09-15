@@ -14,13 +14,13 @@ import DetalhesPedido from './src/pages/DetalhesPedido';
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <AuthProvider>
-      <StatusBar backgroundColor="#1d1d2e" barStyle="light-content" translucent={false}/>
-      <Routes />
-    </AuthProvider>
-    </NavigationContainer>
-    // <DetalhesPedido/>  testando tela de produto
+    // <NavigationContainer>
+    //   <AuthProvider>
+    //   <StatusBar backgroundColor="#1d1d2e" barStyle="light-content" translucent={false}/>
+    //   <Routes />
+    // </AuthProvider>
+    // </NavigationContainer>
+    <DetalhesPedido/>  
     // <SignIn /> // testando a tela de login
     // <Cadastro /> // testando a tela de cadastro
   );
