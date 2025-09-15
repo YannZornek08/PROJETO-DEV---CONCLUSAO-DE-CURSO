@@ -22,6 +22,9 @@ import { ListOrdersController } from './controllers/order/ListOrdersController';
 import { DetailOrderController } from './controllers/order/DetailOrderController';
 import { FinishOrderController } from './controllers/order/FinishOrderController';
 
+import { CreateRoleController } from './controllers/role/CreateRoleController';
+import { ListRoleController } from './controllers/role/ListCategoryController';
+
 import { isAuthenticated } from './middlewares/isAuthenticated'
 
 import uploadConfig from './config/multer'
@@ -48,7 +51,6 @@ router.post('/product', isAuthenticated, new CreateProductController().handle)
 router.get('/category/product', isAuthenticated, new ListByCategoryController().handle)
 
 // -- ROTAS ORDER --
-
 router.post('/order', isAuthenticated, new CreateOrderController().handle)
 router.delete('/order', isAuthenticated, new RemoveOrderController().handle)
 
@@ -60,5 +62,10 @@ router.get('/orders', isAuthenticated, new ListOrdersController().handle)
 router.get('/order/detail', isAuthenticated, new DetailOrderController().handle)
 
 router.put('/order/finish', isAuthenticated, new FinishOrderController().handle)
+
+// -- ROTAS ROLE --
+router.post('/role', new CreateRoleController().handle)
+
+router.get('/role', new ListRoleController().handle)
 
 export { router }
