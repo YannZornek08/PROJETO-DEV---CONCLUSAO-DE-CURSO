@@ -203,8 +203,6 @@ export default function HomeScreen() {
   );
 }
 
- 
-
 type PizzaCardProps = {
   title: string;
   price: string;
