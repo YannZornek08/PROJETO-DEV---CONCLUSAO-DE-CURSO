@@ -56,6 +56,11 @@ export default function HomeScreen() {
     navigation.navigate("LerQR");
   }
 
+  async function Filtros() {
+    alert("blablabla")
+    
+  }
+
   useEffect(() => {
     async function verProdutos() {
       try {
@@ -73,7 +78,7 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.headerText}>Bom dia, João.</Text>
+          <Text style={styles.headerText}>Seja bem vindo, João.</Text>
 
           {/* Barra de busca */}
           <View style={styles.searchBar}>
@@ -110,7 +115,7 @@ export default function HomeScreen() {
           <View style={styles.filtersWrapper}>
             <TouchableOpacity
               style={styles.filterButton}
-              onPress={() => console.log("pressed!")}
+              onPress={Filtros}
             >
               <Image
                 source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/uip8oeqk_expires_30_days.png" }}
@@ -230,7 +235,7 @@ const styles = StyleSheet.create({
   filterText: { color: "#FFFFFF", fontSize: 14, fontWeight: "bold" },
   tableText: { color: "#000000", fontSize: 16, fontWeight: "bold", marginBottom: 8, marginHorizontal: 26 },
   cardsWrapper: { marginBottom: 44, marginHorizontal: 26 },
-  row: { flexDirection: "row", marginBottom: 30 },
+  row: { flexDirection: "row", marginBottom: 30, gap: 10},
   card: { flex: 1, alignItems: "center" },
   cardImage: { height: 180, marginBottom: 8, width: "100%" },
   cardTitle: { color: "#000000", fontSize: 16, textAlign: "center", marginBottom: 12 },
@@ -260,5 +265,5 @@ const styles = StyleSheet.create({
   fullNav: { flexDirection: "row", backgroundColor: "#FCEAE2", borderRadius: 80, paddingHorizontal: 17, marginBottom: 42, marginHorizontal: 26, justifyContent: 'space-between' },
   currentNav: { backgroundColor: '#f3cdbdff', borderRadius: 100 },
   nav: { padding: 10 },
-  imagesNav: { margin: 'auto', width: 30, height: 30, borderRadius: 8 }
+  imagesNav: { margin: 'auto', width: 30, height: 30, borderRadius: 8 },
 });

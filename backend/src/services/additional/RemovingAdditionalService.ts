@@ -17,7 +17,7 @@ class RemovingAdditionalService {
     });
 
     if (!additional) {
-      throw new Error("Adicional não encontrado ou já está marcado como adicionado.");
+      throw new Error("Adicional não encontrado ou já está marcado como não adicionado.");
     }
 
     // 2. Atualizar pelo ID único
