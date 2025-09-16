@@ -63,7 +63,7 @@ export default function HomeScreen() {
     },
   ];
 
-  //Dividir pizzas em linhas de 2
+  // Dividir pizzas em linhas de 2
   const pizzaRows = [];
   for (let i = 0; i < pizzas.length; i += 2) {
     pizzaRows.push(pizzas.slice(i, i + 2));
@@ -130,7 +130,11 @@ export default function HomeScreen() {
                   <Image source={{ uri: pizza.image }} resizeMode="stretch" style={styles.cardImage} />
                   <Text style={styles.cardTitle}>{pizza.title}</Text>
                   <Text style={styles.cardPrice}>{pizza.price}</Text>
-                  <TouchableOpacity style={styles.addButton} onPress={() => alert(`${pizza.title} adicionado!`)}>
+                  <TouchableOpacity
+                    style={styles.addButton}
+                    onPress={() => alert(`${pizza.title} adicionado!`)}
+                  >
+                    <Text style={styles.plus}>+</Text>
                     <Text style={styles.addText}>Adicionar</Text>
                   </TouchableOpacity>
                 </View>
@@ -183,8 +187,28 @@ const styles = StyleSheet.create({
   cardImage: { height: 180, marginBottom: 8, width: "100%" },
   cardTitle: { color: "#000000", fontSize: 16, textAlign: "center", marginBottom: 12 },
   cardPrice: { color: "#000000", fontSize: 14, marginBottom: 7 },
-  addButton: { flexDirection: "row", backgroundColor: "#8D4F28", borderRadius: 100, paddingVertical: 6, paddingHorizontal: 12, marginVertical: 8, marginHorizontal: 35 },
-  addText: { color: "#FFFFFF", fontSize: 14, fontWeight: "bold", flex: 1 },
+  addButton: {
+    flexDirection: "row",
+    backgroundColor: "#8D4F28",
+    borderRadius: 100,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    marginVertical: 8,
+    marginHorizontal: 35,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  plus: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "bold",
+    marginRight: 8,
+  },
+  addText: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontWeight: "bold",
+  },
   fullNav: { flexDirection: "row", backgroundColor: "#FCEAE2", borderRadius: 80, paddingHorizontal: 17, marginBottom: 42, marginHorizontal: 26, justifyContent: 'space-between' },
   currentNav: { backgroundColor: '#f3cdbdff', borderRadius: 100 },
   nav: { padding: 10 },
