@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.8.2
- * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
+ * Prisma Client JS version: 6.9.0
+ * Query Engine version: 81e4af48011447c3cc503a190e86995b66d2a28e
  */
 Prisma.prismaVersion = {
-  client: "6.8.2",
-  engine: "2060c79ba17c6bb9f5823312b6f6b7f4a845738e"
+  client: "6.9.0",
+  engine: "81e4af48011447c3cc503a190e86995b66d2a28e"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -150,10 +150,18 @@ exports.Prisma.ProductScalarFieldEnum = {
 
 exports.Prisma.OrderScalarFieldEnum = {
   id: 'id',
-  table: 'table',
   status: 'status',
   draft: 'draft',
   name: 'name',
+  table_id: 'table_id',
+  costumer_id: 'costumer_id',
+  created_at: 'created_at',
+  update_at: 'update_at'
+};
+
+exports.Prisma.TableScalarFieldEnum = {
+  id: 'id',
+  number: 'number',
   created_at: 'created_at',
   update_at: 'update_at'
 };
@@ -177,6 +185,7 @@ exports.Prisma.RoleScalarFieldEnum = {
 exports.Prisma.CostumerScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  cpf: 'cpf',
   dt_nasc: 'dt_nasc',
   email: 'email',
   password: 'password',
@@ -188,6 +197,7 @@ exports.Prisma.PaymentScalarFieldEnum = {
   id: 'id',
   mtdo_pagto: 'mtdo_pagto',
   order_id: 'order_id',
+  table_id: 'table_id',
   created_at: 'created_at',
   updated_at: 'updated_at'
 };
@@ -229,6 +239,7 @@ exports.Prisma.ModelName = {
   Category: 'Category',
   Product: 'Product',
   Order: 'Order',
+  Table: 'Table',
   Item: 'Item',
   Role: 'Role',
   Costumer: 'Costumer',

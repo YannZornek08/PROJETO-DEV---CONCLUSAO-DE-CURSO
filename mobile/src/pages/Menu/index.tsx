@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
   filterText: { color: "#FFFFFF", fontSize: 14, fontWeight: "bold" },
   tableText: { color: "#000000", fontSize: 16, fontWeight: "bold", marginBottom: 8, marginHorizontal: 26 },
   cardsWrapper: { marginBottom: 44, marginHorizontal: 26 },
-  row: { flexDirection: "row", marginBottom: 30 },
+  row: { flexDirection: "row", marginBottom: 30, gap: 10},
   card: { flex: 1, alignItems: "center" },
   cardImage: { height: 180, marginBottom: 8, width: "100%" },
   cardTitle: { color: "#000000", fontSize: 16, textAlign: "center", marginBottom: 12 },
@@ -265,5 +265,5 @@ const styles = StyleSheet.create({
   fullNav: { flexDirection: "row", backgroundColor: "#FCEAE2", borderRadius: 80, paddingHorizontal: 17, marginBottom: 42, marginHorizontal: 26, justifyContent: 'space-between' },
   currentNav: { backgroundColor: '#f3cdbdff', borderRadius: 100 },
   nav: { padding: 10 },
-  imagesNav: { margin: 'auto', width: 30, height: 30, borderRadius: 8 }
+  imagesNav: { margin: 'auto', width: 30, height: 30, borderRadius: 8 },
 });
