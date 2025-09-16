@@ -33,9 +33,14 @@ const PedidoScreen: React.FC = () => {
     navigation.navigate("Pagamento")
   };
 
+  function VoltarMenu (){
+    navigation.navigate ("VoltarMenu")
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView style={styles.scrollView}>
+        <TouchableOpacity onPress={VoltarMenu}>
         <Image
           source={{
             uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/1oa02iuz_expires_30_days.png",
@@ -43,6 +48,7 @@ const PedidoScreen: React.FC = () => {
           resizeMode="stretch"
           style={styles.logo}
         />
+        </TouchableOpacity>
 
         <Text style={styles.title}>Pedido</Text>
 

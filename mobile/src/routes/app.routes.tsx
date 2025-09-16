@@ -45,6 +45,8 @@ export type StackParamsList = {
     Pagamento: undefined;
     DadosPagamento: undefined;
     DetalhesProdutos: undefined;
+    VoltarMenu:undefined;
+
     Order: {
         number: number | string;
         order_id: string;
@@ -125,6 +127,13 @@ function AppRoutes() {
                 component={DetalhesProdutos} 
                 options={{headerShown: false}}
             />
+
+                <Stack.Screen 
+                name="VoltarMenu" 
+                component={Menu} 
+                options={{headerShown: false}}
+            />
+
 
             <Stack.Screen 
                 name="FinishOrder" 
