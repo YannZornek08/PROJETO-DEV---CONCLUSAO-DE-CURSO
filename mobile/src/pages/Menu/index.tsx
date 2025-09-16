@@ -41,7 +41,7 @@ export default function HomeScreen() {
   }
 
   function Carrinho() {
-    alert('Abrir carrinho!')
+    navigation.navigate("Carrinho")
   }
 
   function Cupons() {
