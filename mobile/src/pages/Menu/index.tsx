@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   View,
@@ -13,61 +13,61 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
 
+import { api } from "../../services/api";
+
 // IMAGENS DO NAV
-const home = require('../../assets/nav-icons/home.png');
-const fav = require('../../assets/nav-icons/star.png');
-const cupom = require('../../assets/nav-icons/cupom.png');
-const qrcode = require('../../assets/nav-icons/qrcode.png');
+const home = require('../../assets/nav-icons/home.png')
+const fav = require('../../assets/nav-icons/star.png')
+const cupom = require('../../assets/nav-icons/cupom.png')
+const qrcode = require('../../assets/nav-icons/qrcode.png')
+
+/////////////////
+
+type Produto = {
+  id: string;
+  name: string;
+  price: number;
+  banner: string;
+}
 
 export default function HomeScreen() {
   const [textInput1, onChangeTextInput1] = useState<string>("");
+  const [produtos, setProdutos] = useState<Produto[]>([]);
+
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
-  const Carrinho = () => alert("Página Carrinho");
-  const Settings = () => alert("Settings!");
-  const Menu = () => navigation.navigate("Menu");
-  const Cupons = () => navigation.navigate("Cupons");
-  const Favoritos = () => navigation.navigate("Favoritos");
-  const LerQR = () => navigation.navigate("LerQR");
-
-  const pizzas = [
-    {
-      title: "Pizza de Pepperoni",
-      price: "R$42,00",
-      image: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/ggqdmnfn_expires_30_days.png",
-    },
-    {
-      title: "Pizza de Abacaxi",
-      price: "R$42,00",
-      image: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/02jqnrgo_expires_30_days.png",
-    },
-    {
-      title: "Pizza de Pepperoni",
-      price: "R$42,00",
-      image: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/sow9drm9_expires_30_days.png",
-    },
-    {
-      title: "Pizza de Abacaxi",
-      price: "R$42,00",
-      image: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/50ff6gko_expires_30_days.png",
-    },
-    {
-      title: "Pizza de Pepperoni",
-      price: "R$42,00",
-      image: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/6zusf2rc_expires_30_days.png",
-    },
-    {
-      title: "Pizza de Abacaxi",
-      price: "R$42,00",
-      image: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/ec18wgmn_expires_30_days.png",
-    },
-  ];
-
-  // Dividir pizzas em linhas de 2
-  const pizzaRows = [];
-  for (let i = 0; i < pizzas.length; i += 2) {
-    pizzaRows.push(pizzas.slice(i, i + 2));
+  function Settings() {
+    alert('Abrindo configs')
   }
+
+  function Carrinho() {
+    alert('Abrir carrinho!')
+  }
+
+  function Cupons() {
+    navigation.navigate("Cupons");
+  }
+
+  function Favoritos() {
+    navigation.navigate("Favoritos");
+  }
+
+  function LerQR() {
+    navigation.navigate("LerQR");
+  }
+
+  useEffect(() => {
+    async function verProdutos() {
+      try {
+        // 👉 Chama a rota que retorna TODOS os produtos
+        const response = await api.get('/product/all');
+        setProdutos(response.data);
+      } catch (err) {
+        console.log("Erro ao buscar produtos:", err);
+      }
+    }
+    verProdutos();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -108,7 +108,10 @@ export default function HomeScreen() {
 
           {/* Botão filtros */}
           <View style={styles.filtersWrapper}>
-            <TouchableOpacity style={styles.filterButton} onPress={() => alert("Pressed!")}>
+            <TouchableOpacity
+              style={styles.filterButton}
+              onPress={() => console.log("pressed!")}
+            >
               <Image
                 source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/uip8oeqk_expires_30_days.png" }}
                 resizeMode="stretch"
@@ -121,23 +124,21 @@ export default function HomeScreen() {
 
         <Text style={styles.tableText}>Sua mesa: 05</Text>
 
-        {/* Cards */}
+        {/* Cards dinâmicos */}
         <View style={styles.cardsWrapper}>
-          {pizzaRows.map((row, rowIndex) => (
-            <View style={styles.row} key={rowIndex}>
-              {row.map((pizza, index) => (
-                <View style={styles.card} key={index}>
-                  <Image source={{ uri: pizza.image }} resizeMode="stretch" style={styles.cardImage} />
-                  <Text style={styles.cardTitle}>{pizza.title}</Text>
-                  <Text style={styles.cardPrice}>{pizza.price}</Text>
-                  <TouchableOpacity
-                    style={styles.addButton}
-                    onPress={() => alert(`${pizza.title} adicionado!`)}
-                  >
-                    <Text style={styles.plus}>+</Text>
-                    <Text style={styles.addText}>Adicionar</Text>
-                  </TouchableOpacity>
-                </View>
+          {produtos.reduce((rows: Produto[][], produto, index) => {
+            if (index % 2 === 0) rows.push([produto]);
+            else rows[rows.length - 1].push(produto);
+            return rows;
+          }, []).map((row, idx) => (
+            <View style={styles.row} key={idx}>
+              {row.map(prod => (
+                <PizzaCard
+                  key={prod.id}
+                  title={prod.name}
+                  price={`R$ ${prod.price}`}
+                  image={prod.banner}
+                />
               ))}
             </View>
           ))}
@@ -150,11 +151,11 @@ export default function HomeScreen() {
             <Text>Home</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={Favoritos} style={styles.nav}>
-            <Image source={fav} style={styles.imagesNav} />
+            <Image source={fav} style={styles.imagesNav} resizeMode="cover" />
             <Text>Favoritos</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={Cupons} style={styles.nav}>
-            <Image source={cupom} style={styles.imagesNav} />
+            <Image source={cupom} style={styles.imagesNav} resizeMode="cover" />
             <Text>Cupons</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={LerQR} style={styles.nav}>
@@ -167,11 +168,58 @@ export default function HomeScreen() {
   );
 }
 
+type PizzaCardProps = {
+  title: string;
+  price: string;
+  image: string;
+};
+
+function PizzaCard({ title, price, image }: PizzaCardProps) {
+  return (
+    <View style={styles.card}>
+      <Image source={{ uri: image }} resizeMode="stretch" style={styles.cardImage} />
+      <Text style={styles.cardTitle}>{title}</Text>
+      <Text style={styles.cardPrice}>{price}</Text>
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={() => alert(`${title} adicionado!`)}
+      >
+        <Image
+          source={{
+            uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/mijsyyvb_expires_30_days.png",
+          }}
+          resizeMode="stretch"
+        />
+        <Text style={styles.addText}>Adicionar</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#FFFFFF" },
-  header: { backgroundColor: "#FFFFFF", paddingTop: 86, paddingBottom: 7 },
-  headerText: { color: "#000000", fontSize: 32, fontWeight: "bold", textAlign: "center", marginBottom: 26 },
-  searchBar: { flexDirection: "row", alignItems: "center", backgroundColor: "#F6E5DD", borderRadius: 28, padding: 4, marginBottom: 10, marginHorizontal: 26 },
+  header: {
+    backgroundColor: "#FFFFFF",
+    paddingTop: 86,
+    paddingBottom: 7,
+    marginBottom: 2,
+  },
+  headerText: {
+    color: "#000000",
+    fontSize: 32,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 26,
+  },
+  searchBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#F6E5DD",
+    borderRadius: 28,
+    padding: 4,
+    marginBottom: 10,
+    marginHorizontal: 26,
+  },
   searchIcon: { width: 48, height: 48, marginRight: 4 },
   searchInput: { color: "#52443C", fontSize: 16, flex: 1, paddingVertical: 12 },
   searchIconsRight: { flexDirection: "row" },
