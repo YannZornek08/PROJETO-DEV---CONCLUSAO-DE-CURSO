@@ -17,7 +17,7 @@ import LerQR from "../pages/Ler QR"
 // Botões da busca
 
 import Carrinho from "../pages/Carrinho"
-// import Settings from "páginaSettings"
+import Settings from "../pages/PageSettings"
 
 //////////////////
 
@@ -34,7 +34,7 @@ export type StackParamsList = {
     Favoritos: undefined;
     LerQR: undefined;
     Carrinho: undefined;
-    // Settings: undefined;
+    Settings: undefined;
     DetalhesProdutos: undefined;
     Order: {
         number: number | string;
@@ -93,11 +93,11 @@ function AppRoutes() {
                 options={{headerShown: false}}
             />
 
-            {/* <Stack.Screen 
+            <Stack.Screen 
                 name="Settings" 
                 component={Settings} 
                 options={{headerShown: false}}
-            /> */}
+            />
 
             <Stack.Screen 
                 name="DetalhesProdutos" 
