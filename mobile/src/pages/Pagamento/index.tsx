@@ -8,7 +8,18 @@ import {
   StyleSheet,
 } from "react-native";
 
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { StackParamsList } from "../../routes/app.routes";
+
 const Pagamento: React.FC = () => {
+
+  const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
+
+  const DadosPagamento = () => {
+    navigation.navigate("DadosPagamento");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
@@ -19,20 +30,22 @@ const Pagamento: React.FC = () => {
           resizeMode="stretch"
           style={styles.image}
         />
+        
+        
 
         <Text style={styles.title}>Pagamento</Text>
 
         <View style={styles.row}>
           <View style={styles.card}>
-            <Text style={styles.cardText}>Crédito</Text>
+            <Text style={styles.cardText} onPress={DadosPagamento}>Crédito</Text>
           </View>
           <View style={styles.card}>
-            <Text style={styles.cardText}>Débito</Text>
+            <Text style={styles.cardText} onPress={DadosPagamento}>Débito</Text>
           </View>
         </View>
 
-        <View style={[styles.card, styles.fullWidthCard]}>
-          <Text style={styles.cardText}>Pix</Text>
+        <View style={[styles.card, styles.fullWidthCard]} >
+          <Text style={styles.cardText} onPress={DadosPagamento}>Pix</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
