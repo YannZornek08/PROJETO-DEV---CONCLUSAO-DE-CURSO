@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   View,
@@ -11,10 +11,11 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { StackParamsList } from "../../routes/app.routes"
+import { StackParamsList } from "../../routes/app.routes";
+
+import { api } from "../../services/api";
 
 // IMAGENS DO NAV
-
 const home = require('../../assets/nav-icons/home.png')
 const fav = require('../../assets/nav-icons/star.png')
 const cupom = require('../../assets/nav-icons/cupom.png')
@@ -22,24 +23,25 @@ const qrcode = require('../../assets/nav-icons/qrcode.png')
 
 /////////////////
 
+type Produto = {
+  id: string;
+  name: string;
+  price: number;
+  banner: string;
+}
+
 export default function HomeScreen() {
   const [textInput1, onChangeTextInput1] = useState<string>("");
+  const [produtos, setProdutos] = useState<Produto[]>([]);
+
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
-  function Carrinho() {
-    // Colocar página do carrinho!
-    // navigation.navigate("");
-    alert("página carrinho")
-  }
-
   function Settings() {
-    // Colocar página do settings
-    // navigation.navigate("")
-    alert("Settings!")
+    alert('Abrindo configs')
   }
 
-  function Menu() {
-    navigation.navigate("Menu");
+  function Carrinho() {
+    navigation.navigate("Carrinho")
   }
 
   function Cupons() {
@@ -54,6 +56,19 @@ export default function HomeScreen() {
     navigation.navigate("LerQR");
   }
 
+  useEffect(() => {
+    async function verProdutos() {
+      try {
+        // 👉 Chama a rota que retorna TODOS os produtos
+        const response = await api.get('/product/all');
+        setProdutos(response.data);
+      } catch (err) {
+        console.log("Erro ao buscar produtos:", err);
+      }
+    }
+    verProdutos();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
@@ -63,9 +78,7 @@ export default function HomeScreen() {
           {/* Barra de busca */}
           <View style={styles.searchBar}>
             <Image
-              source={{
-                uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/m1yrb272_expires_30_days.png",
-              }}
+              source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/m1yrb272_expires_30_days.png" }}
               resizeMode="stretch"
               style={styles.searchIcon}
             />
@@ -78,18 +91,14 @@ export default function HomeScreen() {
             <View style={styles.searchIconsRight}>
               <TouchableOpacity onPress={Carrinho}>
                 <Image
-                  source={{
-                    uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/tmmocg1t_expires_30_days.png",
-                  }}
+                  source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/tmmocg1t_expires_30_days.png" }}
                   resizeMode="stretch"
                   style={styles.iconRight}
-                  />
+                />
               </TouchableOpacity>
               <TouchableOpacity onPress={Settings}>
                 <Image
-                  source={{
-                    uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/bjnemhbr_expires_30_days.png",
-                  }}
+                  source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/bjnemhbr_expires_30_days.png" }}
                   resizeMode="stretch"
                   style={styles.iconRight}
                 />
@@ -101,12 +110,10 @@ export default function HomeScreen() {
           <View style={styles.filtersWrapper}>
             <TouchableOpacity
               style={styles.filterButton}
-              onPress={() => alert("Pressed!")}
+              onPress={() => console.log("pressed!")}
             >
               <Image
-                source={{
-                  uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/uip8oeqk_expires_30_days.png",
-                }}
+                source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/uip8oeqk_expires_30_days.png" }}
                 resizeMode="stretch"
                 style={styles.filterIcon}
               />
@@ -117,93 +124,49 @@ export default function HomeScreen() {
 
         <Text style={styles.tableText}>Sua mesa: 05</Text>
 
-        {/* Cards */}
+        {/* Cards dinâmicos */}
         <View style={styles.cardsWrapper}>
-          <View style={styles.row}>
-            <PizzaCard
-              title="Pizza de Pepperoni"
-              price="R$42,00"
-              image="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/ggqdmnfn_expires_30_days.png"
-            />
-            <PizzaCard
-              title="Pizza de Abacaxi"
-              price="R$42,00"
-              image="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/02jqnrgo_expires_30_days.png"
-            />
-          </View>
-          <View style={styles.row}>
-            <PizzaCard
-              title="Pizza de Pepperoni"
-              price="R$42,00"
-              image="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/sow9drm9_expires_30_days.png"
-            />
-            <PizzaCard
-              title="Pizza de Abacaxi"
-              price="R$42,00"
-              image="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/50ff6gko_expires_30_days.png"
-            />
-          </View>
-          <View style={styles.row}>
-            <PizzaCard
-              title="Pizza de Pepperoni"
-              price="R$42,00"
-              image="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/6zusf2rc_expires_30_days.png"
-            />
-            <PizzaCard
-              title="Pizza de Abacaxi"
-              price="R$42,00"
-              image="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/ec18wgmn_expires_30_days.png"
-            />
-          </View>
+          {produtos.reduce((rows: Produto[][], produto, index) => {
+            if (index % 2 === 0) rows.push([produto]);
+            else rows[rows.length - 1].push(produto);
+            return rows;
+          }, []).map((row, idx) => (
+            <View style={styles.row} key={idx}>
+              {row.map(prod => (
+                <PizzaCard
+                  key={prod.id}
+                  title={prod.name}
+                  price={`R$ ${prod.price}`}
+                  image={prod.banner}
+                />
+              ))}
+            </View>
+          ))}
         </View>
-
-        {/* ---------------- */}
+      </ScrollView>
 
         {/* Bottom Nav */}
-        {/* Em cada página, tirar o onPress da página que está */}
-
         <View style={styles.fullNav}>
-
           <TouchableOpacity style={[styles.currentNav, styles.nav]}>
-            <Image
-              source={home}
-              style={styles.imagesNav}
-              />
+            <Image source={home} style={styles.imagesNav} />
             <Text>Home</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={Favoritos} style={styles.nav}>
-            <Image
-              source={fav}
-              style={styles.imagesNav}
-              resizeMode="cover"
-              />
+            <Image source={fav} style={styles.imagesNav} resizeMode="cover" />
             <Text>Favoritos</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={Cupons} style={styles.nav}>
-            <Image
-              source={cupom}
-              style={styles.imagesNav}
-              resizeMode="cover"
-              />
+            <Image source={cupom} style={styles.imagesNav} resizeMode="cover" />
             <Text>Cupons</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={LerQR} style={styles.nav}>
-            <Image
-              source={qrcode}
-              style={styles.imagesNav}
-              />
+            <Image source={qrcode} style={styles.imagesNav} />
             <Text>Ler QR</Text>
           </TouchableOpacity>
-
         </View>
-        {/* --------------------------- */}
-      
-      </ScrollView>
     </SafeAreaView>
   );
 }
-
- 
 
 type PizzaCardProps = {
   title: string;
@@ -212,7 +175,6 @@ type PizzaCardProps = {
 };
 
 function PizzaCard({ title, price, image }: PizzaCardProps) {
-  
   return (
     <View style={styles.card}>
       <Image source={{ uri: image }} resizeMode="stretch" style={styles.cardImage} />
@@ -221,13 +183,12 @@ function PizzaCard({ title, price, image }: PizzaCardProps) {
       <TouchableOpacity
         style={styles.addButton}
         onPress={() => alert(`${title} adicionado!`)}
-        >
+      >
         <Image
           source={{
             uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/mijsyyvb_expires_30_days.png",
           }}
           resizeMode="stretch"
-          style={styles.addIcon}
         />
         <Text style={styles.addText}>Adicionar</Text>
       </TouchableOpacity>
@@ -236,7 +197,7 @@ function PizzaCard({ title, price, image }: PizzaCardProps) {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: "#FFFFFF" },
+  container: { flex: 1, backgroundColor: "#FFFFFF" },
   header: {
     backgroundColor: "#FFFFFF",
     paddingTop: 86,
@@ -264,32 +225,15 @@ const styles = StyleSheet.create({
   searchIconsRight: { flexDirection: "row" },
   iconRight: { width: 48, height: 48 },
   filtersWrapper: { alignItems: "center", paddingVertical: 8 },
-  filterButton: {
-    flexDirection: "row",
-    backgroundColor: "#8D4F28",
-    borderRadius: 12,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-  },
+  filterButton: { flexDirection: "row", backgroundColor: "#8D4F28", borderRadius: 12, paddingVertical: 6, paddingHorizontal: 12 },
   filterIcon: { width: 20, height: 20, marginRight: 4 },
   filterText: { color: "#FFFFFF", fontSize: 14, fontWeight: "bold" },
-  tableText: {
-    color: "#000000",
-    fontSize: 16,
-    fontWeight: "bold",
-    marginBottom: 8,
-    marginHorizontal: 26,
-  },
+  tableText: { color: "#000000", fontSize: 16, fontWeight: "bold", marginBottom: 8, marginHorizontal: 26 },
   cardsWrapper: { marginBottom: 44, marginHorizontal: 26 },
   row: { flexDirection: "row", marginBottom: 30 },
   card: { flex: 1, alignItems: "center" },
   cardImage: { height: 180, marginBottom: 8, width: "100%" },
-  cardTitle: {
-    color: "#000000",
-    fontSize: 16,
-    textAlign: "center",
-    marginBottom: 12,
-  },
+  cardTitle: { color: "#000000", fontSize: 16, textAlign: "center", marginBottom: 12 },
   cardPrice: { color: "#000000", fontSize: 14, marginBottom: 7 },
   addButton: {
     flexDirection: "row",
@@ -299,38 +243,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     marginVertical: 8,
     marginHorizontal: 35,
+    alignItems: "center",
+    justifyContent: "center",
   },
-  addIcon: { width: 20, height: 20, marginRight: 4 },
-  addText: { color: "#FFFFFF", fontSize: 14, fontWeight: "bold", flex: 1 },
-  bottomMenu: {
-    flexDirection: "row",
-    backgroundColor: "#FCEAE2",
-    borderRadius: 80,
-    paddingHorizontal: 17,
-    marginBottom: 42,
-    marginHorizontal: 26,
-    justifyContent: "space-between",
+  plus: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "bold",
+    marginRight: 8,
   },
-  fullNav: {
-    flexDirection: "row",
-    backgroundColor: "#FCEAE2",
-    borderRadius: 80,
-    paddingHorizontal: 17,
-    marginBottom: 42,
-    marginHorizontal: 26,
-    justifyContent: 'space-between'
+  addText: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontWeight: "bold",
   },
-  currentNav: {
-    backgroundColor: '#f3cdbdff',
-    borderRadius: 100,
-  },
-  nav: {
-    padding: 10,
-  },
-  imagesNav: {
-    margin: 'auto',
-    width: 30,
-    height: 30,
-    borderRadius: 8
-  }
-})
+  fullNav: { flexDirection: "row", backgroundColor: "#FCEAE2", borderRadius: 80, paddingHorizontal: 17, marginBottom: 42, marginHorizontal: 26, justifyContent: 'space-between' },
+  currentNav: { backgroundColor: '#f3cdbdff', borderRadius: 100 },
+  nav: { padding: 10 },
+  imagesNav: { margin: 'auto', width: 30, height: 30, borderRadius: 8 }
+});
