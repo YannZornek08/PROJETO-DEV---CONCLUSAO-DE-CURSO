@@ -1,0 +1,37 @@
+import prismaClient from "../../prisma";
+
+interface IngredientRequest {
+  ingredient_id: string;
+  product_id: string;
+}
+
+class AddingAdditionalService {
+  async execute({ product_id, ingredient_id }: IngredientRequest) {
+    // 1. Buscar o registro específico
+    const additional = await prismaClient.ingredient_product.findFirst({
+      where: {
+        ingredient_id: ingredient_id,
+        product_id: product_id,
+        adicionado: false
+      } 
+    });
+
+    if (!additional) {
+      throw new Error("Adicional não encontrado ou já está marcado como adicionado.");
+    }
+
+    // 2. Atualizar pelo ID único
+    const updated = await prismaClient.ingredient_product.update({
+      where: {
+        id: additional.id
+      },
+      data: {
+        adicionado: true
+      }
+    });
+
+    return updated;
+  }
+}
+
+export { AddingAdditionalService }
