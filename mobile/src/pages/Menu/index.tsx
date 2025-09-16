@@ -56,6 +56,11 @@ export default function HomeScreen() {
     navigation.navigate("LerQR");
   }
 
+  async function Filtros() {
+    alert("blablabla")
+    
+  }
+
   useEffect(() => {
     async function verProdutos() {
       try {
@@ -73,7 +78,7 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.headerText}>Bom dia, João.</Text>
+          <Text style={styles.headerText}>Seja bem vindo, João.</Text>
 
           {/* Barra de busca */}
           <View style={styles.searchBar}>
@@ -110,7 +115,7 @@ export default function HomeScreen() {
           <View style={styles.filtersWrapper}>
             <TouchableOpacity
               style={styles.filterButton}
-              onPress={() => console.log("pressed!")}
+              onPress={Filtros}
             >
               <Image
                 source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/uip8oeqk_expires_30_days.png" }}
