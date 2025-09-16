@@ -60,7 +60,6 @@ model Order {
   id     String  @id @default(uuid())
   status Boolean @default(false)
   draft  Boolean @default(true)
-  name   String?
 
   table    Table  @relation(fields: [table_id], references: [id])
   table_id String
@@ -79,6 +78,7 @@ model Order {
 model Table {
   id         String    @id @default(uuid())
   number     Int
+  status     Boolean   @default(false)
   created_at DateTime? @default(now())
   update_at  DateTime? @default(now())
   orders     Order[]

@@ -152,7 +152,6 @@ exports.Prisma.OrderScalarFieldEnum = {
   id: 'id',
   status: 'status',
   draft: 'draft',
-  name: 'name',
   table_id: 'table_id',
   costumer_id: 'costumer_id',
   created_at: 'created_at',
@@ -162,6 +161,7 @@ exports.Prisma.OrderScalarFieldEnum = {
 exports.Prisma.TableScalarFieldEnum = {
   id: 'id',
   number: 'number',
+  status: 'status',
   created_at: 'created_at',
   update_at: 'update_at'
 };

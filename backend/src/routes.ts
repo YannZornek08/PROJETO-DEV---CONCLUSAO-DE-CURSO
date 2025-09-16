@@ -38,6 +38,11 @@ import { ListIngredientByProductController } from './controllers/additional/List
 import { RemovingAdditionalController } from './controllers/additional/RemovingAdditionalController';
 import { AddingAdditionalController } from './controllers/additional/AddingAdditionalController';
 
+import { CreateTableController } from './controllers/table/CreateTableController';
+import { ListTablesController } from './controllers/table/ListTablesController';
+import { TakeTableController } from './controllers/table/TakeTableController';
+import { ExitTableController } from './controllers/table/ExitTableController';
+
 import { isAuthenticated } from './middlewares/isAuthenticated'
 import { isAuthenticatedClient } from './middlewares/isAuthenticatedClient'
 
@@ -105,5 +110,11 @@ router.post('/additional', isAuthenticated, new AddAdditionalController().handle
 
 //Puxa os ingredientes de um produto
 router.get('/product/ingredients', isAuthenticated, new ListIngredientByProductController().handle)
+
+// -- ROTAS TABLE --
+router.post('/table', isAuthenticated, new CreateTableController().handle)
+router.get('/tables', isAuthenticated, new ListTablesController().handle)
+router.put('/table/:id', isAuthenticated, new TakeTableController().handle)
+router.put('/table/:id/exit', isAuthenticated, new ExitTableController().handle)
 
 export { router }
