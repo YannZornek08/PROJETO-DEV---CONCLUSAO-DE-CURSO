@@ -33,7 +33,7 @@ type Produto = {
 export default function HomeScreen() {
   const [textInput1, onChangeTextInput1] = useState<string>("");
   const [produtos, setProdutos] = useState<Produto[]>([]);
-
+  const [produtosPesquisados, setProdutosPesquisados] = useState<Produto[]>([])
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
   function Settings() {
@@ -58,7 +58,7 @@ export default function HomeScreen() {
 
   async function Filtros() {
     alert("blablabla")
-    
+
   }
 
   useEffect(() => {
@@ -71,8 +71,33 @@ export default function HomeScreen() {
         console.log("Erro ao buscar produtos:", err);
       }
     }
+    async function pesquisarProdutos() {
+      if (textInput1.length == 0 ) {
+        setProdutosPesquisados(produtos)
+      } else {
+        try {
+          // 👉 Chama a rota que retorna TODOS os produtos pesquisados
+          const response = await api.get('/product/search');
+          setProdutosPesquisados(response.data);
+        } catch (err) {
+          console.log("Erro ao pesquisar produtos:", err);
+        }
+      }
+    }
     verProdutos();
+    pesquisarProdutos();
   }, []);
+
+  // useEffect(() => {
+  //   if (textInput1.trim() === "") {
+  //     setProdutosFiltrados(produtos);
+  //   } else {
+  //     const termo = textInput1.toLowerCase();
+  //     const filtrados = produtos.filter((p) =>
+  //       p.name.toLowerCase().includes(termo));
+  //     setProdutosFiltrados(filtrados);
+  //   }
+  // }, [textInput1, produtos]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -132,8 +157,11 @@ export default function HomeScreen() {
         {/* Cards dinâmicos */}
         <View style={styles.cardsWrapper}>
           {produtos.reduce((rows: Produto[][], produto, index) => {
-            if (index % 2 === 0) rows.push([produto]);
-            else rows[rows.length - 1].push(produto);
+            if (index % 2 === 0) {
+              rows.push([produto]);
+            } else {
+              rows[rows.length - 1].push(produto);
+            }
             return rows;
           }, []).map((row, idx) => (
             <View style={styles.row} key={idx}>
@@ -150,25 +178,25 @@ export default function HomeScreen() {
         </View>
       </ScrollView>
 
-        {/* Bottom Nav */}
-        <View style={styles.fullNav}>
-          <TouchableOpacity style={[styles.currentNav, styles.nav]}>
-            <Image source={home} style={styles.imagesNav} />
-            <Text>Home</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={Favoritos} style={styles.nav}>
-            <Image source={fav} style={styles.imagesNav} resizeMode="cover" />
-            <Text>Favoritos</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={Cupons} style={styles.nav}>
-            <Image source={cupom} style={styles.imagesNav} resizeMode="cover" />
-            <Text>Cupons</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={LerQR} style={styles.nav}>
-            <Image source={qrcode} style={styles.imagesNav} />
-            <Text>Ler QR</Text>
-          </TouchableOpacity>
-        </View>
+      {/* Bottom Nav */}
+      <View style={styles.fullNav}>
+        <TouchableOpacity style={[styles.currentNav, styles.nav]}>
+          <Image source={home} style={styles.imagesNav} />
+          <Text>Home</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={Favoritos} style={styles.nav}>
+          <Image source={fav} style={styles.imagesNav} resizeMode="cover" />
+          <Text>Favoritos</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={Cupons} style={styles.nav}>
+          <Image source={cupom} style={styles.imagesNav} resizeMode="cover" />
+          <Text>Cupons</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={LerQR} style={styles.nav}>
+          <Image source={qrcode} style={styles.imagesNav} />
+          <Text>Ler QR</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
@@ -235,7 +263,7 @@ const styles = StyleSheet.create({
   filterText: { color: "#FFFFFF", fontSize: 14, fontWeight: "bold" },
   tableText: { color: "#000000", fontSize: 16, fontWeight: "bold", marginBottom: 8, marginHorizontal: 26 },
   cardsWrapper: { marginBottom: 44, marginHorizontal: 26 },
-  row: { flexDirection: "row", marginBottom: 30, gap: 10},
+  row: { flexDirection: "row", marginBottom: 30, gap: 10 },
   card: { flex: 1, alignItems: "center" },
   cardImage: { height: 180, marginBottom: 8, width: "100%" },
   cardTitle: { color: "#000000", fontSize: 16, textAlign: "center", marginBottom: 12 },
