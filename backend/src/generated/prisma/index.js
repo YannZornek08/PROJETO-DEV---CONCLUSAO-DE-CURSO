@@ -123,10 +123,18 @@ exports.Prisma.ProductScalarFieldEnum = {
 
 exports.Prisma.OrderScalarFieldEnum = {
   id: 'id',
-  table: 'table',
   status: 'status',
   draft: 'draft',
   name: 'name',
+  table_id: 'table_id',
+  costumer_id: 'costumer_id',
+  created_at: 'created_at',
+  update_at: 'update_at'
+};
+
+exports.Prisma.TableScalarFieldEnum = {
+  id: 'id',
+  number: 'number',
   created_at: 'created_at',
   update_at: 'update_at'
 };
@@ -150,6 +158,7 @@ exports.Prisma.RoleScalarFieldEnum = {
 exports.Prisma.CostumerScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  cpf: 'cpf',
   dt_nasc: 'dt_nasc',
   email: 'email',
   password: 'password',
@@ -161,6 +170,7 @@ exports.Prisma.PaymentScalarFieldEnum = {
   id: 'id',
   mtdo_pagto: 'mtdo_pagto',
   order_id: 'order_id',
+  table_id: 'table_id',
   created_at: 'created_at',
   updated_at: 'updated_at'
 };
@@ -202,6 +212,7 @@ exports.Prisma.ModelName = {
   Category: 'Category',
   Product: 'Product',
   Order: 'Order',
+  Table: 'Table',
   Item: 'Item',
   Role: 'Role',
   Costumer: 'Costumer',
