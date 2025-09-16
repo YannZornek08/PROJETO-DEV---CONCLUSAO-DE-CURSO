@@ -26,6 +26,14 @@ const qrcode = require('../../assets/nav-icons/qrcode.png')
 export default function Cupons() {
   const [textInput1, setTextInput1] = useState<string>("");
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>()
+
+   function Settings() {
+    navigation.navigate("Settings")
+  }
+
+    function Carrinho () {
+    navigation.navigate("Carrinho");
+  }
   
   function Menu() {
     navigation.navigate("Menu");
@@ -50,8 +58,9 @@ export default function Cupons() {
         <View style={styles.header}>
           <Text style={styles.greeting}>Bom dia, João.</Text>
 
-   
+  
           <View style={styles.searchContainer}>
+             
             <Image
               source={{
                 uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/lbafwrbc_expires_30_days.png",
@@ -59,6 +68,7 @@ export default function Cupons() {
               resizeMode="stretch"
               style={styles.searchIcon}
             />
+         
             <TextInput
               placeholder="O que busca?"
               value={textInput1}
@@ -66,13 +76,18 @@ export default function Cupons() {
               style={styles.searchInput}
             />
             <View style={{ flexDirection: "row" }}>
+               <TouchableOpacity onPress={Carrinho}>
               <Image
                 source={{
                   uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/tt24czai_expires_30_days.png",
                 }}
+                
                 resizeMode="stretch"
                 style={styles.actionIcon}
               />
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={Settings}>
               <Image
                 source={{
                   uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/ub4jakho_expires_30_days.png",
@@ -80,6 +95,7 @@ export default function Cupons() {
                 resizeMode="stretch"
                 style={styles.actionIcon}
               />
+              </TouchableOpacity>
             </View>
           </View>
 
