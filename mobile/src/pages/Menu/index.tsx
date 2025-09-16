@@ -37,7 +37,7 @@ export default function HomeScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
   function Settings() {
-    alert('Abrindo configs')
+    navigation.navigate("Settings")
   }
 
   function Carrinho() {
