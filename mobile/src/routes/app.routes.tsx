@@ -11,7 +11,23 @@ import Cupons from "../pages/Cupons";
 import Favoritos from "../pages/Favoritos";
 import LerQR from "../pages/Ler QR";
 
+//////
+
+//Pagamento
+
+import Pagamento from "../pages/Pagamento"
+import DadosPagamento from "../pages/DadosPagamento"
+
+//////////////
+import Favoritos from "../pages/Favoritos";
+import LerQR from "../pages/Ler QR";
+
 // Botões da busca
+
+import Carrinho from "../pages/Carrinho";
+import Settings from "../pages/PageSettings";
+
+//////////////////
 import Carrinho from "../pages/Carrinho";
 import Settings from "../pages/PageSettings";
 
@@ -22,6 +38,17 @@ import DetalhesProdutos from "../pages/DetalhesProduto";
 import AutenticacaoComanda from "../pages/LeituraCodigo"
 
 export type StackParamsList = {
+    Dashboard: undefined;
+    Menu: undefined;
+    Cupons: undefined;
+    Favoritos: undefined;
+    LerQR: undefined;
+    Carrinho: undefined;
+    Settings: undefined;
+    Pagamento: undefined;
+    DadosPagamento: undefined;
+    DetalhesProdutos: undefined;
+    VoltarMenu:undefined;
   Dashboard: undefined;
   Menu: undefined;
   Cupons: undefined;
@@ -84,6 +111,29 @@ function AppRoutes() {
         options={{ headerShown: false }}
       />
 
+            <Stack.Screen 
+                name="Carrinho" 
+                component={Carrinho} 
+                options={{headerShown: false}}
+            />
+
+            <Stack.Screen
+                name="Pagamento"
+                component={Pagamento}
+                options={{headerShown: false}}
+            />
+
+            <Stack.Screen
+                name="DadosPagamento"
+                component={DadosPagamento}
+                options={{headerShown: false}}
+            />
+            
+            <Stack.Screen 
+                name="Settings" 
+                component={Settings} 
+                options={{headerShown: false}}
+            />
       <Stack.Screen
         name="Carrinho"
         component={Carrinho}

@@ -21,7 +21,7 @@ const PedidoScreen: React.FC = () => {
   const [mesa, setMesa] = useState("05");
   const [nome, setNome] = useState("João M.");
 
-   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
+  const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
   const handlePay = () => {
     Alert.alert(
@@ -30,6 +30,7 @@ const PedidoScreen: React.FC = () => {
         observacoes || "Nenhuma observação adicionada"
       }`
     );
+    navigation.navigate("Pagamento")
   };
 
   function VoltarMenu (){
