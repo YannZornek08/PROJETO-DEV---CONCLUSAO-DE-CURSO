@@ -8,12 +8,16 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Modal,
+  Button
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
 
 import { api } from "../../services/api";
+import { CategoryProps } from "../Order";
+import { ModalPicker } from "../../components/ModalPicker";
 
 // IMAGENS DO NAV
 const home = require('../../assets/nav-icons/home.png')
@@ -33,6 +37,8 @@ type Produto = {
 export default function HomeScreen() {
   const [textInput1, onChangeTextInput1] = useState<string>("");
   const [produtos, setProdutos] = useState<Produto[]>([]);
+
+  const [modalVisible, setModalVisible] = useState(false);
 
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
@@ -108,15 +114,29 @@ export default function HomeScreen() {
                   style={styles.iconRight}
                 />
               </TouchableOpacity>
+
             </View>
           </View>
 
           {/* Botão filtros */}
+      
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+            <Button
+              title="Fechar"
+              onPress={() => setModalVisible(false)}
+            />
+      </Modal>
           <View style={styles.filtersWrapper}>
             <TouchableOpacity
               style={styles.filterButton}
-              onPress={Filtros}
+              onPress={() => setModalVisible(true)}
             >
+              
               <Image
                 source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/uip8oeqk_expires_30_days.png" }}
                 resizeMode="stretch"
