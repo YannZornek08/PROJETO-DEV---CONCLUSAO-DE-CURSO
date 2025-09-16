@@ -64,7 +64,7 @@ export default function HomeScreen() {
   useEffect(() => {
     async function verProdutos() {
       try {
-        // 👉 Chama a rota que retorna TODOS os produtos
+        //Chama a rota que retorna TODOS os produtos
         const response = await api.get('/product/all');
         setProdutos(response.data);
       } catch (err) {
