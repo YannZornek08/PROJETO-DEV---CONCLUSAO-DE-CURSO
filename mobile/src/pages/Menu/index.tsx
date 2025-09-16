@@ -143,6 +143,7 @@ export default function HomeScreen() {
             </View>
           ))}
         </View>
+      </ScrollView>
 
         {/* Bottom Nav */}
         <View style={styles.fullNav}>
@@ -163,7 +164,6 @@ export default function HomeScreen() {
             <Text>Ler QR</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
     </SafeAreaView>
   );
 }

@@ -136,6 +136,7 @@ export default function Cupons() {
             </TouchableOpacity>
           </View>
         </View>
+        </ScrollView>
 
                 {/* Bottom Nav */}
         {/* Em cada página, tirar o onPress da página que está */}
@@ -176,7 +177,6 @@ export default function Cupons() {
         </View>
         {/* --------------------------- */}
       
-      </ScrollView>
     </SafeAreaView>
   );
 }
