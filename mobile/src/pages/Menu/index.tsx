@@ -37,11 +37,11 @@ export default function HomeScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
   function Settings() {
-    alert('Abrindo configs')
+    navigation.navigate("Settings")
   }
 
   function Carrinho() {
-    alert('Abrir carrinho!')
+    navigation.navigate("Carrinho")
   }
 
   function Cupons() {
@@ -143,6 +143,7 @@ export default function HomeScreen() {
             </View>
           ))}
         </View>
+      </ScrollView>
 
         {/* Bottom Nav */}
         <View style={styles.fullNav}>
@@ -163,7 +164,6 @@ export default function HomeScreen() {
             <Text>Ler QR</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
     </SafeAreaView>
   );
 }

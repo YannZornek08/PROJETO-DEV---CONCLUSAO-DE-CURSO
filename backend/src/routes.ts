@@ -33,9 +33,10 @@ import { DetailCostumerController } from './controllers/costumer/DetailCostumerC
 
 import { CreateIngredientController } from './controllers/additional/CreateIngredientController';
 import { AddAdditionalController } from './controllers/additional/AddAdditionalController';
-import { RemoveIngredientController } from './controllers/additional/RemoveIngredientController';
-import { AddIngredientController } from './controllers/additional/AddIngredientController';
 import { ListIngredientByProductController } from './controllers/additional/ListIngredientByProductController';
+
+import { RemovingAdditionalController } from './controllers/additional/RemovingAdditionalController';
+import { AddingAdditionalController } from './controllers/additional/AddingAdditionalController';
 
 import { isAuthenticated } from './middlewares/isAuthenticated'
 import { isAuthenticatedClient } from './middlewares/isAuthenticatedClient'
@@ -92,10 +93,17 @@ router.post('/session/costumers', new AuthCostumerController().handle)
 router.get('/me/costumers', isAuthenticatedClient, new DetailCostumerController().handle)
 
 // -- ROTAS ADDITIONAL --
+//Põe para true ou false
+router.put('/additional/removing', new RemovingAdditionalController().handle)
+router.put('/additional/adding', new AddingAdditionalController().handle)
+
+// Cria um novo
 router.post('/ingredients', isAuthenticated, new CreateIngredientController().handle)
+
+//Relaciona o adicional no produto
 router.post('/additional', isAuthenticated, new AddAdditionalController().handle)
-router.delete('/ingredients/remove', isAuthenticated, new RemoveIngredientController().handle)
-router.delete('/ingredients/add', isAuthenticated, new AddIngredientController().handle)
+
+//Puxa os ingredientes de um produto
 router.get('/product/ingredients', isAuthenticated, new ListIngredientByProductController().handle)
 
 export { router }
