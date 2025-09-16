@@ -7,9 +7,24 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from "react-native";
 
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { StackParamsList } from "../../routes/app.routes";
+
 const Dados: React.FC = () => {
+
+  const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
+
+  const Menu = () => {
+      Alert.alert(
+        "Pagamento Realizado",
+      );
+      navigation.navigate("Menu")
+    };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
@@ -48,7 +63,7 @@ const Dados: React.FC = () => {
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => alert("Pressed!")}
+              onPress={Menu}
             >
               <Text style={styles.buttonText}>Pagar</Text>
             </TouchableOpacity>

@@ -9,15 +9,22 @@ import FinishOrder from "../pages/FinishOrder";
 
 import Menu from "../pages/Menu";
 import Cupons from "../pages/Cupons";
-import Favoritos from "../pages/Favoritos"
-import LerQR from "../pages/Ler QR"
+import Favoritos from "../pages/Favoritos";
+import LerQR from "../pages/Ler QR";
 
 //////
 
+//Pagamento
+
+import Pagamento from "../pages/Pagamento"
+import DadosPagamento from "../pages/DadosPagamento"
+
+//////////////
+
 // Botões da busca
 
-import Carrinho from "../pages/Carrinho"
-import Settings from "../pages/PageSettings"
+import Carrinho from "../pages/Carrinho";
+import Settings from "../pages/PageSettings";
 
 //////////////////
 
@@ -35,6 +42,8 @@ export type StackParamsList = {
     LerQR: undefined;
     Carrinho: undefined;
     Settings: undefined;
+    Pagamento: undefined;
+    DadosPagamento: undefined;
     DetalhesProdutos: undefined;
     Order: {
         number: number | string;
@@ -93,6 +102,18 @@ function AppRoutes() {
                 options={{headerShown: false}}
             />
 
+            <Stack.Screen
+                name="Pagamento"
+                component={Pagamento}
+                options={{headerShown: false}}
+            />
+
+            <Stack.Screen
+                name="DadosPagamento"
+                component={DadosPagamento}
+                options={{headerShown: false}}
+            />
+            
             <Stack.Screen 
                 name="Settings" 
                 component={Settings} 

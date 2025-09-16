@@ -11,11 +11,17 @@ import {
   TextInput,
 } from "react-native";
 
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { StackParamsList } from "../../routes/app.routes";
+
 const PedidoScreen: React.FC = () => {
   const [observacoes, setObservacoes] = useState("");
   const [total, setTotal] = useState("R$ 77,00");
   const [mesa, setMesa] = useState("05");
   const [nome, setNome] = useState("João M.");
+
+  const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
   const handlePay = () => {
     Alert.alert(
@@ -24,6 +30,7 @@ const PedidoScreen: React.FC = () => {
         observacoes || "Nenhuma observação adicionada"
       }`
     );
+    navigation.navigate("Pagamento")
   };
 
   return (
