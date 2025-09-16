@@ -61,12 +61,30 @@ model Order {
   status     Boolean   @default(false)
   draft      Boolean   @default(true)
   name       String?
+
+  table      Table   @relation(fields: [table_id], references: [id])
+  table_id   String
+
+  costumer   Costumer @relation(fields: [costumer_id], references: [id])
+  costumer_id String
+
   created_at DateTime? @default(now())
   update_at  DateTime? @default(now())
   items      Item[]
   payments   Payment[]
 
   @@map("orders")
+}
+
+model Table {
+  id         String    @id @default(uuid())
+  number     Int
+  created_at DateTime? @default(now())
+  update_at  DateTime? @default(now())
+  orders     Order[]
+  payments   Payment[]
+
+  @@map("tables")
 }
 
 model Item {
@@ -96,11 +114,14 @@ model Role {
 model Costumer {
   id         String   @id @default(uuid())
   name       String
+  cpf        Int?      @unique 
   dt_nasc    String
   email      String
   password   String
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
+
+  orders     Order[]
 
   @@map("costumers")
 }
@@ -111,6 +132,9 @@ model Payment {
 
   order    Order  @relation(fields: [order_id], references: [id])
   order_id String
+
+  table    Table  @relation(fields: [table_id], references: [id])
+  table_id String
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
@@ -140,3 +164,4 @@ model Ingredient_product {
 
   @@map("ingredients_products")
 }
+
