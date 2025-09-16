@@ -8,12 +8,16 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Modal,
+  Button
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
 
 import { api } from "../../services/api";
+import { CategoryProps } from "../Order";
+import { ModalPicker } from "../../components/ModalPicker";
 
 // IMAGENS DO NAV
 const home = require('../../assets/nav-icons/home.png')
@@ -34,6 +38,8 @@ export default function HomeScreen() {
   const [textInput1, onChangeTextInput1] = useState<string>("");
   const [produtos, setProdutos] = useState<Produto[]>([]);
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [produtosPesquisados, setProdutosPesquisados] = useState<Produto[]>([])
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
   function Settings() {
@@ -56,24 +62,54 @@ export default function HomeScreen() {
     navigation.navigate("LerQR");
   }
 
+  async function Filtros() {
+    alert("blablabla")
+
+  }
+
   useEffect(() => {
     async function verProdutos() {
       try {
-        // 👉 Chama a rota que retorna TODOS os produtos
+        //Chama a rota que retorna TODOS os produtos
         const response = await api.get('/product/all');
         setProdutos(response.data);
       } catch (err) {
         console.log("Erro ao buscar produtos:", err);
       }
     }
+    async function pesquisarProdutos() {
+      if (textInput1.length == 0 ) {
+        setProdutosPesquisados(produtos)
+      } else {
+        try {
+          // 👉 Chama a rota que retorna TODOS os produtos pesquisados
+          const response = await api.get('/product/search');
+          setProdutosPesquisados(response.data);
+        } catch (err) {
+          console.log("Erro ao pesquisar produtos:", err);
+        }
+      }
+    }
     verProdutos();
+    pesquisarProdutos();
   }, []);
+
+  // useEffect(() => {
+  //   if (textInput1.trim() === "") {
+  //     setProdutosFiltrados(produtos);
+  //   } else {
+  //     const termo = textInput1.toLowerCase();
+  //     const filtrados = produtos.filter((p) =>
+  //       p.name.toLowerCase().includes(termo));
+  //     setProdutosFiltrados(filtrados);
+  //   }
+  // }, [textInput1, produtos]);
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.headerText}>Bom dia, João.</Text>
+          <Text style={styles.headerText}>Seja bem vindo, João.</Text>
 
           {/* Barra de busca */}
           <View style={styles.searchBar}>
@@ -103,15 +139,29 @@ export default function HomeScreen() {
                   style={styles.iconRight}
                 />
               </TouchableOpacity>
+
             </View>
           </View>
 
           {/* Botão filtros */}
+      
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+            <Button
+              title="Fechar"
+              onPress={() => setModalVisible(false)}
+            />
+      </Modal>
           <View style={styles.filtersWrapper}>
             <TouchableOpacity
               style={styles.filterButton}
-              onPress={() => console.log("pressed!")}
+              onPress={() => setModalVisible(true)}
             >
+              
               <Image
                 source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/uip8oeqk_expires_30_days.png" }}
                 resizeMode="stretch"
@@ -127,8 +177,11 @@ export default function HomeScreen() {
         {/* Cards dinâmicos */}
         <View style={styles.cardsWrapper}>
           {produtos.reduce((rows: Produto[][], produto, index) => {
-            if (index % 2 === 0) rows.push([produto]);
-            else rows[rows.length - 1].push(produto);
+            if (index % 2 === 0) {
+              rows.push([produto]);
+            } else {
+              rows[rows.length - 1].push(produto);
+            }
             return rows;
           }, []).map((row, idx) => (
             <View style={styles.row} key={idx}>
@@ -145,25 +198,25 @@ export default function HomeScreen() {
         </View>
       </ScrollView>
 
-        {/* Bottom Nav */}
-        <View style={styles.fullNav}>
-          <TouchableOpacity style={[styles.currentNav, styles.nav]}>
-            <Image source={home} style={styles.imagesNav} />
-            <Text>Home</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={Favoritos} style={styles.nav}>
-            <Image source={fav} style={styles.imagesNav} resizeMode="cover" />
-            <Text>Favoritos</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={Cupons} style={styles.nav}>
-            <Image source={cupom} style={styles.imagesNav} resizeMode="cover" />
-            <Text>Cupons</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={LerQR} style={styles.nav}>
-            <Image source={qrcode} style={styles.imagesNav} />
-            <Text>Ler QR</Text>
-          </TouchableOpacity>
-        </View>
+      {/* Bottom Nav */}
+      <View style={styles.fullNav}>
+        <TouchableOpacity style={[styles.currentNav, styles.nav]}>
+          <Image source={home} style={styles.imagesNav} />
+          <Text>Home</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={Favoritos} style={styles.nav}>
+          <Image source={fav} style={styles.imagesNav} resizeMode="cover" />
+          <Text>Favoritos</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={Cupons} style={styles.nav}>
+          <Image source={cupom} style={styles.imagesNav} resizeMode="cover" />
+          <Text>Cupons</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={LerQR} style={styles.nav}>
+          <Image source={qrcode} style={styles.imagesNav} />
+          <Text>Ler QR</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
@@ -230,7 +283,7 @@ const styles = StyleSheet.create({
   filterText: { color: "#FFFFFF", fontSize: 14, fontWeight: "bold" },
   tableText: { color: "#000000", fontSize: 16, fontWeight: "bold", marginBottom: 8, marginHorizontal: 26 },
   cardsWrapper: { marginBottom: 44, marginHorizontal: 26 },
-  row: { flexDirection: "row", marginBottom: 30 },
+  row: { flexDirection: "row", marginBottom: 30, gap: 10 },
   card: { flex: 1, alignItems: "center" },
   cardImage: { height: 180, marginBottom: 8, width: "100%" },
   cardTitle: { color: "#000000", fontSize: 16, textAlign: "center", marginBottom: 12 },
@@ -260,5 +313,5 @@ const styles = StyleSheet.create({
   fullNav: { flexDirection: "row", backgroundColor: "#FCEAE2", borderRadius: 80, paddingHorizontal: 17, marginBottom: 42, marginHorizontal: 26, justifyContent: 'space-between' },
   currentNav: { backgroundColor: '#f3cdbdff', borderRadius: 100 },
   nav: { padding: 10 },
-  imagesNav: { margin: 'auto', width: 30, height: 30, borderRadius: 8 }
+  imagesNav: { margin: 'auto', width: 30, height: 30, borderRadius: 8 },
 });
