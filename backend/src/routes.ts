@@ -43,6 +43,12 @@ import { AddingAdditionalController } from './controllers/additional/AddingAddit
 import { CreateTableController } from './controllers/table/CreateTableController';
 import { ListTablesController } from './controllers/table/ListTablesController';
 
+import { CreateMtdoPagtoController } from './controllers/mtdo_pagto/CreateMethodPaymentController';
+import { ListMtdoPagtoController } from './controllers/mtdo_pagto/ListMethodPaymentController';
+
+import { CreatePaymentController } from './controllers/payment/CreatePaymentController';
+import { ListPaymentsController } from './controllers/payment/ListPaymentsController';
+
 import { isAuthenticated } from './middlewares/isAuthenticated'
 import { isAuthenticatedClient } from './middlewares/isAuthenticatedClient'
 
@@ -85,9 +91,9 @@ router.delete('/order/remove', isAuthenticated, new RemoveItemController().handl
 router.put('/order/send', isAuthenticated, new SendOrderController().handle)
 
 router.get('/orders', isAuthenticated, new ListOrdersController().handle)
-router.get('/order/detail', isAuthenticated, new DetailOrderController().handle)
+router.get('/order/detail', new DetailOrderController().handle)
 
-router.put('/order/finish', isAuthenticated, new FinishOrderController().handle)
+router.put('/order/finish', new FinishOrderController().handle)
 
 // -- ROTAS ROLE --
 router.post('/role', new CreateRoleController().handle)
@@ -118,5 +124,13 @@ router.get('/product/ingredients', new ListIngredientByProductController().handl
 // -- ROTAS TABLE --
 router.post('/table', isAuthenticated, new CreateTableController().handle)
 router.get('/tables', isAuthenticated, new ListTablesController().handle)
+
+// -- ROTAS METODO DE PAGAMENTO --
+router.post('/mtdo_pagto', new CreateMtdoPagtoController().handle)
+router.get('/mtdo_pagtos', new ListMtdoPagtoController().handle)
+
+// -- ROTAS PAGAMENTO --
+router.post('/payment',  new CreatePaymentController().handle)
+router.get('/payments', new ListPaymentsController().handle)
 
 export { router }

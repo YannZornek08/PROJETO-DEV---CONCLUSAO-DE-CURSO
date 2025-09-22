@@ -68,6 +68,11 @@ export type Ingredient = $Result.DefaultSelection<Prisma.$IngredientPayload>
  * 
  */
 export type Ingredient_product = $Result.DefaultSelection<Prisma.$Ingredient_productPayload>
+/**
+ * Model Mtdo_pagto
+ * 
+ */
+export type Mtdo_pagto = $Result.DefaultSelection<Prisma.$Mtdo_pagtoPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -85,7 +90,7 @@ export type Ingredient_product = $Result.DefaultSelection<Prisma.$Ingredient_pro
  */
 export class PrismaClient<
   ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
-  U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
+  const U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
   ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
@@ -117,13 +122,6 @@ export class PrismaClient<
    * Disconnect from the database
    */
   $disconnect(): $Utils.JsPromise<void>;
-
-  /**
-   * Add a middleware
-   * @deprecated since 4.16.0. For new code, prefer client extensions instead.
-   * @see https://pris.ly/d/extensions
-   */
-  $use(cb: Prisma.Middleware): void
 
 /**
    * Executes a prepared raw query and returns the number of affected rows.
@@ -303,6 +301,16 @@ export class PrismaClient<
     * ```
     */
   get ingredient_product(): Prisma.Ingredient_productDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.mtdo_pagto`: Exposes CRUD operations for the **Mtdo_pagto** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Mtdo_pagtos
+    * const mtdo_pagtos = await prisma.mtdo_pagto.findMany()
+    * ```
+    */
+  get mtdo_pagto(): Prisma.Mtdo_pagtoDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -361,8 +369,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.9.0
-   * Query Engine version: 81e4af48011447c3cc503a190e86995b66d2a28e
+   * Prisma Client JS version: 6.16.2
+   * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
    */
   export type PrismaVersion = {
     client: string
@@ -753,7 +761,8 @@ export namespace Prisma {
     Costumer: 'Costumer',
     Payment: 'Payment',
     Ingredient: 'Ingredient',
-    Ingredient_product: 'Ingredient_product'
+    Ingredient_product: 'Ingredient_product',
+    Mtdo_pagto: 'Mtdo_pagto'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -772,7 +781,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "category" | "product" | "order" | "table" | "item" | "role" | "costumer" | "payment" | "ingredient" | "ingredient_product"
+      modelProps: "user" | "category" | "product" | "order" | "table" | "item" | "role" | "costumer" | "payment" | "ingredient" | "ingredient_product" | "mtdo_pagto"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1590,6 +1599,80 @@ export namespace Prisma {
           }
         }
       }
+      Mtdo_pagto: {
+        payload: Prisma.$Mtdo_pagtoPayload<ExtArgs>
+        fields: Prisma.Mtdo_pagtoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Mtdo_pagtoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Mtdo_pagtoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Mtdo_pagtoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Mtdo_pagtoPayload>
+          }
+          findFirst: {
+            args: Prisma.Mtdo_pagtoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Mtdo_pagtoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Mtdo_pagtoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Mtdo_pagtoPayload>
+          }
+          findMany: {
+            args: Prisma.Mtdo_pagtoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Mtdo_pagtoPayload>[]
+          }
+          create: {
+            args: Prisma.Mtdo_pagtoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Mtdo_pagtoPayload>
+          }
+          createMany: {
+            args: Prisma.Mtdo_pagtoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Mtdo_pagtoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Mtdo_pagtoPayload>[]
+          }
+          delete: {
+            args: Prisma.Mtdo_pagtoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Mtdo_pagtoPayload>
+          }
+          update: {
+            args: Prisma.Mtdo_pagtoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Mtdo_pagtoPayload>
+          }
+          deleteMany: {
+            args: Prisma.Mtdo_pagtoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Mtdo_pagtoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.Mtdo_pagtoUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Mtdo_pagtoPayload>[]
+          }
+          upsert: {
+            args: Prisma.Mtdo_pagtoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Mtdo_pagtoPayload>
+          }
+          aggregate: {
+            args: Prisma.Mtdo_pagtoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMtdo_pagto>
+          }
+          groupBy: {
+            args: Prisma.Mtdo_pagtoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Mtdo_pagtoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Mtdo_pagtoCountArgs<ExtArgs>
+            result: $Utils.Optional<Mtdo_pagtoCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1633,16 +1716,24 @@ export namespace Prisma {
     /**
      * @example
      * ```
-     * // Defaults to stdout
+     * // Shorthand for `emit: 'stdout'`
      * log: ['query', 'info', 'warn', 'error']
      * 
-     * // Emit as events
+     * // Emit as events only
      * log: [
-     *   { emit: 'stdout', level: 'query' },
-     *   { emit: 'stdout', level: 'info' },
-     *   { emit: 'stdout', level: 'warn' }
-     *   { emit: 'stdout', level: 'error' }
+     *   { emit: 'event', level: 'query' },
+     *   { emit: 'event', level: 'info' },
+     *   { emit: 'event', level: 'warn' }
+     *   { emit: 'event', level: 'error' }
      * ]
+     * 
+     * / Emit as events and log to stdout
+     * og: [
+     *  { emit: 'stdout', level: 'query' },
+     *  { emit: 'stdout', level: 'info' },
+     *  { emit: 'stdout', level: 'warn' }
+     *  { emit: 'stdout', level: 'error' }
+     * 
      * ```
      * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
      */
@@ -1657,6 +1748,10 @@ export namespace Prisma {
       timeout?: number
       isolationLevel?: Prisma.TransactionIsolationLevel
     }
+    /**
+     * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale`
+     */
+    adapter?: runtime.SqlDriverAdapterFactory | null
     /**
      * Global configuration for omitting model fields by default.
      * 
@@ -1685,6 +1780,7 @@ export namespace Prisma {
     payment?: PaymentOmit
     ingredient?: IngredientOmit
     ingredient_product?: Ingredient_productOmit
+    mtdo_pagto?: Mtdo_pagtoOmit
   }
 
   /* Types for Logging */
@@ -1694,10 +1790,15 @@ export namespace Prisma {
     emit: 'stdout' | 'event'
   }
 
-  export type GetLogType<T extends LogLevel | LogDefinition> = T extends LogDefinition ? T['emit'] extends 'event' ? T['level'] : never : never
-  export type GetEvents<T extends any> = T extends Array<LogLevel | LogDefinition> ?
-    GetLogType<T[0]> | GetLogType<T[1]> | GetLogType<T[2]> | GetLogType<T[3]>
-    : never
+  export type CheckIsLogLevel<T> = T extends LogLevel ? T : never;
+
+  export type GetLogType<T> = CheckIsLogLevel<
+    T extends LogDefinition ? T['level'] : T
+  >;
+
+  export type GetEvents<T extends any[]> = T extends Array<LogLevel | LogDefinition>
+    ? GetLogType<T[number]>
+    : never;
 
   export type QueryEvent = {
     timestamp: Date
@@ -1737,25 +1838,6 @@ export namespace Prisma {
     | 'runCommandRaw'
     | 'findRaw'
     | 'groupBy'
-
-  /**
-   * These options are being passed into the middleware as "params"
-   */
-  export type MiddlewareParams = {
-    model?: ModelName
-    action: PrismaAction
-    args: any
-    dataPath: string[]
-    runInTransaction: boolean
-  }
-
-  /**
-   * The `T` type makes sure, that the `return proceed` is not forgotten in the middleware implementation
-   */
-  export type Middleware<T = any> = (
-    params: MiddlewareParams,
-    next: (params: MiddlewareParams) => $Utils.JsPromise<T>,
-  ) => $Utils.JsPromise<T>
 
   // tested in getLogLevel.test.ts
   export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined;
@@ -2015,6 +2097,37 @@ export namespace Prisma {
    */
   export type IngredientCountOutputTypeCountIngredient_productArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: Ingredient_productWhereInput
+  }
+
+
+  /**
+   * Count Type Mtdo_pagtoCountOutputType
+   */
+
+  export type Mtdo_pagtoCountOutputType = {
+    payments: number
+  }
+
+  export type Mtdo_pagtoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    payments?: boolean | Mtdo_pagtoCountOutputTypeCountPaymentsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Mtdo_pagtoCountOutputType without action
+   */
+  export type Mtdo_pagtoCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mtdo_pagtoCountOutputType
+     */
+    select?: Mtdo_pagtoCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Mtdo_pagtoCountOutputType without action
+   */
+  export type Mtdo_pagtoCountOutputTypeCountPaymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PaymentWhereInput
   }
 
 
@@ -10912,7 +11025,7 @@ export namespace Prisma {
 
   export type PaymentMinAggregateOutputType = {
     id: string | null
-    mtdo_pagto: string | null
+    mtdo_pagto_id: string | null
     order_id: string | null
     table_id: string | null
     created_at: Date | null
@@ -10921,7 +11034,7 @@ export namespace Prisma {
 
   export type PaymentMaxAggregateOutputType = {
     id: string | null
-    mtdo_pagto: string | null
+    mtdo_pagto_id: string | null
     order_id: string | null
     table_id: string | null
     created_at: Date | null
@@ -10930,7 +11043,7 @@ export namespace Prisma {
 
   export type PaymentCountAggregateOutputType = {
     id: number
-    mtdo_pagto: number
+    mtdo_pagto_id: number
     order_id: number
     table_id: number
     created_at: number
@@ -10941,7 +11054,7 @@ export namespace Prisma {
 
   export type PaymentMinAggregateInputType = {
     id?: true
-    mtdo_pagto?: true
+    mtdo_pagto_id?: true
     order_id?: true
     table_id?: true
     created_at?: true
@@ -10950,7 +11063,7 @@ export namespace Prisma {
 
   export type PaymentMaxAggregateInputType = {
     id?: true
-    mtdo_pagto?: true
+    mtdo_pagto_id?: true
     order_id?: true
     table_id?: true
     created_at?: true
@@ -10959,7 +11072,7 @@ export namespace Prisma {
 
   export type PaymentCountAggregateInputType = {
     id?: true
-    mtdo_pagto?: true
+    mtdo_pagto_id?: true
     order_id?: true
     table_id?: true
     created_at?: true
@@ -11041,7 +11154,7 @@ export namespace Prisma {
 
   export type PaymentGroupByOutputType = {
     id: string
-    mtdo_pagto: string
+    mtdo_pagto_id: string
     order_id: string
     table_id: string
     created_at: Date
@@ -11067,56 +11180,62 @@ export namespace Prisma {
 
   export type PaymentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    mtdo_pagto?: boolean
+    mtdo_pagto_id?: boolean
     order_id?: boolean
     table_id?: boolean
     created_at?: boolean
     updated_at?: boolean
+    mtdo_pagto?: boolean | Mtdo_pagtoDefaultArgs<ExtArgs>
     order?: boolean | OrderDefaultArgs<ExtArgs>
     table?: boolean | TableDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["payment"]>
 
   export type PaymentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    mtdo_pagto?: boolean
+    mtdo_pagto_id?: boolean
     order_id?: boolean
     table_id?: boolean
     created_at?: boolean
     updated_at?: boolean
+    mtdo_pagto?: boolean | Mtdo_pagtoDefaultArgs<ExtArgs>
     order?: boolean | OrderDefaultArgs<ExtArgs>
     table?: boolean | TableDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["payment"]>
 
   export type PaymentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    mtdo_pagto?: boolean
+    mtdo_pagto_id?: boolean
     order_id?: boolean
     table_id?: boolean
     created_at?: boolean
     updated_at?: boolean
+    mtdo_pagto?: boolean | Mtdo_pagtoDefaultArgs<ExtArgs>
     order?: boolean | OrderDefaultArgs<ExtArgs>
     table?: boolean | TableDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["payment"]>
 
   export type PaymentSelectScalar = {
     id?: boolean
-    mtdo_pagto?: boolean
+    mtdo_pagto_id?: boolean
     order_id?: boolean
     table_id?: boolean
     created_at?: boolean
     updated_at?: boolean
   }
 
-  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "mtdo_pagto" | "order_id" | "table_id" | "created_at" | "updated_at", ExtArgs["result"]["payment"]>
+  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "mtdo_pagto_id" | "order_id" | "table_id" | "created_at" | "updated_at", ExtArgs["result"]["payment"]>
   export type PaymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    mtdo_pagto?: boolean | Mtdo_pagtoDefaultArgs<ExtArgs>
     order?: boolean | OrderDefaultArgs<ExtArgs>
     table?: boolean | TableDefaultArgs<ExtArgs>
   }
   export type PaymentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    mtdo_pagto?: boolean | Mtdo_pagtoDefaultArgs<ExtArgs>
     order?: boolean | OrderDefaultArgs<ExtArgs>
     table?: boolean | TableDefaultArgs<ExtArgs>
   }
   export type PaymentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    mtdo_pagto?: boolean | Mtdo_pagtoDefaultArgs<ExtArgs>
     order?: boolean | OrderDefaultArgs<ExtArgs>
     table?: boolean | TableDefaultArgs<ExtArgs>
   }
@@ -11124,12 +11243,13 @@ export namespace Prisma {
   export type $PaymentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Payment"
     objects: {
+      mtdo_pagto: Prisma.$Mtdo_pagtoPayload<ExtArgs>
       order: Prisma.$OrderPayload<ExtArgs>
       table: Prisma.$TablePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      mtdo_pagto: string
+      mtdo_pagto_id: string
       order_id: string
       table_id: string
       created_at: Date
@@ -11528,6 +11648,7 @@ export namespace Prisma {
    */
   export interface Prisma__PaymentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    mtdo_pagto<T extends Mtdo_pagtoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Mtdo_pagtoDefaultArgs<ExtArgs>>): Prisma__Mtdo_pagtoClient<$Result.GetResult<Prisma.$Mtdo_pagtoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     order<T extends OrderDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrderDefaultArgs<ExtArgs>>): Prisma__OrderClient<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     table<T extends TableDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TableDefaultArgs<ExtArgs>>): Prisma__TableClient<$Result.GetResult<Prisma.$TablePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
@@ -11560,7 +11681,7 @@ export namespace Prisma {
    */
   interface PaymentFieldRefs {
     readonly id: FieldRef<"Payment", 'String'>
-    readonly mtdo_pagto: FieldRef<"Payment", 'String'>
+    readonly mtdo_pagto_id: FieldRef<"Payment", 'String'>
     readonly order_id: FieldRef<"Payment", 'String'>
     readonly table_id: FieldRef<"Payment", 'String'>
     readonly created_at: FieldRef<"Payment", 'DateTime'>
@@ -14116,6 +14237,1063 @@ export namespace Prisma {
 
 
   /**
+   * Model Mtdo_pagto
+   */
+
+  export type AggregateMtdo_pagto = {
+    _count: Mtdo_pagtoCountAggregateOutputType | null
+    _min: Mtdo_pagtoMinAggregateOutputType | null
+    _max: Mtdo_pagtoMaxAggregateOutputType | null
+  }
+
+  export type Mtdo_pagtoMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type Mtdo_pagtoMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type Mtdo_pagtoCountAggregateOutputType = {
+    id: number
+    name: number
+    created_at: number
+    updated_at: number
+    _all: number
+  }
+
+
+  export type Mtdo_pagtoMinAggregateInputType = {
+    id?: true
+    name?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type Mtdo_pagtoMaxAggregateInputType = {
+    id?: true
+    name?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type Mtdo_pagtoCountAggregateInputType = {
+    id?: true
+    name?: true
+    created_at?: true
+    updated_at?: true
+    _all?: true
+  }
+
+  export type Mtdo_pagtoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Mtdo_pagto to aggregate.
+     */
+    where?: Mtdo_pagtoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Mtdo_pagtos to fetch.
+     */
+    orderBy?: Mtdo_pagtoOrderByWithRelationInput | Mtdo_pagtoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Mtdo_pagtoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Mtdo_pagtos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Mtdo_pagtos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Mtdo_pagtos
+    **/
+    _count?: true | Mtdo_pagtoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Mtdo_pagtoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Mtdo_pagtoMaxAggregateInputType
+  }
+
+  export type GetMtdo_pagtoAggregateType<T extends Mtdo_pagtoAggregateArgs> = {
+        [P in keyof T & keyof AggregateMtdo_pagto]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMtdo_pagto[P]>
+      : GetScalarType<T[P], AggregateMtdo_pagto[P]>
+  }
+
+
+
+
+  export type Mtdo_pagtoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Mtdo_pagtoWhereInput
+    orderBy?: Mtdo_pagtoOrderByWithAggregationInput | Mtdo_pagtoOrderByWithAggregationInput[]
+    by: Mtdo_pagtoScalarFieldEnum[] | Mtdo_pagtoScalarFieldEnum
+    having?: Mtdo_pagtoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Mtdo_pagtoCountAggregateInputType | true
+    _min?: Mtdo_pagtoMinAggregateInputType
+    _max?: Mtdo_pagtoMaxAggregateInputType
+  }
+
+  export type Mtdo_pagtoGroupByOutputType = {
+    id: string
+    name: string
+    created_at: Date
+    updated_at: Date
+    _count: Mtdo_pagtoCountAggregateOutputType | null
+    _min: Mtdo_pagtoMinAggregateOutputType | null
+    _max: Mtdo_pagtoMaxAggregateOutputType | null
+  }
+
+  type GetMtdo_pagtoGroupByPayload<T extends Mtdo_pagtoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Mtdo_pagtoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Mtdo_pagtoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Mtdo_pagtoGroupByOutputType[P]>
+            : GetScalarType<T[P], Mtdo_pagtoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Mtdo_pagtoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    payments?: boolean | Mtdo_pagto$paymentsArgs<ExtArgs>
+    _count?: boolean | Mtdo_pagtoCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mtdo_pagto"]>
+
+  export type Mtdo_pagtoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }, ExtArgs["result"]["mtdo_pagto"]>
+
+  export type Mtdo_pagtoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }, ExtArgs["result"]["mtdo_pagto"]>
+
+  export type Mtdo_pagtoSelectScalar = {
+    id?: boolean
+    name?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }
+
+  export type Mtdo_pagtoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "created_at" | "updated_at", ExtArgs["result"]["mtdo_pagto"]>
+  export type Mtdo_pagtoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    payments?: boolean | Mtdo_pagto$paymentsArgs<ExtArgs>
+    _count?: boolean | Mtdo_pagtoCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type Mtdo_pagtoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type Mtdo_pagtoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $Mtdo_pagtoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Mtdo_pagto"
+    objects: {
+      payments: Prisma.$PaymentPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      created_at: Date
+      updated_at: Date
+    }, ExtArgs["result"]["mtdo_pagto"]>
+    composites: {}
+  }
+
+  type Mtdo_pagtoGetPayload<S extends boolean | null | undefined | Mtdo_pagtoDefaultArgs> = $Result.GetResult<Prisma.$Mtdo_pagtoPayload, S>
+
+  type Mtdo_pagtoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<Mtdo_pagtoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Mtdo_pagtoCountAggregateInputType | true
+    }
+
+  export interface Mtdo_pagtoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Mtdo_pagto'], meta: { name: 'Mtdo_pagto' } }
+    /**
+     * Find zero or one Mtdo_pagto that matches the filter.
+     * @param {Mtdo_pagtoFindUniqueArgs} args - Arguments to find a Mtdo_pagto
+     * @example
+     * // Get one Mtdo_pagto
+     * const mtdo_pagto = await prisma.mtdo_pagto.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Mtdo_pagtoFindUniqueArgs>(args: SelectSubset<T, Mtdo_pagtoFindUniqueArgs<ExtArgs>>): Prisma__Mtdo_pagtoClient<$Result.GetResult<Prisma.$Mtdo_pagtoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Mtdo_pagto that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {Mtdo_pagtoFindUniqueOrThrowArgs} args - Arguments to find a Mtdo_pagto
+     * @example
+     * // Get one Mtdo_pagto
+     * const mtdo_pagto = await prisma.mtdo_pagto.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Mtdo_pagtoFindUniqueOrThrowArgs>(args: SelectSubset<T, Mtdo_pagtoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Mtdo_pagtoClient<$Result.GetResult<Prisma.$Mtdo_pagtoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Mtdo_pagto that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Mtdo_pagtoFindFirstArgs} args - Arguments to find a Mtdo_pagto
+     * @example
+     * // Get one Mtdo_pagto
+     * const mtdo_pagto = await prisma.mtdo_pagto.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Mtdo_pagtoFindFirstArgs>(args?: SelectSubset<T, Mtdo_pagtoFindFirstArgs<ExtArgs>>): Prisma__Mtdo_pagtoClient<$Result.GetResult<Prisma.$Mtdo_pagtoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Mtdo_pagto that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Mtdo_pagtoFindFirstOrThrowArgs} args - Arguments to find a Mtdo_pagto
+     * @example
+     * // Get one Mtdo_pagto
+     * const mtdo_pagto = await prisma.mtdo_pagto.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Mtdo_pagtoFindFirstOrThrowArgs>(args?: SelectSubset<T, Mtdo_pagtoFindFirstOrThrowArgs<ExtArgs>>): Prisma__Mtdo_pagtoClient<$Result.GetResult<Prisma.$Mtdo_pagtoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Mtdo_pagtos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Mtdo_pagtoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Mtdo_pagtos
+     * const mtdo_pagtos = await prisma.mtdo_pagto.findMany()
+     * 
+     * // Get first 10 Mtdo_pagtos
+     * const mtdo_pagtos = await prisma.mtdo_pagto.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const mtdo_pagtoWithIdOnly = await prisma.mtdo_pagto.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Mtdo_pagtoFindManyArgs>(args?: SelectSubset<T, Mtdo_pagtoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Mtdo_pagtoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Mtdo_pagto.
+     * @param {Mtdo_pagtoCreateArgs} args - Arguments to create a Mtdo_pagto.
+     * @example
+     * // Create one Mtdo_pagto
+     * const Mtdo_pagto = await prisma.mtdo_pagto.create({
+     *   data: {
+     *     // ... data to create a Mtdo_pagto
+     *   }
+     * })
+     * 
+     */
+    create<T extends Mtdo_pagtoCreateArgs>(args: SelectSubset<T, Mtdo_pagtoCreateArgs<ExtArgs>>): Prisma__Mtdo_pagtoClient<$Result.GetResult<Prisma.$Mtdo_pagtoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Mtdo_pagtos.
+     * @param {Mtdo_pagtoCreateManyArgs} args - Arguments to create many Mtdo_pagtos.
+     * @example
+     * // Create many Mtdo_pagtos
+     * const mtdo_pagto = await prisma.mtdo_pagto.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Mtdo_pagtoCreateManyArgs>(args?: SelectSubset<T, Mtdo_pagtoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Mtdo_pagtos and returns the data saved in the database.
+     * @param {Mtdo_pagtoCreateManyAndReturnArgs} args - Arguments to create many Mtdo_pagtos.
+     * @example
+     * // Create many Mtdo_pagtos
+     * const mtdo_pagto = await prisma.mtdo_pagto.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Mtdo_pagtos and only return the `id`
+     * const mtdo_pagtoWithIdOnly = await prisma.mtdo_pagto.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Mtdo_pagtoCreateManyAndReturnArgs>(args?: SelectSubset<T, Mtdo_pagtoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Mtdo_pagtoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Mtdo_pagto.
+     * @param {Mtdo_pagtoDeleteArgs} args - Arguments to delete one Mtdo_pagto.
+     * @example
+     * // Delete one Mtdo_pagto
+     * const Mtdo_pagto = await prisma.mtdo_pagto.delete({
+     *   where: {
+     *     // ... filter to delete one Mtdo_pagto
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Mtdo_pagtoDeleteArgs>(args: SelectSubset<T, Mtdo_pagtoDeleteArgs<ExtArgs>>): Prisma__Mtdo_pagtoClient<$Result.GetResult<Prisma.$Mtdo_pagtoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Mtdo_pagto.
+     * @param {Mtdo_pagtoUpdateArgs} args - Arguments to update one Mtdo_pagto.
+     * @example
+     * // Update one Mtdo_pagto
+     * const mtdo_pagto = await prisma.mtdo_pagto.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Mtdo_pagtoUpdateArgs>(args: SelectSubset<T, Mtdo_pagtoUpdateArgs<ExtArgs>>): Prisma__Mtdo_pagtoClient<$Result.GetResult<Prisma.$Mtdo_pagtoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Mtdo_pagtos.
+     * @param {Mtdo_pagtoDeleteManyArgs} args - Arguments to filter Mtdo_pagtos to delete.
+     * @example
+     * // Delete a few Mtdo_pagtos
+     * const { count } = await prisma.mtdo_pagto.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Mtdo_pagtoDeleteManyArgs>(args?: SelectSubset<T, Mtdo_pagtoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Mtdo_pagtos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Mtdo_pagtoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Mtdo_pagtos
+     * const mtdo_pagto = await prisma.mtdo_pagto.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Mtdo_pagtoUpdateManyArgs>(args: SelectSubset<T, Mtdo_pagtoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Mtdo_pagtos and returns the data updated in the database.
+     * @param {Mtdo_pagtoUpdateManyAndReturnArgs} args - Arguments to update many Mtdo_pagtos.
+     * @example
+     * // Update many Mtdo_pagtos
+     * const mtdo_pagto = await prisma.mtdo_pagto.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Mtdo_pagtos and only return the `id`
+     * const mtdo_pagtoWithIdOnly = await prisma.mtdo_pagto.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends Mtdo_pagtoUpdateManyAndReturnArgs>(args: SelectSubset<T, Mtdo_pagtoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Mtdo_pagtoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Mtdo_pagto.
+     * @param {Mtdo_pagtoUpsertArgs} args - Arguments to update or create a Mtdo_pagto.
+     * @example
+     * // Update or create a Mtdo_pagto
+     * const mtdo_pagto = await prisma.mtdo_pagto.upsert({
+     *   create: {
+     *     // ... data to create a Mtdo_pagto
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Mtdo_pagto we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Mtdo_pagtoUpsertArgs>(args: SelectSubset<T, Mtdo_pagtoUpsertArgs<ExtArgs>>): Prisma__Mtdo_pagtoClient<$Result.GetResult<Prisma.$Mtdo_pagtoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Mtdo_pagtos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Mtdo_pagtoCountArgs} args - Arguments to filter Mtdo_pagtos to count.
+     * @example
+     * // Count the number of Mtdo_pagtos
+     * const count = await prisma.mtdo_pagto.count({
+     *   where: {
+     *     // ... the filter for the Mtdo_pagtos we want to count
+     *   }
+     * })
+    **/
+    count<T extends Mtdo_pagtoCountArgs>(
+      args?: Subset<T, Mtdo_pagtoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Mtdo_pagtoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Mtdo_pagto.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Mtdo_pagtoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Mtdo_pagtoAggregateArgs>(args: Subset<T, Mtdo_pagtoAggregateArgs>): Prisma.PrismaPromise<GetMtdo_pagtoAggregateType<T>>
+
+    /**
+     * Group by Mtdo_pagto.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Mtdo_pagtoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Mtdo_pagtoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Mtdo_pagtoGroupByArgs['orderBy'] }
+        : { orderBy?: Mtdo_pagtoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Mtdo_pagtoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMtdo_pagtoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Mtdo_pagto model
+   */
+  readonly fields: Mtdo_pagtoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Mtdo_pagto.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Mtdo_pagtoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    payments<T extends Mtdo_pagto$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, Mtdo_pagto$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Mtdo_pagto model
+   */
+  interface Mtdo_pagtoFieldRefs {
+    readonly id: FieldRef<"Mtdo_pagto", 'String'>
+    readonly name: FieldRef<"Mtdo_pagto", 'String'>
+    readonly created_at: FieldRef<"Mtdo_pagto", 'DateTime'>
+    readonly updated_at: FieldRef<"Mtdo_pagto", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Mtdo_pagto findUnique
+   */
+  export type Mtdo_pagtoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mtdo_pagto
+     */
+    select?: Mtdo_pagtoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mtdo_pagto
+     */
+    omit?: Mtdo_pagtoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Mtdo_pagtoInclude<ExtArgs> | null
+    /**
+     * Filter, which Mtdo_pagto to fetch.
+     */
+    where: Mtdo_pagtoWhereUniqueInput
+  }
+
+  /**
+   * Mtdo_pagto findUniqueOrThrow
+   */
+  export type Mtdo_pagtoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mtdo_pagto
+     */
+    select?: Mtdo_pagtoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mtdo_pagto
+     */
+    omit?: Mtdo_pagtoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Mtdo_pagtoInclude<ExtArgs> | null
+    /**
+     * Filter, which Mtdo_pagto to fetch.
+     */
+    where: Mtdo_pagtoWhereUniqueInput
+  }
+
+  /**
+   * Mtdo_pagto findFirst
+   */
+  export type Mtdo_pagtoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mtdo_pagto
+     */
+    select?: Mtdo_pagtoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mtdo_pagto
+     */
+    omit?: Mtdo_pagtoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Mtdo_pagtoInclude<ExtArgs> | null
+    /**
+     * Filter, which Mtdo_pagto to fetch.
+     */
+    where?: Mtdo_pagtoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Mtdo_pagtos to fetch.
+     */
+    orderBy?: Mtdo_pagtoOrderByWithRelationInput | Mtdo_pagtoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Mtdo_pagtos.
+     */
+    cursor?: Mtdo_pagtoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Mtdo_pagtos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Mtdo_pagtos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Mtdo_pagtos.
+     */
+    distinct?: Mtdo_pagtoScalarFieldEnum | Mtdo_pagtoScalarFieldEnum[]
+  }
+
+  /**
+   * Mtdo_pagto findFirstOrThrow
+   */
+  export type Mtdo_pagtoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mtdo_pagto
+     */
+    select?: Mtdo_pagtoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mtdo_pagto
+     */
+    omit?: Mtdo_pagtoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Mtdo_pagtoInclude<ExtArgs> | null
+    /**
+     * Filter, which Mtdo_pagto to fetch.
+     */
+    where?: Mtdo_pagtoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Mtdo_pagtos to fetch.
+     */
+    orderBy?: Mtdo_pagtoOrderByWithRelationInput | Mtdo_pagtoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Mtdo_pagtos.
+     */
+    cursor?: Mtdo_pagtoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Mtdo_pagtos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Mtdo_pagtos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Mtdo_pagtos.
+     */
+    distinct?: Mtdo_pagtoScalarFieldEnum | Mtdo_pagtoScalarFieldEnum[]
+  }
+
+  /**
+   * Mtdo_pagto findMany
+   */
+  export type Mtdo_pagtoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mtdo_pagto
+     */
+    select?: Mtdo_pagtoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mtdo_pagto
+     */
+    omit?: Mtdo_pagtoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Mtdo_pagtoInclude<ExtArgs> | null
+    /**
+     * Filter, which Mtdo_pagtos to fetch.
+     */
+    where?: Mtdo_pagtoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Mtdo_pagtos to fetch.
+     */
+    orderBy?: Mtdo_pagtoOrderByWithRelationInput | Mtdo_pagtoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Mtdo_pagtos.
+     */
+    cursor?: Mtdo_pagtoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Mtdo_pagtos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Mtdo_pagtos.
+     */
+    skip?: number
+    distinct?: Mtdo_pagtoScalarFieldEnum | Mtdo_pagtoScalarFieldEnum[]
+  }
+
+  /**
+   * Mtdo_pagto create
+   */
+  export type Mtdo_pagtoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mtdo_pagto
+     */
+    select?: Mtdo_pagtoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mtdo_pagto
+     */
+    omit?: Mtdo_pagtoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Mtdo_pagtoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Mtdo_pagto.
+     */
+    data: XOR<Mtdo_pagtoCreateInput, Mtdo_pagtoUncheckedCreateInput>
+  }
+
+  /**
+   * Mtdo_pagto createMany
+   */
+  export type Mtdo_pagtoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Mtdo_pagtos.
+     */
+    data: Mtdo_pagtoCreateManyInput | Mtdo_pagtoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Mtdo_pagto createManyAndReturn
+   */
+  export type Mtdo_pagtoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mtdo_pagto
+     */
+    select?: Mtdo_pagtoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mtdo_pagto
+     */
+    omit?: Mtdo_pagtoOmit<ExtArgs> | null
+    /**
+     * The data used to create many Mtdo_pagtos.
+     */
+    data: Mtdo_pagtoCreateManyInput | Mtdo_pagtoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Mtdo_pagto update
+   */
+  export type Mtdo_pagtoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mtdo_pagto
+     */
+    select?: Mtdo_pagtoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mtdo_pagto
+     */
+    omit?: Mtdo_pagtoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Mtdo_pagtoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Mtdo_pagto.
+     */
+    data: XOR<Mtdo_pagtoUpdateInput, Mtdo_pagtoUncheckedUpdateInput>
+    /**
+     * Choose, which Mtdo_pagto to update.
+     */
+    where: Mtdo_pagtoWhereUniqueInput
+  }
+
+  /**
+   * Mtdo_pagto updateMany
+   */
+  export type Mtdo_pagtoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Mtdo_pagtos.
+     */
+    data: XOR<Mtdo_pagtoUpdateManyMutationInput, Mtdo_pagtoUncheckedUpdateManyInput>
+    /**
+     * Filter which Mtdo_pagtos to update
+     */
+    where?: Mtdo_pagtoWhereInput
+    /**
+     * Limit how many Mtdo_pagtos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Mtdo_pagto updateManyAndReturn
+   */
+  export type Mtdo_pagtoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mtdo_pagto
+     */
+    select?: Mtdo_pagtoSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mtdo_pagto
+     */
+    omit?: Mtdo_pagtoOmit<ExtArgs> | null
+    /**
+     * The data used to update Mtdo_pagtos.
+     */
+    data: XOR<Mtdo_pagtoUpdateManyMutationInput, Mtdo_pagtoUncheckedUpdateManyInput>
+    /**
+     * Filter which Mtdo_pagtos to update
+     */
+    where?: Mtdo_pagtoWhereInput
+    /**
+     * Limit how many Mtdo_pagtos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Mtdo_pagto upsert
+   */
+  export type Mtdo_pagtoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mtdo_pagto
+     */
+    select?: Mtdo_pagtoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mtdo_pagto
+     */
+    omit?: Mtdo_pagtoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Mtdo_pagtoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Mtdo_pagto to update in case it exists.
+     */
+    where: Mtdo_pagtoWhereUniqueInput
+    /**
+     * In case the Mtdo_pagto found by the `where` argument doesn't exist, create a new Mtdo_pagto with this data.
+     */
+    create: XOR<Mtdo_pagtoCreateInput, Mtdo_pagtoUncheckedCreateInput>
+    /**
+     * In case the Mtdo_pagto was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Mtdo_pagtoUpdateInput, Mtdo_pagtoUncheckedUpdateInput>
+  }
+
+  /**
+   * Mtdo_pagto delete
+   */
+  export type Mtdo_pagtoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mtdo_pagto
+     */
+    select?: Mtdo_pagtoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mtdo_pagto
+     */
+    omit?: Mtdo_pagtoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Mtdo_pagtoInclude<ExtArgs> | null
+    /**
+     * Filter which Mtdo_pagto to delete.
+     */
+    where: Mtdo_pagtoWhereUniqueInput
+  }
+
+  /**
+   * Mtdo_pagto deleteMany
+   */
+  export type Mtdo_pagtoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Mtdo_pagtos to delete
+     */
+    where?: Mtdo_pagtoWhereInput
+    /**
+     * Limit how many Mtdo_pagtos to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Mtdo_pagto.payments
+   */
+  export type Mtdo_pagto$paymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    where?: PaymentWhereInput
+    orderBy?: PaymentOrderByWithRelationInput | PaymentOrderByWithRelationInput[]
+    cursor?: PaymentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PaymentScalarFieldEnum | PaymentScalarFieldEnum[]
+  }
+
+  /**
+   * Mtdo_pagto without action
+   */
+  export type Mtdo_pagtoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mtdo_pagto
+     */
+    select?: Mtdo_pagtoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mtdo_pagto
+     */
+    omit?: Mtdo_pagtoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Mtdo_pagtoInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -14227,7 +15405,7 @@ export namespace Prisma {
 
   export const PaymentScalarFieldEnum: {
     id: 'id',
-    mtdo_pagto: 'mtdo_pagto',
+    mtdo_pagto_id: 'mtdo_pagto_id',
     order_id: 'order_id',
     table_id: 'table_id',
     created_at: 'created_at',
@@ -14257,6 +15435,16 @@ export namespace Prisma {
   };
 
   export type Ingredient_productScalarFieldEnum = (typeof Ingredient_productScalarFieldEnum)[keyof typeof Ingredient_productScalarFieldEnum]
+
+
+  export const Mtdo_pagtoScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    created_at: 'created_at',
+    updated_at: 'updated_at'
+  };
+
+  export type Mtdo_pagtoScalarFieldEnum = (typeof Mtdo_pagtoScalarFieldEnum)[keyof typeof Mtdo_pagtoScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -14866,22 +16054,24 @@ export namespace Prisma {
     OR?: PaymentWhereInput[]
     NOT?: PaymentWhereInput | PaymentWhereInput[]
     id?: StringFilter<"Payment"> | string
-    mtdo_pagto?: StringFilter<"Payment"> | string
+    mtdo_pagto_id?: StringFilter<"Payment"> | string
     order_id?: StringFilter<"Payment"> | string
     table_id?: StringFilter<"Payment"> | string
     created_at?: DateTimeFilter<"Payment"> | Date | string
     updated_at?: DateTimeFilter<"Payment"> | Date | string
+    mtdo_pagto?: XOR<Mtdo_pagtoScalarRelationFilter, Mtdo_pagtoWhereInput>
     order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
     table?: XOR<TableScalarRelationFilter, TableWhereInput>
   }
 
   export type PaymentOrderByWithRelationInput = {
     id?: SortOrder
-    mtdo_pagto?: SortOrder
+    mtdo_pagto_id?: SortOrder
     order_id?: SortOrder
     table_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    mtdo_pagto?: Mtdo_pagtoOrderByWithRelationInput
     order?: OrderOrderByWithRelationInput
     table?: TableOrderByWithRelationInput
   }
@@ -14891,18 +16081,19 @@ export namespace Prisma {
     AND?: PaymentWhereInput | PaymentWhereInput[]
     OR?: PaymentWhereInput[]
     NOT?: PaymentWhereInput | PaymentWhereInput[]
-    mtdo_pagto?: StringFilter<"Payment"> | string
+    mtdo_pagto_id?: StringFilter<"Payment"> | string
     order_id?: StringFilter<"Payment"> | string
     table_id?: StringFilter<"Payment"> | string
     created_at?: DateTimeFilter<"Payment"> | Date | string
     updated_at?: DateTimeFilter<"Payment"> | Date | string
+    mtdo_pagto?: XOR<Mtdo_pagtoScalarRelationFilter, Mtdo_pagtoWhereInput>
     order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
     table?: XOR<TableScalarRelationFilter, TableWhereInput>
   }, "id">
 
   export type PaymentOrderByWithAggregationInput = {
     id?: SortOrder
-    mtdo_pagto?: SortOrder
+    mtdo_pagto_id?: SortOrder
     order_id?: SortOrder
     table_id?: SortOrder
     created_at?: SortOrder
@@ -14917,7 +16108,7 @@ export namespace Prisma {
     OR?: PaymentScalarWhereWithAggregatesInput[]
     NOT?: PaymentScalarWhereWithAggregatesInput | PaymentScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Payment"> | string
-    mtdo_pagto?: StringWithAggregatesFilter<"Payment"> | string
+    mtdo_pagto_id?: StringWithAggregatesFilter<"Payment"> | string
     order_id?: StringWithAggregatesFilter<"Payment"> | string
     table_id?: StringWithAggregatesFilter<"Payment"> | string
     created_at?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
@@ -15035,6 +16226,56 @@ export namespace Prisma {
     updated_at?: DateTimeWithAggregatesFilter<"Ingredient_product"> | Date | string
     ingredient_id?: StringWithAggregatesFilter<"Ingredient_product"> | string
     product_id?: StringWithAggregatesFilter<"Ingredient_product"> | string
+  }
+
+  export type Mtdo_pagtoWhereInput = {
+    AND?: Mtdo_pagtoWhereInput | Mtdo_pagtoWhereInput[]
+    OR?: Mtdo_pagtoWhereInput[]
+    NOT?: Mtdo_pagtoWhereInput | Mtdo_pagtoWhereInput[]
+    id?: StringFilter<"Mtdo_pagto"> | string
+    name?: StringFilter<"Mtdo_pagto"> | string
+    created_at?: DateTimeFilter<"Mtdo_pagto"> | Date | string
+    updated_at?: DateTimeFilter<"Mtdo_pagto"> | Date | string
+    payments?: PaymentListRelationFilter
+  }
+
+  export type Mtdo_pagtoOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    payments?: PaymentOrderByRelationAggregateInput
+  }
+
+  export type Mtdo_pagtoWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: Mtdo_pagtoWhereInput | Mtdo_pagtoWhereInput[]
+    OR?: Mtdo_pagtoWhereInput[]
+    NOT?: Mtdo_pagtoWhereInput | Mtdo_pagtoWhereInput[]
+    name?: StringFilter<"Mtdo_pagto"> | string
+    created_at?: DateTimeFilter<"Mtdo_pagto"> | Date | string
+    updated_at?: DateTimeFilter<"Mtdo_pagto"> | Date | string
+    payments?: PaymentListRelationFilter
+  }, "id">
+
+  export type Mtdo_pagtoOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    _count?: Mtdo_pagtoCountOrderByAggregateInput
+    _max?: Mtdo_pagtoMaxOrderByAggregateInput
+    _min?: Mtdo_pagtoMinOrderByAggregateInput
+  }
+
+  export type Mtdo_pagtoScalarWhereWithAggregatesInput = {
+    AND?: Mtdo_pagtoScalarWhereWithAggregatesInput | Mtdo_pagtoScalarWhereWithAggregatesInput[]
+    OR?: Mtdo_pagtoScalarWhereWithAggregatesInput[]
+    NOT?: Mtdo_pagtoScalarWhereWithAggregatesInput | Mtdo_pagtoScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Mtdo_pagto"> | string
+    name?: StringWithAggregatesFilter<"Mtdo_pagto"> | string
+    created_at?: DateTimeWithAggregatesFilter<"Mtdo_pagto"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"Mtdo_pagto"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -15573,16 +16814,16 @@ export namespace Prisma {
 
   export type PaymentCreateInput = {
     id?: string
-    mtdo_pagto: string
     created_at?: Date | string
     updated_at?: Date | string
+    mtdo_pagto: Mtdo_pagtoCreateNestedOneWithoutPaymentsInput
     order: OrderCreateNestedOneWithoutPaymentsInput
     table: TableCreateNestedOneWithoutPaymentsInput
   }
 
   export type PaymentUncheckedCreateInput = {
     id?: string
-    mtdo_pagto: string
+    mtdo_pagto_id: string
     order_id: string
     table_id: string
     created_at?: Date | string
@@ -15591,16 +16832,16 @@ export namespace Prisma {
 
   export type PaymentUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    mtdo_pagto?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    mtdo_pagto?: Mtdo_pagtoUpdateOneRequiredWithoutPaymentsNestedInput
     order?: OrderUpdateOneRequiredWithoutPaymentsNestedInput
     table?: TableUpdateOneRequiredWithoutPaymentsNestedInput
   }
 
   export type PaymentUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    mtdo_pagto?: StringFieldUpdateOperationsInput | string
+    mtdo_pagto_id?: StringFieldUpdateOperationsInput | string
     order_id?: StringFieldUpdateOperationsInput | string
     table_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15609,7 +16850,7 @@ export namespace Prisma {
 
   export type PaymentCreateManyInput = {
     id?: string
-    mtdo_pagto: string
+    mtdo_pagto_id: string
     order_id: string
     table_id: string
     created_at?: Date | string
@@ -15618,14 +16859,13 @@ export namespace Prisma {
 
   export type PaymentUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    mtdo_pagto?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PaymentUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    mtdo_pagto?: StringFieldUpdateOperationsInput | string
+    mtdo_pagto_id?: StringFieldUpdateOperationsInput | string
     order_id?: StringFieldUpdateOperationsInput | string
     table_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15744,6 +16984,59 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     ingredient_id?: StringFieldUpdateOperationsInput | string
     product_id?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type Mtdo_pagtoCreateInput = {
+    id?: string
+    name: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    payments?: PaymentCreateNestedManyWithoutMtdo_pagtoInput
+  }
+
+  export type Mtdo_pagtoUncheckedCreateInput = {
+    id?: string
+    name: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    payments?: PaymentUncheckedCreateNestedManyWithoutMtdo_pagtoInput
+  }
+
+  export type Mtdo_pagtoUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    payments?: PaymentUpdateManyWithoutMtdo_pagtoNestedInput
+  }
+
+  export type Mtdo_pagtoUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    payments?: PaymentUncheckedUpdateManyWithoutMtdo_pagtoNestedInput
+  }
+
+  export type Mtdo_pagtoCreateManyInput = {
+    id?: string
+    name: string
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type Mtdo_pagtoUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Mtdo_pagtoUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -16231,9 +17524,14 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type Mtdo_pagtoScalarRelationFilter = {
+    is?: Mtdo_pagtoWhereInput
+    isNot?: Mtdo_pagtoWhereInput
+  }
+
   export type PaymentCountOrderByAggregateInput = {
     id?: SortOrder
-    mtdo_pagto?: SortOrder
+    mtdo_pagto_id?: SortOrder
     order_id?: SortOrder
     table_id?: SortOrder
     created_at?: SortOrder
@@ -16242,7 +17540,7 @@ export namespace Prisma {
 
   export type PaymentMaxOrderByAggregateInput = {
     id?: SortOrder
-    mtdo_pagto?: SortOrder
+    mtdo_pagto_id?: SortOrder
     order_id?: SortOrder
     table_id?: SortOrder
     created_at?: SortOrder
@@ -16251,7 +17549,7 @@ export namespace Prisma {
 
   export type PaymentMinOrderByAggregateInput = {
     id?: SortOrder
-    mtdo_pagto?: SortOrder
+    mtdo_pagto_id?: SortOrder
     order_id?: SortOrder
     table_id?: SortOrder
     created_at?: SortOrder
@@ -16309,6 +17607,27 @@ export namespace Prisma {
     updated_at?: SortOrder
     ingredient_id?: SortOrder
     product_id?: SortOrder
+  }
+
+  export type Mtdo_pagtoCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type Mtdo_pagtoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type Mtdo_pagtoMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type RoleCreateNestedOneWithoutUsersInput = {
@@ -16805,6 +18124,12 @@ export namespace Prisma {
     deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
   }
 
+  export type Mtdo_pagtoCreateNestedOneWithoutPaymentsInput = {
+    create?: XOR<Mtdo_pagtoCreateWithoutPaymentsInput, Mtdo_pagtoUncheckedCreateWithoutPaymentsInput>
+    connectOrCreate?: Mtdo_pagtoCreateOrConnectWithoutPaymentsInput
+    connect?: Mtdo_pagtoWhereUniqueInput
+  }
+
   export type OrderCreateNestedOneWithoutPaymentsInput = {
     create?: XOR<OrderCreateWithoutPaymentsInput, OrderUncheckedCreateWithoutPaymentsInput>
     connectOrCreate?: OrderCreateOrConnectWithoutPaymentsInput
@@ -16815,6 +18140,14 @@ export namespace Prisma {
     create?: XOR<TableCreateWithoutPaymentsInput, TableUncheckedCreateWithoutPaymentsInput>
     connectOrCreate?: TableCreateOrConnectWithoutPaymentsInput
     connect?: TableWhereUniqueInput
+  }
+
+  export type Mtdo_pagtoUpdateOneRequiredWithoutPaymentsNestedInput = {
+    create?: XOR<Mtdo_pagtoCreateWithoutPaymentsInput, Mtdo_pagtoUncheckedCreateWithoutPaymentsInput>
+    connectOrCreate?: Mtdo_pagtoCreateOrConnectWithoutPaymentsInput
+    upsert?: Mtdo_pagtoUpsertWithoutPaymentsInput
+    connect?: Mtdo_pagtoWhereUniqueInput
+    update?: XOR<XOR<Mtdo_pagtoUpdateToOneWithWhereWithoutPaymentsInput, Mtdo_pagtoUpdateWithoutPaymentsInput>, Mtdo_pagtoUncheckedUpdateWithoutPaymentsInput>
   }
 
   export type OrderUpdateOneRequiredWithoutPaymentsNestedInput = {
@@ -16901,6 +18234,48 @@ export namespace Prisma {
     upsert?: ProductUpsertWithoutIngredient_productInput
     connect?: ProductWhereUniqueInput
     update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutIngredient_productInput, ProductUpdateWithoutIngredient_productInput>, ProductUncheckedUpdateWithoutIngredient_productInput>
+  }
+
+  export type PaymentCreateNestedManyWithoutMtdo_pagtoInput = {
+    create?: XOR<PaymentCreateWithoutMtdo_pagtoInput, PaymentUncheckedCreateWithoutMtdo_pagtoInput> | PaymentCreateWithoutMtdo_pagtoInput[] | PaymentUncheckedCreateWithoutMtdo_pagtoInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutMtdo_pagtoInput | PaymentCreateOrConnectWithoutMtdo_pagtoInput[]
+    createMany?: PaymentCreateManyMtdo_pagtoInputEnvelope
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+  }
+
+  export type PaymentUncheckedCreateNestedManyWithoutMtdo_pagtoInput = {
+    create?: XOR<PaymentCreateWithoutMtdo_pagtoInput, PaymentUncheckedCreateWithoutMtdo_pagtoInput> | PaymentCreateWithoutMtdo_pagtoInput[] | PaymentUncheckedCreateWithoutMtdo_pagtoInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutMtdo_pagtoInput | PaymentCreateOrConnectWithoutMtdo_pagtoInput[]
+    createMany?: PaymentCreateManyMtdo_pagtoInputEnvelope
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+  }
+
+  export type PaymentUpdateManyWithoutMtdo_pagtoNestedInput = {
+    create?: XOR<PaymentCreateWithoutMtdo_pagtoInput, PaymentUncheckedCreateWithoutMtdo_pagtoInput> | PaymentCreateWithoutMtdo_pagtoInput[] | PaymentUncheckedCreateWithoutMtdo_pagtoInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutMtdo_pagtoInput | PaymentCreateOrConnectWithoutMtdo_pagtoInput[]
+    upsert?: PaymentUpsertWithWhereUniqueWithoutMtdo_pagtoInput | PaymentUpsertWithWhereUniqueWithoutMtdo_pagtoInput[]
+    createMany?: PaymentCreateManyMtdo_pagtoInputEnvelope
+    set?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    disconnect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    delete?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    update?: PaymentUpdateWithWhereUniqueWithoutMtdo_pagtoInput | PaymentUpdateWithWhereUniqueWithoutMtdo_pagtoInput[]
+    updateMany?: PaymentUpdateManyWithWhereWithoutMtdo_pagtoInput | PaymentUpdateManyWithWhereWithoutMtdo_pagtoInput[]
+    deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
+  }
+
+  export type PaymentUncheckedUpdateManyWithoutMtdo_pagtoNestedInput = {
+    create?: XOR<PaymentCreateWithoutMtdo_pagtoInput, PaymentUncheckedCreateWithoutMtdo_pagtoInput> | PaymentCreateWithoutMtdo_pagtoInput[] | PaymentUncheckedCreateWithoutMtdo_pagtoInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutMtdo_pagtoInput | PaymentCreateOrConnectWithoutMtdo_pagtoInput[]
+    upsert?: PaymentUpsertWithWhereUniqueWithoutMtdo_pagtoInput | PaymentUpsertWithWhereUniqueWithoutMtdo_pagtoInput[]
+    createMany?: PaymentCreateManyMtdo_pagtoInputEnvelope
+    set?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    disconnect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    delete?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    update?: PaymentUpdateWithWhereUniqueWithoutMtdo_pagtoInput | PaymentUpdateWithWhereUniqueWithoutMtdo_pagtoInput[]
+    updateMany?: PaymentUpdateManyWithWhereWithoutMtdo_pagtoInput | PaymentUpdateManyWithWhereWithoutMtdo_pagtoInput[]
+    deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -17409,15 +18784,15 @@ export namespace Prisma {
 
   export type PaymentCreateWithoutOrderInput = {
     id?: string
-    mtdo_pagto: string
     created_at?: Date | string
     updated_at?: Date | string
+    mtdo_pagto: Mtdo_pagtoCreateNestedOneWithoutPaymentsInput
     table: TableCreateNestedOneWithoutPaymentsInput
   }
 
   export type PaymentUncheckedCreateWithoutOrderInput = {
     id?: string
-    mtdo_pagto: string
+    mtdo_pagto_id: string
     table_id: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -17530,7 +18905,7 @@ export namespace Prisma {
     OR?: PaymentScalarWhereInput[]
     NOT?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
     id?: StringFilter<"Payment"> | string
-    mtdo_pagto?: StringFilter<"Payment"> | string
+    mtdo_pagto_id?: StringFilter<"Payment"> | string
     order_id?: StringFilter<"Payment"> | string
     table_id?: StringFilter<"Payment"> | string
     created_at?: DateTimeFilter<"Payment"> | Date | string
@@ -17571,15 +18946,15 @@ export namespace Prisma {
 
   export type PaymentCreateWithoutTableInput = {
     id?: string
-    mtdo_pagto: string
     created_at?: Date | string
     updated_at?: Date | string
+    mtdo_pagto: Mtdo_pagtoCreateNestedOneWithoutPaymentsInput
     order: OrderCreateNestedOneWithoutPaymentsInput
   }
 
   export type PaymentUncheckedCreateWithoutTableInput = {
     id?: string
-    mtdo_pagto: string
+    mtdo_pagto_id: string
     order_id: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -17869,6 +19244,25 @@ export namespace Prisma {
     data: XOR<OrderUpdateManyMutationInput, OrderUncheckedUpdateManyWithoutCostumerInput>
   }
 
+  export type Mtdo_pagtoCreateWithoutPaymentsInput = {
+    id?: string
+    name: string
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type Mtdo_pagtoUncheckedCreateWithoutPaymentsInput = {
+    id?: string
+    name: string
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type Mtdo_pagtoCreateOrConnectWithoutPaymentsInput = {
+    where: Mtdo_pagtoWhereUniqueInput
+    create: XOR<Mtdo_pagtoCreateWithoutPaymentsInput, Mtdo_pagtoUncheckedCreateWithoutPaymentsInput>
+  }
+
   export type OrderCreateWithoutPaymentsInput = {
     id?: string
     status?: boolean
@@ -17915,6 +19309,31 @@ export namespace Prisma {
   export type TableCreateOrConnectWithoutPaymentsInput = {
     where: TableWhereUniqueInput
     create: XOR<TableCreateWithoutPaymentsInput, TableUncheckedCreateWithoutPaymentsInput>
+  }
+
+  export type Mtdo_pagtoUpsertWithoutPaymentsInput = {
+    update: XOR<Mtdo_pagtoUpdateWithoutPaymentsInput, Mtdo_pagtoUncheckedUpdateWithoutPaymentsInput>
+    create: XOR<Mtdo_pagtoCreateWithoutPaymentsInput, Mtdo_pagtoUncheckedCreateWithoutPaymentsInput>
+    where?: Mtdo_pagtoWhereInput
+  }
+
+  export type Mtdo_pagtoUpdateToOneWithWhereWithoutPaymentsInput = {
+    where?: Mtdo_pagtoWhereInput
+    data: XOR<Mtdo_pagtoUpdateWithoutPaymentsInput, Mtdo_pagtoUncheckedUpdateWithoutPaymentsInput>
+  }
+
+  export type Mtdo_pagtoUpdateWithoutPaymentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Mtdo_pagtoUncheckedUpdateWithoutPaymentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type OrderUpsertWithoutPaymentsInput = {
@@ -18127,6 +19546,48 @@ export namespace Prisma {
     item?: ItemUncheckedUpdateManyWithoutProductNestedInput
   }
 
+  export type PaymentCreateWithoutMtdo_pagtoInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    order: OrderCreateNestedOneWithoutPaymentsInput
+    table: TableCreateNestedOneWithoutPaymentsInput
+  }
+
+  export type PaymentUncheckedCreateWithoutMtdo_pagtoInput = {
+    id?: string
+    order_id: string
+    table_id: string
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type PaymentCreateOrConnectWithoutMtdo_pagtoInput = {
+    where: PaymentWhereUniqueInput
+    create: XOR<PaymentCreateWithoutMtdo_pagtoInput, PaymentUncheckedCreateWithoutMtdo_pagtoInput>
+  }
+
+  export type PaymentCreateManyMtdo_pagtoInputEnvelope = {
+    data: PaymentCreateManyMtdo_pagtoInput | PaymentCreateManyMtdo_pagtoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PaymentUpsertWithWhereUniqueWithoutMtdo_pagtoInput = {
+    where: PaymentWhereUniqueInput
+    update: XOR<PaymentUpdateWithoutMtdo_pagtoInput, PaymentUncheckedUpdateWithoutMtdo_pagtoInput>
+    create: XOR<PaymentCreateWithoutMtdo_pagtoInput, PaymentUncheckedCreateWithoutMtdo_pagtoInput>
+  }
+
+  export type PaymentUpdateWithWhereUniqueWithoutMtdo_pagtoInput = {
+    where: PaymentWhereUniqueInput
+    data: XOR<PaymentUpdateWithoutMtdo_pagtoInput, PaymentUncheckedUpdateWithoutMtdo_pagtoInput>
+  }
+
+  export type PaymentUpdateManyWithWhereWithoutMtdo_pagtoInput = {
+    where: PaymentScalarWhereInput
+    data: XOR<PaymentUpdateManyMutationInput, PaymentUncheckedUpdateManyWithoutMtdo_pagtoInput>
+  }
+
   export type ProductCreateManyCategoryInput = {
     id?: string
     name: string
@@ -18245,7 +19706,7 @@ export namespace Prisma {
 
   export type PaymentCreateManyOrderInput = {
     id?: string
-    mtdo_pagto: string
+    mtdo_pagto_id: string
     table_id: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -18277,15 +19738,15 @@ export namespace Prisma {
 
   export type PaymentUpdateWithoutOrderInput = {
     id?: StringFieldUpdateOperationsInput | string
-    mtdo_pagto?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    mtdo_pagto?: Mtdo_pagtoUpdateOneRequiredWithoutPaymentsNestedInput
     table?: TableUpdateOneRequiredWithoutPaymentsNestedInput
   }
 
   export type PaymentUncheckedUpdateWithoutOrderInput = {
     id?: StringFieldUpdateOperationsInput | string
-    mtdo_pagto?: StringFieldUpdateOperationsInput | string
+    mtdo_pagto_id?: StringFieldUpdateOperationsInput | string
     table_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18293,7 +19754,7 @@ export namespace Prisma {
 
   export type PaymentUncheckedUpdateManyWithoutOrderInput = {
     id?: StringFieldUpdateOperationsInput | string
-    mtdo_pagto?: StringFieldUpdateOperationsInput | string
+    mtdo_pagto_id?: StringFieldUpdateOperationsInput | string
     table_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18310,7 +19771,7 @@ export namespace Prisma {
 
   export type PaymentCreateManyTableInput = {
     id?: string
-    mtdo_pagto: string
+    mtdo_pagto_id: string
     order_id: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -18349,15 +19810,15 @@ export namespace Prisma {
 
   export type PaymentUpdateWithoutTableInput = {
     id?: StringFieldUpdateOperationsInput | string
-    mtdo_pagto?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    mtdo_pagto?: Mtdo_pagtoUpdateOneRequiredWithoutPaymentsNestedInput
     order?: OrderUpdateOneRequiredWithoutPaymentsNestedInput
   }
 
   export type PaymentUncheckedUpdateWithoutTableInput = {
     id?: StringFieldUpdateOperationsInput | string
-    mtdo_pagto?: StringFieldUpdateOperationsInput | string
+    mtdo_pagto_id?: StringFieldUpdateOperationsInput | string
     order_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18365,7 +19826,7 @@ export namespace Prisma {
 
   export type PaymentUncheckedUpdateManyWithoutTableInput = {
     id?: StringFieldUpdateOperationsInput | string
-    mtdo_pagto?: StringFieldUpdateOperationsInput | string
+    mtdo_pagto_id?: StringFieldUpdateOperationsInput | string
     order_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18477,6 +19938,38 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     product_id?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PaymentCreateManyMtdo_pagtoInput = {
+    id?: string
+    order_id: string
+    table_id: string
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type PaymentUpdateWithoutMtdo_pagtoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: OrderUpdateOneRequiredWithoutPaymentsNestedInput
+    table?: TableUpdateOneRequiredWithoutPaymentsNestedInput
+  }
+
+  export type PaymentUncheckedUpdateWithoutMtdo_pagtoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    order_id?: StringFieldUpdateOperationsInput | string
+    table_id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentUncheckedUpdateManyWithoutMtdo_pagtoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    order_id?: StringFieldUpdateOperationsInput | string
+    table_id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
