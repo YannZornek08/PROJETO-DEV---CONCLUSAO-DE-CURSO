@@ -98,3 +98,6 @@ mobile/.env*.local
 
 # typescript
 mobile/*.tsbuildinfo
+
+# não subir o ip
+mobile/services/api.ts

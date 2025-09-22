@@ -11,6 +11,7 @@ import { ListCategoryController } from './controllers/category/ListCategoryContr
 import { CreateProductController } from './controllers/product/CreateProductController'
 import { ListByCategoryController } from './controllers/product/ListByCategoryController';
 import { ListProductController } from './controllers/product/ListProductController';
+import { DetailProductController } from './controllers/product/DetailProductController';
 import { SearchProductController } from './controllers/product/SearchProductController';
 
 
@@ -70,6 +71,8 @@ router.post('/product', isAuthenticated, new CreateProductController().handle)
 router.get('/category/product', isAuthenticated, new ListByCategoryController().handle)
 
 router.get('/product/all', new ListProductController().handle)
+
+router.get('/product/especify', new DetailProductController().handle)
 
 router.get('/product/search', new SearchProductController().handle)
 

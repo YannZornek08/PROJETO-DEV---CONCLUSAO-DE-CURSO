@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Dashboard from "../pages/Menu";
 import Order from "../pages/Order";
 import FinishOrder from "../pages/FinishOrder";
+import type { Produto } from "../pages/Menu/index";
 
 // NAV
 import Menu from "../pages/Menu";
@@ -41,7 +42,7 @@ export type StackParamsList = {
     Settings: undefined;
     Pagamento: undefined;
     DadosPagamento: undefined;
-    DetalhesProdutos: undefined;
+    DetalhesProdutos: { product: Produto };
     VoltarMenu:undefined;
   AutenticacaoComanda: undefined;
 
