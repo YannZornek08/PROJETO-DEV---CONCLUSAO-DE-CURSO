@@ -77,7 +77,7 @@ export default function AutenticacaoComanda() {
   </TouchableOpacity>
   <TouchableOpacity onPress={StatusPedido} style={styles.nav}>
     <Image source={fav} style={styles.imagesNav} resizeMode="cover" />
-    <Text>Favoritos</Text>
+    <Text>Status</Text>
   </TouchableOpacity>
   <TouchableOpacity onPress={Cupons} style={styles.nav}>
     <Image source={cupom} style={styles.imagesNav} resizeMode="cover" />

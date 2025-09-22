@@ -22,7 +22,7 @@ const Dados: React.FC = () => {
       Alert.alert(
         "Pagamento Realizado",
       );
-      navigation.navigate("Menu")
+      navigation.navigate("Status2")
     };
 
   return (

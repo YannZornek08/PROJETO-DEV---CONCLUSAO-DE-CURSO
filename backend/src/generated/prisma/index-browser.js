@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.9.0
- * Query Engine version: 81e4af48011447c3cc503a190e86995b66d2a28e
+ * Prisma Client JS version: 6.16.2
+ * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
  */
 Prisma.prismaVersion = {
-  client: "6.9.0",
-  engine: "81e4af48011447c3cc503a190e86995b66d2a28e"
+  client: "6.16.2",
+  engine: "1c57fdcd7e44b29b9313256c76699e91c3ac3c43"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -194,7 +194,7 @@ exports.Prisma.CostumerScalarFieldEnum = {
 
 exports.Prisma.PaymentScalarFieldEnum = {
   id: 'id',
-  mtdo_pagto: 'mtdo_pagto',
+  mtdo_pagto_id: 'mtdo_pagto_id',
   order_id: 'order_id',
   table_id: 'table_id',
   created_at: 'created_at',
@@ -215,6 +215,13 @@ exports.Prisma.Ingredient_productScalarFieldEnum = {
   updated_at: 'updated_at',
   ingredient_id: 'ingredient_id',
   product_id: 'product_id'
+};
+
+exports.Prisma.Mtdo_pagtoScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 };
 
 exports.Prisma.SortOrder = {
@@ -244,7 +251,8 @@ exports.Prisma.ModelName = {
   Costumer: 'Costumer',
   Payment: 'Payment',
   Ingredient: 'Ingredient',
-  Ingredient_product: 'Ingredient_product'
+  Ingredient_product: 'Ingredient_product',
+  Mtdo_pagto: 'Mtdo_pagto'
 };
 
 /**
