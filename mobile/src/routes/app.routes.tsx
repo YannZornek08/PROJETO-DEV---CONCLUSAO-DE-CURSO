@@ -8,8 +8,6 @@ import FinishOrder from "../pages/FinishOrder";
 // NAV
 import Menu from "../pages/Menu";
 import Cupons from "../pages/Cupons";
-import Favoritos from "../pages/Favoritos";
-import LerQR from "../pages/Ler QR";
 
 //////
 
@@ -24,10 +22,6 @@ import LerQR from "../pages/Ler QR";
 
 // Botões da busca
 
-import Carrinho from "../pages/Carrinho";
-import Settings from "../pages/PageSettings";
-
-//////////////////
 import Carrinho from "../pages/Carrinho";
 import Settings from "../pages/PageSettings";
 
@@ -49,15 +43,6 @@ export type StackParamsList = {
     DadosPagamento: undefined;
     DetalhesProdutos: undefined;
     VoltarMenu:undefined;
-  Dashboard: undefined;
-  Menu: undefined;
-  Cupons: undefined;
-  Favoritos: undefined;
-  LerQR: undefined;
-  Carrinho: undefined;
-  Settings: undefined;
-  DetalhesProdutos: undefined;
-  VoltarMenu: undefined;
   AutenticacaoComanda: undefined;
 
   Order: {
