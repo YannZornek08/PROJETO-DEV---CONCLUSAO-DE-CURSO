@@ -54,8 +54,8 @@ export default function HomeScreen() {
     navigation.navigate("Cupons");
   }
 
-  function Favoritos() {
-    navigation.navigate("Favoritos");
+  function StatusPedido() {
+    navigation.navigate("StatusPedido");
   }
 
   function LerQR() {
@@ -64,7 +64,6 @@ export default function HomeScreen() {
 
   async function Filtros() {
     alert("blablabla")
-
   }
 
   useEffect(() => {
@@ -204,9 +203,9 @@ export default function HomeScreen() {
           <Image source={home} style={styles.imagesNav} />
           <Text>Home</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={Favoritos} style={styles.nav}>
+        <TouchableOpacity onPress={StatusPedido} style={styles.nav}>
           <Image source={fav} style={styles.imagesNav} resizeMode="cover" />
-          <Text>Favoritos</Text>
+          <Text>Meu Pedido</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={Cupons} style={styles.nav}>
           <Image source={cupom} style={styles.imagesNav} resizeMode="cover" />

@@ -8,7 +8,7 @@ import FinishOrder from "../pages/FinishOrder";
 // NAV
 import Menu from "../pages/Menu";
 import Cupons from "../pages/Cupons";
-import Favoritos from "../pages/Favoritos";
+import StatusPedido from "../pages/StatusPedido";
 import LerQR from "../pages/Ler QR";
 
 //////
@@ -19,8 +19,6 @@ import Pagamento from "../pages/Pagamento"
 import DadosPagamento from "../pages/DadosPagamento"
 
 //////////////
-import Favoritos from "../pages/Favoritos";
-import LerQR from "../pages/Ler QR";
 
 // Botões da busca
 
@@ -28,8 +26,6 @@ import Carrinho from "../pages/Carrinho";
 import Settings from "../pages/PageSettings";
 
 //////////////////
-import Carrinho from "../pages/Carrinho";
-import Settings from "../pages/PageSettings";
 
 // Cards
 import DetalhesProdutos from "../pages/DetalhesProduto";
@@ -41,7 +37,7 @@ export type StackParamsList = {
     Dashboard: undefined;
     Menu: undefined;
     Cupons: undefined;
-    Favoritos: undefined;
+    StatusPedido: undefined;
     LerQR: undefined;
     Carrinho: undefined;
     Settings: undefined;
@@ -49,15 +45,6 @@ export type StackParamsList = {
     DadosPagamento: undefined;
     DetalhesProdutos: undefined;
     VoltarMenu:undefined;
-  Dashboard: undefined;
-  Menu: undefined;
-  Cupons: undefined;
-  Favoritos: undefined;
-  LerQR: undefined;
-  Carrinho: undefined;
-  Settings: undefined;
-  DetalhesProdutos: undefined;
-  VoltarMenu: undefined;
   AutenticacaoComanda: undefined;
 
   Order: {
@@ -100,8 +87,8 @@ function AppRoutes() {
       />
 
       <Stack.Screen
-        name="Favoritos"
-        component={Favoritos}
+        name="StatusPedido"
+        component={StatusPedido}
         options={{ headerShown: false }}
       />
 
@@ -134,17 +121,6 @@ function AppRoutes() {
                 component={Settings} 
                 options={{headerShown: false}}
             />
-      <Stack.Screen
-        name="Carrinho"
-        component={Carrinho}
-        options={{ headerShown: false }}
-      />
-
-      <Stack.Screen
-        name="Settings"
-        component={Settings}
-        options={{ headerShown: false }}
-      />
 
       <Stack.Screen
         name="DetalhesProdutos"
