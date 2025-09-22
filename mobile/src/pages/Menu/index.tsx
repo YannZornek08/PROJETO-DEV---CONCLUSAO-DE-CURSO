@@ -231,15 +231,18 @@ type PizzaCardProps = {
 
 function PizzaCard({ product }: PizzaCardProps) {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
+  
   return (
-
     <View style={styles.card}>
       <Image source={{ uri: product.banner }} resizeMode="stretch" style={styles.cardImage} />
       <Text style={styles.cardTitle}>{product.name}</Text>
       <Text style={styles.cardPrice}>R$ {product.price}</Text>
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => navigation.navigate("DetalhesProdutos", { product })}
+        onPress={() => {
+          console.log(product) 
+          navigation.navigate("DetalhesProdutos", { product })}
+        }
       >
         <Image
           source={{
@@ -261,6 +264,7 @@ const styles = StyleSheet.create({
     paddingBottom: 7,
     marginBottom: 2,
   },
+  displayHidden: { display: "none" },
   headerText: {
     color: "#000000",
     fontSize: 32,

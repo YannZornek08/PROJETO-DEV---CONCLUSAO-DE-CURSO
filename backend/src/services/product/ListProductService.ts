@@ -8,6 +8,7 @@ class ListProductService{
                 id: true,
                 name: true,
                 price: true,
+                description: true,
                 banner: true
             }
         })
