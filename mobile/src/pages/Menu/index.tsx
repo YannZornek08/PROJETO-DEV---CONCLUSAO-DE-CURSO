@@ -55,7 +55,7 @@ export default function HomeScreen() {
   }
 
   function Favoritos() {
-    navigation.navigate("Favoritos");
+    navigation.navigate("Status1");
   }
 
   function LerQR() {
