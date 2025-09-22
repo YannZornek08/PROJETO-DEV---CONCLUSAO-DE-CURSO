@@ -13,6 +13,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
+import Pagamento from "../Pagamento";
 
 const Dados: React.FC = () => {
 
@@ -24,12 +25,17 @@ const Dados: React.FC = () => {
       );
       navigation.navigate("Menu")
     };
+      const Pagamento = () => {
+    navigation.navigate("Pagamento");
+  };
+
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         {/* Cabeçalho */}
         <View style={styles.header}>
+           <TouchableOpacity onPress ={Pagamento}>
           <Image
             source={{
               uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ibRZmPwSqH/li6hzwg0_expires_30_days.png",
@@ -37,6 +43,7 @@ const Dados: React.FC = () => {
             resizeMode="stretch"
             style={styles.iconHeader}
           />
+          </TouchableOpacity>
           <Text style={styles.title}>Dados</Text>
         </View>
 

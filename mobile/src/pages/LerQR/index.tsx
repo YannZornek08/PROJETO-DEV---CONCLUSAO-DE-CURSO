@@ -32,8 +32,8 @@ export default function AutenticacaoComanda() {
     navigation.navigate("Menu");
   }
 
-  function Favoritos() {
-    navigation.navigate("Favoritos");
+  function StatusPedido() {
+    navigation.navigate("Status1");
   }
 
   function Cupons() {
@@ -70,24 +70,24 @@ export default function AutenticacaoComanda() {
       </View>
 
       {/* NAV */}
-    <View style={styles.fullNav}>
-  <TouchableOpacity onPress={Home} style={styles.nav}>
-    <Image source={home} style={styles.imagesNav} />
-    <Text>Home</Text>
-  </TouchableOpacity>
-  <TouchableOpacity onPress={Favoritos} style={styles.nav}>
-    <Image source={fav} style={styles.imagesNav} resizeMode="cover" />
-    <Text>Favoritos</Text>
-  </TouchableOpacity>
-  <TouchableOpacity onPress={Cupons} style={styles.nav}>
-    <Image source={cupom} style={styles.imagesNav} resizeMode="cover" />
-    <Text>Cupons</Text>
-  </TouchableOpacity>
-  <TouchableOpacity onPress={LerQR} style={[styles.currentNav, styles.nav]}>
-    <Image source={qrcode} style={styles.imagesNav} />
-    <Text>Ler QR</Text>
-  </TouchableOpacity>
-</View>
+      <View style={styles.fullNav}>
+        <TouchableOpacity onPress={Home} style={styles.nav}>
+          <Image source={home} style={styles.imagesNav} />
+          <Text>Home</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={StatusPedido} style={styles.nav}>
+          <Image source={fav} style={styles.imagesNav} resizeMode="cover" />
+          <Text>Favoritos</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={Cupons} style={styles.nav}>
+          <Image source={cupom} style={styles.imagesNav} resizeMode="cover" />
+          <Text>Cupons</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={LerQR} style={[styles.currentNav, styles.nav]}>
+          <Image source={qrcode} style={styles.imagesNav} />
+          <Text>Ler QR</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
@@ -146,33 +146,32 @@ const styles = StyleSheet.create({
     color: "#000",
     textAlign: "center",
   },
-
-fullNav: {
-  flexDirection: "row",
-  backgroundColor: "#FCEAE2",
-  borderRadius: 80,
-  paddingHorizontal: 17,
-  marginBottom: 42,
-  marginHorizontal: 26,
-  justifyContent: "space-between",
-  alignItems: "center",
-},
-currentNav: {
-  backgroundColor: "#f3cdbdff",
-  borderRadius: 100,
-  padding: 10,
-  alignItems: "center",
-  justifyContent: "center",
-},
-nav: {
-  padding: 10,
-  alignItems: "center",
-  justifyContent: "center",
-},
-imagesNav: {
-  width: 30,
-  height: 30,
-  borderRadius: 8,
-  marginBottom: 4,
-},
+  fullNav: {
+    flexDirection: "row",
+    backgroundColor: "#FCEAE2",
+    borderRadius: 80,
+    paddingHorizontal: 17,
+    marginBottom: 42,
+    marginHorizontal: 26,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  currentNav: {
+    backgroundColor: "#f3cdbdff",
+    borderRadius: 100,
+    padding: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  nav: {
+    padding: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  imagesNav: {
+    width: 30,
+    height: 30,
+    borderRadius: 8,
+    marginBottom: 4,
+  },
 });
