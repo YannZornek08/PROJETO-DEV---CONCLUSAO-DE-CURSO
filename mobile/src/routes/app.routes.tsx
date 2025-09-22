@@ -4,12 +4,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Dashboard from "../pages/Menu";
 import Order from "../pages/Order";
 import FinishOrder from "../pages/FinishOrder";
+import type { Produto } from "../pages/Menu/index";
 
 // NAV
 import Menu from "../pages/Menu";
 import Cupons from "../pages/Cupons";
 import StatusPedido from "../pages/StatusPedido";
-import LerQR from "../pages/Ler QR";
+import LerQR from "../pages/LerQR";
 
 //////
 
@@ -19,6 +20,8 @@ import Pagamento from "../pages/Pagamento"
 import DadosPagamento from "../pages/DadosPagamento"
 
 //////////////
+import Status1 from "../pages/Status1";
+import Status2 from "../pages/Status2";
 
 // Botões da busca
 
@@ -30,22 +33,23 @@ import Settings from "../pages/PageSettings";
 // Cards
 import DetalhesProdutos from "../pages/DetalhesProduto";
 
-// importe aqui sua tela de autenticação da comanda
-import AutenticacaoComanda from "../pages/LeituraCodigo"
+
 
 export type StackParamsList = {
     Dashboard: undefined;
     Menu: undefined;
     Cupons: undefined;
-    StatusPedido: undefined;
+    Status1: undefined;
+    Status2: undefined;
     LerQR: undefined;
     Carrinho: undefined;
+    StatusPedido: undefined;
     Settings: undefined;
     Pagamento: undefined;
     DadosPagamento: undefined;
-    DetalhesProdutos: undefined;
+    DetalhesProdutos: { product: Produto };
     VoltarMenu:undefined;
-  AutenticacaoComanda: undefined;
+  
 
   Order: {
     number: number | string;
@@ -83,6 +87,18 @@ function AppRoutes() {
       <Stack.Screen
         name="Cupons"
         component={Cupons}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="Status1"
+        component={Status1}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="Status2"
+        component={Status2}
         options={{ headerShown: false }}
       />
 
@@ -134,12 +150,6 @@ function AppRoutes() {
         options={{ headerShown: false }}
       />
 
-      {/* 🔹 aqui está a tela nova */}
-      <Stack.Screen
-        name="AutenticacaoComanda"
-        component={AutenticacaoComanda}
-        options={{ headerShown: false }}
-      />
 
       <Stack.Screen
         name="FinishOrder"

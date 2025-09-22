@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRoute, RouteProp } from "@react-navigation/native";
 import {
   SafeAreaView,
   View,
@@ -8,8 +9,15 @@ import {
   TouchableOpacity,
   StyleSheet
 } from "react-native";
+import { StackParamsList } from "../../routes/app.routes"; // ajuste o caminho
+
+type DetalhesRouteProp = RouteProp<StackParamsList, "DetalhesProdutos">;
 
 export default function DetalhesProdutos() {
+  const route = useRoute<DetalhesRouteProp>();
+  // Imprime aqui os produtos clicados em adicionar
+  const { product } = route.params;
+  
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState<string>("M");
   const [quantidade, setQuantidade] = useState<number>(1);
   const [adicionais, setAdicionais] = useState<string[]>([]);
@@ -49,7 +57,7 @@ export default function DetalhesProdutos() {
           />
           <Image
             source={{
-              uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/7aryoj32_expires_30_days.png",
+              uri: product.banner,
             }}
             resizeMode={"stretch"}
             style={styles.largeImage}
@@ -57,16 +65,14 @@ export default function DetalhesProdutos() {
         </View>
 
         {/* Nome e preço */}
-        <Text style={styles.productName}>Pizza de Pepperoni</Text>
+        <Text style={styles.productName}>{product.name}</Text>
         <View style={styles.priceContainer}>
-          <Text style={styles.price}>R$42,00</Text>
+          <Text style={styles.price}>R$ {product.price}</Text>
         </View>
 
         {/* Descrição */}
         <Text style={styles.description}>
-          Lorem ipsum dolor sit amet consectetur. Fermentum cras a netus fames.
-          Eu vitae at cras dictumst eget molestie consequat. Laoreet praesent
-          magna faucibus tristique magna dignissim amet.
+          {product.description}
         </Text>
 
         {/* Divisória */}
