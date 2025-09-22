@@ -4,9 +4,6 @@ class ListTablesService {
     async execute() {
 
         const tables = await prismaClient.table.findMany({
-            where:{
-                number: { not: null }
-            },
             orderBy: {
                 created_at: 'desc'
             }

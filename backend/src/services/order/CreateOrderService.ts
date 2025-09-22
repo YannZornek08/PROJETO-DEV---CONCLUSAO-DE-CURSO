@@ -1,4 +1,3 @@
-//ARRUMAR AINDA
 import prismaClient from "../../prisma";
 
 interface OrderRequest {
@@ -12,13 +11,9 @@ class CreateOrderService {
         const order = await prismaClient.order.create({
             data: {
                 table_id: table_id,
-                costumer_id: costumer_id
-            },
-            select: {
-                id: true,
-                table_id: true,
+                costumer_id: costumer_id,
             }
-        })
+        });
 
         return order;
 

@@ -361,8 +361,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.8.2
-   * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
+   * Prisma Client JS version: 6.9.0
+   * Query Engine version: 81e4af48011447c3cc503a190e86995b66d2a28e
    */
   export type PrismaVersion = {
     client: string
@@ -6491,7 +6491,6 @@ export namespace Prisma {
   export type TableMinAggregateOutputType = {
     id: string | null
     number: number | null
-    status: boolean | null
     created_at: Date | null
     update_at: Date | null
   }
@@ -6499,7 +6498,6 @@ export namespace Prisma {
   export type TableMaxAggregateOutputType = {
     id: string | null
     number: number | null
-    status: boolean | null
     created_at: Date | null
     update_at: Date | null
   }
@@ -6507,7 +6505,6 @@ export namespace Prisma {
   export type TableCountAggregateOutputType = {
     id: number
     number: number
-    status: number
     created_at: number
     update_at: number
     _all: number
@@ -6525,7 +6522,6 @@ export namespace Prisma {
   export type TableMinAggregateInputType = {
     id?: true
     number?: true
-    status?: true
     created_at?: true
     update_at?: true
   }
@@ -6533,7 +6529,6 @@ export namespace Prisma {
   export type TableMaxAggregateInputType = {
     id?: true
     number?: true
-    status?: true
     created_at?: true
     update_at?: true
   }
@@ -6541,7 +6536,6 @@ export namespace Prisma {
   export type TableCountAggregateInputType = {
     id?: true
     number?: true
-    status?: true
     created_at?: true
     update_at?: true
     _all?: true
@@ -6636,7 +6630,6 @@ export namespace Prisma {
   export type TableGroupByOutputType = {
     id: string
     number: number
-    status: boolean
     created_at: Date | null
     update_at: Date | null
     _count: TableCountAggregateOutputType | null
@@ -6663,7 +6656,6 @@ export namespace Prisma {
   export type TableSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     number?: boolean
-    status?: boolean
     created_at?: boolean
     update_at?: boolean
     orders?: boolean | Table$ordersArgs<ExtArgs>
@@ -6674,7 +6666,6 @@ export namespace Prisma {
   export type TableSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     number?: boolean
-    status?: boolean
     created_at?: boolean
     update_at?: boolean
   }, ExtArgs["result"]["table"]>
@@ -6682,7 +6673,6 @@ export namespace Prisma {
   export type TableSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     number?: boolean
-    status?: boolean
     created_at?: boolean
     update_at?: boolean
   }, ExtArgs["result"]["table"]>
@@ -6690,12 +6680,11 @@ export namespace Prisma {
   export type TableSelectScalar = {
     id?: boolean
     number?: boolean
-    status?: boolean
     created_at?: boolean
     update_at?: boolean
   }
 
-  export type TableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "number" | "status" | "created_at" | "update_at", ExtArgs["result"]["table"]>
+  export type TableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "number" | "created_at" | "update_at", ExtArgs["result"]["table"]>
   export type TableInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     orders?: boolean | Table$ordersArgs<ExtArgs>
     payments?: boolean | Table$paymentsArgs<ExtArgs>
@@ -6713,7 +6702,6 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       number: number
-      status: boolean
       created_at: Date | null
       update_at: Date | null
     }, ExtArgs["result"]["table"]>
@@ -7143,7 +7131,6 @@ export namespace Prisma {
   interface TableFieldRefs {
     readonly id: FieldRef<"Table", 'String'>
     readonly number: FieldRef<"Table", 'Int'>
-    readonly status: FieldRef<"Table", 'Boolean'>
     readonly created_at: FieldRef<"Table", 'DateTime'>
     readonly update_at: FieldRef<"Table", 'DateTime'>
   }
@@ -14195,7 +14182,6 @@ export namespace Prisma {
   export const TableScalarFieldEnum: {
     id: 'id',
     number: 'number',
-    status: 'status',
     created_at: 'created_at',
     update_at: 'update_at'
   };
@@ -14639,7 +14625,6 @@ export namespace Prisma {
     NOT?: TableWhereInput | TableWhereInput[]
     id?: StringFilter<"Table"> | string
     number?: IntFilter<"Table"> | number
-    status?: BoolFilter<"Table"> | boolean
     created_at?: DateTimeNullableFilter<"Table"> | Date | string | null
     update_at?: DateTimeNullableFilter<"Table"> | Date | string | null
     orders?: OrderListRelationFilter
@@ -14649,7 +14634,6 @@ export namespace Prisma {
   export type TableOrderByWithRelationInput = {
     id?: SortOrder
     number?: SortOrder
-    status?: SortOrder
     created_at?: SortOrderInput | SortOrder
     update_at?: SortOrderInput | SortOrder
     orders?: OrderOrderByRelationAggregateInput
@@ -14662,7 +14646,6 @@ export namespace Prisma {
     OR?: TableWhereInput[]
     NOT?: TableWhereInput | TableWhereInput[]
     number?: IntFilter<"Table"> | number
-    status?: BoolFilter<"Table"> | boolean
     created_at?: DateTimeNullableFilter<"Table"> | Date | string | null
     update_at?: DateTimeNullableFilter<"Table"> | Date | string | null
     orders?: OrderListRelationFilter
@@ -14672,7 +14655,6 @@ export namespace Prisma {
   export type TableOrderByWithAggregationInput = {
     id?: SortOrder
     number?: SortOrder
-    status?: SortOrder
     created_at?: SortOrderInput | SortOrder
     update_at?: SortOrderInput | SortOrder
     _count?: TableCountOrderByAggregateInput
@@ -14688,7 +14670,6 @@ export namespace Prisma {
     NOT?: TableScalarWhereWithAggregatesInput | TableScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Table"> | string
     number?: IntWithAggregatesFilter<"Table"> | number
-    status?: BoolWithAggregatesFilter<"Table"> | boolean
     created_at?: DateTimeNullableWithAggregatesFilter<"Table"> | Date | string | null
     update_at?: DateTimeNullableWithAggregatesFilter<"Table"> | Date | string | null
   }
@@ -15341,7 +15322,6 @@ export namespace Prisma {
   export type TableCreateInput = {
     id?: string
     number: number
-    status?: boolean
     created_at?: Date | string | null
     update_at?: Date | string | null
     orders?: OrderCreateNestedManyWithoutTableInput
@@ -15351,7 +15331,6 @@ export namespace Prisma {
   export type TableUncheckedCreateInput = {
     id?: string
     number: number
-    status?: boolean
     created_at?: Date | string | null
     update_at?: Date | string | null
     orders?: OrderUncheckedCreateNestedManyWithoutTableInput
@@ -15361,7 +15340,6 @@ export namespace Prisma {
   export type TableUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     number?: IntFieldUpdateOperationsInput | number
-    status?: BoolFieldUpdateOperationsInput | boolean
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     update_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     orders?: OrderUpdateManyWithoutTableNestedInput
@@ -15371,7 +15349,6 @@ export namespace Prisma {
   export type TableUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     number?: IntFieldUpdateOperationsInput | number
-    status?: BoolFieldUpdateOperationsInput | boolean
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     update_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     orders?: OrderUncheckedUpdateManyWithoutTableNestedInput
@@ -15381,7 +15358,6 @@ export namespace Prisma {
   export type TableCreateManyInput = {
     id?: string
     number: number
-    status?: boolean
     created_at?: Date | string | null
     update_at?: Date | string | null
   }
@@ -15389,7 +15365,6 @@ export namespace Prisma {
   export type TableUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     number?: IntFieldUpdateOperationsInput | number
-    status?: BoolFieldUpdateOperationsInput | boolean
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     update_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -15397,7 +15372,6 @@ export namespace Prisma {
   export type TableUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     number?: IntFieldUpdateOperationsInput | number
-    status?: BoolFieldUpdateOperationsInput | boolean
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     update_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -16046,7 +16020,6 @@ export namespace Prisma {
   export type TableCountOrderByAggregateInput = {
     id?: SortOrder
     number?: SortOrder
-    status?: SortOrder
     created_at?: SortOrder
     update_at?: SortOrder
   }
@@ -16058,7 +16031,6 @@ export namespace Prisma {
   export type TableMaxOrderByAggregateInput = {
     id?: SortOrder
     number?: SortOrder
-    status?: SortOrder
     created_at?: SortOrder
     update_at?: SortOrder
   }
@@ -16066,7 +16038,6 @@ export namespace Prisma {
   export type TableMinOrderByAggregateInput = {
     id?: SortOrder
     number?: SortOrder
-    status?: SortOrder
     created_at?: SortOrder
     update_at?: SortOrder
   }
@@ -17365,7 +17336,6 @@ export namespace Prisma {
   export type TableCreateWithoutOrdersInput = {
     id?: string
     number: number
-    status?: boolean
     created_at?: Date | string | null
     update_at?: Date | string | null
     payments?: PaymentCreateNestedManyWithoutTableInput
@@ -17374,7 +17344,6 @@ export namespace Prisma {
   export type TableUncheckedCreateWithoutOrdersInput = {
     id?: string
     number: number
-    status?: boolean
     created_at?: Date | string | null
     update_at?: Date | string | null
     payments?: PaymentUncheckedCreateNestedManyWithoutTableInput
@@ -17478,7 +17447,6 @@ export namespace Prisma {
   export type TableUpdateWithoutOrdersInput = {
     id?: StringFieldUpdateOperationsInput | string
     number?: IntFieldUpdateOperationsInput | number
-    status?: BoolFieldUpdateOperationsInput | boolean
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     update_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     payments?: PaymentUpdateManyWithoutTableNestedInput
@@ -17487,7 +17455,6 @@ export namespace Prisma {
   export type TableUncheckedUpdateWithoutOrdersInput = {
     id?: StringFieldUpdateOperationsInput | string
     number?: IntFieldUpdateOperationsInput | number
-    status?: BoolFieldUpdateOperationsInput | boolean
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     update_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     payments?: PaymentUncheckedUpdateManyWithoutTableNestedInput
@@ -17932,7 +17899,6 @@ export namespace Prisma {
   export type TableCreateWithoutPaymentsInput = {
     id?: string
     number: number
-    status?: boolean
     created_at?: Date | string | null
     update_at?: Date | string | null
     orders?: OrderCreateNestedManyWithoutTableInput
@@ -17941,7 +17907,6 @@ export namespace Prisma {
   export type TableUncheckedCreateWithoutPaymentsInput = {
     id?: string
     number: number
-    status?: boolean
     created_at?: Date | string | null
     update_at?: Date | string | null
     orders?: OrderUncheckedCreateNestedManyWithoutTableInput
@@ -17999,7 +17964,6 @@ export namespace Prisma {
   export type TableUpdateWithoutPaymentsInput = {
     id?: StringFieldUpdateOperationsInput | string
     number?: IntFieldUpdateOperationsInput | number
-    status?: BoolFieldUpdateOperationsInput | boolean
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     update_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     orders?: OrderUpdateManyWithoutTableNestedInput
@@ -18008,7 +17972,6 @@ export namespace Prisma {
   export type TableUncheckedUpdateWithoutPaymentsInput = {
     id?: StringFieldUpdateOperationsInput | string
     number?: IntFieldUpdateOperationsInput | number
-    status?: BoolFieldUpdateOperationsInput | boolean
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     update_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     orders?: OrderUncheckedUpdateManyWithoutTableNestedInput
