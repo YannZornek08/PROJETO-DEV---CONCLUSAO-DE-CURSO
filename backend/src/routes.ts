@@ -41,8 +41,6 @@ import { AddingAdditionalController } from './controllers/additional/AddingAddit
 
 import { CreateTableController } from './controllers/table/CreateTableController';
 import { ListTablesController } from './controllers/table/ListTablesController';
-import { TakeTableController } from './controllers/table/TakeTableController';
-import { ExitTableController } from './controllers/table/ExitTableController';
 
 import { isAuthenticated } from './middlewares/isAuthenticated'
 import { isAuthenticatedClient } from './middlewares/isAuthenticatedClient'
@@ -84,7 +82,7 @@ router.delete('/order/remove', isAuthenticated, new RemoveItemController().handl
 router.put('/order/send', isAuthenticated, new SendOrderController().handle)
 
 router.get('/orders', isAuthenticated, new ListOrdersController().handle)
-router.get('/order/detail', isAuthenticated, new DetailOrderController().handle)
+router.get('/order/detail', new DetailOrderController().handle)
 
 router.put('/order/finish', isAuthenticated, new FinishOrderController().handle)
 
@@ -117,7 +115,7 @@ router.get('/product/ingredients', isAuthenticated, new ListIngredientByProductC
 // -- ROTAS TABLE --
 router.post('/table', isAuthenticated, new CreateTableController().handle)
 router.get('/tables', isAuthenticated, new ListTablesController().handle)
-router.put('/table/:id', isAuthenticated, new TakeTableController().handle)
-router.put('/table/:id/exit', isAuthenticated, new ExitTableController().handle)
+
+
 
 export { router }
