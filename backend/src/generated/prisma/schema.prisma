@@ -78,7 +78,6 @@ model Order {
 model Table {
   id         String    @id @default(uuid())
   number     Int
-  status     Boolean   @default(false)
   created_at DateTime? @default(now())
   update_at  DateTime? @default(now())
   orders     Order[]
