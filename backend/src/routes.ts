@@ -11,6 +11,7 @@ import { ListCategoryController } from './controllers/category/ListCategoryContr
 import { CreateProductController } from './controllers/product/CreateProductController'
 import { ListByCategoryController } from './controllers/product/ListByCategoryController';
 import { ListProductController } from './controllers/product/ListProductController';
+import { DetailProductController } from './controllers/product/DetailProductController';
 import { SearchProductController } from './controllers/product/SearchProductController';
 
 
@@ -77,6 +78,8 @@ router.get('/category/product', isAuthenticated, new ListByCategoryController().
 
 router.get('/product/all', new ListProductController().handle)
 
+router.get('/product/especify', new DetailProductController().handle)
+
 router.get('/product/search', new SearchProductController().handle)
 
 // -- ROTAS ORDER --
@@ -88,7 +91,7 @@ router.delete('/order/remove', isAuthenticated, new RemoveItemController().handl
 router.put('/order/send', isAuthenticated, new SendOrderController().handle)
 
 router.get('/orders', isAuthenticated, new ListOrdersController().handle)
-router.get('/order/detail', isAuthenticated, new DetailOrderController().handle)
+router.get('/order/detail', new DetailOrderController().handle)
 
 router.put('/order/finish', isAuthenticated, new FinishOrderController().handle)
 
