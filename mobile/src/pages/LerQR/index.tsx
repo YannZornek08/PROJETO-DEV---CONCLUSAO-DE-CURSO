@@ -25,15 +25,11 @@ export default function AutenticacaoComanda() {
     useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
   function confirmarComanda() {
-    // sua lógica (ex: chamar API)
     console.log("Código digitado:", codigo);
-
-    // exemplo de navegação depois de confirmar:
-    // navigation.navigate("Home");
   }
 
   function Home() {
-    navigation.navigate("Carrinho");
+    navigation.navigate("Menu");
   }
 
   function Favoritos() {
@@ -73,25 +69,25 @@ export default function AutenticacaoComanda() {
         <Text style={styles.link}>Problemas? Fale com o atendente!</Text>
       </View>
 
-      {/* Bottom Nav */}
-      <View style={styles.fullNav}>
-        <TouchableOpacity onPress={Home} style={[styles.currentNav, styles.nav]}>
-          <Image source={home} style={styles.imagesNav} />
-          <Text>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={Favoritos} style={styles.nav}>
-          <Image source={fav} style={styles.imagesNav} resizeMode="cover" />
-          <Text>Favoritos</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={Cupons} style={styles.nav}>
-          <Image source={cupom} style={styles.imagesNav} resizeMode="cover" />
-          <Text>Cupons</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={LerQR} style={styles.nav}>
-          <Image source={qrcode} style={styles.imagesNav} />
-          <Text>Ler QR</Text>
-        </TouchableOpacity>
-      </View>
+      {/* NAV */}
+    <View style={styles.fullNav}>
+  <TouchableOpacity onPress={Home} style={styles.nav}>
+    <Image source={home} style={styles.imagesNav} />
+    <Text>Home</Text>
+  </TouchableOpacity>
+  <TouchableOpacity onPress={Favoritos} style={styles.nav}>
+    <Image source={fav} style={styles.imagesNav} resizeMode="cover" />
+    <Text>Favoritos</Text>
+  </TouchableOpacity>
+  <TouchableOpacity onPress={Cupons} style={styles.nav}>
+    <Image source={cupom} style={styles.imagesNav} resizeMode="cover" />
+    <Text>Cupons</Text>
+  </TouchableOpacity>
+  <TouchableOpacity onPress={LerQR} style={[styles.currentNav, styles.nav]}>
+    <Image source={qrcode} style={styles.imagesNav} />
+    <Text>Ler QR</Text>
+  </TouchableOpacity>
+</View>
     </SafeAreaView>
   );
 }
@@ -150,26 +146,33 @@ const styles = StyleSheet.create({
     color: "#000",
     textAlign: "center",
   },
-  fullNav: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    height: 70,
-    borderTopWidth: 1,
-    borderColor: "#ddd",
-    backgroundColor: "#fff",
-  },
-  nav: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  currentNav: {
-    borderTopWidth: 2,
-    borderColor: "#8B4B26",
-  },
-  imagesNav: {
-    width: 24,
-    height: 24,
-    marginBottom: 4,
-  },
+
+fullNav: {
+  flexDirection: "row",
+  backgroundColor: "#FCEAE2",
+  borderRadius: 80,
+  paddingHorizontal: 17,
+  marginBottom: 42,
+  marginHorizontal: 26,
+  justifyContent: "space-between",
+  alignItems: "center",
+},
+currentNav: {
+  backgroundColor: "#f3cdbdff",
+  borderRadius: 100,
+  padding: 10,
+  alignItems: "center",
+  justifyContent: "center",
+},
+nav: {
+  padding: 10,
+  alignItems: "center",
+  justifyContent: "center",
+},
+imagesNav: {
+  width: 30,
+  height: 30,
+  borderRadius: 8,
+  marginBottom: 4,
+},
 });

@@ -18,7 +18,7 @@ import DadosPagamento from "../pages/DadosPagamento"
 
 //////////////
 import Favoritos from "../pages/Favoritos";
-import LerQR from "../pages/Ler QR";
+import LerQR from "../pages/LerQR";
 
 // Botões da busca
 
@@ -28,8 +28,7 @@ import Settings from "../pages/PageSettings";
 // Cards
 import DetalhesProdutos from "../pages/DetalhesProduto";
 
-// importe aqui sua tela de autenticação da comanda
-import AutenticacaoComanda from "../pages/LeituraCodigo"
+
 
 export type StackParamsList = {
     Dashboard: undefined;
@@ -43,7 +42,7 @@ export type StackParamsList = {
     DadosPagamento: undefined;
     DetalhesProdutos: undefined;
     VoltarMenu:undefined;
-  AutenticacaoComanda: undefined;
+  
 
   Order: {
     number: number | string;
@@ -132,12 +131,6 @@ function AppRoutes() {
         options={{ headerShown: false }}
       />
 
-      {/* 🔹 aqui está a tela nova */}
-      <Stack.Screen
-        name="AutenticacaoComanda"
-        component={AutenticacaoComanda}
-        options={{ headerShown: false }}
-      />
 
       <Stack.Screen
         name="FinishOrder"
