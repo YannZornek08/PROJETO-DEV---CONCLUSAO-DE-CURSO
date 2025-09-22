@@ -60,8 +60,8 @@ export default function HomeScreen() {
     navigation.navigate("Cupons");
   }
 
-  function Status1() {
-    navigation.navigate("Status1");
+  function StatusPedido() {
+    navigation.navigate("StatusPedido");
   }
 
   function LerQR() {
@@ -70,7 +70,6 @@ export default function HomeScreen() {
 
   async function Filtros() {
     alert("blablabla")
-
   }
 
   useEffect(() => {
@@ -208,9 +207,9 @@ export default function HomeScreen() {
           <Image source={home} style={styles.imagesNav} />
           <Text>Home</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={Status1} style={styles.nav}>
+        <TouchableOpacity onPress={StatusPedido} style={styles.nav}>
           <Image source={fav} style={styles.imagesNav} resizeMode="cover" />
-          <Text>Status</Text>
+          <Text>Meu Pedido</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={Cupons} style={styles.nav}>
           <Image source={cupom} style={styles.imagesNav} resizeMode="cover" />

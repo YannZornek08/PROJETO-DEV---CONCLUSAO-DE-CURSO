@@ -85,7 +85,7 @@ router.delete('/order/remove', isAuthenticated, new RemoveItemController().handl
 router.put('/order/send', isAuthenticated, new SendOrderController().handle)
 
 router.get('/orders', isAuthenticated, new ListOrdersController().handle)
-router.get('/order/detail', isAuthenticated, new DetailOrderController().handle)
+router.get('/order/detail', new DetailOrderController().handle)
 
 router.put('/order/finish', isAuthenticated, new FinishOrderController().handle)
 
@@ -118,5 +118,7 @@ router.get('/product/ingredients', isAuthenticated, new ListIngredientByProductC
 // -- ROTAS TABLE --
 router.post('/table', isAuthenticated, new CreateTableController().handle)
 router.get('/tables', isAuthenticated, new ListTablesController().handle)
+
+
 
 export { router }

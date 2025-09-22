@@ -32,8 +32,8 @@ export default function AutenticacaoComanda() {
     navigation.navigate("Menu");
   }
 
-  function Status1() {
-    navigation.navigate("Status1");
+  function StatusPedido() {
+    navigation.navigate("StatusPedido");
   }
 
   function Cupons() {
@@ -75,7 +75,7 @@ export default function AutenticacaoComanda() {
     <Image source={home} style={styles.imagesNav} />
     <Text>Home</Text>
   </TouchableOpacity>
-  <TouchableOpacity onPress={Status1} style={styles.nav}>
+  <TouchableOpacity onPress={StatusPedido} style={styles.nav}>
     <Image source={fav} style={styles.imagesNav} resizeMode="cover" />
     <Text>Status</Text>
   </TouchableOpacity>
