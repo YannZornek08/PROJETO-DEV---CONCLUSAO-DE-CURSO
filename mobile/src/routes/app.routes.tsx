@@ -96,39 +96,28 @@ function AppRoutes() {
         options={{ headerShown: false }}
       />
 
-            <Stack.Screen 
-                name="Carrinho" 
-                component={Carrinho} 
-                options={{headerShown: false}}
-            />
-
-            <Stack.Screen
-                name="Pagamento"
-                component={Pagamento}
-                options={{headerShown: false}}
-            />
-
-            <Stack.Screen
-                name="DadosPagamento"
-                component={DadosPagamento}
-                options={{headerShown: false}}
-            />
-            
-            <Stack.Screen 
-                name="Settings" 
-                component={Settings} 
-                options={{headerShown: false}}
-            />
-      <Stack.Screen
-        name="Carrinho"
-        component={Carrinho}
-        options={{ headerShown: false }}
+      <Stack.Screen 
+          name="Carrinho" 
+          component={Carrinho} 
+          options={{headerShown: false}}
       />
 
       <Stack.Screen
-        name="Settings"
-        component={Settings}
-        options={{ headerShown: false }}
+          name="Pagamento"
+          component={Pagamento}
+          options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+          name="DadosPagamento"
+          component={DadosPagamento}
+          options={{headerShown: false}}
+      />
+            
+      <Stack.Screen 
+          name="Settings" 
+          component={Settings} 
+          options={{headerShown: false}}
       />
 
       <Stack.Screen
