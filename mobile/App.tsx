@@ -14,7 +14,9 @@ import DadosPagamento from './src/pages/DadosPagamento';
 import Cupons from './src/pages/Cupons';
 import Carrinho from './src/pages/Carrinho'
 import AppRoutes from './src/routes/app.routes';
-import LeituraCodigo from './src/pages/LeituraCodigo'
+import LerQR from './src/pages/LerQR';
+import Status1 from './src/pages/Status1';
+import Status2 from './src/pages/Status2';
 
 
 const Stack = createNativeStackNavigator();
@@ -24,11 +26,12 @@ export default function App() {
     <NavigationContainer>
       <AppRoutes/>
     </NavigationContainer>
+   
     // <DetalhesPedido/>  testando tela de produto
     // <SignIn /> // testando a tela de login
     // <Cadastro /> // testando a tela de cadastro
     // <Cupons /> Cupons testado
     // <Carrinho/>
-    // <LeituraCodigo/>
+    // <LerQR/>
   );
 }

@@ -18,8 +18,9 @@ import Pagamento from "../pages/Pagamento"
 import DadosPagamento from "../pages/DadosPagamento"
 
 //////////////
-import Favoritos from "../pages/Favoritos";
-import LerQR from "../pages/Ler QR";
+import Status1 from "../pages/Status1";
+import Status2 from "../pages/Status2";
+import LerQR from "../pages/LerQR";
 
 // Botões da busca
 
@@ -29,14 +30,14 @@ import Settings from "../pages/PageSettings";
 // Cards
 import DetalhesProdutos from "../pages/DetalhesProduto";
 
-// importe aqui sua tela de autenticação da comanda
-import AutenticacaoComanda from "../pages/LeituraCodigo"
+
 
 export type StackParamsList = {
     Dashboard: undefined;
     Menu: undefined;
     Cupons: undefined;
-    Favoritos: undefined;
+    Status1: undefined;
+    Status2: undefined;
     LerQR: undefined;
     Carrinho: undefined;
     Settings: undefined;
@@ -44,7 +45,7 @@ export type StackParamsList = {
     DadosPagamento: undefined;
     DetalhesProdutos: { product: Produto };
     VoltarMenu:undefined;
-  AutenticacaoComanda: undefined;
+  
 
   Order: {
     number: number | string;
@@ -86,8 +87,14 @@ function AppRoutes() {
       />
 
       <Stack.Screen
-        name="Favoritos"
-        component={Favoritos}
+        name="Status1"
+        component={Status1}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="Status2"
+        component={Status2}
         options={{ headerShown: false }}
       />
 
@@ -133,12 +140,6 @@ function AppRoutes() {
         options={{ headerShown: false }}
       />
 
-      {/* 🔹 aqui está a tela nova */}
-      <Stack.Screen
-        name="AutenticacaoComanda"
-        component={AutenticacaoComanda}
-        options={{ headerShown: false }}
-      />
 
       <Stack.Screen
         name="FinishOrder"

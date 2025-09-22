@@ -6,46 +6,59 @@ import {
   Image,
   Text,
   StyleSheet,
+  TouchableOpacity, // <─ importado aqui
 } from "react-native";
-
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
 
 const Pagamento: React.FC = () => {
-
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
+  
   const DadosPagamento = () => {
     navigation.navigate("DadosPagamento");
   };
 
+  const Carrinho = () => {
+    navigation.navigate("Carrinho");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
-        <Image
-          source={{
-            uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ibRZmPwSqH/ivq4y5g2_expires_30_days.png",
-          }}
-          resizeMode="stretch"
-          style={styles.image}
-        />
-        
-        
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+      >
+        <TouchableOpacity onPress={Carrinho}>
+          <Image
+            source={{
+              uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ibRZmPwSqH/ivq4y5g2_expires_30_days.png",
+            }}
+            resizeMode="stretch"
+            style={styles.image}
+          />
+        </TouchableOpacity>
 
         <Text style={styles.title}>Pagamento</Text>
 
         <View style={styles.row}>
           <View style={styles.card}>
-            <Text style={styles.cardText} onPress={DadosPagamento}>Crédito</Text>
+            <Text style={styles.cardText} onPress={DadosPagamento}>
+              Crédito
+            </Text>
           </View>
           <View style={styles.card}>
-            <Text style={styles.cardText} onPress={DadosPagamento}>Débito</Text>
+            <Text style={styles.cardText} onPress={DadosPagamento}>
+              Débito
+            </Text>
           </View>
         </View>
 
-        <View style={[styles.card, styles.fullWidthCard]} >
-          <Text style={styles.cardText} onPress={DadosPagamento}>Pix</Text>
+        <View style={[styles.card, styles.fullWidthCard]}>
+          <Text style={styles.cardText} onPress={DadosPagamento}>
+            Pix
+          </Text>
         </View>
       </ScrollView>
     </SafeAreaView>
