@@ -14,7 +14,7 @@ import DadosPagamento from './src/pages/DadosPagamento';
 import Cupons from './src/pages/Cupons';
 import Carrinho from './src/pages/Carrinho'
 import AppRoutes from './src/routes/app.routes';
-import LeituraCodigo from './src/pages/LerQR'
+import LerQR from './src/pages/LerQR'
 
 
 const Stack = createNativeStackNavigator();
@@ -29,6 +29,6 @@ export default function App() {
     // <Cadastro /> // testando a tela de cadastro
     // <Cupons /> Cupons testado
     // <Carrinho/>
-    // <LeituraCodigo/>
+    // <LerQR/>
   );
 }
