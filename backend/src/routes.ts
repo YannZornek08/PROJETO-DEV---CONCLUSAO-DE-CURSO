@@ -87,7 +87,7 @@ router.put('/order/send', isAuthenticated, new SendOrderController().handle)
 router.get('/orders', isAuthenticated, new ListOrdersController().handle)
 router.get('/order/detail', new DetailOrderController().handle)
 
-router.put('/order/finish', isAuthenticated, new FinishOrderController().handle)
+router.put('/order/finish', new FinishOrderController().handle)
 
 // -- ROTAS ROLE --
 router.post('/role', new CreateRoleController().handle)

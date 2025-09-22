@@ -1,55 +1,46 @@
 import React, { useState, useEffect } from "react";
-import {
-  SafeAreaView,
-  View,
-  ScrollView,
-  Text,
-  Image,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Modal,
-  Button
-} from "react-native";
+import { View, Text } from "react-native";
 
 import { api } from "../../services/api";
-
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { StackParamsList } from "../../routes/app.routes";
 
 type Order = {
   id: string;
   status: boolean;
-}
+};
 
 export default function StatusPedido() {
+  const [order, setOrder] = useState<Order | null>(null);
 
-  const [order, setOrder] = useState<Order>();
-
-  const order_id = "order_id=93185418-d623-4343-9529-8ad524f5be45"
+  const order_id = "order_id=93185418-d623-4343-9529-8ad524f5be45";
 
   useEffect(() => {
     async function verOrder() {
-        try {
-          const response = await api.get(`/order/detail?${order_id}`);
-          console.log("Resposta da API:", response.data); // 👈 olha aqui no console
-          setOrder(response.data);
-        } catch (err) {
-          console.log("Erro ao buscar orders:", err);
+      try {
+        const response = await api.get(`/order/detail?${order_id}`);
+        console.log("Resposta da API:", response.data);
+
+        if (Array.isArray(response.data) && response.data.length > 0) {
+          // pega o "order" do primeiro item
+          const pedido = response.data[0].order;
+          setOrder(pedido);
+        } else {
+          console.log("Nenhum item encontrado para esse pedido.");
         }
+      } catch (err) {
+        console.log("Erro ao buscar orders:", err);
       }
-      verOrder();
-  },[])
+    }
+    verOrder();
+  }, []);
 
   return (
-      <View>
-    <Text>Telinha</Text>
-    {order && (
-      <View>
-        <Text>{order.id}</Text>
-      </View>
-    )}
-  </View>
-  )
+    <View>
+      <Text>Telinha</Text>
+      {order ? (
+        <Text>Status: {order.status ? "Funcionou (true)" : "Não Funcionou (false)"}</Text>
+      ) : (
+        <Text>Carregando pedido...</Text>
+      )}
+    </View>
+  );
 }
