@@ -27,11 +27,17 @@ const qrcode = require('../../assets/nav-icons/qrcode.png')
 
 /////////////////
 
-type Produto = {
+export type Produto = {
   id: string;
   name: string;
+  description: string;
   price: number;
   banner: string;
+}
+
+type Order = {
+  id: string;
+  status: boolean
 }
 
 export default function HomeScreen() {
@@ -39,7 +45,7 @@ export default function HomeScreen() {
   const [produtos, setProdutos] = useState<Produto[]>([]);
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [produtosPesquisados, setProdutosPesquisados] = useState<Produto[]>([])
+  // const [produtosPesquisados, setProdutosPesquisados] = useState<Produto[]>([])
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
   function Settings() {
@@ -54,8 +60,8 @@ export default function HomeScreen() {
     navigation.navigate("Cupons");
   }
 
-  function Favoritos() {
-    navigation.navigate("Status1");
+  function StatusPedido() {
+    navigation.navigate("StatusPedido");
   }
 
   function LerQR() {
@@ -64,7 +70,6 @@ export default function HomeScreen() {
 
   async function Filtros() {
     alert("blablabla")
-
   }
 
   useEffect(() => {
@@ -77,21 +82,21 @@ export default function HomeScreen() {
         console.log("Erro ao buscar produtos:", err);
       }
     }
-    async function pesquisarProdutos() {
-      if (textInput1.length == 0 ) {
-        setProdutosPesquisados(produtos)
-      } else {
-        try {
-          // 👉 Chama a rota que retorna TODOS os produtos pesquisados
-          const response = await api.get('/product/search');
-          setProdutosPesquisados(response.data);
-        } catch (err) {
-          console.log("Erro ao pesquisar produtos:", err);
-        }
-      }
-    }
+    // async function pesquisarProdutos() {
+    //   if (textInput1.length == 0 ) {
+    //     setProdutosPesquisados(produtos)
+    //   } else {
+    //     try {
+    //       // 👉 Chama a rota que retorna TODOS os produtos pesquisados
+    //       const response = await api.get('/product/search');
+    //       setProdutosPesquisados(response.data);
+    //     } catch (err) {
+    //       console.log("Erro ao pesquisar produtos:", err);
+    //     }
+    //   }
+    // }
     verProdutos();
-    pesquisarProdutos();
+    // pesquisarProdutos();
   }, []);
 
   // useEffect(() => {
@@ -188,9 +193,7 @@ export default function HomeScreen() {
               {row.map(prod => (
                 <PizzaCard
                   key={prod.id}
-                  title={prod.name}
-                  price={`R$ ${prod.price}`}
-                  image={prod.banner}
+                  product={prod}
                 />
               ))}
             </View>
@@ -204,9 +207,9 @@ export default function HomeScreen() {
           <Image source={home} style={styles.imagesNav} />
           <Text>Home</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={Favoritos} style={styles.nav}>
+        <TouchableOpacity onPress={StatusPedido} style={styles.nav}>
           <Image source={fav} style={styles.imagesNav} resizeMode="cover" />
-          <Text>Favoritos</Text>
+          <Text>Meu Pedido</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={Cupons} style={styles.nav}>
           <Image source={cupom} style={styles.imagesNav} resizeMode="cover" />
@@ -222,20 +225,20 @@ export default function HomeScreen() {
 }
 
 type PizzaCardProps = {
-  title: string;
-  price: string;
-  image: string;
+  product: Produto;
 };
 
-function PizzaCard({ title, price, image }: PizzaCardProps) {
+function PizzaCard({ product }: PizzaCardProps) {
+  const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
   return (
+
     <View style={styles.card}>
-      <Image source={{ uri: image }} resizeMode="stretch" style={styles.cardImage} />
-      <Text style={styles.cardTitle}>{title}</Text>
-      <Text style={styles.cardPrice}>{price}</Text>
+      <Image source={{ uri: product.banner }} resizeMode="stretch" style={styles.cardImage} />
+      <Text style={styles.cardTitle}>{product.name}</Text>
+      <Text style={styles.cardPrice}>R$ {product.price}</Text>
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => alert(`${title} adicionado!`)}
+        onPress={() => navigation.navigate("DetalhesProdutos", { product })}
       >
         <Image
           source={{

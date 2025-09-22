@@ -126,8 +126,10 @@ model Costumer {
 }
 
 model Payment {
-  id         String @id @default(uuid())
-  mtdo_pagto String
+  id String @id @default(uuid())
+
+  mtdo_pagto    Mtdo_pagto @relation(fields: [mtdo_pagto_id], references: [id])
+  mtdo_pagto_id String
 
   order    Order  @relation(fields: [order_id], references: [id])
   order_id String
@@ -163,4 +165,15 @@ model Ingredient_product {
   product_id    String
 
   @@map("ingredients_products")
+}
+
+model Mtdo_pagto {
+  id   String @id @default(uuid())
+  name String
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
+  payments   Payment[]
+
+  @@map("payment_methods")
 }

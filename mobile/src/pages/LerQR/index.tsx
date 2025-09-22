@@ -33,7 +33,7 @@ export default function AutenticacaoComanda() {
   }
 
   function StatusPedido() {
-    navigation.navigate("Status1");
+    navigation.navigate("StatusPedido");
   }
 
   function Cupons() {
@@ -70,24 +70,24 @@ export default function AutenticacaoComanda() {
       </View>
 
       {/* NAV */}
-      <View style={styles.fullNav}>
-        <TouchableOpacity onPress={Home} style={styles.nav}>
-          <Image source={home} style={styles.imagesNav} />
-          <Text>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={StatusPedido} style={styles.nav}>
-          <Image source={fav} style={styles.imagesNav} resizeMode="cover" />
-          <Text>Favoritos</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={Cupons} style={styles.nav}>
-          <Image source={cupom} style={styles.imagesNav} resizeMode="cover" />
-          <Text>Cupons</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={LerQR} style={[styles.currentNav, styles.nav]}>
-          <Image source={qrcode} style={styles.imagesNav} />
-          <Text>Ler QR</Text>
-        </TouchableOpacity>
-      </View>
+    <View style={styles.fullNav}>
+  <TouchableOpacity onPress={Home} style={styles.nav}>
+    <Image source={home} style={styles.imagesNav} />
+    <Text>Home</Text>
+  </TouchableOpacity>
+  <TouchableOpacity onPress={StatusPedido} style={styles.nav}>
+    <Image source={fav} style={styles.imagesNav} resizeMode="cover" />
+    <Text>Status</Text>
+  </TouchableOpacity>
+  <TouchableOpacity onPress={Cupons} style={styles.nav}>
+    <Image source={cupom} style={styles.imagesNav} resizeMode="cover" />
+    <Text>Cupons</Text>
+  </TouchableOpacity>
+  <TouchableOpacity onPress={LerQR} style={[styles.currentNav, styles.nav]}>
+    <Image source={qrcode} style={styles.imagesNav} />
+    <Text>Ler QR</Text>
+  </TouchableOpacity>
+</View>
     </SafeAreaView>
   );
 }
