@@ -3,6 +3,7 @@
 ############################
 backend/.env
 backend/node_modules/
+backend/src/generated/
 
 # Keep environment variables out of version control
 
@@ -100,4 +101,4 @@ mobile/.env*.local
 mobile/*.tsbuildinfo
 
 # não subir o ip
-mobile/services/api.ts
+mobile/src/services/api.ts
