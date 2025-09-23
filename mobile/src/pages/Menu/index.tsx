@@ -119,7 +119,7 @@ export default function HomeScreen() {
           {/* Barra de busca */}
           <View style={styles.searchBar}>
             <Image
-              source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/m1yrb272_expires_30_days.png" }}
+              source={require('../../assets/Search.png')}
               resizeMode="stretch"
               style={styles.searchIcon}
             />
@@ -132,14 +132,14 @@ export default function HomeScreen() {
             <View style={styles.searchIconsRight}>
               <TouchableOpacity onPress={Carrinho}>
                 <Image
-                  source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/tmmocg1t_expires_30_days.png" }}
+                  source={require('../../assets/Carrinho.png')}
                   resizeMode="stretch"
                   style={styles.iconRight}
                 />
               </TouchableOpacity>
               <TouchableOpacity onPress={Settings}>
                 <Image
-                  source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/bjnemhbr_expires_30_days.png" }}
+                  source={require('../../assets/Configuracoes.png')}
                   resizeMode="stretch"
                   style={styles.iconRight}
                 />
@@ -168,7 +168,7 @@ export default function HomeScreen() {
             >
               
               <Image
-                source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/uip8oeqk_expires_30_days.png" }}
+               source={require('../../assets/abawhite.png')}
                 resizeMode="stretch"
                 style={styles.filterIcon}
               />
@@ -244,9 +244,7 @@ function PizzaCard({ product }: PizzaCardProps) {
         }
       >
         <Image
-          source={{
-            uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/mijsyyvb_expires_30_days.png",
-          }}
+       source={require('../../assets/Plus.png')}
           resizeMode="stretch"
         />
         <Text style={styles.addText}>Adicionar</Text>

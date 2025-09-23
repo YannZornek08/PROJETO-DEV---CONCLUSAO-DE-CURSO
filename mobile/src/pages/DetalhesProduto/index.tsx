@@ -90,9 +90,7 @@ export default function DetalhesProdutos() {
         <View style={styles.imageContainer}>
           <TouchableOpacity onPress={Menu}>
             <Image
-              source={{
-                uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/i2a8n5k6_expires_30_days.png",
-              }}
+            source={require('../../assets/Voltar.png')}
               resizeMode="stretch"
               style={styles.smallImage}
             />
