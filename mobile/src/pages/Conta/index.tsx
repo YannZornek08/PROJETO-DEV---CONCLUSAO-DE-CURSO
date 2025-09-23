@@ -90,18 +90,16 @@ const MinhaConta: React.FC = () => {
           <View style={styles.rowCard}>
             <View style={styles.rowContent}>
               <Image
-                source={{
-                  uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ibRZmPwSqH/ws15r0ls_expires_30_days.png",
-                }}
+                source={require('../../assets/ws15r0ls_expires_30_days.png',
+              )}
                 resizeMode="stretch"
                 style={styles.icon}
               />
               <Text style={styles.textPrimary}>Log out</Text>
             </View>
             <Image
-              source={{
-                uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ibRZmPwSqH/faz03frq_expires_30_days.png",
-              }}
+              source={require('../../assets/faz03frq_expires_30_days.png',
+              )}
               resizeMode="stretch"
               style={styles.iconSmall}
             />
