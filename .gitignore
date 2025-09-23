@@ -1,0 +1,100 @@
+############################
+# GIT IGNORE do Backend
+############################
+
+backend/node_modules/
+
+# Keep environment variables out of version control
+
+
+
+############################
+# GIT IGNORE do Frontend
+############################
+
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+frontend/node_modules/
+frontend/.pnp
+frontend/.pnp.*
+frontend/.yarn/*
+frontend/!.yarn/patches
+frontend/!.yarn/plugins
+frontend/!.yarn/releases
+frontend/!.yarn/versions
+
+# testing
+frontend/coverage
+
+# next.js
+frontend/.next/
+frontend/out/
+
+# production
+frontend/build
+
+# misc
+frontend/.DS_Store
+frontend/*.pem
+
+# debug
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+frontend/.env*
+
+# vercel
+frontend/.vercel
+
+# typescript
+frontend/*.tsbuildinfo
+frontend/next-env.d.ts
+
+
+
+############################
+# GIT IGNORE do Mobile
+############################
+# dependencies
+mobile/node_modules/
+mobile/node_modules/.bin/
+
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+
+# Expo
+mobile/.expo/
+mobile/dist/
+mobile/web-build/
+mobile/expo-env.d.ts
+
+# Native
+mobile/.kotlin/
+mobile/*.orig.*
+mobile/*.jks
+mobile/*.p8
+mobile/*.p12
+mobile/*.key
+mobile/*.mobileprovision
+
+# Metro
+mobile/.metro-health-check*
+
+# debug
+mobile/npm-debug.*
+mobile/yarn-debug.*
+mobile/yarn-error.*
+
+# macOS
+mobile/.DS_Store
+mobile/*.pem
+
+# local env files
+mobile/.env*.local
+
+# typescript
+mobile/*.tsbuildinfo
