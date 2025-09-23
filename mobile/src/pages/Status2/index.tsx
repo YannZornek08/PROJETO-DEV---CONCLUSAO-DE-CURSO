@@ -8,8 +8,6 @@ import {
   StyleSheet,
 } from "react-native";
 
-import { Ionicons } from "@expo/vector-icons";
-
 const PedidoStatus: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>

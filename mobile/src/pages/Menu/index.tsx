@@ -22,6 +22,7 @@ import { ModalPicker } from "../../components/ModalPicker";
 // IMAGENS DO NAV
 const home = require('../../assets/nav-icons/home.png')
 const fav = require('../../assets/nav-icons/star.png')
+// const status = require('../../assets/nav-icons/status.png')
 const cupom = require('../../assets/nav-icons/cupom.png')
 const qrcode = require('../../assets/nav-icons/qrcode.png')
 
@@ -119,7 +120,7 @@ export default function HomeScreen() {
           {/* Barra de busca */}
           <View style={styles.searchBar}>
             <Image
-              source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/m1yrb272_expires_30_days.png" }}
+              source={require('../../assets/Search.png')}
               resizeMode="stretch"
               style={styles.searchIcon}
             />
@@ -132,17 +133,17 @@ export default function HomeScreen() {
             <View style={styles.searchIconsRight}>
               <TouchableOpacity onPress={Carrinho}>
                 <Image
-                  source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/tmmocg1t_expires_30_days.png" }}
+                  source={require('../../assets/Carrinho.png')}
                   resizeMode="stretch"
                   style={styles.iconRight}
-                />
+                  />
               </TouchableOpacity>
               <TouchableOpacity onPress={Settings}>
                 <Image
-                  source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/bjnemhbr_expires_30_days.png" }}
+                  source={require('../../assets/Configuracoes.png')}
                   resizeMode="stretch"
                   style={styles.iconRight}
-                />
+                  />
               </TouchableOpacity>
 
             </View>
@@ -155,23 +156,23 @@ export default function HomeScreen() {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
-      >
+        >
             <Button
               title="Fechar"
               onPress={() => setModalVisible(false)}
-            />
+              />
       </Modal>
           <View style={styles.filtersWrapper}>
             <TouchableOpacity
               style={styles.filterButton}
               onPress={() => setModalVisible(true)}
-            >
+              >
               
               <Image
-                source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/uip8oeqk_expires_30_days.png" }}
+               source={require('../../assets/abawhite.png')}
                 resizeMode="stretch"
                 style={styles.filterIcon}
-              />
+                />
               <Text style={styles.filterText}>Filtros</Text>
             </TouchableOpacity>
           </View>
@@ -192,8 +193,8 @@ export default function HomeScreen() {
             <View style={styles.row} key={idx}>
               {row.map(prod => (
                 <PizzaCard
-                  key={prod.id}
-                  product={prod}
+                key={prod.id}
+                product={prod}
                 />
               ))}
             </View>
@@ -242,11 +243,9 @@ function PizzaCard({ product }: PizzaCardProps) {
           console.log(product) 
           navigation.navigate("DetalhesProdutos", { product })}
         }
-      >
+        >
         <Image
-          source={{
-            uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/mijsyyvb_expires_30_days.png",
-          }}
+       source={require('../../assets/Plus.png')}
           resizeMode="stretch"
         />
         <Text style={styles.addText}>Adicionar</Text>
@@ -280,21 +279,75 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginHorizontal: 26,
   },
-  searchIcon: { width: 48, height: 48, marginRight: 4 },
-  searchInput: { color: "#52443C", fontSize: 16, flex: 1, paddingVertical: 12 },
-  searchIconsRight: { flexDirection: "row" },
-  iconRight: { width: 48, height: 48 },
-  filtersWrapper: { alignItems: "center", paddingVertical: 8 },
-  filterButton: { flexDirection: "row", backgroundColor: "#8D4F28", borderRadius: 12, paddingVertical: 6, paddingHorizontal: 12 },
-  filterIcon: { width: 20, height: 20, marginRight: 4 },
-  filterText: { color: "#FFFFFF", fontSize: 14, fontWeight: "bold" },
-  tableText: { color: "#000000", fontSize: 16, fontWeight: "bold", marginBottom: 8, marginHorizontal: 26 },
-  cardsWrapper: { marginBottom: 44, marginHorizontal: 26 },
-  row: { flexDirection: "row", marginBottom: 30, gap: 10 },
-  card: { flex: 1, alignItems: "center" },
-  cardImage: { height: 180, marginBottom: 8, width: "100%" },
-  cardTitle: { color: "#000000", fontSize: 16, textAlign: "center", marginBottom: 12 },
-  cardPrice: { color: "#000000", fontSize: 14, marginBottom: 7 },
+  searchIcon: { 
+    width: 48, 
+    height: 48, 
+    marginRight: 4 
+  },
+  searchInput: { 
+    color: "#52443C", 
+    fontSize: 16, 
+    flex: 1, 
+    paddingVertical: 12 
+  },
+  searchIconsRight: { 
+    flexDirection: "row" 
+  },
+  iconRight: { 
+    width: 48, 
+    height: 48 
+  },
+  filtersWrapper: { 
+    alignItems: "center", paddingVertical: 8 },
+  filterButton: { 
+    flexDirection: "row", backgroundColor: "#8D4F28", borderRadius: 12, paddingVertical: 6, paddingHorizontal: 12 
+  },
+  filterIcon: { 
+    width: 20, 
+    height: 20, 
+    marginRight: 4 },
+  filterText: { 
+    color: "#FFFFFF", 
+    fontSize: 14, 
+    fontWeight: "bold" },
+  tableText: { 
+    color: "#000000", 
+    fontSize: 16, 
+    fontWeight: "bold", 
+    marginBottom: 8, marginHorizontal: 26 
+  },
+  cardsWrapper: { 
+    marginBottom: 44, marginHorizontal: 26 
+  },
+  row: { 
+    flexDirection: "row", 
+    marginBottom: 30, 
+    gap: 10,
+    alignItems: "stretch"
+  },
+  card: { 
+    flex: 1, 
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  cardImage: { 
+    height: 180, 
+    marginBottom: 8, 
+    width: "100%",
+    borderRadius: 90
+  },
+  cardTitle: { 
+    color: "#000000",
+    fontWeight: "bold", 
+    fontSize: 18, 
+    textAlign: "center", 
+    marginBottom: 4,
+  },
+  cardPrice: { 
+    color: "#000000", 
+    fontSize: 16, 
+    marginBottom: 7 
+  },
   addButton: {
     flexDirection: "row",
     backgroundColor: "#8D4F28",
@@ -317,8 +370,26 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
   },
-  fullNav: { flexDirection: "row", backgroundColor: "#FCEAE2", borderRadius: 80, paddingHorizontal: 17, marginBottom: 42, marginHorizontal: 26, justifyContent: 'space-between' },
-  currentNav: { backgroundColor: '#f3cdbdff', borderRadius: 100 },
-  nav: { padding: 10 },
-  imagesNav: { margin: 'auto', width: 30, height: 30, borderRadius: 8 },
+  fullNav: { 
+    flexDirection: "row", 
+    backgroundColor: "#FCEAE2", 
+    borderRadius: 80, 
+    paddingHorizontal: 17, 
+    marginBottom: 42, 
+    marginHorizontal: 26, 
+    justifyContent: 'space-between' 
+  },
+  currentNav: { 
+    backgroundColor: '#f3cdbdff', 
+    borderRadius: 100 
+  },
+  nav: { 
+    padding: 10 
+  },
+  imagesNav: { 
+    margin: 'auto', 
+    width: 30, 
+    height: 30, 
+    borderRadius: 8 
+  },
 });

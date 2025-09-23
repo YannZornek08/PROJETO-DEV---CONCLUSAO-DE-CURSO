@@ -47,11 +47,13 @@ import { ListMtdoPagtoController } from './controllers/mtdo_pagto/ListMethodPaym
 
 import { CreatePaymentController } from './controllers/payment/CreatePaymentController';
 import { ListPaymentsController } from './controllers/payment/ListPaymentsController';
+import { InputCPFController } from './controllers/payment/InputCPFController';
 
 import { isAuthenticated } from './middlewares/isAuthenticated'
 import { isAuthenticatedClient } from './middlewares/isAuthenticatedClient'
 
 import uploadConfig from './config/multer'
+import { DetailTableController } from './controllers/table/DetailTableController';
 
 const router = Router()
 
@@ -82,7 +84,7 @@ router.get('/product/especify', new DetailProductController().handle)
 router.get('/product/search', new SearchProductController().handle)
 
 // -- ROTAS ORDER --
-router.post('/order', isAuthenticated, new CreateOrderController().handle)
+router.post('/order', new CreateOrderController().handle)
 router.delete('/order', isAuthenticated, new RemoveOrderController().handle)
 
 router.post('/order/add', isAuthenticated, new AddItemController().handle)
@@ -104,7 +106,7 @@ router.post('/costumers', new CreateCostumerController().handle)
 
 router.post('/session/costumers', new AuthCostumerController().handle)
 
-router.get('/me/costumers', isAuthenticatedClient, new DetailCostumerController().handle)
+router.get('/me/costumers', new DetailCostumerController().handle)
 
 // -- ROTAS ADDITIONAL --
 //Põe para true ou false
@@ -122,6 +124,7 @@ router.get('/product/ingredients', new ListIngredientByProductController().handl
 // -- ROTAS TABLE --
 router.post('/table', isAuthenticated, new CreateTableController().handle)
 router.get('/tables', isAuthenticated, new ListTablesController().handle)
+router.get('/table/detail', new DetailTableController().handle)
 
 // -- ROTAS METODO DE PAGAMENTO --
 router.post('/mtdo_pagto', new CreateMtdoPagtoController().handle)
@@ -130,5 +133,6 @@ router.get('/mtdo_pagtos', new ListMtdoPagtoController().handle)
 // -- ROTAS PAGAMENTO --
 router.post('/payment',  new CreatePaymentController().handle)
 router.get('/payments', new ListPaymentsController().handle)
+router.put('/payment/cpf', new InputCPFController().handle)
 
 export { router }

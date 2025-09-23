@@ -49,7 +49,6 @@ export type StackParamsList = {
     DadosPagamento: undefined;
     DetalhesProdutos: { product: Produto };
     VoltarMenu:undefined;
-  
 
   Order: {
     number: number | string;

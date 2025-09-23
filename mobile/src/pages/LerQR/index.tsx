@@ -8,9 +8,10 @@ import {
   StyleSheet,
   Image,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
+import { api } from "../../services/api";
 
 // IMAGENS DO NAV
 const home = require("../../assets/nav-icons/home.png");
@@ -18,15 +19,37 @@ const fav = require("../../assets/nav-icons/star.png");
 const cupom = require("../../assets/nav-icons/cupom.png");
 const qrcode = require("../../assets/nav-icons/qrcode.png");
 
+type RouteDetailParams = {
+    Order: {
+        table_id: string;
+        costumer_id: string;
+    }
+}
+
+type OrderRouterProps = RouteProp<RouteDetailParams, 'Order'>;
+
 export default function AutenticacaoComanda() {
+  const route = useRoute<OrderRouterProps>();
   const [codigo, setCodigo] = useState<string>("");
 
   const navigation =
     useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
-  function confirmarComanda() {
-    console.log("Código digitado:", codigo);
+async function confirmarComanda() {
+  try {
+
+    const response = await api.post("/order", {
+      table_id: '3e9959e3-87a3-4d4a-b112-d7d55183d4b1',
+      costumer_id: 'b57d8730-2b15-4573-8d9f-661fcdb986e8',
+    });
+
+    console.log("Order criada:", response.data);
+
+  } catch (err: any) {
+    console.error("Erro ao criar order:", err.response?.data || err.message || err);
   }
+}
+
 
   function Home() {
     navigation.navigate("Menu");

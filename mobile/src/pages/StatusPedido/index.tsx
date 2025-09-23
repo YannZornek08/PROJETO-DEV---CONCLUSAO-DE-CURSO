@@ -18,7 +18,7 @@ export default function StatusPedido() {
     async function verOrder() {
       try {
         const response = await api.get(`/order/detail?${order_id}`);
-        console.log("Resposta da API:", response.data);
+        // console.log("Resposta da API:", response.data);
 
         if (Array.isArray(response.data) && response.data.length > 0) {
           // pega o "order" do primeiro item

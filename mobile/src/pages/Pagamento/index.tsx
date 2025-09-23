@@ -32,9 +32,7 @@ const Pagamento: React.FC = () => {
       >
         <TouchableOpacity onPress={Carrinho}>
           <Image
-            source={{
-              uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ibRZmPwSqH/ivq4y5g2_expires_30_days.png",
-            }}
+            source={require('../../assets/Voltar.png')}
             resizeMode="stretch"
             style={styles.image}
           />

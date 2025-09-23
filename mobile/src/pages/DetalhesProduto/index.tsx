@@ -92,9 +92,7 @@ export default function DetalhesProdutos() {
         <View style={styles.imageContainer}>
           <TouchableOpacity onPress={Menu}>
             <Image
-              source={{
-                uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/i2a8n5k6_expires_30_days.png",
-              }}
+            source={require('../../assets/Voltar.png')}
               resizeMode="stretch"
               style={styles.smallImage}
             />
@@ -254,9 +252,9 @@ const styles = StyleSheet.create({
   priceContainer: { alignItems: "center", marginVertical: 10 },
   price: { color: "#000000", fontSize: 22, fontWeight: "bold" },
   description: {
-    color: "#666666",
-    fontSize: 16,
-    marginBottom: 25,
+    color: "#000000ab",
+    fontSize: 18,
+    marginTop: 8,
     marginHorizontal: 26,
     textAlign: "center",
     lineHeight: 22,
