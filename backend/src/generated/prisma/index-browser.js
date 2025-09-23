@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.16.2
- * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
+ * Prisma Client JS version: 6.8.2
+ * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
  */
 Prisma.prismaVersion = {
-  client: "6.16.2",
-  engine: "1c57fdcd7e44b29b9313256c76699e91c3ac3c43"
+  client: "6.8.2",
+  engine: "2060c79ba17c6bb9f5823312b6f6b7f4a845738e"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -171,7 +171,7 @@ exports.Prisma.ItemScalarFieldEnum = {
   created_at: 'created_at',
   update_at: 'update_at',
   order_id: 'order_id',
-  product_id: 'product_id'
+  ingredient_product_id: 'ingredient_product_id'
 };
 
 exports.Prisma.RoleScalarFieldEnum = {

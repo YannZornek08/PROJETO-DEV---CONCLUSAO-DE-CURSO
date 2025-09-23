@@ -37,8 +37,7 @@ import { CreateIngredientController } from './controllers/additional/CreateIngre
 import { AddAdditionalController } from './controllers/additional/AddAdditionalController';
 import { ListIngredientByProductController } from './controllers/additional/ListIngredientByProductController';
 
-import { RemovingAdditionalController } from './controllers/additional/RemovingAdditionalController';
-import { AddingAdditionalController } from './controllers/additional/AddingAdditionalController';
+import { UpdateAdditionalController } from './controllers/additional/UpdateAdditionalController';
 
 import { CreateTableController } from './controllers/table/CreateTableController';
 import { ListTablesController } from './controllers/table/ListTablesController';
@@ -109,8 +108,7 @@ router.get('/me/costumers', isAuthenticatedClient, new DetailCostumerController(
 
 // -- ROTAS ADDITIONAL --
 //Põe para true ou false
-router.put('/additional/removing', new RemovingAdditionalController().handle)
-router.put('/additional/adding', new AddingAdditionalController().handle)
+router.put('/additional/update', new UpdateAdditionalController().handle)
 
 // Cria um novo
 router.post('/ingredients', isAuthenticated, new CreateIngredientController().handle)
