@@ -7,23 +7,27 @@ interface ingredientsProductsRequest {
 class ListIngredientByCategoryService {
     async execute ({ product_id}: ingredientsProductsRequest) {
 
-        const findByCategory = await prismaClient.ingredient_product.findMany({
+        const findByCategory = await prismaClient.ingredient_product.findFirst({
             where: {
-                product_id: product_id,
+            product_id: product_id,
             },
-            include: {
-                ingredient: {
-                    select: {
-                        name: true,
-                    },
-                },
-                product: {
-                    select: {
-                        name: true,
-                    },
+            select: {
+            id: true, // exemplo de campo específico da própria tabela
+            adicionado: true,
+            product_id: true,
+            ingredient_id: true,
+            ingredient: {
+                select: {
+                name: true,
                 },
             },
-        })
+            product: {
+                select: {
+                name: true,
+                },
+            },
+            },
+        });
 
         return findByCategory;
 

@@ -37,8 +37,7 @@ import { CreateIngredientController } from './controllers/additional/CreateIngre
 import { AddAdditionalController } from './controllers/additional/AddAdditionalController';
 import { ListIngredientByProductController } from './controllers/additional/ListIngredientByProductController';
 
-import { RemovingAdditionalController } from './controllers/additional/RemovingAdditionalController';
-import { AddingAdditionalController } from './controllers/additional/AddingAdditionalController';
+import { UpdateAdditionalController } from './controllers/additional/UpdateAdditionalController';
 
 import { CreateTableController } from './controllers/table/CreateTableController';
 import { ListTablesController } from './controllers/table/ListTablesController';
@@ -54,6 +53,7 @@ import { isAuthenticated } from './middlewares/isAuthenticated'
 import { isAuthenticatedClient } from './middlewares/isAuthenticatedClient'
 
 import uploadConfig from './config/multer'
+import { DetailTableController } from './controllers/table/DetailTableController';
 
 const router = Router()
 
@@ -84,7 +84,7 @@ router.get('/product/especify', new DetailProductController().handle)
 router.get('/product/search', new SearchProductController().handle)
 
 // -- ROTAS ORDER --
-router.post('/order', isAuthenticated, new CreateOrderController().handle)
+router.post('/order', new CreateOrderController().handle)
 router.delete('/order', isAuthenticated, new RemoveOrderController().handle)
 
 router.post('/order/add', isAuthenticated, new AddItemController().handle)
@@ -106,12 +106,11 @@ router.post('/costumers', new CreateCostumerController().handle)
 
 router.post('/session/costumers', new AuthCostumerController().handle)
 
-router.get('/me/costumers', isAuthenticatedClient, new DetailCostumerController().handle)
+router.get('/me/costumers', new DetailCostumerController().handle)
 
 // -- ROTAS ADDITIONAL --
 //Põe para true ou false
-router.put('/additional/removing', new RemovingAdditionalController().handle)
-router.put('/additional/adding', new AddingAdditionalController().handle)
+router.put('/additional/update', new UpdateAdditionalController().handle)
 
 // Cria um novo
 router.post('/ingredients', isAuthenticated, new CreateIngredientController().handle)
@@ -125,6 +124,7 @@ router.get('/product/ingredients', new ListIngredientByProductController().handl
 // -- ROTAS TABLE --
 router.post('/table', isAuthenticated, new CreateTableController().handle)
 router.get('/tables', isAuthenticated, new ListTablesController().handle)
+router.get('/table/detail', new DetailTableController().handle)
 
 // -- ROTAS METODO DE PAGAMENTO --
 router.post('/mtdo_pagto', new CreateMtdoPagtoController().handle)

@@ -21,7 +21,7 @@ import { ModalPicker } from "../../components/ModalPicker";
 
 
 import BottomNavBar from "../../components/navButton";
-
+// const status = require('../../assets/nav-icons/status.png')
 /////////////////
 
 export type Produto = {
