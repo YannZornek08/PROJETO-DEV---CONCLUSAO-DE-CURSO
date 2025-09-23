@@ -13,36 +13,33 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
-import Pagamento from "../Pagamento";
 
 const Dados: React.FC = () => {
-
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
   const Menu = () => {
-      Alert.alert(
-        "Pagamento Realizado",
-      );
-      navigation.navigate("Status2")
-    };
-      const Pagamento = () => {
+    Alert.alert("Pagamento Realizado");
+    navigation.navigate("Status2");
+  };
+
+  const Pagamento = () => {
     navigation.navigate("Pagamento");
   };
 
-
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+      >
         {/* Cabeçalho */}
         <View style={styles.header}>
-           <TouchableOpacity onPress ={Pagamento}>
-          <Image
-            source={{
-              uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ibRZmPwSqH/li6hzwg0_expires_30_days.png",
-            }}
-            resizeMode="stretch"
-            style={styles.iconHeader}
-          />
+          <TouchableOpacity onPress={Pagamento} style={styles.backButton}>
+            <Image
+              source={require("../../assets/Voltar.png")}
+              resizeMode="stretch"
+              style={styles.iconHeader}
+            />
           </TouchableOpacity>
           <Text style={styles.title}>Dados</Text>
         </View>
@@ -54,24 +51,17 @@ const Dados: React.FC = () => {
           <View style={styles.inputRow}>
             <View style={styles.box} />
             <Image
-              source={{
-                uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ibRZmPwSqH/y0ooi2t9_expires_30_days.png",
-              }}
+              source={require("../../assets/Exclude.png")}
               resizeMode="stretch"
               style={styles.iconInput}
             />
           </View>
 
-          <Text style={styles.helperText}>
-            Exemplo: exemplo@gmail.com
-          </Text>
+          <Text style={styles.helperText}>Exemplo: exemplo@gmail.com</Text>
 
           {/* Botão pagar */}
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={Menu}
-            >
+            <TouchableOpacity style={styles.button} onPress={Menu}>
               <Text style={styles.buttonText}>Pagar</Text>
             </TouchableOpacity>
           </View>
@@ -97,15 +87,22 @@ const styles = StyleSheet.create({
   header: {
     marginTop: 48,
     marginBottom: 24,
+    flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center", 
+  },
+  backButton: {
+    position: "absolute",
+    left: 0,
+    zIndex: 1, 
   },
   iconHeader: {
-    width: 48,
-    height: 48,
-    marginBottom: 16,
-    alignSelf: "flex-start",
+    width: 32,
+    height: 32,
+    marginLeft: 16,
   },
   title: {
+    flex: 1,
     fontSize: 28,
     fontWeight: "bold",
     color: "#000",
