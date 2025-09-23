@@ -59,9 +59,22 @@ export default function DetalhesProdutos() {
             product_id: product.id,
           }
         });
-        console.log(adicionais)
         console.log("API retornou:", response.data);
         setAdicionais(Array.isArray(response.data) ? response.data : [response.data]);
+        const dataArray = Array.isArray(response.data) ? response.data : [response.data];
+        const formattedAdicionais: Additional[] = dataArray.map((item: any) => ({
+          ingredient_product_id: item.ingredient_product_id ?? "",
+          product_id: item.product_id ?? "",
+          ingredient_id: item.ingredient_id ?? "",
+          product: {
+            name: item.product?.name ?? "",
+          },
+          ingredient: {
+            name: item.ingredient?.name ?? "",
+          },
+          adicionado: item.adicionado ?? false,
+        }));
+        setAdicionais(formattedAdicionais);
         console.log("É array?", Array.isArray(response.data));
       } catch (err) {
         console.log("Erro ao buscar produtos:", err);
@@ -125,9 +138,9 @@ export default function DetalhesProdutos() {
           {adicionais.length > 0 && (
             <Text style={styles.sectionTitle}>Adicionais:</Text>
           )}
-          {adicionais.map((ingred, idx) => (
+          {adicionais.map((ingred) => (
             <TouchableOpacity
-              key={ingred.ingredient_product_id || idx}
+              key={ingred.ingredient_product_id}
               style={styles.adicionalItem}
               onPress={async () => {
           // Atualiza localmente
@@ -158,7 +171,7 @@ export default function DetalhesProdutos() {
               >
           {ingred.adicionado && <Text style={styles.checkmark}>✓</Text>}
               </View>
-              <Text style={styles.adicionalText}>{ingred.ingredient.name}</Text>
+              <Text style={styles.adicionalText}>{ingred.ingredient?.name ?? "Sem adicional"}</Text>
             </TouchableOpacity>
           ))}
         </View>
