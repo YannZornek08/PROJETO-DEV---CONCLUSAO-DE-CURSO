@@ -62,9 +62,7 @@ export default function Cupons() {
           <View style={styles.searchContainer}>
              
             <Image
-              source={{
-                uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/lbafwrbc_expires_30_days.png",
-              }}
+              source={require('../../assets/Search.png')}
               resizeMode="stretch"
               style={styles.searchIcon}
             />
@@ -78,10 +76,7 @@ export default function Cupons() {
             <View style={{ flexDirection: "row" }}>
                <TouchableOpacity onPress={Carrinho}>
               <Image
-                source={{
-                  uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/tt24czai_expires_30_days.png",
-                }}
-                
+              source={require('../../assets/Carrinho.png')}
                 resizeMode="stretch"
                 style={styles.actionIcon}
               />
@@ -89,9 +84,7 @@ export default function Cupons() {
 
               <TouchableOpacity onPress={Settings}>
               <Image
-                source={{
-                  uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/ub4jakho_expires_30_days.png",
-                }}
+                source={require('../../assets/Configuracoes.png')}
                 resizeMode="stretch"
                 style={styles.actionIcon}
               />
@@ -106,9 +99,7 @@ export default function Cupons() {
               onPress={(e: GestureResponderEvent) => alert("Filtros clicado!")}
             >
               <Image
-                source={{
-                  uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/wdj9268r_expires_30_days.png",
-                }}
+                source={require('../../assets/abawhite.png')}
                 resizeMode="stretch"
                 style={styles.filterIcon}
               />
@@ -123,7 +114,7 @@ export default function Cupons() {
         
           <View style={[styles.couponCard, { marginRight: 12 }]}>
             <Image
-              source={{ uri: "https://img.icons8.com/ios-filled/100/8D4F28/ticket.png" }}
+              source={require('../../assets/ticket.png')}
               style={styles.couponIcon}
             />
             <Text style={styles.couponText}>50% OFF</Text>
@@ -139,7 +130,7 @@ export default function Cupons() {
          
           <View style={styles.couponCard}>
             <Image
-              source={{ uri: "https://img.icons8.com/ios-filled/100/8D4F28/ticket.png" }}
+               source={require('../../assets/ticket.png')}
               style={styles.couponIcon}
             />
             <Text style={styles.couponText}>30% OFF</Text>

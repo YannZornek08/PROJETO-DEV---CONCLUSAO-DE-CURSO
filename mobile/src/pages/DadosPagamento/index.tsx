@@ -36,7 +36,10 @@ const Dados: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+      >
         {/* Cabeçalho */}
         <View style={styles.header}>
           <TouchableOpacity onPress={Pagamento}>
@@ -84,10 +87,7 @@ const Dados: React.FC = () => {
 
           {/* Botão pagar */}
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={Menu}
-            >
+            <TouchableOpacity style={styles.button} onPress={Menu}>
               <Text style={styles.buttonText}>Pagar</Text>
             </TouchableOpacity>
           </View>
@@ -113,15 +113,22 @@ const styles = StyleSheet.create({
   header: {
     marginTop: 48,
     marginBottom: 24,
+    flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center", 
+  },
+  backButton: {
+    position: "absolute",
+    left: 0,
+    zIndex: 1, 
   },
   iconHeader: {
-    width: 48,
-    height: 48,
-    marginBottom: 16,
-    alignSelf: "flex-start",
+    width: 32,
+    height: 32,
+    marginLeft: 16,
   },
   title: {
+    flex: 1,
     fontSize: 28,
     fontWeight: "bold",
     color: "#000",

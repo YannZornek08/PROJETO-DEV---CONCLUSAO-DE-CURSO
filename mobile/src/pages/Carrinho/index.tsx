@@ -42,9 +42,7 @@ const PedidoScreen: React.FC = () => {
       <ScrollView style={styles.scrollView}>
         <TouchableOpacity onPress={VoltarMenu}>
         <Image
-          source={{
-            uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/1oa02iuz_expires_30_days.png",
-          }}
+        source={require('../../assets/Voltar.png')}
           resizeMode="stretch"
           style={styles.logo}
         />

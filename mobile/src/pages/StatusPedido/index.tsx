@@ -37,7 +37,8 @@ export default function StatusPedido() {
   return (
     <View>
       {order ? (
-        <><Text style={styles.textMain}>Status:</Text><Text style={styles.textH2}> {order.status ? <Text style={styles.true}>"Funcionou (true)"</Text> : <Text style={styles.false}>"Não Funcionou (false)"</Text>} </Text></>
+        <><Text style={styles.textMain}>Status:</Text>
+        <Text style={styles.textH2}> {order.status ? <Text style={styles.true}>"Funcionou (true)"</Text> : <Text style={styles.false}>"Não Funcionou (false)"</Text>} </Text></>
       ) : (
         <Text>Carregando pedido...</Text>
       )}

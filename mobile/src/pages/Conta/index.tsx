@@ -15,9 +15,7 @@ const MinhaConta: React.FC = () => {
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         {/* Ícone superior */}
         <Image
-          source={{
-            uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ibRZmPwSqH/6e2yz29n_expires_30_days.png",
-          }}
+        source={require('../../assets/Voltar.png')}
           resizeMode="stretch"
           style={styles.image}
         />
@@ -28,9 +26,7 @@ const MinhaConta: React.FC = () => {
         {/* Foto de perfil + botão mudar foto */}
         <View style={styles.row}>
           <Image
-            source={{
-              uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ibRZmPwSqH/2gfwotnq_expires_30_days.png",
-            }}
+          source={require('../../assets/FotoDePerfil.png')}
             resizeMode="stretch"
             style={styles.profileImage}
           />
@@ -47,18 +43,14 @@ const MinhaConta: React.FC = () => {
           <View style={styles.rowCard}>
             <View style={styles.rowContent}>
               <Image
-                source={{
-                  uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ibRZmPwSqH/lh8rw13i_expires_30_days.png",
-                }}
+              source={require('../../assets/Internet.png')}
                 resizeMode="stretch"
                 style={styles.icon}
               />
               <Text style={styles.textPrimary}>João Mateus</Text>
             </View>
             <Image
-              source={{
-                uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ibRZmPwSqH/38i2s4kf_expires_30_days.png",
-              }}
+            source={require('../../assets/SetaDireita.png')}
               resizeMode="stretch"
               style={styles.iconSmall}
             />
@@ -67,18 +59,14 @@ const MinhaConta: React.FC = () => {
           <View style={styles.rowCard}>
             <View style={styles.rowContent}>
               <Image
-                source={{
-                  uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ibRZmPwSqH/yu8ma48d_expires_30_days.png",
-                }}
+              source={require('../../assets/Internet.png')}
                 resizeMode="stretch"
                 style={styles.icon}
               />
               <Text style={styles.textPrimary}>email@email.com</Text>
             </View>
             <Image
-              source={{
-                uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ibRZmPwSqH/1uhtnhui_expires_30_days.png",
-              }}
+            source={require('../../assets/SetaDireita.png')}
               resizeMode="stretch"
               style={styles.iconSmall}
             />
@@ -90,16 +78,14 @@ const MinhaConta: React.FC = () => {
           <View style={styles.rowCard}>
             <View style={styles.rowContent}>
               <Image
-                source={require('../../assets/ws15r0ls_expires_30_days.png',
-              )}
+                source={require('../../assets/Internet.png')}
                 resizeMode="stretch"
                 style={styles.icon}
               />
               <Text style={styles.textPrimary}>Log out</Text>
             </View>
             <Image
-              source={require('../../assets/faz03frq_expires_30_days.png',
-              )}
+              source={require('../../assets/SetaDireita.png')}
               resizeMode="stretch"
               style={styles.iconSmall}
             />
@@ -108,18 +94,14 @@ const MinhaConta: React.FC = () => {
           <View style={[styles.rowCard, styles.deleteRow]}>
             <View style={styles.rowContent}>
               <Image
-                source={{
-                  uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ibRZmPwSqH/3raz01uu_expires_30_days.png",
-                }}
+               source={require('../../assets/InternetWhite.png')}
                 resizeMode="stretch"
                 style={styles.icon}
               />
               <Text style={styles.textDelete}>Deletar conta</Text>
             </View>
             <Image
-              source={{
-                uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ibRZmPwSqH/de9vxnu8_expires_30_days.png",
-              }}
+              source={require('../../assets/InternetWhite.png')}
               resizeMode="stretch"
               style={styles.iconSmall}
             />

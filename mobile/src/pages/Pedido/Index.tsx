@@ -8,9 +8,7 @@ export default function Pedido() {
         
         {/* Logo ou ícone da pizzaria */}
         <Image
-          source={{
-            uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ogwEx3xhdY/rco2jqx2_expires_30_days.png",
-          }}
+         source={require('../../assets/Voltar.png')}
           resizeMode={"stretch"}
           style={{
             width: 32,
