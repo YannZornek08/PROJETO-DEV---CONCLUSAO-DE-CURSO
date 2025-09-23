@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"; 
 import {
   SafeAreaView,
   View,
@@ -19,13 +19,9 @@ import { api } from "../../services/api";
 import { CategoryProps } from "../Order";
 import { ModalPicker } from "../../components/ModalPicker";
 
-// IMAGENS DO NAV
-const home = require('../../assets/nav-icons/home.png')
-const fav = require('../../assets/nav-icons/star.png')
-// const status = require('../../assets/nav-icons/status.png')
-const cupom = require('../../assets/nav-icons/cupom.png')
-const qrcode = require('../../assets/nav-icons/qrcode.png')
 
+import BottomNavBar from "../../components/navButton";
+// const status = require('../../assets/nav-icons/status.png')
 /////////////////
 
 export type Produto = {
@@ -46,7 +42,6 @@ export default function HomeScreen() {
   const [produtos, setProdutos] = useState<Produto[]>([]);
 
   const [modalVisible, setModalVisible] = useState(false);
-  // const [produtosPesquisados, setProdutosPesquisados] = useState<Produto[]>([])
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
   function Settings() {
@@ -57,18 +52,6 @@ export default function HomeScreen() {
     navigation.navigate("Carrinho")
   }
 
-  function Cupons() {
-    navigation.navigate("Cupons");
-  }
-
-  function StatusPedido() {
-    navigation.navigate("StatusPedido");
-  }
-
-  function LerQR() {
-    navigation.navigate("LerQR");
-  }
-
   async function Filtros() {
     alert("blablabla")
   }
@@ -76,40 +59,14 @@ export default function HomeScreen() {
   useEffect(() => {
     async function verProdutos() {
       try {
-        //Chama a rota que retorna TODOS os produtos
         const response = await api.get('/product/all');
         setProdutos(response.data);
       } catch (err) {
         console.log("Erro ao buscar produtos:", err);
       }
     }
-    // async function pesquisarProdutos() {
-    //   if (textInput1.length == 0 ) {
-    //     setProdutosPesquisados(produtos)
-    //   } else {
-    //     try {
-    //       // 👉 Chama a rota que retorna TODOS os produtos pesquisados
-    //       const response = await api.get('/product/search');
-    //       setProdutosPesquisados(response.data);
-    //     } catch (err) {
-    //       console.log("Erro ao pesquisar produtos:", err);
-    //     }
-    //   }
-    // }
     verProdutos();
-    // pesquisarProdutos();
   }, []);
-
-  // useEffect(() => {
-  //   if (textInput1.trim() === "") {
-  //     setProdutosFiltrados(produtos);
-  //   } else {
-  //     const termo = textInput1.toLowerCase();
-  //     const filtrados = produtos.filter((p) =>
-  //       p.name.toLowerCase().includes(termo));
-  //     setProdutosFiltrados(filtrados);
-  //   }
-  // }, [textInput1, produtos]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -136,43 +93,40 @@ export default function HomeScreen() {
                   source={require('../../assets/Carrinho.png')}
                   resizeMode="stretch"
                   style={styles.iconRight}
-                  />
+                />
               </TouchableOpacity>
               <TouchableOpacity onPress={Settings}>
                 <Image
                   source={require('../../assets/Configuracoes.png')}
                   resizeMode="stretch"
                   style={styles.iconRight}
-                  />
+                />
               </TouchableOpacity>
-
             </View>
           </View>
 
-          {/* Botão filtros */}
-      
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-        >
+          
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => setModalVisible(false)}
+          >
             <Button
               title="Fechar"
               onPress={() => setModalVisible(false)}
-              />
-      </Modal>
+            />
+          </Modal>
           <View style={styles.filtersWrapper}>
             <TouchableOpacity
               style={styles.filterButton}
               onPress={() => setModalVisible(true)}
-              >
-              
+            >
               <Image
-               source={require('../../assets/abawhite.png')}
+                source={require('../../assets/abawhite.png')}
                 resizeMode="stretch"
                 style={styles.filterIcon}
-                />
+              />
               <Text style={styles.filterText}>Filtros</Text>
             </TouchableOpacity>
           </View>
@@ -193,8 +147,8 @@ export default function HomeScreen() {
             <View style={styles.row} key={idx}>
               {row.map(prod => (
                 <PizzaCard
-                key={prod.id}
-                product={prod}
+                  key={prod.id}
+                  product={prod}
                 />
               ))}
             </View>
@@ -202,25 +156,8 @@ export default function HomeScreen() {
         </View>
       </ScrollView>
 
-      {/* Bottom Nav */}
-      <View style={styles.fullNav}>
-        <TouchableOpacity style={[styles.currentNav, styles.nav]}>
-          <Image source={home} style={styles.imagesNav} />
-          <Text>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={StatusPedido} style={styles.nav}>
-          <Image source={fav} style={styles.imagesNav} resizeMode="cover" />
-          <Text>Meu Pedido</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={Cupons} style={styles.nav}>
-          <Image source={cupom} style={styles.imagesNav} resizeMode="cover" />
-          <Text>Cupons</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={LerQR} style={styles.nav}>
-          <Image source={qrcode} style={styles.imagesNav} />
-          <Text>Ler QR</Text>
-        </TouchableOpacity>
-      </View>
+      {/* Usa o BottomNavBar aqui */}
+      <BottomNavBar/>
     </SafeAreaView>
   );
 }
@@ -240,12 +177,11 @@ function PizzaCard({ product }: PizzaCardProps) {
       <TouchableOpacity
         style={styles.addButton}
         onPress={() => {
-          console.log(product) 
-          navigation.navigate("DetalhesProdutos", { product })}
-        }
-        >
+          navigation.navigate("DetalhesProdutos", { product })
+        }}
+      >
         <Image
-       source={require('../../assets/Plus.png')}
+          source={require('../../assets/Plus.png')}
           resizeMode="stretch"
         />
         <Text style={styles.addText}>Adicionar</Text>
@@ -359,37 +295,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  plus: {
-    color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "bold",
-    marginRight: 8,
-  },
   addText: {
     color: "#FFFFFF",
     fontSize: 14,
     fontWeight: "bold",
-  },
-  fullNav: { 
-    flexDirection: "row", 
-    backgroundColor: "#FCEAE2", 
-    borderRadius: 80, 
-    paddingHorizontal: 17, 
-    marginBottom: 42, 
-    marginHorizontal: 26, 
-    justifyContent: 'space-between' 
-  },
-  currentNav: { 
-    backgroundColor: '#f3cdbdff', 
-    borderRadius: 100 
-  },
-  nav: { 
-    padding: 10 
-  },
-  imagesNav: { 
-    margin: 'auto', 
-    width: 30, 
-    height: 30, 
-    borderRadius: 8 
   },
 });
