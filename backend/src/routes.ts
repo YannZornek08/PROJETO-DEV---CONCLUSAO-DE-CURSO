@@ -48,6 +48,7 @@ import { ListMtdoPagtoController } from './controllers/mtdo_pagto/ListMethodPaym
 
 import { CreatePaymentController } from './controllers/payment/CreatePaymentController';
 import { ListPaymentsController } from './controllers/payment/ListPaymentsController';
+import { InputCPFController } from './controllers/payment/InputCPFController';
 
 import { isAuthenticated } from './middlewares/isAuthenticated'
 import { isAuthenticatedClient } from './middlewares/isAuthenticatedClient'
@@ -132,5 +133,6 @@ router.get('/mtdo_pagtos', new ListMtdoPagtoController().handle)
 // -- ROTAS PAGAMENTO --
 router.post('/payment',  new CreatePaymentController().handle)
 router.get('/payments', new ListPaymentsController().handle)
+router.put('/payment/cpf', new InputCPFController().handle)
 
 export { router }

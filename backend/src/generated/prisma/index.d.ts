@@ -9887,13 +9887,13 @@ export namespace Prisma {
   }
 
   export type CostumerSumAggregateOutputType = {
-    cpf: number | null
+    cpf: bigint | null
   }
 
   export type CostumerMinAggregateOutputType = {
     id: string | null
     name: string | null
-    cpf: number | null
+    cpf: bigint | null
     dt_nasc: string | null
     email: string | null
     password: string | null
@@ -9904,7 +9904,7 @@ export namespace Prisma {
   export type CostumerMaxAggregateOutputType = {
     id: string | null
     name: string | null
-    cpf: number | null
+    cpf: bigint | null
     dt_nasc: string | null
     email: string | null
     password: string | null
@@ -10056,7 +10056,7 @@ export namespace Prisma {
   export type CostumerGroupByOutputType = {
     id: string
     name: string
-    cpf: number | null
+    cpf: bigint | null
     dt_nasc: string
     email: string
     password: string
@@ -10145,7 +10145,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
-      cpf: number | null
+      cpf: bigint | null
       dt_nasc: string
       email: string
       password: string
@@ -10577,7 +10577,7 @@ export namespace Prisma {
   interface CostumerFieldRefs {
     readonly id: FieldRef<"Costumer", 'String'>
     readonly name: FieldRef<"Costumer", 'String'>
-    readonly cpf: FieldRef<"Costumer", 'Int'>
+    readonly cpf: FieldRef<"Costumer", 'BigInt'>
     readonly dt_nasc: FieldRef<"Costumer", 'String'>
     readonly email: FieldRef<"Costumer", 'String'>
     readonly password: FieldRef<"Costumer", 'String'>
@@ -15526,6 +15526,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'BigInt'
+   */
+  export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
+    
+
+
+  /**
+   * Reference to a field of type 'BigInt[]'
+   */
+  export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -15983,7 +15997,7 @@ export namespace Prisma {
     NOT?: CostumerWhereInput | CostumerWhereInput[]
     id?: StringFilter<"Costumer"> | string
     name?: StringFilter<"Costumer"> | string
-    cpf?: IntNullableFilter<"Costumer"> | number | null
+    cpf?: BigIntNullableFilter<"Costumer"> | bigint | number | null
     dt_nasc?: StringFilter<"Costumer"> | string
     email?: StringFilter<"Costumer"> | string
     password?: StringFilter<"Costumer"> | string
@@ -16006,7 +16020,7 @@ export namespace Prisma {
 
   export type CostumerWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    cpf?: number
+    cpf?: bigint | number
     AND?: CostumerWhereInput | CostumerWhereInput[]
     OR?: CostumerWhereInput[]
     NOT?: CostumerWhereInput | CostumerWhereInput[]
@@ -16041,7 +16055,7 @@ export namespace Prisma {
     NOT?: CostumerScalarWhereWithAggregatesInput | CostumerScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Costumer"> | string
     name?: StringWithAggregatesFilter<"Costumer"> | string
-    cpf?: IntNullableWithAggregatesFilter<"Costumer"> | number | null
+    cpf?: BigIntNullableWithAggregatesFilter<"Costumer"> | bigint | number | null
     dt_nasc?: StringWithAggregatesFilter<"Costumer"> | string
     email?: StringWithAggregatesFilter<"Costumer"> | string
     password?: StringWithAggregatesFilter<"Costumer"> | string
@@ -16734,7 +16748,7 @@ export namespace Prisma {
   export type CostumerCreateInput = {
     id?: string
     name: string
-    cpf?: number | null
+    cpf?: bigint | number | null
     dt_nasc: string
     email: string
     password: string
@@ -16746,7 +16760,7 @@ export namespace Prisma {
   export type CostumerUncheckedCreateInput = {
     id?: string
     name: string
-    cpf?: number | null
+    cpf?: bigint | number | null
     dt_nasc: string
     email: string
     password: string
@@ -16758,7 +16772,7 @@ export namespace Prisma {
   export type CostumerUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    cpf?: NullableIntFieldUpdateOperationsInput | number | null
+    cpf?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     dt_nasc?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -16770,7 +16784,7 @@ export namespace Prisma {
   export type CostumerUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    cpf?: NullableIntFieldUpdateOperationsInput | number | null
+    cpf?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     dt_nasc?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -16782,7 +16796,7 @@ export namespace Prisma {
   export type CostumerCreateManyInput = {
     id?: string
     name: string
-    cpf?: number | null
+    cpf?: bigint | number | null
     dt_nasc: string
     email: string
     password: string
@@ -16793,7 +16807,7 @@ export namespace Prisma {
   export type CostumerUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    cpf?: NullableIntFieldUpdateOperationsInput | number | null
+    cpf?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     dt_nasc?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -16804,7 +16818,7 @@ export namespace Prisma {
   export type CostumerUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    cpf?: NullableIntFieldUpdateOperationsInput | number | null
+    cpf?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     dt_nasc?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -17431,15 +17445,15 @@ export namespace Prisma {
     update_at?: SortOrder
   }
 
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  export type BigIntNullableFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -17494,20 +17508,20 @@ export namespace Prisma {
     cpf?: SortOrder
   }
 
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+  export type BigIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntNullableWithAggregatesFilter<$PrismaModel> | bigint | number | null
     _count?: NestedIntNullableFilter<$PrismaModel>
     _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
+    _sum?: NestedBigIntNullableFilter<$PrismaModel>
+    _min?: NestedBigIntNullableFilter<$PrismaModel>
+    _max?: NestedBigIntNullableFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -18084,12 +18098,12 @@ export namespace Prisma {
     connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
   }
 
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type NullableBigIntFieldUpdateOperationsInput = {
+    set?: bigint | number | null
+    increment?: bigint | number
+    decrement?: bigint | number
+    multiply?: bigint | number
+    divide?: bigint | number
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -18396,6 +18410,17 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedBigIntNullableFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -18407,20 +18432,20 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+  export type NestedBigIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntNullableWithAggregatesFilter<$PrismaModel> | bigint | number | null
     _count?: NestedIntNullableFilter<$PrismaModel>
     _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
+    _sum?: NestedBigIntNullableFilter<$PrismaModel>
+    _min?: NestedBigIntNullableFilter<$PrismaModel>
+    _max?: NestedBigIntNullableFilter<$PrismaModel>
   }
 
   export type NestedFloatNullableFilter<$PrismaModel = never> = {
@@ -18732,7 +18757,7 @@ export namespace Prisma {
   export type CostumerCreateWithoutOrdersInput = {
     id?: string
     name: string
-    cpf?: number | null
+    cpf?: bigint | number | null
     dt_nasc: string
     email: string
     password: string
@@ -18743,7 +18768,7 @@ export namespace Prisma {
   export type CostumerUncheckedCreateWithoutOrdersInput = {
     id?: string
     name: string
-    cpf?: number | null
+    cpf?: bigint | number | null
     dt_nasc: string
     email: string
     password: string
@@ -18849,7 +18874,7 @@ export namespace Prisma {
   export type CostumerUpdateWithoutOrdersInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    cpf?: NullableIntFieldUpdateOperationsInput | number | null
+    cpf?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     dt_nasc?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -18860,7 +18885,7 @@ export namespace Prisma {
   export type CostumerUncheckedUpdateWithoutOrdersInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    cpf?: NullableIntFieldUpdateOperationsInput | number | null
+    cpf?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     dt_nasc?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
