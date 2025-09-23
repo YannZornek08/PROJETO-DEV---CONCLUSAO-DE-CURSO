@@ -113,7 +113,7 @@ model Role {
 model Costumer {
   id         String   @id @default(uuid())
   name       String
-  cpf        Int?      @unique 
+  cpf        BigInt?      @unique 
   dt_nasc    String
   email      String
   password   String
