@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
   cardsWrapper: { marginBottom: 44, marginHorizontal: 26 },
   row: { flexDirection: "row", marginBottom: 30, gap: 10 },
   card: { flex: 1, alignItems: "center" },
-  cardImage: { height: 180, marginBottom: 8, width: "100%" },
+  cardImage: { height: 180, marginBottom: 8, width: "100%", borderRadius: 90},
   cardTitle: { color: "#000000", fontSize: 16, textAlign: "center", marginBottom: 12 },
   cardPrice: { color: "#000000", fontSize: 14, marginBottom: 7 },
   addButton: {
