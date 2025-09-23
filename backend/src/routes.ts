@@ -119,7 +119,7 @@ router.post('/ingredients', isAuthenticated, new CreateIngredientController().ha
 router.post('/additional', isAuthenticated, new AddAdditionalController().handle)
 
 //Puxa os ingredientes de um produto
-router.get('/product/ingredients', isAuthenticated, new ListIngredientByProductController().handle)
+router.get('/product/ingredients', new ListIngredientByProductController().handle)
 
 // -- ROTAS TABLE --
 router.post('/table', isAuthenticated, new CreateTableController().handle)
