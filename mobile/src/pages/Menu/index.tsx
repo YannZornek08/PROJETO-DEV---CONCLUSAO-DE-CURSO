@@ -22,6 +22,7 @@ import { ModalPicker } from "../../components/ModalPicker";
 // IMAGENS DO NAV
 const home = require('../../assets/nav-icons/home.png')
 const fav = require('../../assets/nav-icons/star.png')
+// const status = require('../../assets/nav-icons/status.png')
 const cupom = require('../../assets/nav-icons/cupom.png')
 const qrcode = require('../../assets/nav-icons/qrcode.png')
 
