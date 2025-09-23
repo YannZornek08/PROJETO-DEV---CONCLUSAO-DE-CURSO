@@ -1,19 +1,19 @@
 import prismaClient from "../../prisma";
 
 interface OrderRequest {
-    table: number;
-    name: string;
+    table_id: string;
+    costumer_id: string;
 }
 
 class CreateOrderService {
-    async execute({ table, name }: OrderRequest ) {
+    async execute({ table_id, costumer_id }: OrderRequest ) {
 
         const order = await prismaClient.order.create({
             data: {
-                table: table,
-                name: name
+                table_id: table_id,
+                costumer_id: costumer_id,
             }
-        })
+        });
 
         return order;
 

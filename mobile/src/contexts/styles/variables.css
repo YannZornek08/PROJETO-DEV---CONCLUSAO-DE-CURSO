@@ -1,0 +1,53 @@
+root {
+    --begePadrao: #f1e0ca;
+    /* CORES CLARAS (A PARTIR DO begePadrao) */
+    --begePadrao-light-1: #f2e3cf;
+    --begePadrao-light-2: #f4e6d5;
+    --begePadrao-light-3: #f5e9da;
+    --begePadrao-light-4: #f7ecdf;
+    --begePadrao-light-5: #f8f0e5;
+    --begePadrao-light-6: #f9f3ea;
+    --begePadrao-light-7: #fbf6ef;
+
+    /* CORES ESCURAS (A PARTIR DO begePadrao) */
+    --begePadrao-dark-1: #d9cab6;
+    --begePadrao-dark-2: #c1b3a2;
+    --begePadrao-dark-3: #a99d8d;
+    --begePadrao-dark-4: #918679;
+    --begePadrao-dark-5: #797065;
+    --begePadrao-dark-6: #605a51;
+    --begePadrao-dark-7: #48433d;
+    --begePadrao-dark-8: #302d28;
+
+
+
+    --laranjaPadrao: #ff9000;
+    
+    /* CORES CLARAS (A PARTIR DO laranjaPadrao) */
+    --laranjaPadrao-light-1: #ff9b1a;
+    --laranjaPadrao-light-2: #ffa633;
+    --laranjaPadrao-light-3: #ffb14d;
+    --laranjaPadrao-light-4: #ffbc66;
+
+    /* CORES ESCURAS (A PARTIR DO laranjaPadrao) */
+    --laranjaPadrao-dark-1: #e68200;
+    --laranjaPadrao-dark-2: #cc7300;
+    --laranjaPadrao-dark-3: #b36500;
+    --laranjaPadrao-dark-4: #995600;
+
+
+
+    --marromPadrao: #563b00;
+    
+    /* CORES CLARAS (A PARTIR DO marromPadrao) */
+    --marromPadrao-light-1: #6f541a;
+    --marromPadrao-light-2: #8f7a4d;
+    --marromPadrao-light-3: #afa080;
+    --marromPadrao-light-4: #cfc6b3;
+
+    /* CORES ESCURAS (A PARTIR DO marromPadrao) */
+    --marromPadrao-dark-1: #4c3400;
+    --marromPadrao-dark-2: #392700;
+    --marromPadrao-dark-3: #261a00;
+    --marromPadrao-dark-4: #1c1300;
+};

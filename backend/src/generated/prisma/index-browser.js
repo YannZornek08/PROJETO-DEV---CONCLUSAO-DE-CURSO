@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.8.2
- * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
+ * Prisma Client JS version: 6.16.2
+ * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
  */
 Prisma.prismaVersion = {
-  client: "6.8.2",
-  engine: "2060c79ba17c6bb9f5823312b6f6b7f4a845738e"
+  client: "6.16.2",
+  engine: "1c57fdcd7e44b29b9313256c76699e91c3ac3c43"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -126,7 +126,8 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   created_at: 'created_at',
-  update_at: 'update_at'
+  update_at: 'update_at',
+  role_id: 'role_id'
 };
 
 exports.Prisma.CategoryScalarFieldEnum = {
@@ -149,10 +150,17 @@ exports.Prisma.ProductScalarFieldEnum = {
 
 exports.Prisma.OrderScalarFieldEnum = {
   id: 'id',
-  table: 'table',
   status: 'status',
   draft: 'draft',
-  name: 'name',
+  table_id: 'table_id',
+  costumer_id: 'costumer_id',
+  created_at: 'created_at',
+  update_at: 'update_at'
+};
+
+exports.Prisma.TableScalarFieldEnum = {
+  id: 'id',
+  number: 'number',
   created_at: 'created_at',
   update_at: 'update_at'
 };
@@ -164,6 +172,56 @@ exports.Prisma.ItemScalarFieldEnum = {
   update_at: 'update_at',
   order_id: 'order_id',
   product_id: 'product_id'
+};
+
+exports.Prisma.RoleScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  created_at: 'created_at',
+  update_at: 'update_at'
+};
+
+exports.Prisma.CostumerScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  cpf: 'cpf',
+  dt_nasc: 'dt_nasc',
+  email: 'email',
+  password: 'password',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.PaymentScalarFieldEnum = {
+  id: 'id',
+  mtdo_pagto_id: 'mtdo_pagto_id',
+  order_id: 'order_id',
+  table_id: 'table_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.IngredientScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.Ingredient_productScalarFieldEnum = {
+  id: 'id',
+  adicionado: 'adicionado',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  ingredient_id: 'ingredient_id',
+  product_id: 'product_id'
+};
+
+exports.Prisma.Mtdo_pagtoScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 };
 
 exports.Prisma.SortOrder = {
@@ -187,7 +245,14 @@ exports.Prisma.ModelName = {
   Category: 'Category',
   Product: 'Product',
   Order: 'Order',
-  Item: 'Item'
+  Table: 'Table',
+  Item: 'Item',
+  Role: 'Role',
+  Costumer: 'Costumer',
+  Payment: 'Payment',
+  Ingredient: 'Ingredient',
+  Ingredient_product: 'Ingredient_product',
+  Mtdo_pagto: 'Mtdo_pagto'
 };
 
 /**
