@@ -272,7 +272,7 @@ export default function DetalhesProdutos() {
             // Por enquanto, apenas mostramos um alerta
             adicionarItem();
             alert(
-              `Pizza adicionada! Tamanho: ${tamanhoSelecionado}, Quantidade: ${quantidade}, Adicionais: ${adicionais.join(
+              `${product.name} adicionado! Tamanho: ${tamanhoSelecionado}, Quantidade: ${quantidade}, Adicionais: ${adicionais.join(
                 ", "
               ) || "Nenhum"}`
             );
