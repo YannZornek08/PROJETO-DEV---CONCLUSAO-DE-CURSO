@@ -37,10 +37,10 @@ export default function AutenticacaoComanda() {
 
 async function confirmarComanda() {
   try {
-
+    // Alterar toda vez o id.
     const response = await api.post("/order", {
-      table_id: '3e9959e3-87a3-4d4a-b112-d7d55183d4b1',
-      costumer_id: 'b57d8730-2b15-4573-8d9f-661fcdb986e8',
+      table_id: '06dce9c4-6902-40aa-86c8-2cc199657db3',
+      costumer_id: '07dda466-0a28-4c30-842a-962e3ccf133d',
     });
 
     console.log("Order criada:", response.data);

@@ -15,6 +15,20 @@ import { api } from "../../services/api";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
+import { api } from "../../services/api";
+
+export type Produto = {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  banner: string;
+}
+
+export type Order = {
+  id: string;
+  status: boolean
+}
 
 type ItensPedido = {
   id: string;
@@ -28,12 +42,26 @@ type ItensPedido = {
 
 const PedidoScreen: React.FC = () => {
   const [observacoes, setObservacoes] = useState("");
+  const [produtos, setProdutos] = useState<Produto[]>([]);
   const [total, setTotal] = useState("R$ 77,00");
   const [mesa, setMesa] = useState("05");
   const [nome, setNome] = useState("João M.");
   const [items, setItems] = useState<ItensPedido[]>([])
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
+    useEffect(() => {
+    
+    async function verProdutosPedido() {
+      try {
+        const response = await api.get('/order/detail');
+        setProdutos(response.data);
+      } catch (err) {
+        console.log("Erro ao buscar produtos:", err);
+      }
+    }
+    verProdutosPedido();
+  }, []);
+  
   const handlePay = () => {
     Alert.alert(
       "Resumo do Pedido",
@@ -91,6 +119,22 @@ const PedidoScreen: React.FC = () => {
           </View>
         ))}
 
+
+        <View>
+          {produtos.map((produto) => (
+            <View key={produto.id} style={styles.orderItem}>
+              <Image
+                source={{ uri: produto.banner }}
+                resizeMode="stretch"
+                style={styles.orderItemImage}
+              />
+              <Text style={styles.orderItemDescription}>
+                {produto.name}{"\n"}{produto.description}
+              </Text>
+              <Text style={styles.orderItemPrice}>R$ {produto.price}</Text>
+            </View>
+          ))}
+        </View>
         {/* Campo de observações visível (mas não aparece no resumo) */}
         < View style={styles.notesContainer} >
           <TextInput
