@@ -39,8 +39,8 @@ async function confirmarComanda() {
   try {
 
     const response = await api.post("/order", {
-      table_id: '3e9959e3-87a3-4d4a-b112-d7d55183d4b1',
-      costumer_id: 'b57d8730-2b15-4573-8d9f-661fcdb986e8',
+      table_id: '49d5d67d-7e85-41b7-9f6a-4ac78de4e695',
+      costumer_id: 'ed26fe41-14ed-43df-9be8-8216e6234ca3',
     });
 
     console.log("Order criada:", response.data);

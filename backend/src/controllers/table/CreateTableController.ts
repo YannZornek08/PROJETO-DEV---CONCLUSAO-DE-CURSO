@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreateTableService } from "../../services/table/createTableService";
+import { CreateTableService } from "../../services/table/CreateTableService";
 
 class CreateTableController {
     async handle(req: Request, res: Response) {
