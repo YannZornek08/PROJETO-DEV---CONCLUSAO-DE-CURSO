@@ -6,27 +6,21 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Image,
 } from "react-native";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
 import { api } from "../../services/api";
-
-// IMAGENS DO NAV
-const home = require("../../assets/nav-icons/home.png");
-const fav = require("../../assets/nav-icons/star.png");
-const cupom = require("../../assets/nav-icons/cupom.png");
-const qrcode = require("../../assets/nav-icons/qrcode.png");
+import BottomNavBar from "../../components/navButton"; 
 
 type RouteDetailParams = {
-    Order: {
-        table_id: string;
-        costumer_id: string;
-    }
-}
+  Order: {
+    table_id: string;
+    costumer_id: string;
+  };
+};
 
-type OrderRouterProps = RouteProp<RouteDetailParams, 'Order'>;
+type OrderRouterProps = RouteProp<RouteDetailParams, "Order">;
 
 export default function AutenticacaoComanda() {
   const route = useRoute<OrderRouterProps>();
@@ -35,36 +29,20 @@ export default function AutenticacaoComanda() {
   const navigation =
     useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
-async function confirmarComanda() {
-  try {
+  async function confirmarComanda() {
+    try {
+      const response = await api.post("/order", {
+        table_id: "3e9959e3-87a3-4d4a-b112-d7d55183d4b1",
+        costumer_id: "b57d8730-2b15-4573-8d9f-661fcdb986e8",
+      });
 
-    const response = await api.post("/order", {
-      table_id: '3e9959e3-87a3-4d4a-b112-d7d55183d4b1',
-      costumer_id: 'b57d8730-2b15-4573-8d9f-661fcdb986e8',
-    });
-
-    console.log("Order criada:", response.data);
-
-  } catch (err: any) {
-    console.error("Erro ao criar order:", err.response?.data || err.message || err);
-  }
-}
-
-
-  function Home() {
-    navigation.navigate("Menu");
-  }
-
-  function StatusPedido() {
-    navigation.navigate("StatusPedido");
-  }
-
-  function Cupons() {
-    navigation.navigate("Cupons");
-  }
-
-  function LerQR() {
-    navigation.navigate("LerQR");
+      console.log("Order criada:", response.data);
+    } catch (err: any) {
+      console.error(
+        "Erro ao criar order:",
+        err.response?.data || err.message || err
+      );
+    }
   }
 
   return (
@@ -92,25 +70,8 @@ async function confirmarComanda() {
         <Text style={styles.link}>Problemas? Fale com o atendente!</Text>
       </View>
 
-      {/* NAV */}
-    <View style={styles.fullNav}>
-  <TouchableOpacity onPress={Home} style={styles.nav}>
-    <Image source={home} style={styles.imagesNav} />
-    <Text>Home</Text>
-  </TouchableOpacity>
-  <TouchableOpacity onPress={StatusPedido} style={styles.nav}>
-    <Image source={fav} style={styles.imagesNav} resizeMode="cover" />
-    <Text>Status</Text>
-  </TouchableOpacity>
-  <TouchableOpacity onPress={Cupons} style={styles.nav}>
-    <Image source={cupom} style={styles.imagesNav} resizeMode="cover" />
-    <Text>Cupons</Text>
-  </TouchableOpacity>
-  <TouchableOpacity onPress={LerQR} style={[styles.currentNav, styles.nav]}>
-    <Image source={qrcode} style={styles.imagesNav} />
-    <Text>Ler QR</Text>
-  </TouchableOpacity>
-</View>
+      {/* Usa o componente do Navbar */}
+      <BottomNavBar activeRoute="LerQR"/>
     </SafeAreaView>
   );
 }
@@ -168,33 +129,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#000",
     textAlign: "center",
-  },
-  fullNav: {
-    flexDirection: "row",
-    backgroundColor: "#FCEAE2",
-    borderRadius: 80,
-    paddingHorizontal: 17,
-    marginBottom: 42,
-    marginHorizontal: 26,
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  currentNav: {
-    backgroundColor: "#f3cdbdff",
-    borderRadius: 100,
-    padding: 10,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  nav: {
-    padding: 10,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  imagesNav: {
-    width: 30,
-    height: 30,
-    borderRadius: 8,
-    marginBottom: 4,
   },
 });

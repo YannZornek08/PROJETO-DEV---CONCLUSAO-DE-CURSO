@@ -13,25 +13,17 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes"
-
-// IMAGENS DO NAV
-
-const home = require('../../assets/nav-icons/home.png')
-const fav = require('../../assets/nav-icons/star.png')
-const cupom = require('../../assets/nav-icons/cupom.png')
-const qrcode = require('../../assets/nav-icons/qrcode.png')
-
-/////////////////
+import BottomNavBar from "../../components/navButton";
 
 export default function Cupons() {
   const [textInput1, setTextInput1] = useState<string>("");
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>()
 
-   function Settings() {
+  function Settings() {
     navigation.navigate("Settings")
   }
 
-    function Carrinho () {
+  function Carrinho () {
     navigation.navigate("Carrinho");
   }
   
@@ -43,7 +35,7 @@ export default function Cupons() {
     navigation.navigate("Cupons");
   }
 
-  function  Status1() {
+  function Status1() {
     navigation.navigate("Status1");
   }
 
@@ -58,9 +50,7 @@ export default function Cupons() {
         <View style={styles.header}>
           <Text style={styles.greeting}>Bom dia, João.</Text>
 
-  
           <View style={styles.searchContainer}>
-             
             <Image
               source={require('../../assets/Search.png')}
               resizeMode="stretch"
@@ -74,25 +64,24 @@ export default function Cupons() {
               style={styles.searchInput}
             />
             <View style={{ flexDirection: "row" }}>
-               <TouchableOpacity onPress={Carrinho}>
-              <Image
-              source={require('../../assets/Carrinho.png')}
-                resizeMode="stretch"
-                style={styles.actionIcon}
-              />
+              <TouchableOpacity onPress={Carrinho}>
+                <Image
+                  source={require('../../assets/Carrinho.png')}
+                  resizeMode="stretch"
+                  style={styles.actionIcon}
+                />
               </TouchableOpacity>
 
               <TouchableOpacity onPress={Settings}>
-              <Image
-                source={require('../../assets/Configuracoes.png')}
-                resizeMode="stretch"
-                style={styles.actionIcon}
-              />
+                <Image
+                  source={require('../../assets/Configuracoes.png')}
+                  resizeMode="stretch"
+                  style={styles.actionIcon}
+                />
               </TouchableOpacity>
             </View>
           </View>
 
-     
           <View style={styles.filterWrapper}>
             <TouchableOpacity
               style={styles.filterButton}
@@ -108,7 +97,6 @@ export default function Cupons() {
           </View>
         </View>
 
-   
         <Text style={styles.couponTitle}>Seus cupons:</Text>
         <View style={styles.couponRow}>
         
@@ -127,7 +115,6 @@ export default function Cupons() {
             </TouchableOpacity>
           </View>
 
-         
           <View style={styles.couponCard}>
             <Image
                source={require('../../assets/ticket.png')}
@@ -143,47 +130,8 @@ export default function Cupons() {
             </TouchableOpacity>
           </View>
         </View>
-        </ScrollView>
-
-                {/* Bottom Nav */}
-        {/* Em cada página, tirar o onPress da página que está */}
-
-        <View style={styles.fullNav}>
-
-          <TouchableOpacity onPress={Menu} style={styles.nav}>
-            <Image
-              source={home}
-              style={styles.imagesNav}
-              />
-            <Text>Home</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={Status1} style={styles.nav}>
-            <Image
-              source={fav}
-              style={styles.imagesNav}
-              resizeMode="cover"
-              />
-            <Text>Status</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.currentNav, styles.nav]}>
-            <Image
-              source={cupom}
-              style={styles.imagesNav}
-              resizeMode="cover"
-              />
-            <Text>Cupons</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={LerQR} style={styles.nav}>
-            <Image
-              source={qrcode}
-              style={styles.imagesNav}
-              />
-            <Text>Ler QR</Text>
-          </TouchableOpacity>
-
-        </View>
-        {/* --------------------------- */}
-      
+      </ScrollView>
+           <BottomNavBar activeRoute="Cupons" />
     </SafeAreaView>
   );
 }
@@ -266,26 +214,4 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-  fullNav: {
-    flexDirection: "row",
-    backgroundColor: "#FCEAE2",
-    borderRadius: 80,
-    paddingHorizontal: 17,
-    marginBottom: 42,
-    marginHorizontal: 26,
-    justifyContent: 'space-between'
-  },
-  currentNav: {
-    backgroundColor: '#f3cdbdff',
-    borderRadius: 100,
-  },
-  nav: {
-    padding: 10,
-  },
-  imagesNav: {
-    margin: 'auto',
-    width: 30,
-    height: 30,
-    borderRadius: 8
-  }
 });

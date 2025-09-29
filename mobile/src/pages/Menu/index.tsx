@@ -157,7 +157,8 @@ export default function HomeScreen() {
       </ScrollView>
 
       {/* Usa o BottomNavBar aqui */}
-      <BottomNavBar/>
+<BottomNavBar activeRoute="Menu" />
+
     </SafeAreaView>
   );
 }
