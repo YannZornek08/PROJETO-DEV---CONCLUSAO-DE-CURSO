@@ -87,7 +87,7 @@ router.get('/product/search', new SearchProductController().handle)
 router.post('/order', new CreateOrderController().handle)
 router.delete('/order', isAuthenticated, new RemoveOrderController().handle)
 
-router.post('/order/add', isAuthenticated, new AddItemController().handle)
+router.post('/order/add', new AddItemController().handle)
 router.delete('/order/remove', isAuthenticated, new RemoveItemController().handle)
 router.put('/order/send', isAuthenticated, new SendOrderController().handle)
 

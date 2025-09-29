@@ -51,6 +51,7 @@ model Product {
   category    Category @relation(fields: [category_id], references: [id])
   category_id String
   ingredient_product Ingredient_product[] // relação muitos para muitos
+  items       Item[]
 
   @@map("products")
 }
@@ -92,9 +93,12 @@ model Item {
   update_at  DateTime? @default(now())
 
   order      Order   @relation(fields: [order_id], references: [id])
-  ingredient_product    Ingredient_product @relation(fields: [ingredient_product_id], references: [id])
+  // ingredient_product    Ingredient_product @relation(fields: [ingredient_product_id], references: [id])
+  product    Product @relation(fields: [product_id], references: [id])
+
   order_id   String
-  ingredient_product_id String
+  // ingredient_product_id String
+  product_id String
   
 
   @@map("items")
@@ -164,7 +168,7 @@ model Ingredient_product {
   ingredient_id String
   product_id String
 
-  item        Item[]
+  // item        Item[]
 
 
   @@map("ingredients_products")
