@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   View,
@@ -11,75 +11,88 @@ import {
   TextInput,
 } from "react-native";
 
+import { api } from "../../services/api";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
+
+type ItensPedido = {
+  id: string;
+  product: {
+    name: string;
+    banner: string;
+    price: number;
+  }
+  amount: number;
+}
 
 const PedidoScreen: React.FC = () => {
   const [observacoes, setObservacoes] = useState("");
   const [total, setTotal] = useState("R$ 77,00");
   const [mesa, setMesa] = useState("05");
   const [nome, setNome] = useState("João M.");
-
+  const [items, setItems] = useState<ItensPedido[]>([])
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
   const handlePay = () => {
     Alert.alert(
       "Resumo do Pedido",
-      `Mesa: ${mesa}\nNome: ${nome}\nTotal: ${total}\n\nObservações: ${
-        observacoes || "Nenhuma observação adicionada"
+      `Mesa: ${mesa}\nNome: ${nome}\nTotal: ${total}\n\nObservações: ${observacoes || "Nenhuma observação adicionada"
       }`
     );
     navigation.navigate("Pagamento")
   };
 
-  function VoltarMenu (){
-    navigation.navigate ("VoltarMenu")
+  useEffect(() => {
+    async function verPedidos() {
+      try {
+        const response = await api.get('/order/detail', {
+          params: { order_id: "c35fd0b5-5761-46c4-9607-25123efd369d" }
+        });
+        setItems(response.data);
+        // console.log("Produtos no carrinho:", response.data);
+      } catch (err) {
+        console.log("Erro ao buscar produtos:", err);
+      }
+    }
+    verPedidos();
+  }, []);
+
+  function VoltarMenu() {
+    navigation.navigate("VoltarMenu")
   }
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView style={styles.scrollView}>
         <TouchableOpacity onPress={VoltarMenu}>
-        <Image
-        source={require('../../assets/Voltar.png')}
-          resizeMode="stretch"
-          style={styles.logo}
-        />
+          <Image
+            source={require('../../assets/Voltar.png')}
+            resizeMode="stretch"
+            style={styles.logo}
+          />
         </TouchableOpacity>
 
         <Text style={styles.title}>Pedido</Text>
 
-        <View style={styles.orderItem}>
-          <Image
-            source={{
-              uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/icrlbyc3_expires_30_days.png",
-            }}
-            resizeMode="stretch"
-            style={styles.orderItemImage}
-          />
-          <Text style={styles.orderItemDescription}>
-            Pizza de Abacaxi{"\n"}Tamanho: S
-          </Text>
-          <Text style={styles.orderItemPrice}>R$ 35,00</Text>
-        </View>
-
-        <View style={styles.orderItem}>
-          <Image
-            source={{
-              uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/26f7t1z2_expires_30_days.png",
-            }}
-            resizeMode="stretch"
-            style={styles.orderItemImage}
-          />
-          <Text style={styles.orderItemDescription}>
-            Pizza de Pepperoni{"\n"}Tamanho: M
-          </Text>
-          <Text style={styles.orderItemPrice}>R$ 42,00</Text>
-        </View>
+        {items.map((item) => (
+          <View style={styles.orderItem}
+          key={item.id}>
+            <Image
+              source={{ uri: item.product.banner
+              }}
+              resizeMode="stretch"
+              style={styles.orderItemImage}
+            />
+            <Text style={styles.orderItemDescription}>
+              {item.product.name}{"\n"}Quantidade: {item.amount}
+            </Text>
+            <Text style={styles.orderItemPrice}>R$ {item.product.price}</Text>
+          </View>
+        ))}
 
         {/* Campo de observações visível (mas não aparece no resumo) */}
-        <View style={styles.notesContainer}>
+        < View style={styles.notesContainer} >
           <TextInput
             style={styles.notesInput}
             placeholder="Toque para adicionar observações:"
@@ -111,7 +124,7 @@ const PedidoScreen: React.FC = () => {
           <Text style={styles.payButtonText}>Pagar</Text>
         </TouchableOpacity>
       </ScrollView>
-    </SafeAreaView>
+    </SafeAreaView >
   );
 };
 
