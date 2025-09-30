@@ -99,7 +99,7 @@ export default function DetalhesProdutos() {
   async function adicionarItem() {
     try {
       const newItem = await api.post('/order/add', {
-          order_id: "39abb591-8642-4b4f-81b7-49bfbeb4e246", // Substitua pelo ID real do pedido
+          order_id: "1c2dead7-8b5f-4182-8639-2441a03af475",
           product_id: product.id,
           amount: quantidade,
       });

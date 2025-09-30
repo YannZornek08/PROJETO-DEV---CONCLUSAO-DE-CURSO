@@ -19,6 +19,8 @@ import { formatarPreco } from "../../components/conversorDeMoeda/valoresEmReal";
 import { api } from "../../services/api";
 import { CategoryProps } from "../Order";
 import { ModalPicker } from "../../components/ModalPicker";
+import { SettingsButton } from "../../components/SettingsButton";
+import BottomNavBar from "../../components/navButton";
 
 
 // const status = require('../../assets/nav-icons/status.png')

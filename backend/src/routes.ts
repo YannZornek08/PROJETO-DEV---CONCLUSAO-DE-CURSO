@@ -67,15 +67,15 @@ router.post('/session', new AuthUserController().handle)
 router.get('/me', isAuthenticated, new DetailUserController().handle)
 
 // -- ROTAS CATEGORY --
-router.post('/category', isAuthenticated, new CreateCategoryController().handle)
+router.post('/category', new CreateCategoryController().handle)
 
-router.get('/category', isAuthenticated, new ListCategoryController().handle)
+router.get('/category', new ListCategoryController().handle)
 
 // -- ROTAS PRODUCT --
 // router.post('/product', isAuthenticated, upload.single('file'), new CreateProductController().handle)
-router.post('/product', isAuthenticated, new CreateProductController().handle)
+router.post('/product', new CreateProductController().handle)
 
-router.get('/category/product', isAuthenticated, new ListByCategoryController().handle)
+router.get('/category/product', new ListByCategoryController().handle)
 
 router.get('/product/all', new ListProductController().handle)
 
@@ -85,13 +85,13 @@ router.get('/product/search', new SearchProductController().handle)
 
 // -- ROTAS ORDER --
 router.post('/order', new CreateOrderController().handle)
-router.delete('/order', isAuthenticated, new RemoveOrderController().handle)
+router.delete('/order', new RemoveOrderController().handle)
 
 router.post('/order/add', new AddItemController().handle)
-router.delete('/order/remove', isAuthenticated, new RemoveItemController().handle)
-router.put('/order/send', isAuthenticated, new SendOrderController().handle)
+router.delete('/order/remove', new RemoveItemController().handle)
+router.put('/order/send', new SendOrderController().handle)
 
-router.get('/orders', isAuthenticated, new ListOrdersController().handle)
+router.get('/orders', new ListOrdersController().handle)
 router.get('/order/detail', new DetailOrderController().handle)
 
 router.put('/order/finish', new FinishOrderController().handle)
@@ -113,17 +113,17 @@ router.get('/me/costumers', new DetailCostumerController().handle)
 router.put('/additional/update', new UpdateAdditionalController().handle)
 
 // Cria um novo
-router.post('/ingredients', isAuthenticated, new CreateIngredientController().handle)
+router.post('/ingredients', new CreateIngredientController().handle)
 
 //Relaciona o adicional no produto
-router.post('/additional', isAuthenticated, new AddAdditionalController().handle)
+router.post('/additional', new AddAdditionalController().handle)
 
 //Puxa os ingredientes de um produto
 router.get('/product/ingredients', new ListIngredientByProductController().handle)
 
 // -- ROTAS TABLE --
-router.post('/table', isAuthenticated, new CreateTableController().handle)
-router.get('/tables', isAuthenticated, new ListTablesController().handle)
+router.post('/table', new CreateTableController().handle)
+router.get('/tables', new ListTablesController().handle)
 router.get('/table/detail', new DetailTableController().handle)
 
 // -- ROTAS METODO DE PAGAMENTO --

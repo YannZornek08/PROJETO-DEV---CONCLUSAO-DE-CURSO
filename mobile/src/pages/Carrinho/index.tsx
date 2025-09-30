@@ -87,7 +87,7 @@ const PedidoScreen: React.FC = () => {
       try {
         const response = await api.get('/order/detail', {
           params: { 
-            order_id: "39abb591-8642-4b4f-81b7-49bfbeb4e246" 
+            order_id: "1c2dead7-8b5f-4182-8639-2441a03af475" 
           }
         });
         setItems(response.data);
@@ -101,6 +101,22 @@ const PedidoScreen: React.FC = () => {
 
   function VoltarMenu() {
     navigation.navigate("VoltarMenu")
+  }
+
+    async function excluir(item_id: string) {
+      Alert.alert("Item excluído do carrinho.");
+      console.log("Tentando excluir item:", item_id);
+      try {
+          const response = await api.delete("/order/remove", {
+          params: { item_id }
+        });
+          console.log("Resposta do backend:", response.data);
+
+          setItems((prev) => prev.filter((item) => item.id !== item_id));
+          alert("Item excluído do carrinho.");
+        } catch (err) {
+         console.log("Erro ao excluir item:", err);
+        }
   }
 
   return (
@@ -128,6 +144,9 @@ const PedidoScreen: React.FC = () => {
             <Text style={styles.orderItemDescription}>
               {item.product.name}{"\n"}Quantidade: {item.amount}
             </Text>
+            <TouchableOpacity onPress={() => excluir(item.id)}>
+              <Text style={styles.remove}>Excluir</Text>
+            </TouchableOpacity>
             <Text style={styles.orderItemPrice}>{formatarPreco(item.product.price*item.amount)}</Text>
           </View>
         ))}
@@ -140,7 +159,7 @@ const PedidoScreen: React.FC = () => {
                 source={{ uri: produto.banner }}
                 resizeMode="stretch"
                 style={styles.orderItemImage}
-              />
+                />
               <Text style={styles.orderItemDescription}>
                 {produto.name}{"\n"}{produto.description}
               </Text>
@@ -295,6 +314,12 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 24,
   },
+  remove: {
+    backgroundColor: "#FF0000",
+    marginTop: 50,
+    padding: 5,
+    borderRadius: 10,
+  }
 });
 
 export default PedidoScreen;

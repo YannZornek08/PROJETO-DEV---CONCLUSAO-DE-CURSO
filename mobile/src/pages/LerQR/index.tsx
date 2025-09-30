@@ -33,8 +33,8 @@ async function confirmarComanda() {
   try {
     // Alterar toda vez o id.
     const response = await api.post("/order", {
-      table_id: '06dce9c4-6902-40aa-86c8-2cc199657db3',
-      costumer_id: '07dda466-0a28-4c30-842a-962e3ccf133d',
+      table_id: '3f018ff9-8ffc-4b68-b6a0-d6a6f7143616',
+      costumer_id: '99efaf19-e2b8-41f0-9cd6-f692757dff9f',
     });
 
       console.log("Order criada:", response.data);
