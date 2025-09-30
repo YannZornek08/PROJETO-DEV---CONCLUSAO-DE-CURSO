@@ -254,7 +254,9 @@ const styles = StyleSheet.create({
   scrollView: { flex: 1, backgroundColor: "#FFFFFF" },
   imageContainer: { marginTop: 65, marginBottom: 2, marginHorizontal: 26 },
   smallImage: { width: 32, height: 32, marginBottom: 16 },
-  largeImage: { height: 360 },
+  largeImage: { height: 360,
+    borderRadius: 180,
+  },
   productName: {
     color: "#000000",
     fontSize: 32,

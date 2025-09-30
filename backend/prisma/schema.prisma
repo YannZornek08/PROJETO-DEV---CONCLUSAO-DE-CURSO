@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -14,7 +8,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// criar uma migration: yarn prisma migrate dev
 model User {
   id         String    @id @default(uuid())
   name       String
@@ -22,9 +15,8 @@ model User {
   password   String
   created_at DateTime? @default(now())
   update_at  DateTime? @default(now())
-
-  role    Role   @relation(fields: [role_id], references: [id])
-  role_id String
+  role_id    String
+  role       Role      @relation(fields: [role_id], references: [id])
 
   @@map("users")
 }
@@ -35,41 +27,38 @@ model Category {
   created_at DateTime? @default(now())
   update_at  DateTime? @default(now())
   products   Product[]
+  categories_additionals categories_additionals[]
 
   @@map("categories")
 }
 
 model Product {
-  id          String    @id @default(uuid())
-  name        String
-  price       String
-  description String
-  banner      String
-  created_at  DateTime? @default(now())
-  update_at   DateTime? @default(now())
-
-  category    Category @relation(fields: [category_id], references: [id])
-  category_id String
-  ingredient_product Ingredient_product[] // relação muitos para muitos
+  id                 String               @id @default(uuid())
+  name               String
+  price              String
+  description        String
+  banner             String
+  created_at         DateTime?            @default(now())
+  update_at          DateTime?            @default(now())
+  category_id        String
+  ingredient_product Ingredient_product[]
+  category           Category             @relation(fields: [category_id], references: [id])
 
   @@map("products")
 }
 
 model Order {
-  id         String    @id @default(uuid())
-  status     Boolean   @default(false)
-  draft      Boolean   @default(true)
-
-  table      Table   @relation(fields: [table_id], references: [id])
-  table_id   String
-
-  costumer   Costumer @relation(fields: [costumer_id], references: [id])
+  id          String    @id @default(uuid())
+  status      Boolean   @default(false)
+  draft       Boolean   @default(true)
+  created_at  DateTime? @default(now())
+  update_at   DateTime? @default(now())
   costumer_id String
-
-  created_at DateTime? @default(now())
-  update_at  DateTime? @default(now())
-  items      Item[]
-  payments   Payment[]
+  table_id    String
+  items       Item[]
+  costumer    Costumer  @relation(fields: [costumer_id], references: [id])
+  table       Table     @relation(fields: [table_id], references: [id])
+  payments    Payment[]
 
   @@map("orders")
 }
@@ -92,10 +81,11 @@ model Item {
   update_at  DateTime? @default(now())
 
   order      Order   @relation(fields: [order_id], references: [id])
-  ingredient_product    Ingredient_product @relation(fields: [ingredient_product_id], references: [id])
-  order_id   String
-  ingredient_product_id String
-  
+  items_additionals Items_additionals @relation(fields: [items_additionals_id], references: [id])
+  items_ingredients Items_ingredients @relation(fields: [items_ingredients_id], references: [id])
+  order_id   String // pega pelo login
+  items_additionals_id String // ele cria sozinho, se não quiser vem tudo como false
+  items_ingredients_id String // ele cria sozinho, vem tudo como true
 
   @@map("items")
 }
@@ -112,50 +102,44 @@ model Role {
 
 model Costumer {
   id         String   @id @default(uuid())
-  name       String
-  cpf        BigInt?      @unique 
   dt_nasc    String
   email      String
-  password   String
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
-
+  name       String
+  password   String
+  cpf        BigInt?  @unique
   orders     Order[]
 
   @@map("costumers")
 }
 
 model Payment {
-  id         String @id @default(uuid())
-
-  mtdo_pagto Mtdo_pagto @relation(fields: [mtdo_pagto_id], references: [id])
+  id            String     @id @default(uuid())
+  order_id      String
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @default(now())
   mtdo_pagto_id String
-
-  order    Order  @relation(fields: [order_id], references: [id])
-  order_id String
-
-  table    Table  @relation(fields: [table_id], references: [id])
-  table_id String
-
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
+  table_id      String
+  mtdo_pagto    Mtdo_pagto @relation(fields: [mtdo_pagto_id], references: [id])
+  order         Order      @relation(fields: [order_id], references: [id])
+  table         Table      @relation(fields: [table_id], references: [id])
 
   @@map("payments")
 }
 
 model Ingredient {
-  id         String @id @default(uuid())
-  name       String
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
-  ingredient_product Ingredient_product[] // relação muitos para muitos
+  id                 String               @id @default(uuid())
+  name               String
+  created_at         DateTime             @default(now())
+  updated_at         DateTime             @default(now())
+  ingredient_product Ingredient_product[]
 
   @@map("ingredients")
 }
 
 model Ingredient_product {
   id         String @id @default(uuid())
-  adicionado Boolean @default(true)
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
@@ -164,19 +148,73 @@ model Ingredient_product {
   ingredient_id String
   product_id String
 
-  item        Item[]
+  items_ingredients Items_ingredients[]
 
 
   @@map("ingredients_products")
 }
 
 model Mtdo_pagto {
-  id         String @id @default(uuid())
+  id         String    @id @default(uuid())
   name       String
-
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
   payments   Payment[]
 
   @@map("payment_methods")
+}
+
+model Additionals {
+  id         String @id @default(uuid())
+  name       String
+  price      String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  categories_additionals categories_additionals[]
+
+  @@map("additionals")
+}
+
+model categories_additionals {
+  id         String @id @default(uuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  additionals Additionals @relation(fields: [additionals_id], references: [id])
+  additionals_id String
+  category    Category @relation(fields: [category_id], references: [id])
+  category_id String
+
+  items_additionals Items_additionals[]
+
+  @@map("categories_additionals")
+}
+
+model Items_additionals {
+  id         String @id @default(uuid())
+  adicionado Boolean @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  categories_additionals categories_additionals @relation(fields: [categories_additionals_id], references: [id])
+  categories_additionals_id String
+
+  item Item[]
+
+  @@map("items_additionals")
+}
+
+model Items_ingredients {
+  id         String @id @default(uuid())
+  adicionado Boolean @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  ingredient_product Ingredient_product @relation(fields: [ingredient_product_id], references: [id])
+  ingredient_product_id String
+
+  item Item[]
+
+  @@map("items_ingredients")
 }

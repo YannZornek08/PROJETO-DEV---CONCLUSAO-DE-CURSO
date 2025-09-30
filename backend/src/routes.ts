@@ -33,11 +33,18 @@ import { CreateCostumerController } from './controllers/costumer/CreateCostumerC
 import { AuthCostumerController } from './controllers/costumer/AuthCostumerController';
 import { DetailCostumerController } from './controllers/costumer/DetailCostumerController';
 
-import { CreateIngredientController } from './controllers/additional/CreateIngredientController';
-import { AddAdditionalController } from './controllers/additional/AddAdditionalController';
-import { ListIngredientByProductController } from './controllers/additional/ListIngredientByProductController';
+import { CreateIngredientController } from './controllers/ingredients/CreateIngredientController';
+import { AddIngredientController } from './controllers/ingredients/AddIngredientController';
+import { ListIngredientByProductController } from './controllers/ingredients/ListIngredientByProductController';
+import { ItemIngredientController } from './controllers/ingredients/ItemIngredientController';
+import { RemoveItemIngredientController } from './controllers/ingredients/RemoveItemIngredientController';
+import { AllItemIngredientController } from './controllers/ingredients/AllItemIngredientController';
 
-import { UpdateAdditionalController } from './controllers/additional/UpdateAdditionalController';
+import { CreateAdditionalController } from './controllers/additional/CreateAdditionalController';
+import { AddAdditionalController } from './controllers/additional/AddAdditionalController';
+import { ListAdditionalByCategoryController } from './controllers/additional/ListAdditionalByCategoryController';
+import { ItemAdditionalController } from './controllers/additional/ItemAdditionalController';
+import { RemoveItemAdditionalController } from './controllers/additional/RemoveItemAdditionalController';
 
 import { CreateTableController } from './controllers/table/CreateTableController';
 import { ListTablesController } from './controllers/table/ListTablesController';
@@ -108,18 +115,24 @@ router.post('/session/costumers', new AuthCostumerController().handle)
 
 router.get('/me/costumers', new DetailCostumerController().handle)
 
-// -- ROTAS ADDITIONAL --
-//Põe para true ou false
-router.put('/additional/update', new UpdateAdditionalController().handle)
-
-// Cria um novo
-router.post('/ingredients', isAuthenticated, new CreateIngredientController().handle)
-
+// -- ROTAS INGREDIENTS --
+router.post('/ingredients', new CreateIngredientController().handle)
 //Relaciona o adicional no produto
-router.post('/additional', isAuthenticated, new AddAdditionalController().handle)
-
+router.post('/ingredient/relation', new AddIngredientController().handle)
 //Puxa os ingredientes de um produto
 router.get('/product/ingredients', new ListIngredientByProductController().handle)
+router.post('/item/ingredient', new ItemIngredientController().handle)
+router.delete('/item/ingredient', new RemoveItemIngredientController().handle)
+router.post('/item/all/ingredients', new AllItemIngredientController().handle)
+
+// -- ROTAS ADDITIONAL --
+router.post('/additionals', new CreateAdditionalController().handle)
+//Relaciona o adicional na categoria
+router.post('/additional/relation', new AddAdditionalController().handle)
+//Puxa os adicionais de uma categoria
+router.get('/category/additionals', new ListAdditionalByCategoryController().handle)
+router.post('/item/additional', new ItemAdditionalController().handle)
+router.delete('/item/additional', new RemoveItemAdditionalController().handle)
 
 // -- ROTAS TABLE --
 router.post('/table', isAuthenticated, new CreateTableController().handle)
