@@ -48,6 +48,7 @@ const PedidoScreen: React.FC = () => {
   const [nome, setNome] = useState("João M.");
   const [items, setItems] = useState<ItensPedido[]>([])
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
+  const trash = require('../../assets/trash.png');
 
   //   useEffect(() => {
     
@@ -76,7 +77,7 @@ const PedidoScreen: React.FC = () => {
   const handlePay = () => {
     Alert.alert(
       "Resumo do Pedido",
-      `Mesa: ${mesa}\nNome: ${nome}\nTotal: ${total}\n\nObservações: ${observacoes || "Nenhuma observação adicionada"
+      `Mesa: ${mesa}\nNome: ${nome}\nTotal: ${formatarPreco((Number(total)))}\n\nObservações: ${observacoes || "Nenhuma observação adicionada"
       }`
     );
     navigation.navigate("Pagamento")
@@ -133,23 +134,27 @@ const PedidoScreen: React.FC = () => {
         <Text style={styles.title}>Pedido</Text>
 
         {items.map((item) => (
-          <View style={styles.orderItem}
-          key={item.id}>
-            <Image
-              source={{ uri: item.product.banner
-              }}
-              resizeMode="stretch"
-              style={styles.orderItemImage}
-            />
-            <Text style={styles.orderItemDescription}>
-              {item.product.name}{"\n"}Quantidade: {item.amount}
-            </Text>
-            <TouchableOpacity onPress={() => excluir(item.id)}>
-              <Text style={styles.remove}>Excluir</Text>
-            </TouchableOpacity>
-            <Text style={styles.orderItemPrice}>{formatarPreco(item.product.price*item.amount)}</Text>
-          </View>
-        ))}
+  <View style={styles.orderItem} key={item.id}>
+    <Image
+      source={{ uri: item.product.banner }}
+      resizeMode="stretch"
+      style={styles.orderItemImage}
+    />
+    <Text style={styles.orderItemDescription}>
+      {item.product.name}{"\n"}Quantidade: {item.amount}
+    </Text>
+
+    {/* Coluna para valor + botão */}
+      <View>
+        <Text style={styles.orderItemPrice}>
+          {formatarPreco(item.product.price * item.amount)}
+        </Text>
+        <TouchableOpacity onPress={() => excluir(item.id)}>
+          <Image source={trash} style={styles.trash}/>
+        </TouchableOpacity>
+      </View>
+    </View>
+  ))}
 
 
         <View>
@@ -231,6 +236,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginBottom: 10,
     marginHorizontal: 33,
+    borderTopColor: "#E6E6E6",
+    borderTopWidth: 1,
+    paddingTop: 10,
+    alignItems: "center",
   },
   orderItemImage: {
     width: 90,
@@ -240,13 +249,12 @@ const styles = StyleSheet.create({
   },
   orderItemDescription: {
     color: "#000000",
-    fontSize: 14,
-    marginTop: 14,
-    flex: 1,
+    fontSize: 16,
+    marginBottom: 40,
   },
   orderItemPrice: {
     color: "#000000",
-    fontSize: 14,
+    fontSize: 16,
     textAlign: "right",
     marginVertical: 6,
     width: 94,
@@ -314,11 +322,11 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 24,
   },
-  remove: {
+  trash: {
     backgroundColor: "#FF0000",
-    marginTop: 50,
-    padding: 5,
-    borderRadius: 10,
+    padding: 18,
+    borderRadius: 25,
+    marginLeft: 45,
   }
 });
 
