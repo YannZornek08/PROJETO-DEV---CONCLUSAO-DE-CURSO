@@ -1,18 +1,18 @@
 import { Request, Response } from "express";
-import { AddAdditionalService } from "../../services/additional/AddAdditionalService";
+import { AddAdditionalService} from "../../services/additional/RelationAdditionalWithCategoryService"
 
 class AddAdditionalController {
     async handle(req: Request, res: Response) {
-        const { ingredient_id, product_id } = req.body;
+        const { additional_id, category_id } = req.body;
 
         const addAdditionalService = new AddAdditionalService();
 
-        const additional = await addAdditionalService.execute({
-            ingredient_id,
-            product_id
+        const Additional = await addAdditionalService.execute({
+            additional_id,
+            category_id
         });
 
-        res.json(additional);
+        res.json(Additional);
     }
 }
 

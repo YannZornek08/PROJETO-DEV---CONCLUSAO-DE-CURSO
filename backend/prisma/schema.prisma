@@ -27,7 +27,7 @@ model Category {
   created_at DateTime? @default(now())
   update_at  DateTime? @default(now())
   products   Product[]
-  category_adicionais Category_adicionais[]
+  categories_additionals categories_additionals[]
 
   @@map("categories")
 }
@@ -81,11 +81,11 @@ model Item {
   update_at  DateTime? @default(now())
 
   order      Order   @relation(fields: [order_id], references: [id])
-  itens_adicionais Itens_adicionais @relation(fields: [itens_adicionais_id], references: [id])
-  itens_ingredientes Itens_ingredientes @relation(fields: [itens_ingredientes_id], references: [id])
+  items_additionals Items_additionals @relation(fields: [items_additionals_id], references: [id])
+  items_ingredients Items_ingredients @relation(fields: [items_ingredients_id], references: [id])
   order_id   String // pega pelo login
-  itens_adicionais_id String // ele cria sozinho, se não quiser vem tudo como false
-  itens_ingredientes_id String // ele cria sozinho, vem tudo como true
+  items_additionals_id String // ele cria sozinho, se não quiser vem tudo como false
+  items_ingredients_id String // ele cria sozinho, vem tudo como true
 
   @@map("items")
 }
@@ -148,7 +148,7 @@ model Ingredient_product {
   ingredient_id String
   product_id String
 
-  itens_ingredientes Itens_ingredientes[]
+  items_ingredients Items_ingredients[]
 
 
   @@map("ingredients_products")
@@ -164,48 +164,48 @@ model Mtdo_pagto {
   @@map("payment_methods")
 }
 
-model Adicionais {
+model Additionals {
   id         String @id @default(uuid())
   name       String
   price      String
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  category_adicionais Category_adicionais[]
+  categories_additionals categories_additionals[]
 
-  @@map("adicionais")
+  @@map("additionals")
 }
 
-model Category_adicionais {
+model categories_additionals {
   id         String @id @default(uuid())
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  adicionais Adicionais @relation(fields: [adicionais_id], references: [id])
-  adicionais_id String
+  additionals Additionals @relation(fields: [additionals_id], references: [id])
+  additionals_id String
   category    Category @relation(fields: [category_id], references: [id])
   category_id String
 
-  itens_adicionais Itens_adicionais[]
+  items_additionals Items_additionals[]
 
-  @@map("categories_adicionais")
+  @@map("categories_additionals")
 }
 
-model Itens_adicionais {
+model Items_additionals {
   id         String @id @default(uuid())
   adicionado Boolean @default(false)
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  category_adicionais Category_adicionais @relation(fields: [category_adicionais_id], references: [id])
-  category_adicionais_id String
+  categories_additionals categories_additionals @relation(fields: [categories_additionals_id], references: [id])
+  categories_additionals_id String
 
   item Item[]
 
-  @@map("itens_adicionais")
+  @@map("items_additionals")
 }
 
-model Itens_ingredientes {
+model Items_ingredients {
   id         String @id @default(uuid())
   adicionado Boolean @default(true)
   created_at DateTime @default(now())
@@ -216,5 +216,5 @@ model Itens_ingredientes {
 
   item Item[]
 
-  @@map("itens_ingredientes")
+  @@map("items_ingredients")
 }
