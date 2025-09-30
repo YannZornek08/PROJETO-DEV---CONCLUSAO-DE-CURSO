@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; 
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   View,
@@ -14,13 +14,14 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
+import { SettingsButton } from "../../components/SettingsButton";
+import BottomNavBar from "../../components/navButton";
 
 import { api } from "../../services/api";
 import { CategoryProps } from "../Order";
 import { ModalPicker } from "../../components/ModalPicker";
 
 
-import BottomNavBar from "../../components/navButton";
 // const status = require('../../assets/nav-icons/status.png')
 /////////////////
 
@@ -95,17 +96,15 @@ export default function HomeScreen() {
                   style={styles.iconRight}
                 />
               </TouchableOpacity>
-              <TouchableOpacity onPress={Settings}>
-                <Image
-                  source={require('../../assets/Configuracoes.png')}
-                  resizeMode="stretch"
-                  style={styles.iconRight}
-                />
+              <TouchableOpacity>
+                
+                <SettingsButton />
+
               </TouchableOpacity>
             </View>
           </View>
 
-          
+
           <Modal
             animationType="slide"
             transparent={true}
@@ -157,7 +156,7 @@ export default function HomeScreen() {
       </ScrollView>
 
       {/* Usa o BottomNavBar aqui */}
-<BottomNavBar activeRoute="Menu" />
+      <BottomNavBar activeRoute="Menu" />
 
     </SafeAreaView>
   );
@@ -169,7 +168,7 @@ type PizzaCardProps = {
 
 function PizzaCard({ product }: PizzaCardProps) {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
-  
+
   return (
     <View style={styles.card}>
       <Image source={{ uri: product.banner }} resizeMode="stretch" style={styles.cardImage} />
@@ -216,74 +215,77 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginHorizontal: 26,
   },
-  searchIcon: { 
-    width: 48, 
-    height: 48, 
-    marginRight: 4 
+  searchIcon: {
+    width: 48,
+    height: 48,
+    marginRight: 4
   },
-  searchInput: { 
-    color: "#52443C", 
-    fontSize: 16, 
-    flex: 1, 
-    paddingVertical: 12 
+  searchInput: {
+    color: "#52443C",
+    fontSize: 16,
+    flex: 1,
+    paddingVertical: 12
   },
-  searchIconsRight: { 
-    flexDirection: "row" 
+  searchIconsRight: {
+    flexDirection: "row"
   },
-  iconRight: { 
-    width: 48, 
-    height: 48 
+  iconRight: {
+    width: 48,
+    height: 48
   },
-  filtersWrapper: { 
-    alignItems: "center", paddingVertical: 8 },
-  filterButton: { 
-    flexDirection: "row", backgroundColor: "#8D4F28", borderRadius: 12, paddingVertical: 6, paddingHorizontal: 12 
+  filtersWrapper: {
+    alignItems: "center", paddingVertical: 8
   },
-  filterIcon: { 
-    width: 20, 
-    height: 20, 
-    marginRight: 4 },
-  filterText: { 
-    color: "#FFFFFF", 
-    fontSize: 14, 
-    fontWeight: "bold" },
-  tableText: { 
-    color: "#000000", 
-    fontSize: 16, 
-    fontWeight: "bold", 
-    marginBottom: 8, marginHorizontal: 26 
+  filterButton: {
+    flexDirection: "row", backgroundColor: "#8D4F28", borderRadius: 12, paddingVertical: 6, paddingHorizontal: 12
   },
-  cardsWrapper: { 
-    marginBottom: 44, marginHorizontal: 26 
+  filterIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 4
   },
-  row: { 
-    flexDirection: "row", 
-    marginBottom: 30, 
+  filterText: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontWeight: "bold"
+  },
+  tableText: {
+    color: "#000000",
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 8, marginHorizontal: 26
+  },
+  cardsWrapper: {
+    marginBottom: 44, marginHorizontal: 26
+  },
+  row: {
+    flexDirection: "row",
+    marginBottom: 30,
     gap: 10,
     alignItems: "stretch"
   },
-  card: { 
-    flex: 1, 
+  card: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "space-between"
   },
-  cardImage: { 
-    height: 180, 
-    marginBottom: 8, 
+  cardImage: {
+    height: 180,
+    marginBottom: 8,
     width: "100%",
     borderRadius: 90
   },
-  cardTitle: { 
+  cardTitle: {
     color: "#000000",
-    fontWeight: "bold", 
-    fontSize: 18, 
-    textAlign: "center", 
+    fontWeight: "bold",
+    fontSize: 18,
+    textAlign: "center",
     marginBottom: 4,
   },
-  cardPrice: { 
-    color: "#000000", 
-    fontSize: 16, 
-    marginBottom: 7 
+  cardPrice: {
+    color: "#000000",
+    fontSize: 16,
+    marginBottom: 7
   },
   addButton: {
     flexDirection: "row",
