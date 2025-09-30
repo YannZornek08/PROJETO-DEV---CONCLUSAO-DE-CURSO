@@ -32,16 +32,18 @@ model Category {
 }
 
 model Product {
-  id                 String               @id @default(uuid())
-  name               String
-  price              String
-  description        String
-  banner             String
-  created_at         DateTime?            @default(now())
-  update_at          DateTime?            @default(now())
-  category_id        String
-  ingredient_product Ingredient_product[]
-  category           Category             @relation(fields: [category_id], references: [id])
+  id          String    @id @default(uuid())
+  name        String
+  price       String
+  description String
+  banner      String
+  created_at  DateTime? @default(now())
+  update_at   DateTime? @default(now())
+
+  category    Category @relation(fields: [category_id], references: [id])
+  category_id String
+  ingredient_product Ingredient_product[] // relação muitos para muitos
+  items       Item[]
 
   @@map("products")
 }
@@ -74,14 +76,19 @@ model Table {
 }
 
 model Item {
-  id                    String             @id @default(uuid())
-  amount                Int
-  created_at            DateTime?          @default(now())
-  update_at             DateTime?          @default(now())
-  order_id              String
-  ingredient_product_id String
-  ingredient_product    Ingredient_product @relation(fields: [ingredient_product_id], references: [id])
-  order                 Order              @relation(fields: [order_id], references: [id])
+  id         String    @id @default(uuid())
+  amount     Int
+  created_at DateTime? @default(now())
+  update_at  DateTime? @default(now())
+
+  order      Order   @relation(fields: [order_id], references: [id])
+  // ingredient_product    Ingredient_product @relation(fields: [ingredient_product_id], references: [id])
+  product    Product @relation(fields: [product_id], references: [id])
+
+  order_id   String
+  // ingredient_product_id String
+  product_id String
+  
 
   @@map("items")
 }
@@ -140,10 +147,10 @@ model Ingredient_product {
   created_at    DateTime   @default(now())
   updated_at    DateTime   @default(now())
   ingredient_id String
-  product_id    String
-  ingredient    Ingredient @relation(fields: [ingredient_id], references: [id])
-  product       Product    @relation(fields: [product_id], references: [id])
-  item          Item[]
+  product_id String
+
+  // item        Item[]
+
 
   @@map("ingredients_products")
 }

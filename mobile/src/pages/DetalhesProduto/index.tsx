@@ -15,31 +15,38 @@ import { StackParamsList } from "../../routes/app.routes"; // ajuste o caminho
 import { api } from "../../services/api";
 
 type DetalhesRouteProp = RouteProp<StackParamsList, "DetalhesProdutos">;
-
+// RESOLVER A PARTE DOS ADICIONAIS
+// O código está buscando os adicionais corretamente, mas não está atualizando o estado quando um adicional é selecionado ou desselecionado.
+// O código para atualizar o estado local dos adicionais está comentado, o que impede a atualização visual dos checkboxes.
+// Além disso, a chamada à API para atualizar o estado do adicional no backend também está comentada.
+// Além disso, quando você tenta adicionar um ingrediente e há mais de um adicional no produto, ele irá atualizar todos os adicionais do produto, não apenas o que foi clicado.
+// O código está lendo cada adicional com a key ingredient_product_id, mas ao atualizar, está enviando product_id e ingredient_id, o que pode causar confusão se houver múltiplos adicionais para o mesmo produto.
+// O código está lendo as chaves key repetidas
+// Além disso, a lógica para enviar os adicionais selecionados ao carrinho ainda não foi implementada.
 type Additional = {
-  ingredient_product_id: string;
-  product_id: string;
-  ingredient_id: string;
+  ingredient_product_id: string | null;
+  product_id: string | null;
+  ingredient_id: string | null;
   product: {
-    name: string;
+    name: string | null;
   };
   ingredient: {
-    name: string;
+    name: string | null;
   };
-  adicionado: boolean;
+  adicionado: boolean | null;
 };
 
-// const toggleAdicional = (adicional: string) => {
-//   if (adicionais.includes(adicional)) {
-//     setAdicionais(adicionais.filter((item) => item !== adicional));
-//   } else {
-//     setAdicionais([...adicionais, adicional]);
-//   }
-// };
+type Item = {
+  order_id: string;
+  ingredient_product_id: string;
+  amount: number;
+};
+
 export default function DetalhesProdutos() {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
   const route = useRoute<DetalhesRouteProp>();
   const [adicionais, setAdicionais] = useState<Additional[]>([]);
+  // const [items, setItems] = useState<Item[]>([]);
 
   // Imprime aqui os produtos clicados em adicionar
   const { product } = route.params;
@@ -60,6 +67,10 @@ export default function DetalhesProdutos() {
           }
         });
         console.log("API retornou:", response.data);
+        if (!response.data) {
+          setAdicionais([]);
+          return;
+        }
         setAdicionais(Array.isArray(response.data) ? response.data : [response.data]);
         const dataArray = Array.isArray(response.data) ? response.data : [response.data];
         const formattedAdicionais: Additional[] = dataArray.map((item: any) => ({
@@ -75,13 +86,28 @@ export default function DetalhesProdutos() {
           adicionado: item.adicionado ?? false,
         }));
         setAdicionais(formattedAdicionais);
-        console.log("É array?", Array.isArray(response.data));
+        console.log("Adicionais formatados:", formattedAdicionais);
+        // console.log("É array?", Array.isArray(response.data));
       } catch (err) {
         console.log("Erro ao buscar produtos:", err);
       }
     }
     verAdicionaisProduto();
   }, [product.id]);
+
+  async function adicionarItem() {
+    try {
+      const newItem = await api.post('/order/add', {
+          order_id: "c35fd0b5-5761-46c4-9607-25123efd369d", // Substitua pelo ID real do pedido
+          product_id: product.id,
+          amount: quantidade,
+      });
+      console.log("Item adicionado:", newItem.data);
+      // setItems((prevItems) => [...prevItems, newItem.data]);
+    } catch (err) {
+      console.log("Erro ao adicionar item:", err, product.id, quantidade);
+    }
+  }
 
   const Menu = () => {
     navigation.navigate("Menu");
@@ -105,7 +131,7 @@ export default function DetalhesProdutos() {
         <View style={styles.imageContainer}>
           <TouchableOpacity onPress={Menu}>
             <Image
-            source={require('../../assets/Voltar.png')}
+              source={require('../../assets/Voltar.png')}
               resizeMode="stretch"
               style={styles.smallImage}
             />
@@ -135,45 +161,52 @@ export default function DetalhesProdutos() {
 
         {/* Adicionais */}
         <View style={styles.adicionaisContainer}>
-          {adicionais.length > 0 && (
-            <Text style={styles.sectionTitle}>Adicionais:</Text>
+          {adicionais.length <= 0 ? (
+            <Text style={styles.sectionTitle}>Nenhum adicional disponível.</Text>
+          ) : (
+            <>
+              <Text style={styles.sectionTitle}>Adicionais:</Text>
+              {adicionais.map((ingred) => (
+                // console.log("Renderizando adicional:", ingred.ingredient_product_id),
+                <TouchableOpacity
+                  key={ingred.ingredient_id}
+                  style={styles.adicionalItem}
+                // onPress={async () => {
+
+                //   //Atualiza localmente
+                //   setAdicionais((prev) =>
+                //     prev.map((item) =>
+                //       item.ingredient_product_id === ingred.ingredient_product_id
+                //         ? { ...item, adicionado: !item.adicionado }
+                //         : item
+                //     )
+                //   );
+                //   // Atualiza no banco via API
+                //   try {
+                //     await api.put(`/additional/update`, {
+                //       product_id: ingred.product_id,
+                //       ingredient_id: ingred.ingredient_id,
+                //     });
+                //     console.log("Adicional atualizado com sucesso", ingred, ingred.adicionado);
+
+                //   } catch (err) {
+                //     console.log("Erro ao atualizar adicional:", err);
+                //   }
+                // }}
+                >
+                  <View
+                    style={[
+                      styles.checkbox,
+                      ingred.adicionado && styles.checkboxSelecionado,
+                    ]}
+                  >
+                    {ingred.adicionado && <Text style={styles.checkmark}>✓</Text>}
+                  </View>
+                  <Text style={styles.adicionalText}>{ingred.ingredient?.name ?? "Sem adicional"}</Text>
+                </TouchableOpacity>
+              ))}
+            </>
           )}
-          {adicionais.map((ingred) => (
-            <TouchableOpacity
-              key={ingred.ingredient_product_id}
-              style={styles.adicionalItem}
-              onPress={async () => {
-          // Atualiza localmente
-          setAdicionais((prev) =>
-            prev.map((item) =>
-              item.ingredient_product_id === ingred.ingredient_product_id
-                ? { ...item, adicionado: !item.adicionado }
-                : item
-            )
-          );
-          // Atualiza no banco via API
-            try {
-            await api.put(`/additional/update`, {
-              product_id: ingred.product_id,
-              ingredient_id: ingred.ingredient_id,
-            });
-            console.log("Adicional atualizado com sucesso", ingred, ingred.adicionado);
-            } catch (err) {
-            console.log("Erro ao atualizar adicional:", err);
-            }
-              }}
-            >
-              <View
-          style={[
-            styles.checkbox,
-            ingred.adicionado && styles.checkboxSelecionado,
-          ]}
-              >
-          {ingred.adicionado && <Text style={styles.checkmark}>✓</Text>}
-              </View>
-              <Text style={styles.adicionalText}>{ingred.ingredient?.name ?? "Sem adicional"}</Text>
-            </TouchableOpacity>
-          ))}
         </View>
 
         {/* Seletor de tamanho */}
@@ -234,8 +267,12 @@ export default function DetalhesProdutos() {
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => {
+            // Lógica para adicionar ao carrinho
+            // Aqui você pode enviar os dados para o backend ou atualizar o estado global
+            // Por enquanto, apenas mostramos um alerta
+            adicionarItem();
             alert(
-              `Pizza adicionada! Tamanho: ${tamanhoSelecionado}, Quantidade: ${quantidade}, Adicionais: ${adicionais.join(
+              `${product.name} adicionado! Tamanho: ${tamanhoSelecionado}, Quantidade: ${quantidade}, Adicionais: ${adicionais.join(
                 ", "
               ) || "Nenhum"}`
             );
