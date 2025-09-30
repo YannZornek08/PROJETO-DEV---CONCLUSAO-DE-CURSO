@@ -14,6 +14,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
+import { formatarPreco } from "../../components/conversorDeMoeda/valoresEmReal";
 
 import { api } from "../../services/api";
 import { CategoryProps } from "../Order";
@@ -173,7 +174,7 @@ function PizzaCard({ product }: PizzaCardProps) {
     <View style={styles.card}>
       <Image source={{ uri: product.banner }} resizeMode="stretch" style={styles.cardImage} />
       <Text style={styles.cardTitle}>{product.name}</Text>
-      <Text style={styles.cardPrice}>R$ {product.price}</Text>
+      <Text style={styles.cardPrice}>{formatarPreco(Number(product.price))}</Text>
       <TouchableOpacity
         style={styles.addButton}
         onPress={() => {
