@@ -35,6 +35,7 @@ model Category {
   created_at DateTime? @default(now())
   update_at  DateTime? @default(now())
   products   Product[]
+  category_adicionais Category_adicionais[]
 
   @@map("categories")
 }
@@ -92,10 +93,11 @@ model Item {
   update_at  DateTime? @default(now())
 
   order      Order   @relation(fields: [order_id], references: [id])
-  ingredient_product    Ingredient_product @relation(fields: [ingredient_product_id], references: [id])
-  order_id   String
-  ingredient_product_id String
-  
+  itens_adicionais Itens_adicionais @relation(fields: [itens_adicionais_id], references: [id])
+  itens_ingredientes Itens_ingredientes @relation(fields: [itens_ingredientes_id], references: [id])
+  order_id   String // pega pelo login
+  itens_adicionais_id String // ele cria sozinho, se não quiser vem tudo como false
+  itens_ingredientes_id String // ele cria sozinho, vem tudo como true
 
   @@map("items")
 }
@@ -155,7 +157,6 @@ model Ingredient {
 
 model Ingredient_product {
   id         String @id @default(uuid())
-  adicionado Boolean @default(true)
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
@@ -164,7 +165,7 @@ model Ingredient_product {
   ingredient_id String
   product_id String
 
-  item        Item[]
+  itens_ingredientes Itens_ingredientes[]
 
 
   @@map("ingredients_products")
@@ -179,4 +180,59 @@ model Mtdo_pagto {
   payments   Payment[]
 
   @@map("payment_methods")
+}
+
+model Adicionais {
+  id         String @id @default(uuid())
+  name       String
+  price      String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  category_adicionais Category_adicionais[]
+
+  @@map("adicionais")
+}
+
+model Category_adicionais {
+  id         String @id @default(uuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  adicionais Adicionais @relation(fields: [adicionais_id], references: [id])
+  adicionais_id String
+  category    Category @relation(fields: [category_id], references: [id])
+  category_id String
+
+  itens_adicionais Itens_adicionais[]
+
+  @@map("categories_adicionais")
+}
+
+model Itens_adicionais {
+  id         String @id @default(uuid())
+  adicionado Boolean @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  category_adicionais Category_adicionais @relation(fields: [category_adicionais_id], references: [id])
+  category_adicionais_id String
+
+  item Item[]
+
+  @@map("itens_adicionais")
+}
+
+model Itens_ingredientes {
+  id         String @id @default(uuid())
+  adicionado Boolean @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  ingredient_product Ingredient_product @relation(fields: [ingredient_product_id], references: [id])
+  ingredient_product_id String
+
+  item Item[]
+
+  @@map("itens_ingredientes")
 }
