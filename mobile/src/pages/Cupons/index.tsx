@@ -14,14 +14,11 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes"
 import BottomNavBar from "../../components/navButton";
+import { SettingsButton } from "../../components/SettingsButton";
 
 export default function Cupons() {
   const [textInput1, setTextInput1] = useState<string>("");
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>()
-
-  function Settings() {
-    navigation.navigate("Settings")
-  }
 
   function Carrinho () {
     navigation.navigate("Carrinho");
@@ -72,12 +69,8 @@ export default function Cupons() {
                 />
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={Settings}>
-                <Image
-                  source={require('../../assets/Configuracoes.png')}
-                  resizeMode="stretch"
-                  style={styles.actionIcon}
-                />
+              <TouchableOpacity>
+              <SettingsButton/>
               </TouchableOpacity>
             </View>
           </View>

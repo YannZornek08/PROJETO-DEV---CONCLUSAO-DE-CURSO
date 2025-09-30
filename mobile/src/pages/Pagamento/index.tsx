@@ -7,16 +7,16 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Alert, // <─ importado aqui
+  Alert, 
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
+import BackButton from "../../components/cart";
 
 const Pagamento: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
-  
   const DadosPagamento = () => {
     navigation.navigate("DadosPagamento");
   };
@@ -36,13 +36,8 @@ const Pagamento: React.FC = () => {
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
       >
-        <TouchableOpacity onPress={Carrinho}>
-          <Image
-            source={require('../../assets/Voltar.png')}
-            resizeMode="stretch"
-            style={styles.image}
-          />
-        </TouchableOpacity>
+        {/* usando o componente BackButton */}
+        <BackButton to="Menu" />
 
         <Text style={styles.title}>Pagamento</Text>
 
@@ -69,23 +64,19 @@ const Pagamento: React.FC = () => {
           <TouchableOpacity style={styles.rowCard} onPress={chamarGarcom}>
             <View style={styles.rowContent}>
               <Image
-                source={require('../../assets/person_alert_24dp_8D4E27_FILL0_wght400_GRAD0_opsz24.png',
-              )}
+                source={require('../../assets/person_alert_24dp_8D4E27_FILL0_wght400_GRAD0_opsz24.png')}
                 resizeMode="stretch"
                 style={styles.icon}
               />
               <Text style={styles.textPrimary}>Chamar um garçom</Text>
             </View>
             <Image
-              source={require('../../assets/faz03frq_expires_30_days.png',
-              )}
+              source={require('../../assets/faz03frq_expires_30_days.png')}
               resizeMode="stretch"
               style={styles.iconSmall}
             />
           </TouchableOpacity>
-        {/* <Text style={styles.subtitle}>Chamar o garçom</Text> */}
         </View>
-
       </ScrollView>
     </SafeAreaView>
   );
@@ -103,12 +94,6 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     padding: 24,
-  },
-  image: {
-    width: 48,
-    height: 48,
-    marginBottom: 16,
-    alignSelf: "flex-start",
   },
   title: {
     color: "#000000",
