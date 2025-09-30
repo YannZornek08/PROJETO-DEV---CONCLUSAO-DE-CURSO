@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
 import { api } from "../../services/api";
+import { formatarPreco } from "../../components/conversorDeMoeda/valoresEmReal";
 
 export type Produto = {
   id: string;
@@ -42,24 +43,35 @@ type ItensPedido = {
 const PedidoScreen: React.FC = () => {
   const [observacoes, setObservacoes] = useState("");
   const [produtos, setProdutos] = useState<Produto[]>([]);
-  const [total, setTotal] = useState("R$ 77,00");
+  const [total, setTotal] = useState(0);
   const [mesa, setMesa] = useState("05");
   const [nome, setNome] = useState("João M.");
   const [items, setItems] = useState<ItensPedido[]>([])
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
-    useEffect(() => {
+  //   useEffect(() => {
     
-    async function verProdutosPedido() {
-      try {
-        const response = await api.get('/order/detail');
-        setProdutos(response.data);
-      } catch (err) {
-        console.log("Erro ao buscar produtos:", err);
-      }
-    }
-    verProdutosPedido();
-  }, []);
+  //   async function verProdutosPedido() {
+  //     try {
+  //       const response = await api.get('/order/detail');
+  //       setProdutos(response.data);
+  //     } catch (err) {
+  //       console.log("Erro ao buscar produtos:", err);
+  //     }
+  //   }
+  //   verProdutosPedido();
+  // }, []);
+
+  useEffect(() => {
+  const calcularTotal = () => {
+    const soma = items.reduce((somatoria, item) => {
+      return somatoria + item.product.price * item.amount;
+    }, 0);
+    setTotal(soma);
+  };
+
+  calcularTotal();
+}, [items]);
   
   const handlePay = () => {
     Alert.alert(
@@ -74,7 +86,9 @@ const PedidoScreen: React.FC = () => {
     async function verPedidos() {
       try {
         const response = await api.get('/order/detail', {
-          params: { order_id: "c35fd0b5-5761-46c4-9607-25123efd369d" }
+          params: { 
+            order_id: "39abb591-8642-4b4f-81b7-49bfbeb4e246" 
+          }
         });
         setItems(response.data);
         // console.log("Produtos no carrinho:", response.data);
@@ -114,7 +128,7 @@ const PedidoScreen: React.FC = () => {
             <Text style={styles.orderItemDescription}>
               {item.product.name}{"\n"}Quantidade: {item.amount}
             </Text>
-            <Text style={styles.orderItemPrice}>R$ {item.product.price}</Text>
+            <Text style={styles.orderItemPrice}>{formatarPreco(item.product.price*item.amount)}</Text>
           </View>
         ))}
 
@@ -150,7 +164,7 @@ const PedidoScreen: React.FC = () => {
         {/* Total / Mesa / Nome — igual ao modelo (sem exibir observações aqui) */}
         <View style={styles.totalContainer}>
           <Text style={styles.totalLabel}>Total:</Text>
-          <Text style={styles.totalValue}>{total}</Text>
+          <Text style={styles.totalValue}> {formatarPreco(total)}</Text>
         </View>
 
         <View style={styles.detailsRow}>

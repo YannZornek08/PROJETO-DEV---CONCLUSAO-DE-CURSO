@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes"; // ajuste o caminho
 import { api } from "../../services/api";
+import { formatarPreco } from "../../components/conversorDeMoeda/valoresEmReal";
 
 type DetalhesRouteProp = RouteProp<StackParamsList, "DetalhesProdutos">;
 // RESOLVER A PARTE DOS ADICIONAIS
@@ -98,7 +99,7 @@ export default function DetalhesProdutos() {
   async function adicionarItem() {
     try {
       const newItem = await api.post('/order/add', {
-          order_id: "c35fd0b5-5761-46c4-9607-25123efd369d", // Substitua pelo ID real do pedido
+          order_id: "39abb591-8642-4b4f-81b7-49bfbeb4e246", // Substitua pelo ID real do pedido
           product_id: product.id,
           amount: quantidade,
       });
@@ -148,7 +149,7 @@ export default function DetalhesProdutos() {
         {/* Nome e preço */}
         <Text style={styles.productName}>{product.name}</Text>
         <View style={styles.priceContainer}>
-          <Text style={styles.price}>R$ {product.price}</Text>
+          <Text style={styles.price}>{formatarPreco(Number(product.price))}</Text>
         </View>
 
         {/* Descrição */}
@@ -260,6 +261,8 @@ export default function DetalhesProdutos() {
             >
               <Text style={styles.quantityButtonText}>+</Text>
             </TouchableOpacity>
+            {/* Valor Somado do produto */}
+            {/* <Text style={styles.price}> R${product.price*quantidade}</Text> */}
           </View>
         </View>
 
