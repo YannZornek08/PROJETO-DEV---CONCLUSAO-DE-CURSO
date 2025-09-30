@@ -203,6 +203,7 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
     marginRight: 27,
+    borderRadius: 45,
   },
   orderItemDescription: {
     color: "#000000",
