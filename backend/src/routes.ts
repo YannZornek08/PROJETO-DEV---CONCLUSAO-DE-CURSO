@@ -35,16 +35,15 @@ import { DetailCostumerController } from './controllers/costumer/DetailCostumerC
 
 import { CreateIngredientController } from './controllers/ingredients/CreateIngredientController';
 import { AddIngredientController } from './controllers/ingredients/AddIngredientController';
-import { ListIngredientByProductController } from './controllers/ingredients/ListIngredientByProductController';
-import { ItemIngredientController } from './controllers/ingredients/ItemIngredientController';
-import { RemoveItemIngredientController } from './controllers/ingredients/RemoveItemIngredientController';
+import { ListAllItemIngredientByProductController } from './controllers/ingredients/ListAllItemIngredientByProductController';
+import { ListIngredientByProductController } from './controllers/ingredients/ListIngredientByProduct';
 import { AllItemIngredientController } from './controllers/ingredients/AllItemIngredientController';
+import { UpdateIngredientController } from './controllers/ingredients/UpdateIngredientController';
 
-import { CreateAdditionalController } from './controllers/additional/CreateAdditionalController';
-import { AddAdditionalController } from './controllers/additional/AddAdditionalController';
+import { AddAdditionalController } from './controllers/additional/RelationAdditionalController';
 import { ListAdditionalByCategoryController } from './controllers/additional/ListAdditionalByCategoryController';
-import { ItemAdditionalController } from './controllers/additional/ItemAdditionalController';
-import { RemoveItemAdditionalController } from './controllers/additional/RemoveItemAdditionalController';
+import { UpdateAdditionalController } from './controllers/additional/UpdateAdditionalController';
+import { AllItemAdditionalController } from './controllers/additional/AllItemAdditionalController';
 
 import { CreateTableController } from './controllers/table/CreateTableController';
 import { ListTablesController } from './controllers/table/ListTablesController';
@@ -61,6 +60,7 @@ import { isAuthenticatedClient } from './middlewares/isAuthenticatedClient'
 
 import uploadConfig from './config/multer'
 import { DetailTableController } from './controllers/table/DetailTableController';
+import { CreateAdditionalController } from './controllers/additional/CreateAdditionalController';
 
 const router = Router()
 
@@ -119,20 +119,28 @@ router.get('/me/costumers', new DetailCostumerController().handle)
 router.post('/ingredients', new CreateIngredientController().handle)
 //Relaciona o adicional no produto
 router.post('/ingredient/relation', new AddIngredientController().handle)
-//Puxa os ingredientes de um produto
+
+//Puxa os ingredientes do item de um produto
+router.get('/product/all/ingredients', new ListAllItemIngredientByProductController().handle)
 router.get('/product/ingredients', new ListIngredientByProductController().handle)
-router.post('/item/ingredient', new ItemIngredientController().handle)
-router.delete('/item/ingredient', new RemoveItemIngredientController().handle)
+
+
+// Lista todos os ingredientes de um item
 router.post('/item/all/ingredients', new AllItemIngredientController().handle)
+//Atualiza o item ingrediente (adicionado: true ou false)
+router.put('/item/ingredient', new UpdateIngredientController().handle)
 
 // -- ROTAS ADDITIONAL --
-router.post('/additionals', new CreateAdditionalController().handle)
+// Cria um adicional
+router.post('/additional', new CreateAdditionalController().handle)
+//Cria todos os adicionais de uma categoria para um item
+router.post('/item/all/additionals', new AllItemAdditionalController().handle)
 //Relaciona o adicional na categoria
 router.post('/additional/relation', new AddAdditionalController().handle)
 //Puxa os adicionais de uma categoria
 router.get('/category/additionals', new ListAdditionalByCategoryController().handle)
-router.post('/item/additional', new ItemAdditionalController().handle)
-router.delete('/item/additional', new RemoveItemAdditionalController().handle)
+//Atualiza o item adicional (adicionado: true ou false)
+router.put('/item/additional', new UpdateAdditionalController().handle)
 
 // -- ROTAS TABLE --
 router.post('/table', isAuthenticated, new CreateTableController().handle)

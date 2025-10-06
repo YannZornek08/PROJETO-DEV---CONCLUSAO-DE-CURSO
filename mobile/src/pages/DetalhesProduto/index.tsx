@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useRoute, RouteProp } from "@react-navigation/native";
 import {
   SafeAreaView,
@@ -16,30 +16,31 @@ import { api } from "../../services/api";
 
 type DetalhesRouteProp = RouteProp<StackParamsList, "DetalhesProdutos">;
 
-type Additional = {
+type Ingredient = {
+  items_ingredients_id: string;
   ingredient_product_id: string;
-  product_id: string;
-  ingredient_id: string;
-  product: {
-    name: string;
-  };
   ingredient: {
     name: string;
   };
+  product: {
+    name: string;
+  };
   adicionado: boolean;
-};
+}
 
-// const toggleAdicional = (adicional: string) => {
-//   if (adicionais.includes(adicional)) {
-//     setAdicionais(adicionais.filter((item) => item !== adicional));
-//   } else {
-//     setAdicionais([...adicionais, adicional]);
-//   }
-// };
+type Additional = {
+  id: string;
+  additional: {
+    name: string;
+    price: number;
+  };
+}
+
 export default function DetalhesProdutos() {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
   const route = useRoute<DetalhesRouteProp>();
   const [adicionais, setAdicionais] = useState<Additional[]>([]);
+  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
   // Imprime aqui os produtos clicados em adicionar
   const { product } = route.params;
@@ -49,55 +50,65 @@ export default function DetalhesProdutos() {
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState<string>("M");
   const [quantidade, setQuantidade] = useState<number>(1);
 
-
-  useEffect(() => {
-    async function verAdicionaisProduto() {
-      try {
-        //Chama a rota que retorna TODOS os ingredientes do produto
-        const response = await api.get('/product/ingredients', {
-          params: {
-            product_id: product.id,
-          }
-        });
-        console.log("API retornou:", response.data);
-        setAdicionais(Array.isArray(response.data) ? response.data : [response.data]);
-        const dataArray = Array.isArray(response.data) ? response.data : [response.data];
-        const formattedAdicionais: Additional[] = dataArray.map((item: any) => ({
-          ingredient_product_id: item.ingredient_product_id ?? "",
-          product_id: item.product_id ?? "",
-          ingredient_id: item.ingredient_id ?? "",
-          product: {
-            name: item.product?.name ?? "",
-          },
-          ingredient: {
-            name: item.ingredient?.name ?? "",
-          },
-          adicionado: item.adicionado ?? false,
-        }));
-        setAdicionais(formattedAdicionais);
-        console.log("É array?", Array.isArray(response.data));
-      } catch (err) {
-        console.log("Erro ao buscar produtos:", err);
-      }
-    }
-    verAdicionaisProduto();
-  }, [product.id]);
-
+  
   const Menu = () => {
     navigation.navigate("Menu");
   };
-
+  
   const aumentarQuantidade = () => {
     setQuantidade(quantidade + 1);
   };
-
+  
   const diminuirQuantidade = () => {
     if (quantidade > 1) {
       setQuantidade(quantidade - 1);
     }
   };
+  
+  
+  useEffect(() => {
+     async function verIngredientesProduto() {
+      try {
+        //Chama a rota que retorna TODOS os ingredientes do produto
+        const response = await api.get('/product/all/ingredients', {
+          params: {
+            product_id: product.id,
+          }
+        });
+        // nao ta imprimindo o nome dos ingredientes nem dos produtos
+        // console.log("API retornou:", response.data);
+        setIngredients(Array.isArray(response.data) ? response.data : [response.data]);
+        const dataArray = Array.isArray(response.data) ? response.data : [response.data];
+        const formattedIngredients: Ingredient[] = dataArray.map((item: any) => ({
+          items_ingredients_id: item.id,
+          ingredient_product_id: item.ingredient_product_id,
+          ingredient: {
+            name: item.ingredient_product.ingredient.name ?? "",
+          },
+          product: {
+            name: item.ingredient_product.product.name ?? "",
+          },
+          adicionado: item.adicionado,
+        }));
+        setIngredients(formattedIngredients);
+      } catch (err) {
+        console.log("Erro ao buscar produtos:", err);
+      }
+    }
+    verIngredientesProduto();
+  }, [product.id]);
 
-
+    async function updateIngrediente(id_ingredient_product: string) {
+    try {
+      await api.put('/item/ingredient', { 
+          params: {
+            ingredient_product_id: id_ingredient_product
+          }
+        });
+    } catch (err) {
+      console.log("Erro ao atualizar ingrediente:", err);
+    }
+  }
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -135,32 +146,24 @@ export default function DetalhesProdutos() {
 
         {/* Adicionais */}
         <View style={styles.adicionaisContainer}>
-          {adicionais.length > 0 && (
-            <Text style={styles.sectionTitle}>Adicionais:</Text>
+          {ingredients.length > 0 && (
+            <Text style={styles.sectionTitle}>Ingredientes:</Text>
           )}
-          {adicionais.map((ingred) => (
+          {ingredients.map((ingred) => (
+            console.log("Ingrediente:", ingred),
             <TouchableOpacity
-              key={ingred.ingredient_product_id}
+              key={ingred.items_ingredients_id}
               style={styles.adicionalItem}
               onPress={async () => {
-          // Atualiza localmente
-          setAdicionais((prev) =>
-            prev.map((item) =>
-              item.ingredient_product_id === ingred.ingredient_product_id
-                ? { ...item, adicionado: !item.adicionado }
-                : item
-            )
-          );
-          // Atualiza no banco via API
-            try {
-            await api.put(`/additional/update`, {
-              product_id: ingred.product_id,
-              ingredient_id: ingred.ingredient_id,
-            });
-            console.log("Adicional atualizado com sucesso", ingred, ingred.adicionado);
-            } catch (err) {
-            console.log("Erro ao atualizar adicional:", err);
-            }
+                updateIngrediente(ingred.ingredient_product_id);
+                // const updatedIngredients = ingredients.map((item) =>
+                //   item.items_ingredients_id === ingred.items_ingredients_id
+                //     ? { ...item, adicionado: !item.adicionado }
+                //     : item
+                // );
+                // setIngredients(updatedIngredients);
+                console.log("Ingrediente clicado:", ingred, "Novo estado adicionado:", ingred.adicionado);
+                alert(`Ingrediente: ${ingred.ingredient?.name ?? "Sem adicional"}`);
               }}
             >
               <View

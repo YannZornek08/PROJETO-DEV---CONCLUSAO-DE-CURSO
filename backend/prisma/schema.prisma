@@ -69,7 +69,6 @@ model Table {
   created_at DateTime? @default(now())
   update_at  DateTime? @default(now())
   orders     Order[]
-  payments   Payment[]
 
   @@map("tables")
 }
@@ -120,10 +119,9 @@ model Payment {
   created_at    DateTime   @default(now())
   updated_at    DateTime   @default(now())
   mtdo_pagto_id String
-  table_id      String
+  pago          Boolean    @default(true)
   mtdo_pagto    Mtdo_pagto @relation(fields: [mtdo_pagto_id], references: [id])
   order         Order      @relation(fields: [order_id], references: [id])
-  table         Table      @relation(fields: [table_id], references: [id])
 
   @@map("payments")
 }

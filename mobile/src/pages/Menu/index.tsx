@@ -169,6 +169,18 @@ type PizzaCardProps = {
 function PizzaCard({ product }: PizzaCardProps) {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
+  async function criarTodosIngredientsProduto() {
+    try {
+      await api.post('/item/all/ingredients', {
+        product_id: product.id
+      });
+      console.log("Ingredientes do produto criados com sucesso!");
+    } catch (err) {
+      console.log("Id do produto", product.id);
+      console.log("Erro ao criar ingredientes do produto:", err);
+    }
+  }
+
   return (
     <View style={styles.card}>
       <Image source={{ uri: product.banner }} resizeMode="stretch" style={styles.cardImage} />
@@ -177,6 +189,7 @@ function PizzaCard({ product }: PizzaCardProps) {
       <TouchableOpacity
         style={styles.addButton}
         onPress={() => {
+          criarTodosIngredientsProduto();
           navigation.navigate("DetalhesProdutos", { product })
         }}
       >
