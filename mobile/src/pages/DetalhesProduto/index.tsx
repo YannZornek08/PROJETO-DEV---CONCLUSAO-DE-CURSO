@@ -133,6 +133,49 @@ export default function DetalhesProdutos() {
         {/* Divisória */}
         <View style={styles.divider} />
 
+        {/* Ingredientes */}
+        <View style={styles.adicionaisContainer}>
+          {adicionais.length > 0 && (
+            <Text style={styles.sectionTitle}>Ingredientes:</Text>
+          )}
+          {adicionais.map((ingred) => (
+            <TouchableOpacity
+              key={ingred.ingredient_product_id}
+              style={styles.adicionalItem}
+              onPress={async () => {
+          // Atualiza localmente
+          setAdicionais((prev) =>
+            prev.map((item) =>
+              item.ingredient_product_id === ingred.ingredient_product_id
+                ? { ...item, adicionado: !item.adicionado }
+                : item
+            )
+          );
+          // Atualiza no banco via API
+            try {
+            await api.put(`/additional/update`, {
+              product_id: ingred.product_id,
+              ingredient_id: ingred.ingredient_id,
+            });
+            console.log("Adicional atualizado com sucesso", ingred, ingred.adicionado);
+            } catch (err) {
+            console.log("Erro ao atualizar adicional:", err);
+            }
+              }}
+            >
+              <View
+          style={[
+            styles.checkbox,
+            ingred.adicionado && styles.checkboxSelecionado,
+          ]}
+              >
+          {ingred.adicionado && <Text style={styles.checkmark}>✓</Text>}
+              </View>
+              <Text style={styles.adicionalText}>{ingred.ingredient?.name ?? "Sem adicional"}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
         {/* Adicionais */}
         <View style={styles.adicionaisContainer}>
           {adicionais.length > 0 && (
@@ -286,15 +329,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 8,
     marginLeft: 23,
+
   },
   adicionaisContainer: {
     marginBottom: 25,
-    marginLeft: 23,
+    marginLeft: 0,
   },
   adicionalItem: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 12,
+    marginLeft: 23,
   },
   checkbox: {
     width: 24,
