@@ -44,7 +44,6 @@ model Product {
   category    Category @relation(fields: [category_id], references: [id])
   category_id String
   ingredient_product Ingredient_product[] // relação muitos para muitos
-  items       Item[]
 
   @@map("products")
 }

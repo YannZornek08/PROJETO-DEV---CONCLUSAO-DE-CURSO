@@ -119,7 +119,6 @@ router.get('/me/costumers', new DetailCostumerController().handle)
 router.post('/ingredients', new CreateIngredientController().handle)
 // -- ROTAS ADDITIONAL --
 //Põe para true ou false
-router.put('/additional/update', new UpdateAdditionalController().handle)
 
 // Cria um novo
 router.post('/ingredients', new CreateIngredientController().handle)
