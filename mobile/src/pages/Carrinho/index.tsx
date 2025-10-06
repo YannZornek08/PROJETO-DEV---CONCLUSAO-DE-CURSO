@@ -16,6 +16,9 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
 import { api } from "../../services/api";
 import { formatarPreco } from "../../components/conversorDeMoeda/valoresEmReal";
+import Order from "../Order";
+import { useRoute, RouteProp } from "@react-navigation/native";
+import { useOrder } from "../../contexts/OrderContext";
 
 export type Produto = {
   id: string;
@@ -49,6 +52,7 @@ const PedidoScreen: React.FC = () => {
   const [items, setItems] = useState<ItensPedido[]>([])
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
   const trash = require('../../assets/trash.png');
+  const { orderId } = useOrder();
 
   //   useEffect(() => {
     
@@ -83,22 +87,16 @@ const PedidoScreen: React.FC = () => {
     navigation.navigate("Pagamento")
   };
 
-  useEffect(() => {
-    async function verPedidos() {
-      try {
-        const response = await api.get('/order/detail', {
-          params: { 
-            order_id: "1c2dead7-8b5f-4182-8639-2441a03af475" 
-          }
-        });
-        setItems(response.data);
-        // console.log("Produtos no carrinho:", response.data);
-      } catch (err) {
-        console.log("Erro ao buscar produtos:", err);
-      }
-    }
-    verPedidos();
-  }, []);
+
+useEffect(() => {
+  if (!orderId) return;
+  async function verPedidos() {
+    const response = await api.get('/order/detail', { params: { order_id: orderId } });
+    setItems(response.data);
+  }
+  verPedidos();
+}, [orderId]);
+
 
   function VoltarMenu() {
     navigation.navigate("VoltarMenu")
@@ -205,7 +203,7 @@ const PedidoScreen: React.FC = () => {
           <Text style={styles.payButtonText}>Pagar</Text>
         </TouchableOpacity>
       </ScrollView>
-    </SafeAreaView >
+    </SafeAreaView>
   );
 };
 

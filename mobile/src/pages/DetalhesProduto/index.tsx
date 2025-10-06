@@ -14,6 +14,8 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes"; // ajuste o caminho
 import { api } from "../../services/api";
 import { formatarPreco } from "../../components/conversorDeMoeda/valoresEmReal";
+import { useOrder } from "../../contexts/OrderContext";
+
 
 type DetalhesRouteProp = RouteProp<StackParamsList, "DetalhesProdutos">;
 // RESOLVER A PARTE DOS ADICIONAIS
@@ -57,6 +59,7 @@ export default function DetalhesProdutos() {
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState<string>("M");
   const [quantidade, setQuantidade] = useState<number>(1);
 
+  const { orderId } = useOrder();
 
   useEffect(() => {
     async function verAdicionaisProduto() {
@@ -99,7 +102,7 @@ export default function DetalhesProdutos() {
   async function adicionarItem() {
     try {
       const newItem = await api.post('/order/add', {
-          order_id: "1c2dead7-8b5f-4182-8639-2441a03af475",
+          order_id: orderId,
           product_id: product.id,
           amount: quantidade,
       });
