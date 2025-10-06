@@ -12,6 +12,8 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
 import { api } from "../../services/api";
 import BottomNavBar from "../../components/navButton";
+import { useOrder } from "../../contexts/OrderContext"; 
+
 
 type RouteDetailParams = {
   Order: {
@@ -24,6 +26,9 @@ type OrderRouterProps = RouteProp<RouteDetailParams, "Order">;
 
 export default function LerQR() {
   const route = useRoute<OrderRouterProps>();
+  const [codigo, setCodigo] = useState<string>("");
+  const { setOrderId } = useOrder();
+
   const navigation =
     useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
@@ -54,6 +59,9 @@ export default function LerQR() {
           "b1dde329-4efe-48f3-8928-44727e80ee74",
       });
       console.log("Comanda criada:", response.data);
+
+          setOrderId(response.data.id);
+
     } catch (err: any) {
       console.error(
         "Erro ao criar comanda:",

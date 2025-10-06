@@ -11,15 +11,16 @@ import {
   Modal,
   Button
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
-import { SettingsButton } from "../../components/SettingsButton";
-import BottomNavBar from "../../components/navButton";
+import { formatarPreco } from "../../components/conversorDeMoeda/valoresEmReal";
 
 import { api } from "../../services/api";
 import { CategoryProps } from "../Order";
 import { ModalPicker } from "../../components/ModalPicker";
+import { SettingsButton } from "../../components/SettingsButton";
+import BottomNavBar from "../../components/navButton";
 
 
 // const status = require('../../assets/nav-icons/status.png')
@@ -165,14 +166,17 @@ type PizzaCardProps = {
   product: Produto;
 };
 
+type CarrinhoRouteProp = RouteProp<StackParamsList, "Carrinho">;
+
 function PizzaCard({ product }: PizzaCardProps) {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
-
+  const route_car = useRoute<CarrinhoRouteProp>();
+  
   return (
     <View style={styles.card}>
       <Image source={{ uri: product.banner }} resizeMode="stretch" style={styles.cardImage} />
       <Text style={styles.cardTitle}>{product.name}</Text>
-      <Text style={styles.cardPrice}>R$ {product.price}</Text>
+      <Text style={styles.cardPrice}>{formatarPreco(Number(product.price))}</Text>
       <TouchableOpacity
         style={styles.addButton}
         onPress={() => {

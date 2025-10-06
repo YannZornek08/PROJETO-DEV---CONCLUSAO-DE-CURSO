@@ -17,6 +17,7 @@ import AppRoutes from './src/routes/app.routes';
 import LerQR from './src/pages/LerQR';
 import Status1 from './src/pages/Status1';
 import Status2 from './src/pages/Status2';
+import { OrderProvider } from "./src/contexts/OrderContext";
 
 
 const Stack = createNativeStackNavigator();
@@ -24,7 +25,9 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <AppRoutes/>
+      <OrderProvider>
+        <AppRoutes />
+      </OrderProvider>
     </NavigationContainer>
 
     // <DetalhesPedido/>  testando tela de produto

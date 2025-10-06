@@ -33,16 +33,18 @@ model Category {
 }
 
 model Product {
-  id                 String               @id @default(uuid())
-  name               String
-  price              String
-  description        String
-  banner             String
-  created_at         DateTime?            @default(now())
-  update_at          DateTime?            @default(now())
-  category_id        String
-  ingredient_product Ingredient_product[]
-  category           Category             @relation(fields: [category_id], references: [id])
+  id          String    @id @default(uuid())
+  name        String
+  price       String
+  description String
+  banner      String
+  created_at  DateTime? @default(now())
+  update_at   DateTime? @default(now())
+
+  category    Category @relation(fields: [category_id], references: [id])
+  category_id String
+  ingredient_product Ingredient_product[] // relação muitos para muitos
+  items       Item[]
 
   @@map("products")
 }
