@@ -102,9 +102,9 @@ export default function DetalhesProdutos() {
   async function adicionarItem() {
     try {
       const newItem = await api.post('/order/add', {
-          order_id: orderId,
-          product_id: product.id,
-          amount: quantidade,
+        order_id: orderId,
+        product_id: product.id,
+        amount: quantidade,
       });
       console.log("Item adicionado:", newItem.data);
       // setItems((prevItems) => [...prevItems, newItem.data]);
@@ -297,7 +297,8 @@ const styles = StyleSheet.create({
   scrollView: { flex: 1, backgroundColor: "#FFFFFF" },
   imageContainer: { marginTop: 65, marginBottom: 2, marginHorizontal: 26 },
   smallImage: { width: 32, height: 32, marginBottom: 16 },
-  largeImage: { height: 360,
+  largeImage: {
+    height: 360,
     borderRadius: 180,
   },
   productName: {

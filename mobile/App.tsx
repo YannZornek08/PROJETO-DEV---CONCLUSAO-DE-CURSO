@@ -19,7 +19,6 @@ import Status1 from './src/pages/Status1';
 import Status2 from './src/pages/Status2';
 import { OrderProvider } from "./src/contexts/OrderContext";
 
-
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -29,12 +28,12 @@ export default function App() {
         <AppRoutes />
       </OrderProvider>
     </NavigationContainer>
-
-    // <DetalhesPedido/>  testando tela de produto
-    // <SignIn /> // testando a tela de login
-    // <Cadastro /> // testando a tela de cadastro
-    // <Cupons /> Cupons testado
-    // <Carrinho/>
-    // <LerQR/>
+    // <NavigationContainer>
+    //   <AuthProvider>
+    //   <OrderProvider>
+    //     <Routes />
+    //   </OrderProvider>
+    //   </AuthProvider>
+    // </NavigationContainer>
   );
 }

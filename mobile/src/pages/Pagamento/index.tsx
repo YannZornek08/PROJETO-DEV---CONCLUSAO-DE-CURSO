@@ -27,7 +27,7 @@ const Pagamento: React.FC = () => {
 
   const chamarGarcom = () => {
     Alert.alert('Atenção', 'Um garçom foi chamado para sua mesa.', [{ text: 'OK' }]);
-    navigation.navigate("Status2");
+    navigation.navigate("StatusPedido");
   }
 
   return (

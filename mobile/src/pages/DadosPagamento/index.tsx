@@ -27,7 +27,7 @@ const Dados: React.FC = () => {
     }
 
     Alert.alert("Pagamento Realizado", `CPF informado: ${cpf}`);
-    navigation.navigate("Status2");
+    navigation.navigate("StatusPedido");
   };
 
   const Pagamento = () => {

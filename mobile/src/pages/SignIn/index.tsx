@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Cadastro from "../Cadastro";
 
+import { AuthContext } from "../../contexts/AuthContext";
+
 export default function SignIn() {
+    const { signIn, loadingAuth } = useContext(AuthContext)
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    async function handleLogin() {
+        
+        if(email === '' || password === '') {
+            return;
+        }
+
+        await signIn({ email, password})
+    }
+    
   const navigation = useNavigation();
 
   const handleCadastro = () => {
@@ -17,12 +33,23 @@ export default function SignIn() {
       
       <View style={styles.div}>
         <Text style={styles.text_title}>Email:</Text>
-        <TextInput placeholder="Exemplo: exemplo@gmail.com" style={styles.text_placeholder}/>
+        <TextInput 
+          placeholder="Exemplo: exemplo@gmail.com" 
+          style={styles.text_placeholder} 
+          value={email}
+          onChangeText={setEmail}
+        />
         <Text style={styles.text_title}>Senha:</Text>
-        <TextInput placeholder="Senha@Secreta2" style={styles.text_placeholder} secureTextEntry={true}/>
+        <TextInput 
+          placeholder="Senha@Secreta2" 
+          style={styles.text_placeholder} 
+          secureTextEntry={true}
+          value={password}
+          onChangeText={setPassword}
+        />
         <Text style={styles.space_google}> Entrar Com Google</Text>
         
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.text_button}> Entrar </Text>
         </TouchableOpacity>
       </View>
