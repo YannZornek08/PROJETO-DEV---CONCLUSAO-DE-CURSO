@@ -11,7 +11,8 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
 import { api } from "../../services/api";
-import BottomNavBar from "../../components/navButton"; 
+import BottomNavBar from "../../components/navButton";
+import { useOrder } from "../../contexts/OrderContext"; 
 
 type RouteDetailParams = {
   Order: {
@@ -25,11 +26,12 @@ type OrderRouterProps = RouteProp<RouteDetailParams, "Order">;
 export default function AutenticacaoComanda() {
   const route = useRoute<OrderRouterProps>();
   const [codigo, setCodigo] = useState<string>("");
+  const { setOrderId } = useOrder();
 
   const navigation =
     useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
-async function confirmarComanda() {
+  async function confirmarComanda() {
   try {
     // Alterar toda vez o id.
     const response = await api.post("/order", {
@@ -38,6 +40,8 @@ async function confirmarComanda() {
     });
 
       console.log("Order criada:", response.data);
+      setOrderId(response.data.id);
+
     } catch (err: any) {
       console.error(
         "Erro ao criar order:",
