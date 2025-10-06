@@ -17,7 +17,6 @@ import { api } from "../../services/api";
 type DetalhesRouteProp = RouteProp<StackParamsList, "DetalhesProdutos">;
 
 type Ingredient = {
-  items_ingredients_id: string;
   ingredient_product_id: string;
   ingredient: {
     name: string;
@@ -25,6 +24,10 @@ type Ingredient = {
   product: {
     name: string;
   };
+}
+
+type Item_Ingredient = {
+  id: string;
   adicionado: boolean;
 }
 
@@ -41,6 +44,7 @@ export default function DetalhesProdutos() {
   const route = useRoute<DetalhesRouteProp>();
   const [adicionais, setAdicionais] = useState<Additional[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+  const [itemIngredients, setItemIngredients] = useState<Item_Ingredient[]>([])
 
   // Imprime aqui os produtos clicados em adicionar
   const { product } = route.params;
@@ -50,27 +54,27 @@ export default function DetalhesProdutos() {
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState<string>("M");
   const [quantidade, setQuantidade] = useState<number>(1);
 
-  
+
   const Menu = () => {
     navigation.navigate("Menu");
   };
-  
+
   const aumentarQuantidade = () => {
     setQuantidade(quantidade + 1);
   };
-  
+
   const diminuirQuantidade = () => {
     if (quantidade > 1) {
       setQuantidade(quantidade - 1);
     }
   };
-  
-  
+
+
   useEffect(() => {
-     async function verIngredientesProduto() {
+    async function verIngredientesProduto() {
       try {
         //Chama a rota que retorna TODOS os ingredientes do produto
-        const response = await api.get('/product/all/ingredients', {
+        const response = await api.get('/product/ingredients', {
           params: {
             product_id: product.id,
           }
@@ -80,17 +84,16 @@ export default function DetalhesProdutos() {
         setIngredients(Array.isArray(response.data) ? response.data : [response.data]);
         const dataArray = Array.isArray(response.data) ? response.data : [response.data];
         const formattedIngredients: Ingredient[] = dataArray.map((item: any) => ({
-          items_ingredients_id: item.id,
-          ingredient_product_id: item.ingredient_product_id,
+          ingredient_product_id: item.id ?? "",
           ingredient: {
-            name: item.ingredient_product.ingredient.name ?? "",
+            name: item.ingredient.name ?? "",
           },
           product: {
-            name: item.ingredient_product.product.name ?? "",
+            name: item.product.name ?? "",
           },
-          adicionado: item.adicionado,
         }));
         setIngredients(formattedIngredients);
+        console.log(ingredients)
       } catch (err) {
         console.log("Erro ao buscar produtos:", err);
       }
@@ -98,17 +101,29 @@ export default function DetalhesProdutos() {
     verIngredientesProduto();
   }, [product.id]);
 
-    async function updateIngrediente(id_ingredient_product: string) {
+  async function criarItemIngrediente(id_ingredient_product: string) {
     try {
-      await api.put('/item/ingredient', { 
-          params: {
-            ingredient_product_id: id_ingredient_product
-          }
-        });
+      await api.post('/item/ingredient/create', {
+        ingredient_product_id: id_ingredient_product,
+      })
+      console.log("Ingrediente dos itens criados com sucesso")
     } catch (err) {
-      console.log("Erro ao atualizar ingrediente:", err);
+      console.log("Não foi possível criar os ingredientes dos itens", err)
     }
   }
+
+  //   async function updateIngrediente(id_ingredient_product: string) {
+  //   try {
+  //     await api.put('/item/ingredient', { 
+  //         params: {
+  //           ingredient_product_id: id_ingredient_product
+  //         }
+  //       });
+  //   } catch (err) {
+  //     console.log("Erro ao atualizar ingrediente:", err);
+  //   }
+  // }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -116,7 +131,7 @@ export default function DetalhesProdutos() {
         <View style={styles.imageContainer}>
           <TouchableOpacity onPress={Menu}>
             <Image
-            source={require('../../assets/Voltar.png')}
+              source={require('../../assets/Voltar.png')}
               resizeMode="stretch"
               style={styles.smallImage}
             />
@@ -152,27 +167,20 @@ export default function DetalhesProdutos() {
           {ingredients.map((ingred) => (
             console.log("Ingrediente:", ingred),
             <TouchableOpacity
-              key={ingred.items_ingredients_id}
+              key={ingred.ingredient_product_id}
               style={styles.adicionalItem}
               onPress={async () => {
-                updateIngrediente(ingred.ingredient_product_id);
-                // const updatedIngredients = ingredients.map((item) =>
-                //   item.items_ingredients_id === ingred.items_ingredients_id
-                //     ? { ...item, adicionado: !item.adicionado }
-                //     : item
-                // );
-                // setIngredients(updatedIngredients);
-                console.log("Ingrediente clicado:", ingred, "Novo estado adicionado:", ingred.adicionado);
+                console.log(ingred.ingredient_product_id)
+                criarItemIngrediente(ingred.ingredient_product_id);
                 alert(`Ingrediente: ${ingred.ingredient?.name ?? "Sem adicional"}`);
-              }}
-            >
+              }}>
               <View
-          style={[
-            styles.checkbox,
-            ingred.adicionado && styles.checkboxSelecionado,
-          ]}
+                style={[
+                  styles.checkbox,
+                  // ingred.adicionado && styles.checkboxSelecionado,
+                ]}
               >
-          {ingred.adicionado && <Text style={styles.checkmark}>✓</Text>}
+                {/* {ingred.adicionado && <Text style={styles.checkmark}>✓</Text>} */}
               </View>
               <Text style={styles.adicionalText}>{ingred.ingredient?.name ?? "Sem adicional"}</Text>
             </TouchableOpacity>
@@ -180,7 +188,7 @@ export default function DetalhesProdutos() {
         </View>
 
         {/* Seletor de tamanho */}
-        <Text style={styles.sectionTitle}>Tamanho:</Text>
+        {/* <Text style={styles.sectionTitle}>Tamanho:</Text>
         <View style={styles.sizeContainer}>
           {tamanhos.map((tamanho) => (
             <TouchableOpacity
@@ -202,7 +210,7 @@ export default function DetalhesProdutos() {
               </Text>
             </TouchableOpacity>
           ))}
-        </View>
+        </View> */}
       </ScrollView>
 
       {/* Área fixa inferior com quantidade e botão de adicionar */}
@@ -257,7 +265,8 @@ const styles = StyleSheet.create({
   scrollView: { flex: 1, backgroundColor: "#FFFFFF" },
   imageContainer: { marginTop: 65, marginBottom: 2, marginHorizontal: 26 },
   smallImage: { width: 32, height: 32, marginBottom: 16 },
-  largeImage: { height: 360,
+  largeImage: {
+    height: 360,
     borderRadius: 180,
   },
   productName: {

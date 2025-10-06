@@ -33,12 +33,17 @@ import { CreateCostumerController } from './controllers/costumer/CreateCostumerC
 import { AuthCostumerController } from './controllers/costumer/AuthCostumerController';
 import { DetailCostumerController } from './controllers/costumer/DetailCostumerController';
 
+// ==============
+// INGREDIENTES
+// ==============
 import { CreateIngredientController } from './controllers/ingredients/CreateIngredientController';
 import { AddIngredientController } from './controllers/ingredients/AddIngredientController';
 import { ListAllItemIngredientByProductController } from './controllers/ingredients/ListAllItemIngredientByProductController';
 import { ListIngredientByProductController } from './controllers/ingredients/ListIngredientByProduct';
 import { AllItemIngredientController } from './controllers/ingredients/AllItemIngredientController';
 import { UpdateIngredientController } from './controllers/ingredients/UpdateIngredientController';
+import { ItemIngredientController } from './controllers/ingredients/ItemIngredientController';
+import { RemoveItemIngredientController } from './controllers/ingredients/RemoveItemIngredientController';
 
 import { AddAdditionalController } from './controllers/additional/RelationAdditionalController';
 import { ListAdditionalByCategoryController } from './controllers/additional/ListAdditionalByCategoryController';
@@ -127,6 +132,11 @@ router.get('/product/ingredients', new ListIngredientByProductController().handl
 
 // Lista todos os ingredientes de um item
 router.post('/item/all/ingredients', new AllItemIngredientController().handle)
+
+//Cria e remove um igrediente do item
+router.post('/item/ingredient/create', new ItemIngredientController().handle)
+router.post('/item/ingredient/delete', new RemoveItemController().handle)
+
 //Atualiza o item ingrediente (adicionado: true ou false)
 router.put('/item/ingredient', new UpdateIngredientController().handle)
 
