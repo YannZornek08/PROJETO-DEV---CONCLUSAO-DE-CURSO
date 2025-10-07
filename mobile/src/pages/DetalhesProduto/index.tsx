@@ -1,5 +1,5 @@
-import React, { use, useEffect, useState } from "react";
-import { useRoute, RouteProp } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { useRoute, RouteProp, useNavigation } from "@react-navigation/native";
 import {
   SafeAreaView,
   View,
@@ -7,11 +7,10 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { StackParamsList } from "../../routes/app.routes"; // ajuste o caminho
+import { StackParamsList } from "../../routes/app.routes";
 import { api } from "../../services/api";
 
 type DetalhesRouteProp = RouteProp<StackParamsList, "DetalhesProdutos">;
@@ -43,8 +42,9 @@ export default function DetalhesProdutos() {
   const route = useRoute<DetalhesRouteProp>();
   const [adicionais, setAdicionais] = useState<Additional[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+  const [mostrarIngredientes, setMostrarIngredientes] = useState(false);
+  const [mostrarAdicionais, setMostrarAdicionais] = useState(false);
 
-  // Imprime aqui os produtos clicados em adicionar
   const { product } = route.params;
   const order_id = "e7611b30-2756-4346-9305-2bf30495c238";
 
@@ -54,7 +54,6 @@ export default function DetalhesProdutos() {
   // console.log("Order ID:", order_id);
 
   const tamanhos = ["P", "M", "G"];
-
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState<string>("M");
   const [quantidade, setQuantidade] = useState<number>(1);
 
@@ -63,14 +62,9 @@ export default function DetalhesProdutos() {
     navigation.navigate("Menu");
   };
 
-  const aumentarQuantidade = () => {
-    setQuantidade(quantidade + 1);
-  };
-
+  const aumentarQuantidade = () => setQuantidade(quantidade + 1);
   const diminuirQuantidade = () => {
-    if (quantidade > 1) {
-      setQuantidade(quantidade - 1);
-    }
+    if (quantidade > 1) setQuantidade(quantidade - 1);
   };
 
   useEffect(() => {
@@ -153,7 +147,7 @@ export default function DetalhesProdutos() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        {/* Cabeçalho e imagem do produto */}
+        {/* Cabeçalho e imagem */}
         <View style={styles.imageContainer}>
           <TouchableOpacity onPress={Menu}>
             <Image
@@ -163,9 +157,7 @@ export default function DetalhesProdutos() {
             />
           </TouchableOpacity>
           <Image
-            source={{
-              uri: product.banner,
-            }}
+            source={{ uri: product.banner }}
             resizeMode={"stretch"}
             style={styles.largeImage}
           />
@@ -178,9 +170,7 @@ export default function DetalhesProdutos() {
         </View>
 
         {/* Descrição */}
-        <Text style={styles.description}>
-          {product.description}
-        </Text>
+        <Text style={styles.description}>{product.description}</Text>
 
         {/* Divisória */}
         <View style={styles.divider} />
@@ -230,15 +220,17 @@ export default function DetalhesProdutos() {
           ))}
         </View>
 
-        {/* // Mensagem caso nenhum ingrediente seja encontrado */}
-        {ingredients.length === 0 && (
-          <Text style={[styles.sectionTitle]}>
-            Nenhum ingrediente encontrado
-          </Text>
-        )}
+  {/* // Mensagem caso nenhum ingrediente seja encontrado */ }
+  {
+    ingredients.length === 0 && (
+      <Text style={[styles.sectionTitle]}>
+        Nenhum ingrediente encontrado
+      </Text>
+    )
+  }
 
-        {/* Seletor de tamanho */}
-        {/* <Text style={styles.sectionTitle}>Tamanho:</Text>
+  {/* Seletor de tamanho */ }
+  {/* <Text style={styles.sectionTitle}>Tamanho:</Text>
         <View style={styles.sizeContainer}>
           {tamanhos.map((tamanho) => (
             <TouchableOpacity
@@ -253,7 +245,7 @@ export default function DetalhesProdutos() {
                 style={[
                   styles.sizeButtonText,
                   tamanhoSelecionado === tamanho &&
-                  styles.selectedSizeButtonText,
+                    styles.selectedSizeButtonText,
                 ]}
               >
                 {tamanho}
@@ -261,11 +253,10 @@ export default function DetalhesProdutos() {
             </TouchableOpacity>
           ))}
         </View> */}
-      </ScrollView>
+      </ScrollView >
 
-      {/* Área fixa inferior com quantidade e botão de adicionar */}
-      <View style={styles.bottomContainer}>
-        {/* Seletor de quantidade */}
+    {/* Área inferior */ }
+    < View style = { styles.bottomContainer } >
         <View style={styles.quantityContainer}>
           <Text style={styles.quantityLabel}>Quantidade:</Text>
           <View style={styles.quantitySelector}>
@@ -291,23 +282,20 @@ export default function DetalhesProdutos() {
           </View>
         </View>
 
-        {/* Botão de adicionar */}
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => {
             adicionarItem();
             alert(
-              `Pizza adicionada! Tamanho: ${tamanhoSelecionado}, Quantidade: ${quantidade}, Adicionais: ${adicionais.join(
-                ", "
-              ) || "Nenhum"}`
+              `Pizza adicionada! Tamanho: ${tamanhoSelecionado}, Quantidade: ${quantidade}`
             );
             navigation.navigate("Carrinho");
           }}
         >
           <Text style={styles.addButtonText}>Adicionar</Text>
         </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+      </View >
+    </SafeAreaView >
   );
 }
 
@@ -316,16 +304,13 @@ const styles = StyleSheet.create({
   scrollView: { flex: 1, backgroundColor: "#FFFFFF" },
   imageContainer: { marginTop: 65, marginBottom: 2, marginHorizontal: 26 },
   smallImage: { width: 32, height: 32, marginBottom: 16 },
-  largeImage: {
-    height: 360,
-    borderRadius: 180,
-  },
+  largeImage: { height: 360, borderRadius: 180 },
   productName: {
     color: "#000000",
     fontSize: 32,
-    fontWeight: "bold",
     textAlign: "center",
     marginTop: 20,
+    fontFamily: "BesleyBold",
   },
   priceContainer: { alignItems: "center", marginVertical: 10 },
   price: { color: "#000000", fontSize: 22, fontWeight: "bold" },
@@ -336,6 +321,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 26,
     textAlign: "center",
     lineHeight: 22,
+
   },
   divider: {
     height: 1,
@@ -349,7 +335,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 8,
     marginLeft: 23,
-
   },
   adicionaisContainer: {
     marginBottom: 25,
@@ -379,7 +364,28 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
-  adicionalText: { color: "#000000", fontSize: 16, textTransform: "capitalize" },
+  adicionalText: {
+    color: "#000000",
+    fontSize: 16,
+    textTransform: "capitalize",
+  },
+  toggleButton: {
+    backgroundColor: "#8D4F28",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 99,
+    marginHorizontal: 20,
+    marginBottom: 8,
+  },
+  toggleButtonText: {
+    color: "#FFFFFF",
+    fontWeight: "bold",
+    fontSize: 16,
+    textAlign: "center",
+  },
+  optionsContainer: {
+    marginTop: 8,
+  },
   sizeContainer: {
     flexDirection: "row",
     justifyContent: "center",
@@ -421,7 +427,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginLeft: 15,
-    marginBottom: 20
+    marginBottom: 20,
   },
   quantityButton: {
     borderWidth: 1,

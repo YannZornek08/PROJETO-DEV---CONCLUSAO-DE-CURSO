@@ -44,10 +44,10 @@ const styles = StyleSheet.create({
   },
   container: {
     fontSize: 32,
-    fontWeight: 'bold',
     marginTop: 20,
     marginBottom: 25,
     textAlign: 'center',
+    fontFamily: "BesleyBold",
   },
   div: {
     backgroundColor: '#F1E0CA',

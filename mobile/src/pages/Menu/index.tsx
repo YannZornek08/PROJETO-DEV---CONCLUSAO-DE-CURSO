@@ -217,9 +217,9 @@ const styles = StyleSheet.create({
   headerText: {
     color: "#000000",
     fontSize: 32,
-    fontWeight: "bold",
     textAlign: "center",
     marginBottom: 26,
+    fontFamily: "BesleyBold",
   },
   searchBar: {
     flexDirection: "row",

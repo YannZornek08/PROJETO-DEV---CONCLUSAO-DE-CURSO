@@ -98,9 +98,9 @@ const styles = StyleSheet.create({
   title: {
     color: "#000000",
     fontSize: 28,
-    fontWeight: "bold",
     textAlign: "center",
     marginBottom: 24,
+    fontFamily: "BesleyRegular",
   },
   section: {
     marginBottom: 32,
@@ -167,6 +167,6 @@ const styles = StyleSheet.create({
   cardText: {
     color: "#000000",
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: "BesleyBold",
   },
 });

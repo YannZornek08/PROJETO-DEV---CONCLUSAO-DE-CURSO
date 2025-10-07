@@ -58,10 +58,10 @@ const styles = StyleSheet.create({
   },
   greeting: {
     fontSize: 32,
-    fontWeight: "bold",
     color: "#000",
     textAlign: "center",
     marginBottom: 160,
+    fontFamily: "BesleyBold",
   },
   absoluteImage: {
     position: "absolute",
