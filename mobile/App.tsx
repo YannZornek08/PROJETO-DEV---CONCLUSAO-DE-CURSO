@@ -23,17 +23,17 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <OrderProvider>
-        <AppRoutes />
-      </OrderProvider>
-    </NavigationContainer>
     // <NavigationContainer>
-    //   <AuthProvider>
     //   <OrderProvider>
-    //     <Routes />
+    //     <AppRoutes />
     //   </OrderProvider>
-    //   </AuthProvider>
     // </NavigationContainer>
+    <NavigationContainer>
+      <AuthProvider>
+      <OrderProvider>
+        <Routes />
+      </OrderProvider>
+      </AuthProvider>
+    </NavigationContainer>
   );
 }
