@@ -31,6 +31,7 @@ export type Produto = {
   description: string;
   price: number;
   banner: string;
+  category_id: string;
 }
 
 type Order = {

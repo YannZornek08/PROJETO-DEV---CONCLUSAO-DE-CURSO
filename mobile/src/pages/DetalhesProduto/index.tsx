@@ -101,6 +101,38 @@ export default function DetalhesProdutos() {
         console.log("Erro ao buscar produtos:", err);
       }
     }
+    async function verAdicionaisCategoria () {
+      try {
+        //Chama a rota que retorna TODOS os adicionais da categoria
+        console.log("Buscando adicionais para a categoria:", product.category_id);
+        const response = await api.get('/product/all/ingredients', {
+          params: {
+            category_id: product.category_id,
+            order_id: order_id
+          }
+        });
+        console.log("API retornou:", response.data);
+        setIngredients(Array.isArray(response.data) ? response.data : [response.data]);
+        const dataArray = Array.isArray(response.data) ? response.data : [response.data];
+        const formattedIngredients: Ingredient[] = dataArray.map((item: any) => ({
+          id: item.id ?? "",
+          ingredient_product_id: item.ingredient_product_id ?? "",
+          ingredient: {
+            name: item.ingredient_product.ingredient.name ?? "",
+          },
+          product: {
+            name: item.ingredient_product.product.name ?? "",
+            product_id: item.ingredient_product.product.id ?? "",
+          },
+          order_id: order_id,
+          adicionado: item.adicionado ?? Error("Campo 'adicionado' não encontrado"),
+        }));
+        setIngredients(formattedIngredients);
+        console.log("Ingredientes formatados:", ingredients)
+      } catch (err) {
+        console.log("Erro ao buscar produtos:", err);
+      }
+    }
     verIngredientesProduto();
   }, [product.id]);
 
@@ -124,6 +156,17 @@ export default function DetalhesProdutos() {
       });
     } catch (err) {
       console.log("Erro ao atualizar ingrediente:", err);
+    }
+  }
+
+  async function updateAdicional(id_categories_additional: string) {
+    try {
+      await api.put('/item/additional', {
+        categories_additionals_id: id_categories_additional,
+        order_id: order_id
+      });
+    } catch (err) {
+      console.log("Erro ao atualizar adicional:", err);
     }
   }
 
