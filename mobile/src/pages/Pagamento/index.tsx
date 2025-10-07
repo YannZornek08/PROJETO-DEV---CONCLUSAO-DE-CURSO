@@ -7,12 +7,14 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Alert, 
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
 import BackButton from "../../components/cart";
+import{useOrder} from "../../contexts/OrderContext";
+// import { api } from "../services/api";
 
 const Pagamento: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
@@ -25,10 +27,57 @@ const Pagamento: React.FC = () => {
     navigation.navigate("Carrinho");
   };
 
+  const {orderId} = useOrder();
+
+  React.useEffect(() => {
+    console.log("Order ID no Pagamento:", orderId);
+  }, [orderId]);
   const chamarGarcom = () => {
     Alert.alert('Atenção', 'Um garçom foi chamado para sua mesa.', [{ text: 'OK' }]);
     navigation.navigate("Status2");
   }
+
+  const realizarPagamento = async () => {
+    try {
+      const response = await fetch("http://192.168.137.1:3333/payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          order_id: orderId,
+          table_id: "629ce4eb-1e0e-4c7c-9deb-5f562b1e89e4",
+          mtdo_pagto_id: "13ae76b5-cf85-4e27-84ad-52972cb32d9d"
+        }), 
+      });
+
+      if (!response.ok) throw new Error("Erro no pagamento");
+
+      const data = await response.json();
+      console.log("Pagamento concluído:", data);
+
+      Alert.alert(
+        "Pedido Finalizado",
+        "Deseja pedir algo mais?",
+        [
+          {
+            text: "Não",
+            onPress: () => navigation.navigate("StatusPedido"),
+            style: "cancel",
+          },
+          {
+            text: "Sim",
+            onPress: () => navigation.navigate("Menu"),
+          },
+        ],
+        { cancelable: false }
+      );
+
+    } catch (error) {
+      console.log("Erro ao processar pagamento:", error);
+      Alert.alert("Erro", "Não foi possível concluir o pagamento.");
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -36,25 +85,24 @@ const Pagamento: React.FC = () => {
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
       >
-        {/* usando o componente BackButton */}
         <BackButton to="Menu" />
 
         <Text style={styles.title}>Pagamento</Text>
 
         <View style={styles.row}>
-          <TouchableOpacity style={styles.card} onPress={DadosPagamento}>
+          <TouchableOpacity style={styles.card} onPress={realizarPagamento}>
             <Text style={styles.cardText}>
               Crédito
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.card} onPress={DadosPagamento}>
+          <TouchableOpacity style={styles.card} onPress={realizarPagamento}>
             <Text style={styles.cardText}>
               Débito
             </Text>
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={[styles.card, styles.fullWidthCard]} onPress={DadosPagamento}>
+        <TouchableOpacity style={[styles.card, styles.fullWidthCard]} onPress={realizarPagamento}>
           <Text style={styles.cardText}>
             Pix
           </Text>

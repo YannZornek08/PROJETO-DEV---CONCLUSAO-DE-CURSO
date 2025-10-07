@@ -1,16 +1,12 @@
 import { Request, Response } from "express";
-import { ListPaymentService } from "../../services/payment/ListPaymentsService"
+import { ListMethodPaymentService } from "../../services/mtdo_pagto/ListMethodPaymentService";
 
-class ListPaymentsController {
-    async handle(req: Request, res: Response) {
-
-        const listPaymentsService = new ListPaymentService();
-
-        const payments = await listPaymentsService.execute();
-
-        res.json(payments);
-
-    }
+class ListMethodPaymentController {
+  async handle(req: Request, res: Response) {
+    const listMethods = new ListMethodPaymentService();
+    const methods = await listMethods.execute();
+    return res.json(methods);
+  }
 }
 
-export { ListPaymentsController }
+export { ListMethodPaymentController };

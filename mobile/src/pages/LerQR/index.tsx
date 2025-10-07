@@ -53,10 +53,10 @@ export default function LerQR() {
       const response = await api.post("/order", {
         table_id:
           route.params?.table_id ??
-          "335cdf0d-de0a-40b1-813f-16e887cb38d4",
+          "629ce4eb-1e0e-4c7c-9deb-5f562b1e89e4",
         costumer_id:
           route.params?.costumer_id ??
-          "b1dde329-4efe-48f3-8928-44727e80ee74",
+          "eeb6e723-76ef-4d2e-bdbc-c14e910b59f9",
       });
       console.log("Comanda criada:", response.data);
 
