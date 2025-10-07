@@ -54,8 +54,8 @@ export default function DetalhesProdutos() {
   // console.log("Produto selecionado:", product);
   // console.log("Order ID:", order_id);
 
-  const tamanhos = ["P", "M", "G"];
-  const [tamanhoSelecionado, setTamanhoSelecionado] = useState<string>("M");
+  // const tamanhos = ["P", "M", "G"];
+  // const [tamanhoSelecionado, setTamanhoSelecionado] = useState<string>("M");
   const [quantidade, setQuantidade] = useState<number>(1);
 
 
@@ -267,7 +267,7 @@ export default function DetalhesProdutos() {
         {/* // Mensagem caso nenhum ingrediente seja encontrado */}
         {ingredients.length === 0 && (
           <Text style={[styles.sectionTitle]}>
-            Nenhum ingrediente encontrado
+            Nenhum ingrediente encontrado.
           </Text>
         )}
 
@@ -320,7 +320,7 @@ export default function DetalhesProdutos() {
                       )}
                     </View>
                     <Text style={styles.adicionalText}>
-                      {ingred.ingredient?.name ?? "Sem ingrediente"}
+                      {ingred.ingredient?.name}
                     </Text>
                   </TouchableOpacity>
                 ))}
@@ -447,7 +447,7 @@ export default function DetalhesProdutos() {
           onPress={() => {
             adicionarItem();
             alert(
-              `Pizza adicionada! Tamanho: ${tamanhoSelecionado}, Quantidade: ${quantidade}`
+              `Pizza adicionada! Quantidade: ${quantidade}`
             );
             navigation.navigate("Carrinho");
           }}

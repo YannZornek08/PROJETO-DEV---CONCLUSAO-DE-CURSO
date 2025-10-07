@@ -9,7 +9,8 @@ class ListProductService{
                 name: true,
                 price: true,
                 description: true,
-                banner: true
+                banner: true,
+                category_id: true
             }
         })
 
