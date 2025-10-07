@@ -214,8 +214,8 @@ export default function DetalhesProdutos() {
         </View>
 
         {/* Seletor de tamanho */}
-        <Text style={styles.sectionTitle}>Tamanho:</Text>
-        <View style={styles.sizeContainer}>
+        {/* <Text style={styles.sectionTitle}>Tamanho:</Text> */}
+        {/* <View style={styles.sizeContainer}>
           {tamanhos.map((tamanho) => (
             <TouchableOpacity
               key={tamanho}
@@ -236,7 +236,7 @@ export default function DetalhesProdutos() {
               </Text>
             </TouchableOpacity>
           ))}
-        </View>
+        </View> */}
       </ScrollView>
 
       {/* Área fixa inferior com quantidade e botão de adicionar */}
@@ -276,14 +276,19 @@ export default function DetalhesProdutos() {
             // Lógica para adicionar ao carrinho
             // Aqui você pode enviar os dados para o backend ou atualizar o estado global
             // Por enquanto, apenas mostramos um alerta
-            adicionarItem();
-            alert(
-              `${product.name} adicionado! Tamanho: ${tamanhoSelecionado}, Quantidade: ${quantidade}, Adicionais: ${adicionais.join(
-                ", "
-              ) || "Nenhum"}`
-            );
-            navigation.navigate("Carrinho");
-          }}
+            if(!orderId){
+              alert("Erro: Nenhum pedido ativo. Por favor, inicie um pedido antes de adicionar itens.");
+              return;
+            }else {
+              adicionarItem();
+              alert(
+                `${product.name} adicionado! Tamanho: ${tamanhoSelecionado}, Quantidade: ${quantidade}, Adicionais: ${adicionais.join(
+                  ", "
+                ) || "Nenhum"}`
+              );
+              navigation.navigate("Carrinho");
+            }}
+            }
         >
           <Text style={styles.addButtonText}>Adicionar</Text>
         </TouchableOpacity>

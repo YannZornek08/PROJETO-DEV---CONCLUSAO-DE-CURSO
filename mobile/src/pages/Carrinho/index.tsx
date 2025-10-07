@@ -190,13 +190,13 @@ useEffect(() => {
         </View>
 
         <View style={styles.detailsRow}>
-          <Text style={styles.detailLabel}>Mesa:</Text>
-          <Text style={styles.detailValue}>{mesa}</Text>
+          {/* <Text style={styles.detailLabel}>Mesa:</Text> */}
+          {/* <Text style={styles.detailValue}>{mesa}</Text> */}
         </View>
 
         <View style={styles.detailsRow}>
-          <Text style={styles.detailLabel}>Nome:</Text>
-          <Text style={styles.detailValue}>{nome}</Text>
+          {/* <Text style={styles.detailLabel}>Nome:</Text> */}
+          {/* <Text style={styles.detailValue}>{nome}</Text> */}
         </View>
 
         <TouchableOpacity style={styles.payButton} onPress={handlePay}>
