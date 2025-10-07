@@ -7,11 +7,11 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { StackParamsList } from "../../routes/app.routes"; // ajuste o caminho
+import { StackParamsList } from "../../routes/app.routes";
 import { api } from "../../services/api";
 
 type DetalhesRouteProp = RouteProp<StackParamsList, "DetalhesProdutos">;
@@ -29,53 +29,39 @@ type Additional = {
   adicionado: boolean;
 };
 
-// const toggleAdicional = (adicional: string) => {
-//   if (adicionais.includes(adicional)) {
-//     setAdicionais(adicionais.filter((item) => item !== adicional));
-//   } else {
-//     setAdicionais([...adicionais, adicional]);
-//   }
-// };
 export default function DetalhesProdutos() {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
   const route = useRoute<DetalhesRouteProp>();
   const [adicionais, setAdicionais] = useState<Additional[]>([]);
+  const [mostrarIngredientes, setMostrarIngredientes] = useState(false);
+  const [mostrarAdicionais, setMostrarAdicionais] = useState(false);
 
-  // Imprime aqui os produtos clicados em adicionar
   const { product } = route.params;
-
   const tamanhos = ["P", "M", "G"];
-
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState<string>("M");
   const [quantidade, setQuantidade] = useState<number>(1);
-
 
   useEffect(() => {
     async function verAdicionaisProduto() {
       try {
-        //Chama a rota que retorna TODOS os ingredientes do produto
-        const response = await api.get('/product/ingredients', {
-          params: {
-            product_id: product.id,
-          }
+        const response = await api.get("/product/ingredients", {
+          params: { product_id: product.id },
         });
-        console.log("API retornou:", response.data);
-        setAdicionais(Array.isArray(response.data) ? response.data : [response.data]);
-        const dataArray = Array.isArray(response.data) ? response.data : [response.data];
+
+        const dataArray = Array.isArray(response.data)
+          ? response.data
+          : [response.data];
+
         const formattedAdicionais: Additional[] = dataArray.map((item: any) => ({
           ingredient_product_id: item.ingredient_product_id ?? "",
           product_id: item.product_id ?? "",
           ingredient_id: item.ingredient_id ?? "",
-          product: {
-            name: item.product?.name ?? "",
-          },
-          ingredient: {
-            name: item.ingredient?.name ?? "",
-          },
+          product: { name: item.product?.name ?? "" },
+          ingredient: { name: item.ingredient?.name ?? "" },
           adicionado: item.adicionado ?? false,
         }));
+
         setAdicionais(formattedAdicionais);
-        console.log("É array?", Array.isArray(response.data));
       } catch (err) {
         console.log("Erro ao buscar produtos:", err);
       }
@@ -87,33 +73,25 @@ export default function DetalhesProdutos() {
     navigation.navigate("Menu");
   };
 
-  const aumentarQuantidade = () => {
-    setQuantidade(quantidade + 1);
-  };
-
+  const aumentarQuantidade = () => setQuantidade(quantidade + 1);
   const diminuirQuantidade = () => {
-    if (quantidade > 1) {
-      setQuantidade(quantidade - 1);
-    }
+    if (quantidade > 1) setQuantidade(quantidade - 1);
   };
-
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        {/* Cabeçalho e imagem do produto */}
+        {/* Cabeçalho e imagem */}
         <View style={styles.imageContainer}>
           <TouchableOpacity onPress={Menu}>
             <Image
-            source={require('../../assets/Voltar.png')}
+              source={require("../../assets/Voltar.png")}
               resizeMode="stretch"
               style={styles.smallImage}
             />
           </TouchableOpacity>
           <Image
-            source={{
-              uri: product.banner,
-            }}
+            source={{ uri: product.banner }}
             resizeMode={"stretch"}
             style={styles.largeImage}
           />
@@ -126,98 +104,128 @@ export default function DetalhesProdutos() {
         </View>
 
         {/* Descrição */}
-        <Text style={styles.description}>
-          {product.description}
-        </Text>
+        <Text style={styles.description}>{product.description}</Text>
 
         {/* Divisória */}
         <View style={styles.divider} />
 
-        {/* Ingredientes */}
-        <View style={styles.adicionaisContainer}>
-          {adicionais.length > 0 && (
-            <Text style={styles.sectionTitle}>Ingredientes:</Text>
-          )}
-          {adicionais.map((ingred) => (
+        {/* Botão Ingredientes */}
+        {adicionais.length > 0 && (
+          <View style={styles.adicionaisContainer}>
             <TouchableOpacity
-              key={ingred.ingredient_product_id}
-              style={styles.adicionalItem}
-              onPress={async () => {
-          // Atualiza localmente
-          setAdicionais((prev) =>
-            prev.map((item) =>
-              item.ingredient_product_id === ingred.ingredient_product_id
-                ? { ...item, adicionado: !item.adicionado }
-                : item
-            )
-          );
-          // Atualiza no banco via API
-            try {
-            await api.put(`/additional/update`, {
-              product_id: ingred.product_id,
-              ingredient_id: ingred.ingredient_id,
-            });
-            console.log("Adicional atualizado com sucesso", ingred, ingred.adicionado);
-            } catch (err) {
-            console.log("Erro ao atualizar adicional:", err);
-            }
-              }}
+              style={styles.toggleButton}
+              onPress={() => setMostrarIngredientes(!mostrarIngredientes)}
             >
-              <View
-          style={[
-            styles.checkbox,
-            ingred.adicionado && styles.checkboxSelecionado,
-          ]}
-              >
-          {ingred.adicionado && <Text style={styles.checkmark}>✓</Text>}
-              </View>
-              <Text style={styles.adicionalText}>{ingred.ingredient?.name ?? "Sem adicional"}</Text>
+              <Text style={styles.toggleButtonText}>
+                {mostrarIngredientes
+                  ? "Ocultar Ingredientes ▲"
+                  : "Ver Ingredientes ▼"}
+              </Text>
             </TouchableOpacity>
-          ))}
-        </View>
 
-        {/* Adicionais */}
-        <View style={styles.adicionaisContainer}>
-          {adicionais.length > 0 && (
-            <Text style={styles.sectionTitle}>Adicionais:</Text>
-          )}
-          {adicionais.map((ingred) => (
-            <TouchableOpacity
-              key={ingred.ingredient_product_id}
-              style={styles.adicionalItem}
-              onPress={async () => {
-          // Atualiza localmente
-          setAdicionais((prev) =>
-            prev.map((item) =>
-              item.ingredient_product_id === ingred.ingredient_product_id
-                ? { ...item, adicionado: !item.adicionado }
-                : item
-            )
-          );
-          // Atualiza no banco via API
-            try {
-            await api.put(`/additional/update`, {
-              product_id: ingred.product_id,
-              ingredient_id: ingred.ingredient_id,
-            });
-            console.log("Adicional atualizado com sucesso", ingred, ingred.adicionado);
-            } catch (err) {
-            console.log("Erro ao atualizar adicional:", err);
-            }
-              }}
-            >
-              <View
-          style={[
-            styles.checkbox,
-            ingred.adicionado && styles.checkboxSelecionado,
-          ]}
-              >
-          {ingred.adicionado && <Text style={styles.checkmark}>✓</Text>}
+            {mostrarIngredientes && (
+              <View style={styles.optionsContainer}>
+                {adicionais.map((ingred) => (
+                  <TouchableOpacity
+                    key={`ingred-${ingred.ingredient_product_id}`}
+                    style={styles.adicionalItem}
+                    onPress={async () => {
+                      setAdicionais((prev) =>
+                        prev.map((item) =>
+                          item.ingredient_product_id ===
+                          ingred.ingredient_product_id
+                            ? { ...item, adicionado: !item.adicionado }
+                            : item
+                        )
+                      );
+                      try {
+                        await api.put(`/additional/update`, {
+                          product_id: ingred.product_id,
+                          ingredient_id: ingred.ingredient_id,
+                        });
+                      } catch (err) {
+                        console.log("Erro ao atualizar ingrediente:", err);
+                      }
+                    }}
+                  >
+                    <View
+                      style={[
+                        styles.checkbox,
+                        ingred.adicionado && styles.checkboxSelecionado,
+                      ]}
+                    >
+                      {ingred.adicionado && (
+                        <Text style={styles.checkmark}>✓</Text>
+                      )}
+                    </View>
+                    <Text style={styles.adicionalText}>
+                      {ingred.ingredient?.name ?? "Sem ingrediente"}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
               </View>
-              <Text style={styles.adicionalText}>{ingred.ingredient?.name ?? "Sem adicional"}</Text>
+            )}
+          </View>
+        )}
+
+        {/* Botão Adicionais */}
+        {adicionais.length > 0 && (
+          <View style={styles.adicionaisContainer}>
+            <TouchableOpacity
+              style={styles.toggleButton}
+              onPress={() => setMostrarAdicionais(!mostrarAdicionais)}
+            >
+              <Text style={styles.toggleButtonText}>
+                {mostrarAdicionais
+                  ? "Ocultar Adicionais ▲"
+                  : "Ver Adicionais ▼"}
+              </Text>
             </TouchableOpacity>
-          ))}
-        </View>
+
+            {mostrarAdicionais && (
+              <View style={styles.optionsContainer}>
+                {adicionais.map((ingred) => (
+                  <TouchableOpacity
+                    key={`adicional-${ingred.ingredient_product_id}`}
+                    style={styles.adicionalItem}
+                    onPress={async () => {
+                      setAdicionais((prev) =>
+                        prev.map((item) =>
+                          item.ingredient_product_id ===
+                          ingred.ingredient_product_id
+                            ? { ...item, adicionado: !item.adicionado }
+                            : item
+                        )
+                      );
+                      try {
+                        await api.put(`/additional/update`, {
+                          product_id: ingred.product_id,
+                          ingredient_id: ingred.ingredient_id,
+                        });
+                      } catch (err) {
+                        console.log("Erro ao atualizar adicional:", err);
+                      }
+                    }}
+                  >
+                    <View
+                      style={[
+                        styles.checkbox,
+                        ingred.adicionado && styles.checkboxSelecionado,
+                      ]}
+                    >
+                      {ingred.adicionado && (
+                        <Text style={styles.checkmark}>✓</Text>
+                      )}
+                    </View>
+                    <Text style={styles.adicionalText}>
+                      {ingred.ingredient?.name ?? "Sem adicional"}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
+          </View>
+        )}
 
         {/* Seletor de tamanho */}
         <Text style={styles.sectionTitle}>Tamanho:</Text>
@@ -235,7 +243,7 @@ export default function DetalhesProdutos() {
                 style={[
                   styles.sizeButtonText,
                   tamanhoSelecionado === tamanho &&
-                  styles.selectedSizeButtonText,
+                    styles.selectedSizeButtonText,
                 ]}
               >
                 {tamanho}
@@ -245,9 +253,8 @@ export default function DetalhesProdutos() {
         </View>
       </ScrollView>
 
-      {/* Área fixa inferior com quantidade e botão de adicionar */}
+      {/* Área inferior */}
       <View style={styles.bottomContainer}>
-        {/* Seletor de quantidade */}
         <View style={styles.quantityContainer}>
           <Text style={styles.quantityLabel}>Quantidade:</Text>
           <View style={styles.quantitySelector}>
@@ -273,14 +280,11 @@ export default function DetalhesProdutos() {
           </View>
         </View>
 
-        {/* Botão de adicionar */}
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => {
             alert(
-              `Pizza adicionada! Tamanho: ${tamanhoSelecionado}, Quantidade: ${quantidade}, Adicionais: ${adicionais.join(
-                ", "
-              ) || "Nenhum"}`
+              `Pizza adicionada! Tamanho: ${tamanhoSelecionado}, Quantidade: ${quantidade}`
             );
             navigation.navigate("Carrinho");
           }}
@@ -297,7 +301,8 @@ const styles = StyleSheet.create({
   scrollView: { flex: 1, backgroundColor: "#FFFFFF" },
   imageContainer: { marginTop: 65, marginBottom: 2, marginHorizontal: 26 },
   smallImage: { width: 32, height: 32, marginBottom: 16 },
-  largeImage: { height: 360,
+  largeImage: {
+    height: 360,
     borderRadius: 180,
   },
   productName: {
@@ -329,7 +334,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 8,
     marginLeft: 23,
-
   },
   adicionaisContainer: {
     marginBottom: 25,
@@ -359,7 +363,28 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
-  adicionalText: { color: "#000000", fontSize: 16, textTransform: "capitalize" },
+  adicionalText: {
+    color: "#000000",
+    fontSize: 16,
+    textTransform: "capitalize",
+  },
+  toggleButton: {
+    backgroundColor: "#8D4F28",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 99,
+    marginHorizontal: 20,
+    marginBottom: 8,
+  },
+  toggleButtonText: {
+    color: "#FFFFFF",
+    fontWeight: "bold",
+    fontSize: 16,
+    textAlign: "center",
+  },
+  optionsContainer: {
+    marginTop: 8,
+  },
   sizeContainer: {
     flexDirection: "row",
     justifyContent: "center",
@@ -401,7 +426,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginLeft: 15,
-    marginBottom: 20
+    marginBottom: 20,
   },
   quantityButton: {
     borderWidth: 1,
