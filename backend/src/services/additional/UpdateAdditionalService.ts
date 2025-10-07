@@ -2,14 +2,16 @@ import prismaClient from "../../prisma";
 
 interface AdditionalRequest {
   categories_additionals_id: string;
+  order_id: string;
 }
 
 class UpdateAdditionalService {
-  async execute({ categories_additionals_id }: AdditionalRequest) {
+  async execute({ categories_additionals_id, order_id }: AdditionalRequest) {
     // Buscar o registro específico
     const additional = await prismaClient.items_additionals.findFirst({
       where: {
-        categories_additionals_id: categories_additionals_id
+        categories_additionals_id: categories_additionals_id,
+        order_id: order_id
       }
     });
 

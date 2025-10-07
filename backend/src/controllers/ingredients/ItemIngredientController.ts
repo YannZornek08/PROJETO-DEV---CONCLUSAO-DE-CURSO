@@ -5,9 +5,9 @@ class ItemIngredientController {
     async handle(req: Request, res: Response) {
         const { ingredient_product_id, order_id } = req.body;
 
-        const ItemIngredient = new ItemIngredientService();
+        const itemIngredient = new ItemIngredientService();
 
-        const ingredient = await ItemIngredient.execute({
+        const ingredient = await itemIngredient.execute({
             ingredient_product_id,
             order_id
         });

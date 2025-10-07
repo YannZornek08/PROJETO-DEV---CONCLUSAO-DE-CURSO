@@ -45,10 +45,14 @@ import { UpdateIngredientController } from './controllers/ingredients/UpdateIngr
 import { ItemIngredientController } from './controllers/ingredients/ItemIngredientController';
 import { RemoveItemIngredientController } from './controllers/ingredients/RemoveItemIngredientController';
 
+import { CreateAdditionalController } from './controllers/additional/CreateAdditionalController';
 import { AddAdditionalController } from './controllers/additional/RelationAdditionalController';
+import { ListAllItemAdditionalByCategoryController } from './controllers/additional/ListAllItemAdditionalByCategoryController';
 import { ListAdditionalByCategoryController } from './controllers/additional/ListAdditionalByCategoryController';
-import { UpdateAdditionalController } from './controllers/additional/UpdateAdditionalController';
 import { AllItemAdditionalController } from './controllers/additional/AllItemAdditionalController';
+import { UpdateAdditionalController } from './controllers/additional/UpdateAdditionalController';
+import { ItemAdditionalController } from './controllers/additional/ItemAdditionalController';
+import { RemoveItemAdditionalController } from './controllers/additional/RemoveItemAdditionalController';
 
 import { CreateTableController } from './controllers/table/CreateTableController';
 import { ListTablesController } from './controllers/table/ListTablesController';
@@ -65,7 +69,6 @@ import { isAuthenticatedClient } from './middlewares/isAuthenticatedClient'
 
 import uploadConfig from './config/multer'
 import { DetailTableController } from './controllers/table/DetailTableController';
-import { CreateAdditionalController } from './controllers/additional/CreateAdditionalController';
 
 const router = Router()
 
@@ -124,19 +127,14 @@ router.get('/me/costumers', new DetailCostumerController().handle)
 router.post('/ingredients', new CreateIngredientController().handle)
 //Relaciona o adicional no produto
 router.post('/ingredient/relation', new AddIngredientController().handle)
-
 //Puxa os ingredientes do item de um produto
 router.get('/product/all/ingredients', new ListAllItemIngredientByProductController().handle)
 router.get('/product/ingredients', new ListIngredientByProductController().handle)
-
-
 // Lista todos os ingredientes de um item
 router.post('/item/all/ingredients', new AllItemIngredientController().handle)
-
 //Cria e remove um igrediente do item
 router.post('/item/ingredient/create', new ItemIngredientController().handle)
-router.post('/item/ingredient/delete', new RemoveItemController().handle)
-
+router.delete('/item/ingredient/delete', new RemoveItemController().handle)
 //Atualiza o item ingrediente (adicionado: true ou false)
 router.put('/item/ingredient', new UpdateIngredientController().handle)
 
@@ -148,7 +146,11 @@ router.post('/item/all/additionals', new AllItemAdditionalController().handle)
 //Relaciona o adicional na categoria
 router.post('/additional/relation', new AddAdditionalController().handle)
 //Puxa os adicionais de uma categoria
+router.get('/category/all/additionals', new ListAllItemAdditionalByCategoryController().handle)
 router.get('/category/additionals', new ListAdditionalByCategoryController().handle)
+//Cria e remove um adicional ao item
+router.post('/item/additional/create', new ItemAdditionalController().handle)
+router.delete('/item/additional/delete', new RemoveItemAdditionalController().handle)
 //Atualiza o item adicional (adicionado: true ou false)
 router.put('/item/additional', new UpdateAdditionalController().handle)
 

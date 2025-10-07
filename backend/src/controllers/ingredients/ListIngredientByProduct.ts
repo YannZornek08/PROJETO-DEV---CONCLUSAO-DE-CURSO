@@ -3,7 +3,7 @@ import { ListIngredientByProductService } from "../../services/ingredients/ListI
 
 class ListIngredientByProductController {
     async handle(req: Request, res: Response) {
-        const product_id = req.query.Product_id as string;
+        const product_id = req.query.product_id as string;
 
         const listIngredientByProduct = new ListIngredientByProductService();
 
