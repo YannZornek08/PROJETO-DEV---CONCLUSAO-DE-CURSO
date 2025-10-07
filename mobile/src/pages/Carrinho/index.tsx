@@ -78,7 +78,7 @@ const PedidoScreen: React.FC = () => {
           <Text style={styles.orderItemPrice}>R$ 42,00</Text>
         </View>
 
-        {/* Campo de observações visível (mas não aparece no resumo) */}
+        
         <View style={styles.notesContainer}>
           <TextInput
             style={styles.notesInput}
@@ -91,7 +91,7 @@ const PedidoScreen: React.FC = () => {
           />
         </View>
 
-        {/* Total / Mesa / Nome — igual ao modelo (sem exibir observações aqui) */}
+        
         <View style={styles.totalContainer}>
           <Text style={styles.totalLabel}>Total:</Text>
           <Text style={styles.totalValue}>{total}</Text>
