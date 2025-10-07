@@ -35,6 +35,12 @@ type Additional = {
     name: string;
     price: number;
   };
+  category: {
+    category_id: string;
+    name: string;
+  };
+  adicionado: boolean;
+  order_id: string;
 }
 
 export default function DetalhesProdutos() {
@@ -72,14 +78,14 @@ export default function DetalhesProdutos() {
     async function verIngredientesProduto() {
       try {
         //Chama a rota que retorna TODOS os ingredientes do produto
-        console.log("Buscando ingredientes para o produto ID:", product);
+        // console.log("Buscando ingredientes para o produto ID:", product);
         const response = await api.get('/product/all/ingredients', {
           params: {
             product_id: product.id,
             order_id: order_id
           }
         });
-        console.log("API retornou:", response.data);
+        // console.log("API retornou:", response.data);
         setIngredients(Array.isArray(response.data) ? response.data : [response.data]);
         const dataArray = Array.isArray(response.data) ? response.data : [response.data];
         const formattedIngredients: Ingredient[] = dataArray.map((item: any) => ({
@@ -96,43 +102,46 @@ export default function DetalhesProdutos() {
           adicionado: item.adicionado ?? Error("Campo 'adicionado' não encontrado"),
         }));
         setIngredients(formattedIngredients);
-        console.log("Ingredientes formatados:", ingredients)
+        // console.log("Ingredientes formatados:", ingredients)
       } catch (err) {
         console.log("Erro ao buscar produtos:", err);
       }
     }
-    async function verAdicionaisCategoria () {
+    async function verAdicionaisCategoria() {
       try {
         //Chama a rota que retorna TODOS os adicionais da categoria
         console.log("Buscando adicionais para a categoria:", product.category_id);
-        const response = await api.get('/product/all/ingredients', {
+        const response = await api.get('/category/all/additionals', {
           params: {
             category_id: product.category_id,
             order_id: order_id
           }
         });
         console.log("API retornou:", response.data);
-        setIngredients(Array.isArray(response.data) ? response.data : [response.data]);
+        setAdicionais(Array.isArray(response.data) ? response.data : [response.data]);
         const dataArray = Array.isArray(response.data) ? response.data : [response.data];
-        const formattedIngredients: Ingredient[] = dataArray.map((item: any) => ({
+        const formattedAdditionals: Additional[] = dataArray.map((item: any) => ({
           id: item.id ?? "",
-          ingredient_product_id: item.ingredient_product_id ?? "",
-          ingredient: {
-            name: item.ingredient_product.ingredient.name ?? "",
+          categories_additionals_id: item.categories_additionals_id ?? Error("Campo 'categories_additionals_id' não encontrado"),
+          category: {
+            // NOME DA CATEGORIA TA RETORNANDO NULL, VERIFICAR
+            name: item.categories_additionals.category.name ?? "",
+            category_id: item.categories_additionals.id ?? "",
           },
-          product: {
-            name: item.ingredient_product.product.name ?? "",
-            product_id: item.ingredient_product.product.id ?? "",
+          additional: {
+            name: item.categories_additionals.additionals.name ?? "",
+            price: item.categories_additionals.additionals.price ?? Error("Campo 'price' não encontrado"),
           },
           order_id: order_id,
           adicionado: item.adicionado ?? Error("Campo 'adicionado' não encontrado"),
         }));
-        setIngredients(formattedIngredients);
-        console.log("Ingredientes formatados:", ingredients)
+        setAdicionais(formattedAdditionals);
+        console.log("Adicionais formatados:", adicionais)
       } catch (err) {
-        console.log("Erro ao buscar produtos:", err);
+        console.log("Erro ao buscar categorias/adicionais:", err);
       }
     }
+    verAdicionaisCategoria();
     verIngredientesProduto();
   }, [product.id]);
 

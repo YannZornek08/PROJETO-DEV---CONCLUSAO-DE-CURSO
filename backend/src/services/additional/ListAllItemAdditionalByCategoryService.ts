@@ -12,7 +12,7 @@ class ListAllItemAdditionalByCategoryService {
             where: {
                 order_id: order_id,
                 categories_additionals: {
-                    id: category_id, // aqui ele filtra pelos produtos relacionados
+                    category_id: category_id, // aqui ele filtra pelos produtos relacionados
                 },
             },
             select: {
@@ -21,6 +21,7 @@ class ListAllItemAdditionalByCategoryService {
                 order_id: true,
                 categories_additionals: {
                     select: {
+                        category_id: true,
                         category: {
                             select: {
                                 name: true,
