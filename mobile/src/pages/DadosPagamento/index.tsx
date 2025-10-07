@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   header: {
-    marginTop: 48,
+    marginTop: 0,
     marginBottom: 24,
     flexDirection: "row",
     alignItems: "center",
@@ -130,6 +130,8 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     fontSize: 28,
+    marginLeft: -48,
+    marginTop: 64,
     color: "#000",
     textAlign: "center",
     fontFamily: "BesleyRegular",
