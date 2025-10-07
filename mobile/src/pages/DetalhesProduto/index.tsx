@@ -17,18 +17,17 @@ import { api } from "../../services/api";
 type DetalhesRouteProp = RouteProp<StackParamsList, "DetalhesProdutos">;
 
 type Ingredient = {
+  id: string;
   ingredient_product_id: string;
   ingredient: {
     name: string;
   };
   product: {
+    product_id: string;
     name: string;
   };
-}
-
-type Item_Ingredient = {
-  id: string;
   adicionado: boolean;
+  order_id: string;
 }
 
 type Additional = {
@@ -44,10 +43,15 @@ export default function DetalhesProdutos() {
   const route = useRoute<DetalhesRouteProp>();
   const [adicionais, setAdicionais] = useState<Additional[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
-  const [itemIngredients, setItemIngredients] = useState<Item_Ingredient[]>([])
 
   // Imprime aqui os produtos clicados em adicionar
   const { product } = route.params;
+  const order_id = "e7611b30-2756-4346-9305-2bf30495c238";
+
+  //CODIGO DO COPILOT
+  // const order_id = route.params?.order_id ?? null;
+  // console.log("Produto selecionado:", product);
+  // console.log("Order ID:", order_id);
 
   const tamanhos = ["P", "M", "G"];
 
@@ -69,31 +73,35 @@ export default function DetalhesProdutos() {
     }
   };
 
-
   useEffect(() => {
     async function verIngredientesProduto() {
       try {
         //Chama a rota que retorna TODOS os ingredientes do produto
-        const response = await api.get('/product/ingredients', {
+        console.log("Buscando ingredientes para o produto ID:", product);
+        const response = await api.get('/product/all/ingredients', {
           params: {
             product_id: product.id,
+            order_id: order_id
           }
         });
-        // nao ta imprimindo o nome dos ingredientes nem dos produtos
-        // console.log("API retornou:", response.data);
+        console.log("API retornou:", response.data);
         setIngredients(Array.isArray(response.data) ? response.data : [response.data]);
         const dataArray = Array.isArray(response.data) ? response.data : [response.data];
         const formattedIngredients: Ingredient[] = dataArray.map((item: any) => ({
-          ingredient_product_id: item.id ?? "",
+          id: item.id ?? "",
+          ingredient_product_id: item.ingredient_product_id ?? "",
           ingredient: {
-            name: item.ingredient.name ?? "",
+            name: item.ingredient_product.ingredient.name ?? "",
           },
           product: {
-            name: item.product.name ?? "",
+            name: item.ingredient_product.product.name ?? "",
+            product_id: item.ingredient_product.product.id ?? "",
           },
+          order_id: order_id,
+          adicionado: item.adicionado ?? Error("Campo 'adicionado' não encontrado"),
         }));
         setIngredients(formattedIngredients);
-        console.log(ingredients)
+        console.log("Ingredientes formatados:", ingredients)
       } catch (err) {
         console.log("Erro ao buscar produtos:", err);
       }
@@ -101,28 +109,46 @@ export default function DetalhesProdutos() {
     verIngredientesProduto();
   }, [product.id]);
 
-  async function criarItemIngrediente(id_ingredient_product: string) {
+  // async function criarItemIngrediente(id_ingredient_product: string) {
+  //   try {
+  //     await api.post('/item/ingredient/create', {
+  //       ingredient_product_id: id_ingredient_product,
+  //       order_id: order_id
+  //     })
+  //     console.log("Ingrediente dos itens criados com sucesso")
+  //   } catch (err) {
+  //     console.log("Não foi possível criar os ingredientes dos itens", err)
+  //   }
+  // }
+
+  async function updateIngrediente(id_ingredient_product: string) {
     try {
-      await api.post('/item/ingredient/create', {
+      await api.put('/item/ingredient', {
         ingredient_product_id: id_ingredient_product,
-      })
-      console.log("Ingrediente dos itens criados com sucesso")
+        order_id: order_id
+      });
     } catch (err) {
-      console.log("Não foi possível criar os ingredientes dos itens", err)
+      console.log("Erro ao atualizar ingrediente:", err);
     }
   }
 
-  //   async function updateIngrediente(id_ingredient_product: string) {
-  //   try {
-  //     await api.put('/item/ingredient', { 
-  //         params: {
-  //           ingredient_product_id: id_ingredient_product
-  //         }
-  //       });
-  //   } catch (err) {
-  //     console.log("Erro ao atualizar ingrediente:", err);
-  //   }
-  // }
+  async function adicionarItem() {
+    try {
+      const newItem = await api.post('/order/add', {
+        order_id: order_id,
+        items_ingredients_id: ingredients.map(ing => ing.id).join(", "), // Exemplo de como pegar os IDs dos ingredientes selecionados
+        items_additionals_id: adicionais.map(add => add.id).join(",") ?? "", // Exemplo de como pegar os IDs dos adicionais selecionados
+        amount: quantidade,
+      });
+      console.log("Item adicionado:", newItem.data);
+      // setItems((prevItems) => [...prevItems, newItem.data]);
+    } catch (err) {
+      console.log("Erro ao adicionar item:", err,
+        ingredients.map(ing => ing.id).join(","),
+        adicionais.map(add => add.id).join(",") ?? "Não está enviando adicionais",
+        quantidade);
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -161,74 +187,55 @@ export default function DetalhesProdutos() {
 
         {/* Ingredientes */}
         <View style={styles.adicionaisContainer}>
-          {adicionais.length > 0 && (
+          {ingredients.length > 0 && (
             <Text style={styles.sectionTitle}>Ingredientes:</Text>
           )}
-          {adicionais.map((ingred) => (
+          {ingredients.map((ingred) => (
             <TouchableOpacity
-              key={ingred.ingredient_product_id}
+              key={ingred.id}
               style={styles.adicionalItem}
               onPress={async () => {
-          // Atualiza localmente
-          setAdicionais((prev) =>
-            prev.map((item) =>
-              item.ingredient_product_id === ingred.ingredient_product_id
-                ? { ...item, adicionado: !item.adicionado }
-                : item
-            )
-          );
-          // Atualiza no banco via API
-            try {
-            await api.put(`/additional/update`, {
-              product_id: ingred.product_id,
-              ingredient_id: ingred.ingredient_id,
-            });
-            console.log("Adicional atualizado com sucesso", ingred, ingred.adicionado);
-            } catch (err) {
-            console.log("Erro ao atualizar adicional:", err);
-            }
-              }}
+                alert("Adicional: " + (ingred.ingredient?.name ?? "Sem adicional"));
+
+                // Atualiza localmente
+                setIngredients((prev) =>
+                  prev.map((item) =>
+                    item.id === ingred.id
+                      ? { ...item, adicionado: !item.adicionado }
+                      : item
+                  )
+                );
+                // Atualiza no banco via API
+                console.log("Atualizando ingrediente ID:", ingred.ingredient_product_id);
+                if (ingred.id) {
+                  await updateIngrediente(ingred.ingredient_product_id);
+                  console.log("Ingrediente atualizado com sucesso", ingred, ingred.adicionado);
+                } else {
+                  console.log("ID do ingrediente não encontrado, não foi possível atualizar");
+                }
+
+              }
+              }
             >
               <View
-          style={[
-            styles.checkbox,
-            ingred.adicionado && styles.checkboxSelecionado,
-          ]}
+                style={[
+                  styles.checkbox,
+                  ingred.adicionado && styles.checkboxSelecionado,
+                ]}
               >
-          {ingred.adicionado && <Text style={styles.checkmark}>✓</Text>}
+                {ingred.adicionado && <Text style={styles.checkmark}>✓</Text>}
               </View>
               <Text style={styles.adicionalText}>{ingred.ingredient?.name ?? "Sem adicional"}</Text>
             </TouchableOpacity>
           ))}
         </View>
 
-        {/* Adicionais */}
-        <View style={styles.adicionaisContainer}>
-          {ingredients.length > 0 && (
-            <Text style={styles.sectionTitle}>Ingredientes:</Text>
-          )}
-          {ingredients.map((ingred) => (
-            console.log("Ingrediente:", ingred),
-            <TouchableOpacity
-              key={ingred.ingredient_product_id}
-              style={styles.adicionalItem}
-              onPress={async () => {
-                console.log(ingred.ingredient_product_id)
-                criarItemIngrediente(ingred.ingredient_product_id);
-                alert(`Ingrediente: ${ingred.ingredient?.name ?? "Sem adicional"}`);
-              }}>
-              <View
-                style={[
-                  styles.checkbox,
-                  // ingred.adicionado && styles.checkboxSelecionado,
-                ]}
-              >
-                {/* {ingred.adicionado && <Text style={styles.checkmark}>✓</Text>} */}
-              </View>
-              <Text style={styles.adicionalText}>{ingred.ingredient?.name ?? "Sem adicional"}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        {/* // Mensagem caso nenhum ingrediente seja encontrado */}
+        {ingredients.length === 0 && (
+          <Text style={[styles.sectionTitle]}>
+            Nenhum ingrediente encontrado
+          </Text>
+        )}
 
         {/* Seletor de tamanho */}
         {/* <Text style={styles.sectionTitle}>Tamanho:</Text>
@@ -288,6 +295,7 @@ export default function DetalhesProdutos() {
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => {
+            adicionarItem();
             alert(
               `Pizza adicionada! Tamanho: ${tamanhoSelecionado}, Quantidade: ${quantidade}, Adicionais: ${adicionais.join(
                 ", "

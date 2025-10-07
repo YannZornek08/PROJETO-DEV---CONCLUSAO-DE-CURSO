@@ -2,17 +2,23 @@ import { Request, Response } from "express";
 import { ListAllItemIngredientByProductService } from "../../services/ingredients/ListAllItemIngredientByProductService";
 
 class ListAllItemIngredientByProductController {
-    async handle(req: Request, res: Response) {
-        const product_id = req.query.product_id as string;
+  async handle(req: Request, res: Response) {
+    const { product_id, order_id } = req.query as { product_id: string; order_id: string };
+    // ou use req.params.product_id / req.params.order_id se a rota for /:product_id/:order_id
 
-        const listAllItemIngredientByProduct = new ListAllItemIngredientByProductService();
+    const listAllItemIngredientByProductService = new ListAllItemIngredientByProductService();
 
-        const ingredients = await listAllItemIngredientByProduct.execute({
-            product_id
-        });
+    try {
+      const result = await listAllItemIngredientByProductService.execute({
+        product_id,
+        order_id,
+      });
 
-        res.json(ingredients);
+      res.json(result);
+    } catch (err: any) {
+      res.status(400).json({ error: err.message });
     }
+  }
 }
 
-export { ListAllItemIngredientByProductController }
+export { ListAllItemIngredientByProductController };

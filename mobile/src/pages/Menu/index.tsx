@@ -168,17 +168,19 @@ type PizzaCardProps = {
 function PizzaCard({ product }: PizzaCardProps) {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
-  // async function criarTodosIngredientsProduto() {
-  //   try {
-  //     await api.post('/item/all/ingredients', {
-  //       product_id: product.id
-  //     });
-  //     console.log("Ingredientes do produto criados com sucesso!");
-  //   } catch (err) {
-  //     console.log("Id do produto", product.id);
-  //     console.log("Erro ao criar ingredientes do produto:", err);
-  //   }
-  // }
+  async function criarTodosIngredientsProduto(id_produto: string) {
+    // console.log("Criando ingredientes para o produto:", id_produto);
+    try {
+      await api.post('/item/all/ingredients', {
+        product_id: id_produto,
+        order_id: "e7611b30-2756-4346-9305-2bf30495c238"
+      });
+      console.log("Ingredientes do produto criados com sucesso!");
+    } catch (err) {
+      console.log("Id do produto", product.id);
+      console.log("Erro ao criar ingredientes do produto:", err);
+    }
+  }
 
   return (
     <View style={styles.card}>
@@ -188,6 +190,8 @@ function PizzaCard({ product }: PizzaCardProps) {
       <TouchableOpacity
         style={styles.addButton}
         onPress={() => {
+          // console.log("Clicou em adicionar", product.id);
+          criarTodosIngredientsProduto(product.id);
           navigation.navigate("DetalhesProdutos", { product })
         }}
       >

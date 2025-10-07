@@ -2,14 +2,16 @@ import prismaClient from "../../prisma";
 
 interface IngredientRequest {
   ingredient_product_id: string;
+  order_id: string;
 }
 
 class UpdateIngredientService {
-  async execute({ ingredient_product_id }: IngredientRequest) {
+  async execute({ ingredient_product_id, order_id }: IngredientRequest) {
     // Buscar o registro específico
     const ingredient = await prismaClient.items_ingredients.findFirst({
       where: {
-        ingredient_product_id: ingredient_product_id
+        ingredient_product_id: ingredient_product_id,
+        order_id: order_id
       }
     });
 
@@ -27,6 +29,7 @@ class UpdateIngredientService {
       }
     });
 
+    console.log("Ingrediente atualizado:", updated);
     return updated;
   }
 }

@@ -4,7 +4,7 @@ import { UpdateIngredientService } from "../../services/ingredients/UpdateIngred
 class UpdateIngredientController {
     async handle(req: Request, res: Response) {
         try {
-            const { ingredient_product_id } = req.body;
+            const { ingredient_product_id, order_id } = req.body;
 
             if (!ingredient_product_id) {
                 res.status(400).json({ error: "ingredient_product_id são obrigatórios." });
@@ -13,7 +13,8 @@ class UpdateIngredientController {
             const updateIngredient = new UpdateIngredientService();
 
             const ingredient = await updateIngredient.execute({
-                ingredient_product_id
+                ingredient_product_id,
+                order_id
             });
 
             res.json(ingredient);
