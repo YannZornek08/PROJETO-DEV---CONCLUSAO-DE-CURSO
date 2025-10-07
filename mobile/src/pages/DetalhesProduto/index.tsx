@@ -42,6 +42,7 @@ export default function DetalhesProdutos() {
   const route = useRoute<DetalhesRouteProp>();
   const [adicionais, setAdicionais] = useState<Additional[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+
   const [mostrarIngredientes, setMostrarIngredientes] = useState(false);
   const [mostrarAdicionais, setMostrarAdicionais] = useState(false);
 
@@ -53,8 +54,8 @@ export default function DetalhesProdutos() {
   // console.log("Produto selecionado:", product);
   // console.log("Order ID:", order_id);
 
-  const tamanhos = ["P", "M", "G"];
-  const [tamanhoSelecionado, setTamanhoSelecionado] = useState<string>("M");
+  // const tamanhos = ["P", "M", "G"];
+  // const [tamanhoSelecionado, setTamanhoSelecionado] = useState<string>("M");
   const [quantidade, setQuantidade] = useState<number>(1);
 
 
@@ -75,6 +76,38 @@ export default function DetalhesProdutos() {
         const response = await api.get('/product/all/ingredients', {
           params: {
             product_id: product.id,
+            order_id: order_id
+          }
+        });
+        console.log("API retornou:", response.data);
+        setIngredients(Array.isArray(response.data) ? response.data : [response.data]);
+        const dataArray = Array.isArray(response.data) ? response.data : [response.data];
+        const formattedIngredients: Ingredient[] = dataArray.map((item: any) => ({
+          id: item.id ?? "",
+          ingredient_product_id: item.ingredient_product_id ?? "",
+          ingredient: {
+            name: item.ingredient_product.ingredient.name ?? "",
+          },
+          product: {
+            name: item.ingredient_product.product.name ?? "",
+            product_id: item.ingredient_product.product.id ?? "",
+          },
+          order_id: order_id,
+          adicionado: item.adicionado ?? Error("Campo 'adicionado' não encontrado"),
+        }));
+        setIngredients(formattedIngredients);
+        console.log("Ingredientes formatados:", ingredients)
+      } catch (err) {
+        console.log("Erro ao buscar produtos:", err);
+      }
+    }
+    async function verAdicionaisCategoria () {
+      try {
+        //Chama a rota que retorna TODOS os adicionais da categoria
+        console.log("Buscando adicionais para a categoria:", product.category_id);
+        const response = await api.get('/product/all/ingredients', {
+          params: {
+            category_id: product.category_id,
             order_id: order_id
           }
         });
@@ -123,6 +156,17 @@ export default function DetalhesProdutos() {
       });
     } catch (err) {
       console.log("Erro ao atualizar ingrediente:", err);
+    }
+  }
+
+  async function updateAdicional(id_categories_additional: string) {
+    try {
+      await api.put('/item/additional', {
+        categories_additionals_id: id_categories_additional,
+        order_id: order_id
+      });
+    } catch (err) {
+      console.log("Erro ao atualizar adicional:", err);
     }
   }
 
@@ -176,7 +220,7 @@ export default function DetalhesProdutos() {
         <View style={styles.divider} />
 
         {/* Ingredientes */}
-        <View style={styles.adicionaisContainer}>
+        {/* <View style={styles.adicionaisContainer}>
           {ingredients.length > 0 && (
             <Text style={styles.sectionTitle}>Ingredientes:</Text>
           )}
@@ -218,62 +262,75 @@ export default function DetalhesProdutos() {
               <Text style={styles.adicionalText}>{ingred.ingredient?.name ?? "Sem adicional"}</Text>
             </TouchableOpacity>
           ))}
-        </View>
+        </View> */}
 
         {/* // Mensagem caso nenhum ingrediente seja encontrado */}
         {ingredients.length === 0 && (
           <Text style={[styles.sectionTitle]}>
-            Nenhum ingrediente encontrado
+            Nenhum ingrediente encontrado.
           </Text>
         )}
-        {/*}
+
+        {/* Botão Ingredientes */}
+        {ingredients.length > 0 && (
+          <View style={styles.adicionaisContainer}>
+            <TouchableOpacity
+              style={styles.toggleButton}
+              onPress={() => setMostrarIngredientes(!mostrarIngredientes)}
+            >
+              <Text style={styles.toggleButtonText}>
+                {mostrarIngredientes
+                  ? "Ocultar Ingredientes ▲"
+                  : "Ver Ingredientes ▼"}
+              </Text>
+            </TouchableOpacity>
+
             {mostrarIngredientes && (
-          <View style={styles.optionsContainer}>
-            {adicionais.map((ingred) => (
-              <TouchableOpacity
-                key={`ingred-${ingred.ingredient_product_id}`}
-                style={styles.adicionalItem}
-                onPress={async () => {
-                  setAdicionais((prev) =>
-                    prev.map((item) =>
-                      item.ingredient_product_id ===
-                        ingred.ingredient_product_id
-                        ? { ...item, adicionado: !item.adicionado }
-                        : item
-                    )
-                  );
-                  try {
-                    await api.put(`/additional/update`, {
-                      product_id: ingred.product_id,
-                      ingredient_id: ingred.ingredient_id,
-                    });
-                  } catch (err) {
-                    console.log("Erro ao atualizar ingrediente:", err);
-                  }
-                }}
-              >
-                <View
-                  style={[
-                    styles.checkbox,
-                    ingred.adicionado && styles.checkboxSelecionado,
-                  ]}
-                >
-                  {ingred.adicionado && (
-                    <Text style={styles.checkmark}>✓</Text>
-                  )}
-                </View>
-                <Text style={styles.adicionalText}>
-                  {ingred.ingredient?.name ?? "Sem ingrediente"}
-                </Text>
-              </TouchableOpacity>
-            ))}
+              <View style={styles.optionsContainer}>
+                {ingredients.map((ingred) => (
+                  <TouchableOpacity
+                    key={`ingred-${ingred.id}`}
+                    style={styles.adicionalItem}
+                    onPress={async () => {
+                      setIngredients((prev) =>
+                        prev.map((item) =>
+                          item.id ===
+                            ingred.id
+                            ? { ...item, adicionado: !item.adicionado }
+                            : item
+                        )
+                      );
+                      console.log("Atualizando ingrediente ID:", ingred.ingredient_product_id);
+                      if (ingred.id) {
+                        await updateIngrediente(ingred.ingredient_product_id);
+                        console.log("Ingrediente atualizado com sucesso", ingred, ingred.adicionado);
+                      } else {
+                        console.log("ID do ingrediente não encontrado, não foi possível atualizar");
+                      }
+                    }}
+                  >
+                    <View
+                      style={[
+                        styles.checkbox,
+                        ingred.adicionado && styles.checkboxSelecionado,
+                      ]}
+                    >
+                      {ingred.adicionado && (
+                        <Text style={styles.checkmark}>✓</Text>
+                      )}
+                    </View>
+                    <Text style={styles.adicionalText}>
+                      {ingred.ingredient?.name}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
           </View>
         )}
-      </View>
-        )} */}
 
-      {/* Botão Adicionais */}
-      {/* {adicionais.length > 0 && (
+        {/* Botão Adicionais */}
+        {/* {adicionais.length > 0 && (
         <View style={styles.adicionaisContainer}>
           <TouchableOpacity
             style={styles.toggleButton}
@@ -332,8 +389,8 @@ export default function DetalhesProdutos() {
       )
       } */}
 
-      {/* Seletor de tamanho */}
-      {/* <Text style={styles.sectionTitle}>Tamanho:</Text>
+        {/* Seletor de tamanho */}
+        {/* <Text style={styles.sectionTitle}>Tamanho:</Text>
         <View style={styles.sizeContainer}>
           {tamanhos.map((tamanho) => (
             <TouchableOpacity
@@ -356,48 +413,48 @@ export default function DetalhesProdutos() {
             </TouchableOpacity>
           ))}
         </View> */}
-    </ScrollView >
+      </ScrollView >
 
-      {/* Área inferior */ }
-  < View style={styles.bottomContainer} >
-    <View style={styles.quantityContainer}>
-      <Text style={styles.quantityLabel}>Quantidade:</Text>
-      <View style={styles.quantitySelector}>
+      {/* Área inferior */}
+      < View style={styles.bottomContainer} >
+        <View style={styles.quantityContainer}>
+          <Text style={styles.quantityLabel}>Quantidade:</Text>
+          <View style={styles.quantitySelector}>
+            <TouchableOpacity
+              onPress={diminuirQuantidade}
+              style={[
+                styles.quantityButton,
+                quantidade <= 1 && styles.disabledButton,
+              ]}
+              disabled={quantidade <= 1}
+            >
+              <Text style={styles.quantityButtonText}>-</Text>
+            </TouchableOpacity>
+
+            <Text style={styles.quantityText}>{quantidade}</Text>
+
+            <TouchableOpacity
+              onPress={aumentarQuantidade}
+              style={styles.quantityButton}
+            >
+              <Text style={styles.quantityButtonText}>+</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
         <TouchableOpacity
-          onPress={diminuirQuantidade}
-          style={[
-            styles.quantityButton,
-            quantidade <= 1 && styles.disabledButton,
-          ]}
-          disabled={quantidade <= 1}
+          style={styles.addButton}
+          onPress={() => {
+            adicionarItem();
+            alert(
+              `Pizza adicionada! Quantidade: ${quantidade}`
+            );
+            navigation.navigate("Carrinho");
+          }}
         >
-          <Text style={styles.quantityButtonText}>-</Text>
+          <Text style={styles.addButtonText}>Adicionar</Text>
         </TouchableOpacity>
-
-        <Text style={styles.quantityText}>{quantidade}</Text>
-
-        <TouchableOpacity
-          onPress={aumentarQuantidade}
-          style={styles.quantityButton}
-        >
-          <Text style={styles.quantityButtonText}>+</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-
-    <TouchableOpacity
-      style={styles.addButton}
-      onPress={() => {
-        adicionarItem();
-        alert(
-          `Pizza adicionada! Tamanho: ${tamanhoSelecionado}, Quantidade: ${quantidade}`
-        );
-        navigation.navigate("Carrinho");
-      }}
-    >
-      <Text style={styles.addButtonText}>Adicionar</Text>
-    </TouchableOpacity>
-  </View >
+      </View >
     </SafeAreaView >
   );
 }
