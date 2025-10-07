@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useRoute, RouteProp } from "@react-navigation/native";
+import { useRoute, RouteProp, useNavigation } from "@react-navigation/native";
 import {
   SafeAreaView,
   View,
@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
 import { api } from "../../services/api";
@@ -20,12 +19,8 @@ type Additional = {
   ingredient_product_id: string;
   product_id: string;
   ingredient_id: string;
-  product: {
-    name: string;
-  };
-  ingredient: {
-    name: string;
-  };
+  product: { name: string };
+  ingredient: { name: string };
   adicionado: boolean;
 };
 
@@ -301,16 +296,13 @@ const styles = StyleSheet.create({
   scrollView: { flex: 1, backgroundColor: "#FFFFFF" },
   imageContainer: { marginTop: 65, marginBottom: 2, marginHorizontal: 26 },
   smallImage: { width: 32, height: 32, marginBottom: 16 },
-  largeImage: {
-    height: 360,
-    borderRadius: 180,
-  },
+  largeImage: { height: 360, borderRadius: 180 },
   productName: {
     color: "#000000",
     fontSize: 32,
-    fontWeight: "bold",
     textAlign: "center",
     marginTop: 20,
+    fontFamily: "BesleyBold",
   },
   priceContainer: { alignItems: "center", marginVertical: 10 },
   price: { color: "#000000", fontSize: 22, fontWeight: "bold" },
@@ -321,6 +313,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 26,
     textAlign: "center",
     lineHeight: 22,
+    
   },
   divider: {
     height: 1,

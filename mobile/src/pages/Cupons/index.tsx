@@ -136,9 +136,9 @@ const styles = StyleSheet.create({
   greeting: {
     color: "#000000",
     fontSize: 32,
-    fontWeight: "bold",
     textAlign: "center",
     marginBottom: 26,
+    fontFamily: "BesleyBold",
   },
   searchContainer: {
     flexDirection: "row",
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     tintColor: "#8D4F28",
   },
-  couponText: { color: "#000000", fontSize: 28, fontWeight: "bold" },
+  couponText: { color: "#000000", fontSize: 24, fontFamily: "BesleyBold",},
   couponDescription: {
     fontSize: 14,
     color: "#52443C",

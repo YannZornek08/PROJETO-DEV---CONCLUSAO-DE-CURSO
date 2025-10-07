@@ -141,9 +141,9 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   titulo: {
-    fontSize: 28,
-    fontWeight: "bold",
+    fontSize: 24,
     marginBottom: 20,
+    fontFamily: "BesleyBold",
   },
   botao: {
     backgroundColor: "#8B4B26",

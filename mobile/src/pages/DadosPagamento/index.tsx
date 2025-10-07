@@ -130,9 +130,9 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     fontSize: 28,
-    fontWeight: "bold",
     color: "#000",
     textAlign: "center",
+    fontFamily: "BesleyRegular",
   },
   card: {
     backgroundColor: "#FFF8F5",

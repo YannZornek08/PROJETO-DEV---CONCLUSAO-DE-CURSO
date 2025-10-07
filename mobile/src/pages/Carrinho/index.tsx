@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 24,
     marginHorizontal: 26,
+    fontFamily: "BesleyBold",
   },
   orderItem: {
     flexDirection: "row",
@@ -160,6 +161,7 @@ const styles = StyleSheet.create({
     textAlign: "right",
     marginVertical: 6,
     width: 94,
+    fontFamily: "BesleyRegular",
   },
   notesContainer: {
     backgroundColor: "#FFFFFF",
@@ -190,12 +192,12 @@ const styles = StyleSheet.create({
   totalLabel: {
     fontSize: 26,
     color: "#000000",
-    fontWeight: "600",
+    fontFamily: "BesleyBold",
   },
   totalValue: {
     fontSize: 28,
     color: "#000000",
-    fontWeight: "700",
+    fontFamily: "BesleyBold",
   },
   detailsRow: {
     flexDirection: "row",
@@ -206,10 +208,12 @@ const styles = StyleSheet.create({
   detailLabel: {
     fontSize: 16,
     color: "#000000",
+    fontFamily: "BesleyRegular",
   },
   detailValue: {
     fontSize: 16,
     color: "#000000",
+    fontFamily: "BesleyRegular",
   },
   payButton: {
     alignItems: "center",
