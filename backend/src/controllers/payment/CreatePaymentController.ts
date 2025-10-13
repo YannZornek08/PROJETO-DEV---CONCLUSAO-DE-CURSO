@@ -13,7 +13,7 @@ class CreatePaymentController {
             mtdo_pagto_id
         });
 
-        return res.json(payment);
+        res.json(payment);
     }
 }
 

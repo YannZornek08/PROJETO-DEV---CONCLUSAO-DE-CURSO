@@ -12,7 +12,7 @@ class CreateOrderController {
             costumer_id
         });
 
-        return res.json(order);
+        res.json(order);
     }
 }
 
