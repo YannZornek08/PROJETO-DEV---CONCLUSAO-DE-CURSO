@@ -17,15 +17,6 @@ class CreatePaymentService {
       throw new Error("Pedido não encontrado!");
     }
 
-    
-    await prismaClient.order.update({
-      where: { id: order_id },
-      data: {
-        draft: false,
-    
-      },
-    });
-
     const payment = await prismaClient.payment.create({
       data: {
         order_id,
