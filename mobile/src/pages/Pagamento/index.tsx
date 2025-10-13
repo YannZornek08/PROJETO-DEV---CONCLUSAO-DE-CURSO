@@ -110,19 +110,19 @@ const Pagamento: React.FC = () => {
         <Text style={styles.title}>Pagamento</Text>
 
         <View style={styles.row}>
-          <TouchableOpacity style={styles.card} onPress={realizarPagamento}>
+          <TouchableOpacity style={styles.card} onPress={DadosPagamento}>
             <Text style={styles.cardText}>
               Crédito
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.card} onPress={realizarPagamento}>
+          <TouchableOpacity style={styles.card} onPress={DadosPagamento}>
             <Text style={styles.cardText}>
               Débito
             </Text>
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={[styles.card, styles.fullWidthCard]} onPress={realizarPagamento}>
+        <TouchableOpacity style={[styles.card, styles.fullWidthCard]} onPress={DadosPagamento}>
           <Text style={styles.cardText}>
             Pix
           </Text>
