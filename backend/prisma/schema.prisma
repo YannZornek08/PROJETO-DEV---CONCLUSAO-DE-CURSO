@@ -27,7 +27,6 @@ model Category {
   created_at DateTime? @default(now())
   update_at  DateTime? @default(now())
   products   Product[]
-  categories_additionals categories_additionals[]
 
   @@map("categories")
 }
@@ -44,6 +43,7 @@ model Product {
   category    Category @relation(fields: [category_id], references: [id])
   category_id String
   ingredient_product Ingredient_product[] // relação muitos para muitos
+  items       Item[]
 
   @@map("products")
 }
@@ -70,6 +70,7 @@ model Table {
   created_at DateTime? @default(now())
   update_at  DateTime? @default(now())
   orders     Order[]
+  payments   Payment[]
 
   @@map("tables")
 }
@@ -81,11 +82,13 @@ model Item {
   update_at  DateTime? @default(now())
 
   order      Order   @relation(fields: [order_id], references: [id])
-  items_additionals Items_additionals @relation(fields: [items_additionals_id], references: [id])
-  items_ingredients Items_ingredients @relation(fields: [items_ingredients_id], references: [id])
-  order_id   String // pega pelo login
-  items_additionals_id String // ele cria sozinho, se não quiser vem tudo como false
-  items_ingredients_id String // ele cria sozinho, vem tudo como true
+  // ingredient_product    Ingredient_product @relation(fields: [ingredient_product_id], references: [id])
+  product    Product @relation(fields: [product_id], references: [id])
+
+  order_id   String
+  // ingredient_product_id String
+  product_id String
+  
 
   @@map("items")
 }
@@ -120,8 +123,10 @@ model Payment {
   created_at    DateTime   @default(now())
   updated_at    DateTime   @default(now())
   mtdo_pagto_id String
+  table_id      String
   mtdo_pagto    Mtdo_pagto @relation(fields: [mtdo_pagto_id], references: [id])
   order         Order      @relation(fields: [order_id], references: [id])
+  table         Table      @relation(fields: [table_id], references: [id])
 
   @@map("payments")
 }
@@ -137,16 +142,16 @@ model Ingredient {
 }
 
 model Ingredient_product {
-  id         String @id @default(uuid())
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
-
-  ingredient Ingredient @relation(fields: [ingredient_id], references: [id])
-  product    Product    @relation(fields: [product_id], references: [id])
+  id            String     @id @default(uuid())
+  adicionado    Boolean    @default(true)
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @default(now())
+  ingredient   Ingredient @relation(fields: [ingredient_id], references: [id])
+  product      Product    @relation(fields: [product_id], references: [id])
   ingredient_id String
   product_id String
 
-  items_ingredients Items_ingredients[]
+  // item        Item[]
 
 
   @@map("ingredients_products")
@@ -160,59 +165,4 @@ model Mtdo_pagto {
   payments   Payment[]
 
   @@map("payment_methods")
-}
-
-model Additionals {
-  id         String @id @default(uuid())
-  name       String
-  price      String
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
-
-  categories_additionals categories_additionals[]
-
-  @@map("additionals")
-}
-
-model categories_additionals {
-  id         String @id @default(uuid())
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
-
-  additionals Additionals @relation(fields: [additionals_id], references: [id])
-  additionals_id String
-  category    Category @relation(fields: [category_id], references: [id])
-  category_id String
-
-  items_additionals Items_additionals[]
-
-  @@map("categories_additionals")
-}
-
-model Items_additionals {
-  id         String @id @default(uuid())
-  adicionado Boolean @default(false)
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
-
-  categories_additionals categories_additionals @relation(fields: [categories_additionals_id], references: [id])
-  categories_additionals_id String
-
-  item Item[]
-
-  @@map("items_additionals")
-}
-
-model Items_ingredients {
-  id         String @id @default(uuid())
-  adicionado Boolean @default(true)
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
-
-  ingredient_product Ingredient_product @relation(fields: [ingredient_product_id], references: [id])
-  ingredient_product_id String
-
-  item Item[]
-
-  @@map("items_ingredients")
 }

@@ -48,15 +48,13 @@ export default function LerQR() {
   }, [showCamera]);
 
  
-  async function confirmarComanda() {
+  async function confirmarComanda(id_mesa: string) {
     try {
       const response = await api.post("/order", {
-        table_id:
-          route.params?.table_id ??
-          "629ce4eb-1e0e-4c7c-9deb-5f562b1e89e4",
+        table_id: id_mesa ?? Error("Não há um id da mesa"),
         costumer_id:
           route.params?.costumer_id ??
-          "eeb6e723-76ef-4d2e-bdbc-c14e910b59f9",
+          "9e7bab9c-c0d3-4da5-a396-262d2eec957f",
       });
       console.log("Comanda criada:", response.data);
 
@@ -74,7 +72,8 @@ export default function LerQR() {
   const handleBarCodeScanned = (result: any) => {
     setShowCamera(false);
     console.log("QR Code detectado! Dados:", result.data);
-    confirmarComanda();
+    const id_da_mesa = result.data
+    confirmarComanda(id_da_mesa);
   };
 
   // Tela da câmera

@@ -13,11 +13,35 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
 import BackButton from "../../components/cart";
-import{useOrder} from "../../contexts/OrderContext";
-// import { api } from "../services/api";
+import { useOrder } from "../../contexts/OrderContext";
+import { api } from "../../services/api";
+
+export async function fazPagamento(id_order: string | null) {
+  try {
+    await api.post("/payments", {
+      order_id: id_order,
+      table_id: "43a4d933-e310-4137-92df-e5ae4fdb9f85",
+      mtdo_pagto_id: "1daf2f54-81d9-45c4-81a2-9a8759f5d453"
+    })
+  } catch (err) {
+    console.log("Não foi possível pagar o seu pedido", err)
+  }
+}
+
+export async function enviarOrder(id_order: string | null) {
+  try {
+    await api.put("/order/send", {
+      order_id: id_order
+    });
+  } catch (err) {
+    console.log("Deu erro ao finalizar o draft", err)
+  }
+}
+
 
 const Pagamento: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
+
 
   const DadosPagamento = () => {
     navigation.navigate("DadosPagamento");
@@ -27,33 +51,28 @@ const Pagamento: React.FC = () => {
     navigation.navigate("Carrinho");
   };
 
-  const {orderId} = useOrder();
+  const { orderId } = useOrder();
+
+
 
   React.useEffect(() => {
     console.log("Order ID no Pagamento:", orderId);
   }, [orderId]);
   const chamarGarcom = () => {
+    fazPagamento(orderId)
+    enviarOrder(orderId)
+
     Alert.alert('Atenção', 'Um garçom foi chamado para sua mesa.', [{ text: 'OK' }]);
     navigation.navigate("Status2");
   }
 
   const realizarPagamento = async () => {
     try {
-      const response = await fetch("http://192.168.137.1:3333/payment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          order_id: orderId,
-          table_id: "629ce4eb-1e0e-4c7c-9deb-5f562b1e89e4",
-          mtdo_pagto_id: "13ae76b5-cf85-4e27-84ad-52972cb32d9d"
-        }), 
-      });
+      const response = fazPagamento(orderId)
 
-      if (!response.ok) throw new Error("Erro no pagamento");
+      if (!response) throw new Error("Erro no pagamento");
 
-      const data = await response.json();
+      const data = await response;
       console.log("Pagamento concluído:", data);
 
       Alert.alert(
@@ -78,6 +97,7 @@ const Pagamento: React.FC = () => {
       Alert.alert("Erro", "Não foi possível concluir o pagamento.");
     }
   };
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -128,9 +148,13 @@ const Pagamento: React.FC = () => {
       </ScrollView>
     </SafeAreaView>
   );
+
+
 };
 
 export default Pagamento;
+
+
 
 const styles = StyleSheet.create({
   container: {
