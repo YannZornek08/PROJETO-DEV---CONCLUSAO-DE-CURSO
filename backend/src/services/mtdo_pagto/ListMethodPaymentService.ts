@@ -1,17 +1,16 @@
 import prismaClient from "../../prisma";
 
-class ListMtdoPagtoService{
-    async execute() {
+class ListMethodPaymentService {
+  async execute() {
+    const methods = await prismaClient.mtdo_pagto.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+    });
 
-        const mtdo_pagto = await prismaClient.mtdo_pagto.findMany({
-            select: {
-                id: true,
-                name: true,
-            }
-        })
-
-        return mtdo_pagto;
-    }
+    return methods;
+  }
 }
 
-export { ListMtdoPagtoService }
+export { ListMethodPaymentService };

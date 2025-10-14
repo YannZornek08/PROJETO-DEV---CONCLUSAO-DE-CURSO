@@ -5,8 +5,13 @@ import {
   ScrollView,
   ImageBackground,
   Text,
+  TouchableOpacity,
+  Image,
   StyleSheet,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { StackParamsList } from "../../routes/app.routes";
 
 // Enum para os status dos pedidos
 enum OrderStatus {
@@ -26,6 +31,13 @@ interface Pedido {
 
 const PedidoStatus: React.FC = () => {
   // Array de pedidos - você pode buscar isso de uma API
+  
+    const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
+  
+    function VoltarMenu (){
+      navigation.navigate ("VoltarMenu")
+    }
+
   const pedidos: Pedido[] = [
     {
       id: "1",
@@ -118,6 +130,14 @@ const PedidoStatus: React.FC = () => {
           style={styles.banner}
         >
           <Text style={styles.greeting}>Pedidos</Text>
+
+        <TouchableOpacity onPress={VoltarMenu}>
+          <Image
+            source={require('../../assets/Voltar.png')}
+            resizeMode="stretch"
+            style={styles.logo}
+          />
+        </TouchableOpacity>
         </ImageBackground>
 
         {/* Renderizar cards de pedidos visíveis */}
@@ -223,6 +243,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#8D4F28",
     marginLeft: 8,
     marginVertical: 4,
+  },
+  logo: {
+    width: 32,
+    height: 32,
+    marginTop: 65,
+    marginBottom: 5,
+    marginLeft: 26,
   },
   stepText: {
     fontSize: 16,

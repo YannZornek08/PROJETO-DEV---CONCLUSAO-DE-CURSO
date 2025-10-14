@@ -8,17 +8,24 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
-  TextInput, // 🔹 Importando TextInput
+  TextInput,
 } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
+import { useOrder } from "../../contexts/OrderContext";
+import { fazPagamento, enviarOrder } from "../Pagamento";
+import { RouteProp, useRoute } from "@react-navigation/native";
+
+type DadosPagamentoRouteProp = RouteProp<StackParamsList, "DadosPagamento">;
+
 
 const Dados: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
-
-  const [cpf, setCpf] = useState(""); // 🔹 Estado para armazenar o valor digitado
+  const { orderId } = useOrder();
+  const [cpf, setCpf] = useState("");
+  const {id_mtdo_pagto} = useRoute<DadosPagamentoRouteProp>().params;
 
   const Menu = () => {
     if (!cpf) {
@@ -58,36 +65,38 @@ const Dados: React.FC = () => {
         <View style={styles.card}>
           <Text style={styles.label}>CPF:</Text>
 
-         <View style={styles.inputRow}>
-  <TextInput
-    style={styles.input}
-    placeholder="Digite seu CPF"
-    value={cpf}
-    onChangeText={setCpf}
-    keyboardType="numeric"
-    maxLength={11} // limite para CPF
-  />
+          <View style={styles.inputRow}>
+            <TextInput
+              style={styles.input}
+              placeholder="Digite seu CPF"
+              value={cpf}
+              onChangeText={setCpf}
+              keyboardType="numeric"
+              maxLength={11}
+            />
+            <TouchableOpacity onPress={() => setCpf("")}>
+              <Image
+                source={{
+                  uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ibRZmPwSqH/y0ooi2t9_expires_30_days.png",
+                }}
+                resizeMode="stretch"
+                style={styles.iconInput}
+              />
+            </TouchableOpacity>
+          </View>
 
-  {/* 🔹 Ícone virou botão para limpar o campo */}
-  <TouchableOpacity onPress={() => setCpf("")}>
-    <Image
-      source={{
-        uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ibRZmPwSqH/y0ooi2t9_expires_30_days.png",
-      }}
-      resizeMode="stretch"
-      style={styles.iconInput}
-    />
-  </TouchableOpacity>
-</View>
+          <Text style={styles.helperText}>Exemplo: 123.456.789-01</Text>
 
-
-          <Text style={styles.helperText}>
-            Exemplo: 12345678901
-          </Text>
-
-          {/* Botão pagar */}
+          {/* 🔹 Botão pagar (corrigido) */}
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={Menu}>
+            <TouchableOpacity
+              style={styles.button} // <-- adicionado aqui
+              onPress={() => {
+                fazPagamento(orderId, id_mtdo_pagto);
+                enviarOrder(orderId);
+                navigation.navigate("Menu");
+              }}
+            >
               <Text style={styles.buttonText}>Pagar</Text>
             </TouchableOpacity>
           </View>
@@ -115,12 +124,12 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center", 
+    justifyContent: "center",
   },
   backButton: {
     position: "absolute",
     left: 0,
-    zIndex: 1, 
+    zIndex: 1,
   },
   iconHeader: {
     width: 32,

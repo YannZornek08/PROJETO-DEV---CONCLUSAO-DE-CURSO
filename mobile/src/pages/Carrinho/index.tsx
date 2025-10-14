@@ -170,8 +170,9 @@ useEffect(() => {
             </View>
           ))}
         </View>
-        {/* Campo de observações visível (mas não aparece no resumo) */}
-        < View style={styles.notesContainer} >
+
+        
+        <View style={styles.notesContainer}>
           <TextInput
             style={styles.notesInput}
             placeholder="Toque para adicionar observações:"
@@ -183,7 +184,7 @@ useEffect(() => {
           />
         </View>
 
-        {/* Total / Mesa / Nome — igual ao modelo (sem exibir observações aqui) */}
+        
         <View style={styles.totalContainer}>
           <Text style={styles.totalLabel}>Total:</Text>
           <Text style={styles.totalValue}> {formatarPreco(total)}</Text>
