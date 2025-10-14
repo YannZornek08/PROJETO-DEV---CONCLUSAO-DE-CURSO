@@ -16,6 +16,7 @@ import Pagamento from "./src/pages/Pagamento";
 import Conta from "./src/pages/Conta";
 import DetalhesProduto from "./src/pages/DetalhesProduto";
 import DadosPagamento from "./src/pages/DadosPagamento";
+import DadosPagamentoPix from "./src/pages/DadosPagamentoPix";
 import Cupons from "./src/pages/Cupons";
 import Carrinho from "./src/pages/Carrinho";
 import LerQR from "./src/pages/LerQR";

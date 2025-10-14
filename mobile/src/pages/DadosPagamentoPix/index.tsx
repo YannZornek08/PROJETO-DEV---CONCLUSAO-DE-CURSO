@@ -18,20 +18,12 @@ import { StackParamsList } from "../../routes/app.routes";
 const Dados: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
-  const [cpf, setCpf] = useState(""); // 🔹 Estado para armazenar o valor digitado
-
-  const Menu = () => {
-    if (!cpf) {
-      Alert.alert("Erro", "Por favor, digite seu CPF.");
-      return;
-    }
-
-    Alert.alert("Pagamento Realizado", `CPF informado: ${cpf}`);
-    navigation.navigate("Status2");
-  };
-
   const Pagamento = () => {
     navigation.navigate("Pagamento");
+  };
+
+  const StatusPedido = () => {
+    navigation.navigate("StatusPedido");
   };
 
   return (
@@ -54,67 +46,21 @@ const Dados: React.FC = () => {
           <Text style={styles.title}>Dados</Text>
         </View>
 
-        {/* Campo CPF */}
+       
         <View style={styles.card}>
-          <Text style={styles.label}>CPF:</Text>
+          <Text style={styles.label}>Pagar com QR-Code:</Text>
 
-         <View style={styles.inputRow}>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite seu CPF"
-              value={cpf}
-              onChangeText={setCpf}
-              keyboardType="numeric"
-              maxLength={11} // limite para CPF
-            />
-          
-            {/* 🔹 Ícone virou botão para limpar o campo */}
-            <TouchableOpacity onPress={() => setCpf("")}>
-              <Image
-                source={{
-                  uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ibRZmPwSqH/y0ooi2t9_expires_30_days.png",
-                }}
-                resizeMode="stretch"
-                style={styles.iconInput}
-              />
-            </TouchableOpacity>
-          </View>
+          <Image
+            source={require("../../assets/qrcode-template.png")}
+            resizeMode="stretch"
+            style={styles.qrcode}
+          ></Image>
 
-          <Text style={styles.helperText}>
-            Exemplo: 12345678901
-          </Text>
-
-          <Text style={styles.label}>Número do cartão:</Text>
-
-         <View style={styles.inputRow}>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite o número do cartão"
-              keyboardType="numeric"
-              maxLength={11}
-            />
-          
-            {/* botão para limpar o campo */}
-            <TouchableOpacity onPress={() => setCpf("")}>
-              <Image
-                source={{
-                  uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/ibRZmPwSqH/y0ooi2t9_expires_30_days.png",
-                }}
-                resizeMode="stretch"
-                style={styles.iconInput}
-              />
-            </TouchableOpacity>
-          </View>
-
-
-          <Text style={styles.helperText}>
-            Exemplo: 12345678901
-          </Text>
 
           {/* Botão pagar */}
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={Menu}>
-              <Text style={styles.buttonText}>Pagar</Text>
+            <TouchableOpacity style={styles.button} onPress={StatusPedido}>
+              <Text style={styles.buttonText}>Copiar código</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -173,11 +119,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 20,
   },
+  qrcode: {
+    height: 200,
+    width: 200,
+    alignSelf: "center",
+    marginBottom: 20,
+  },
   label: {
     fontSize: 20,
     fontWeight: "600",
     color: "#000",
     marginBottom: 12,
+    alignSelf: "center",
   },
   inputRow: {
     flexDirection: "row",
@@ -216,6 +169,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     paddingVertical: 12,
     paddingHorizontal: 24,
+    alignSelf: "center",
   },
   buttonText: {
     color: "#FFFFFF",

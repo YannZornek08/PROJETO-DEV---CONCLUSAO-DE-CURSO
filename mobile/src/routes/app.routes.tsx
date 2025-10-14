@@ -18,6 +18,7 @@ import LerQR from "../pages/LerQR";
 
 import Pagamento from "../pages/Pagamento"
 import DadosPagamento from "../pages/DadosPagamento"
+import DadosPagamentoPix from "../pages/DadosPagamentoPix"
 
 //////////////
 import Status1 from "../pages/Status1";
@@ -47,6 +48,7 @@ export type StackParamsList = {
     Settings: undefined;
     Pagamento: undefined;
     DadosPagamento: undefined;
+    DadosPagamentoPix: undefined;
     DetalhesProdutos: { product: Produto };
     VoltarMenu:undefined;
 
@@ -128,6 +130,11 @@ function AppRoutes() {
       <Stack.Screen
           name="DadosPagamento"
           component={DadosPagamento}
+          options={{headerShown: false}}
+      />
+      <Stack.Screen
+          name="DadosPagamentoPix"
+          component={DadosPagamentoPix}
           options={{headerShown: false}}
       />
             

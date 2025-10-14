@@ -21,6 +21,10 @@ const Pagamento: React.FC = () => {
     navigation.navigate("DadosPagamento");
   };
 
+  const DadosPagamentoPix = () => {
+    navigation.navigate("DadosPagamentoPix");
+  };
+
   const Carrinho = () => {
     navigation.navigate("Carrinho");
   };
@@ -54,7 +58,7 @@ const Pagamento: React.FC = () => {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={[styles.card, styles.fullWidthCard]} onPress={DadosPagamento}>
+        <TouchableOpacity style={[styles.card, styles.fullWidthCard]} onPress={DadosPagamentoPix}>
           <Text style={styles.cardText}>
             Pix
           </Text>
