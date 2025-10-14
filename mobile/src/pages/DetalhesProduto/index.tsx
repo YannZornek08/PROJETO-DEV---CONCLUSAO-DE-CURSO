@@ -76,8 +76,8 @@ export default function DetalhesProdutos() {
           order_id: orderId
         }
       })
-      setOrderAtual(response.data)
-      // console.log("A order atual é", orderAtual?.draft)
+      setOrderAtual(response.data.orders)
+      console.log("A order atual é", orderAtual)
       if (orderAtual?.draft == false) {
       } else {
       }
