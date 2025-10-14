@@ -56,6 +56,7 @@ const Pagamento: React.FC = () => {
   React.useEffect(() => {
     console.log("Order ID no Pagamento:", orderId);
   }, [orderId]);
+  
   const chamarGarcom = () => {
     fazPagamento(orderId, "075e53d7-bf47-4bb8-9b34-aed0c7ffee46")
     enviarOrder(orderId)

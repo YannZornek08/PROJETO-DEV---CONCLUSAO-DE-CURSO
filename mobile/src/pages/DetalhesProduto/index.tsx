@@ -45,7 +45,7 @@ type Item = {
   amount: number;
 };
 
-type OrderAtual = {
+export type OrderAtual = {
   id: string;
   draft: boolean;
 }
@@ -54,7 +54,10 @@ export default function DetalhesProdutos() {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
   const route = useRoute<DetalhesRouteProp>();
   const [adicionais, setAdicionais] = useState<Additional[]>([]);
-  const [orderAtual, setOrderAtual] = useState<OrderAtual | null>(null);
+  
+  //REFATORAR DEPOIS PARA QUE AS VARIAVEIS SEJAM EXPORTADAS AO CARRINHO
+  const [bloquearTela, setBloquearTela] = useState(false);
+  const [orderAtual, setOrderAtual] = useState<OrderAtual | boolean>(Boolean);
   // const [items, setItems] = useState<Item[]>([]);
 
   // Imprime aqui os produtos clicados em adicionar
@@ -67,23 +70,30 @@ export default function DetalhesProdutos() {
 
   const { orderId } = useOrder();
 
-  useEffect(() => {
-    async function bloquearPedidos() {
-      if (!orderId) return;
-
+  //REFATORAR DEPOIS PARA QUE A FUNÇÃO SEJA EXPORTADA AO CARRINHO
+  async function bloquearPedidos() {
+    if (!orderId) return;
+    try {
       const response = await api.get("/order/detail", {
-        params: {
-          order_id: orderId
-        }
-      })
-      setOrderAtual(response.data.orders)
-      console.log("A order atual é", orderAtual)
-      if (orderAtual?.draft == false) {
+        params: { order_id: orderId },
+      });
+      setOrderAtual(response.data.orders.draft);
+      console.log("O id do pedido atual é", orderId)
+      if (response.data.orders.draft == false) {
+        console.log("DETALHES PRODUTOS Tem que bloquear a TELA!!")
+        setBloquearTela(true);
       } else {
+        console.log("DETALHES PRODUTOS Não bloqueia a tela")
+        setBloquearTela(false);
       }
+    } catch (err) {
+      console.log("Erro ao buscar detalhes do pedido:", err);
     }
-    bloquearPedidos()
-  })
+  }
+
+  useEffect(() => {
+    bloquearPedidos();
+  }, [orderId]);
 
   async function adicionarItem() {
     try {
@@ -116,6 +126,23 @@ export default function DetalhesProdutos() {
 
   return (
     <SafeAreaView style={styles.container}>
+  {/* //REFATORAR DEPOIS PARA QUE O BLOCO DE CÓDIGO SEJA EXPORTADO AO CARRINHO */}
+      {bloquearTela && (
+        <View style={styles.overlay}>
+          <View style={styles.overlayContent}>
+            <Text style={styles.overlayText}>
+              Este pedido já foi finalizado e não pode ser editado.
+            </Text>
+
+            <TouchableOpacity
+              style={styles.overlayButton}
+              onPress={() => navigation.goBack()}
+            >
+              <Text style={styles.overlayButtonText}>Voltar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
       <ScrollView style={styles.scrollView}>
         {/* Cabeçalho e imagem do produto */}
         <View style={styles.imageContainer}>
@@ -258,11 +285,54 @@ export default function DetalhesProdutos() {
           <Text style={styles.addButtonText}>Adicionar</Text>
         </TouchableOpacity>
       </View>
+
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  overlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 999, // cobre tudo
+  },
+  overlayContent: {
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    padding: 30,
+    width: "80%",
+    alignItems: "center",
+    elevation: 10,
+  },
+  overlayTitle: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#8D4F28",
+    marginBottom: 10,
+  },
+  overlayText: {
+    fontSize: 16,
+    color: "#333",
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  overlayButton: {
+    backgroundColor: "#8D4F28",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 25,
+  },
+  overlayButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
   container: { flex: 1, backgroundColor: "#FFFFFF" },
   scrollView: { flex: 1, backgroundColor: "#FFFFFF" },
   imageContainer: { marginTop: 65, marginBottom: 2, marginHorizontal: 26 },
