@@ -55,7 +55,7 @@ const PedidoScreen: React.FC = () => {
   const { orderId } = useOrder();
 
   //   useEffect(() => {
-    
+
   //   async function verProdutosPedido() {
   //     try {
   //       const response = await api.get('/order/detail');
@@ -68,16 +68,16 @@ const PedidoScreen: React.FC = () => {
   // }, []);
 
   useEffect(() => {
-  const calcularTotal = () => {
-    const soma = items.reduce((somatoria, item) => {
-      return somatoria + item.product.price * item.amount;
-    }, 0);
-    setTotal(soma);
-  };
+    const calcularTotal = () => {
+      const soma = items.reduce((somatoria, item) => {
+        return somatoria + item.product.price * item.amount;
+      }, 0);
+      setTotal(soma);
+    };
 
-  calcularTotal();
-}, [items]);
-  
+    calcularTotal();
+  }, [items]);
+
   const handlePay = () => {
     Alert.alert(
       "Resumo do Pedido",
@@ -88,34 +88,34 @@ const PedidoScreen: React.FC = () => {
   };
 
 
-useEffect(() => {
-  if (!orderId) return;
-  async function verPedidos() {
-    const response = await api.get('/order/detail', { params: { order_id: orderId } });
-    setItems(response.data);
-  }
-  verPedidos();
-}, [orderId]);
+  useEffect(() => {
+    if (!orderId) return;
+    async function verPedidos() {
+      const response = await api.get('/order/detail', { params: { order_id: orderId } });
+      setItems(response.data.items);
+    }
+    verPedidos();
+  }, [orderId]);
 
 
   function VoltarMenu() {
     navigation.navigate("VoltarMenu")
   }
 
-    async function excluir(item_id: string) {
-      Alert.alert("Item excluído do carrinho.");
-      console.log("Tentando excluir item:", item_id);
-      try {
-          const response = await api.delete("/order/remove", {
-          params: { item_id }
-        });
-          console.log("Resposta do backend:", response.data);
+  async function excluir(item_id: string) {
+    Alert.alert("Item excluído do carrinho.");
+    console.log("Tentando excluir item:", item_id);
+    try {
+      const response = await api.delete("/order/remove", {
+        params: { item_id }
+      });
+      console.log("Resposta do backend:", response.data);
 
-          setItems((prev) => prev.filter((item) => item.id !== item_id));
-          alert("Item excluído do carrinho.");
-        } catch (err) {
-         console.log("Erro ao excluir item:", err);
-        }
+      setItems((prev) => prev.filter((item) => item.id !== item_id));
+      alert("Item excluído do carrinho.");
+    } catch (err) {
+      console.log("Erro ao excluir item:", err);
+    }
   }
 
   return (
@@ -131,28 +131,28 @@ useEffect(() => {
 
         <Text style={styles.title}>Pedido</Text>
 
-  {items.map((item) => (
-  <View style={styles.orderItem} key={item.id}>
-    <Image
-      source={{ uri: item.product.banner }}
-      resizeMode="stretch"
-      style={styles.orderItemImage}
-    />
-    <Text style={styles.orderItemDescription}>
-      {item.product.name}{"\n"}Quantidade: {item.amount}
-    </Text>
+        {items.map((item) => (
+          <View style={styles.orderItem} key={item.id}>
+            <Image
+              source={{ uri: item.product.banner }}
+              resizeMode="stretch"
+              style={styles.orderItemImage}
+            />
+            <Text style={styles.orderItemDescription}>
+              {item.product.name}{"\n"}Quantidade: {item.amount}
+            </Text>
 
-    {/* Coluna para valor + botão */}
-      <View>
-        <Text style={styles.orderItemPrice}>
-          {formatarPreco(item.product.price * item.amount)}
-        </Text>
-        <TouchableOpacity onPress={() => excluir(item.id)}>
-          <Image source={trash} style={styles.trash}/>
-        </TouchableOpacity>
-      </View>
-    </View>
-  ))}
+            {/* Coluna para valor + botão */}
+            <View>
+              <Text style={styles.orderItemPrice}>
+                {formatarPreco(item.product.price * item.amount)}
+              </Text>
+              <TouchableOpacity onPress={() => excluir(item.id)}>
+                <Image source={trash} style={styles.trash} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        ))}
 
 
         <View>
@@ -162,7 +162,7 @@ useEffect(() => {
                 source={{ uri: produto.banner }}
                 resizeMode="stretch"
                 style={styles.orderItemImage}
-                />
+              />
               <Text style={styles.orderItemDescription}>
                 {produto.name}{"\n"}{produto.description}
               </Text>
@@ -171,7 +171,7 @@ useEffect(() => {
           ))}
         </View>
 
-        
+
         <View style={styles.notesContainer}>
           <TextInput
             style={styles.notesInput}
@@ -184,7 +184,7 @@ useEffect(() => {
           />
         </View>
 
-        
+
         <View style={styles.totalContainer}>
           <Text style={styles.totalLabel}>Total:</Text>
           <Text style={styles.totalValue}> {formatarPreco(total)}</Text>

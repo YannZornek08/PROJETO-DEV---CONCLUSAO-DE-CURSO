@@ -38,7 +38,7 @@ class DetailOrderService {
             }
         });
 
-        return items;
+        return { items, orders } ;
     }
 }
 

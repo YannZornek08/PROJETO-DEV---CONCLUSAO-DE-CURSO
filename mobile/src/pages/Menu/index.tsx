@@ -75,7 +75,7 @@ export default function HomeScreen() {
       <ScrollView style={styles.container}>
         <View style={styles.header}>
           <View style={styles.headerTop}>
-            <Text style={styles.headerText}>Seja bem-vindo, João.</Text>
+            <Text style={styles.headerText}>Seja bem-vindo{user?.name ? `, ${user.name}` : ""}.</Text>
 
             <TouchableOpacity style={styles.signOutButton} onPress={signOut}>
               <Text style={styles.signOutText}>Sair</Text>
@@ -192,6 +192,7 @@ function PizzaCard({ product }: PizzaCardProps) {
         <Image
           source={require("../../assets/Plus.png")}
           resizeMode="stretch"
+          style={{ width: 25, height: 25}}
         />
         <Text style={styles.addText}>Adicionar</Text>
       </TouchableOpacity>
@@ -299,5 +300,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  addText: { color: "#FFFFFF", fontSize: 14, fontWeight: "bold" },
+  addText: { color: "#FFFFFF", fontSize: 12, fontWeight: "bold" },
 });
