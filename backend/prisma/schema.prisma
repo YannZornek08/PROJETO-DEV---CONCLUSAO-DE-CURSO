@@ -52,6 +52,7 @@ model Order {
   id                String              @id @default(uuid())
   status            Boolean             @default(false)
   draft             Boolean             @default(true)
+  note              String              @default("")
   created_at        DateTime?           @default(now())
   update_at         DateTime?           @default(now())
   costumer_id       String

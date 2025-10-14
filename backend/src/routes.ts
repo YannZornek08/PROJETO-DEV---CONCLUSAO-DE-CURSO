@@ -21,6 +21,7 @@ import { RemoveOrderController } from './controllers/order/RemoveOrderController
 import { AddItemController } from './controllers/order/AddItemController';
 import { RemoveItemController } from './controllers/order/RemoveItemController';
 import { SendOrderController } from './controllers/order/SendOrderController';
+import { AddNoteController } from './controllers/order/AddNoteController';
 
 import { ListOrdersController } from './controllers/order/ListOrdersController';
 import { DetailOrderController } from './controllers/order/DetailOrderController';
@@ -104,6 +105,7 @@ router.delete('/order', new RemoveOrderController().handle)
 
 router.post('/order/add', new AddItemController().handle)
 router.delete('/order/remove', new RemoveItemController().handle)
+router.put('/order/note', new AddNoteController().handle)
 router.put('/order/send', new SendOrderController().handle)
 
 router.get('/orders', new ListOrdersController().handle)
