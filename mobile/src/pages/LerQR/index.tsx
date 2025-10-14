@@ -13,6 +13,7 @@ import { StackParamsList } from "../../routes/app.routes";
 import { api } from "../../services/api";
 import BottomNavBar from "../../components/navButton";
 import { useOrder } from "../../contexts/OrderContext"; 
+import { useCostumer } from "../../contexts/CostumerContext";
 
 type RouteDetailParams = {
   Order: {
@@ -27,16 +28,16 @@ export default function AutenticacaoComanda() {
   const route = useRoute<OrderRouterProps>();
   const [codigo, setCodigo] = useState<string>("");
   const { setOrderId } = useOrder();
-
   const navigation =
     useNavigation<NativeStackNavigationProp<StackParamsList>>();
+  const { costumerId, setCostumerId } = useCostumer();
 
   async function confirmarComanda() {
   try {
     // Alterar toda vez o id.
     const response = await api.post("/order", {
       table_id: '3f018ff9-8ffc-4b68-b6a0-d6a6f7143616',
-      costumer_id: '99efaf19-e2b8-41f0-9cd6-f692757dff9f',
+      costumer_id: costumerId,
     });
 
       console.log("Order criada:", response.data);
