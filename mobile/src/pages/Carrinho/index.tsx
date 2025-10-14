@@ -118,6 +118,25 @@ const PedidoScreen: React.FC = () => {
     }
   }
 
+  async function atualizarObservacao() {
+    // Alert.alert("Observação atualizada ao item.");
+    console.log("Tentando atualizar observação ao item:", orderId);
+    try {
+      await api.put("/order/note", {
+        params: {
+          order_id: orderId, 
+          note: observacoes,
+        }
+      });
+      console.log("Resposta do backend: Observação atualizada com sucesso.", observacoes);
+
+      // setItems((prev) => prev.filter((item) => item.id !== item_id));
+      // alert("Observação adicionada ao item.");
+    } catch (err) {
+      console.log("Erro ao adicionar observação ao item:", err);
+    }
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView style={styles.scrollView}>
@@ -178,7 +197,11 @@ const PedidoScreen: React.FC = () => {
             placeholder="Toque para adicionar observações:"
             placeholderTextColor="#52443C"
             value={observacoes}
-            onChangeText={setObservacoes}
+            onChangeText={(text) => {
+              setObservacoes(text);
+              atualizarObservacao();
+            }}
+
             multiline
             textAlignVertical="top"
           />

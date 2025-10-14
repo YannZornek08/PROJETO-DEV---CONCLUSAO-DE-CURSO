@@ -1,4 +1,4 @@
-import { View, StatusBar } from 'react-native';
+import { View, StatusBar, ActivityIndicator } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -6,6 +6,7 @@ import Routes from './src/routes';
 import { AuthProvider } from './src/contexts/AuthContext';
 import { OrderProvider } from "./src/contexts/OrderContext";
 import { CostumerProvider } from "./src/contexts/CostumerContext";
+import { useFonts } from 'expo-font';
 
 const Stack = createNativeStackNavigator();
 
