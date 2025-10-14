@@ -12,6 +12,9 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
 import { api } from "../../services/api";
 import BottomNavBar from "../../components/navButton";
+import { useOrder } from "../../contexts/OrderContext"; 
+import { useCostumer } from "../../contexts/CostumerContext";
+
 
 type RouteDetailParams = {
   Order: {
@@ -24,13 +27,15 @@ type OrderRouterProps = RouteProp<RouteDetailParams, "Order">;
 
 export default function LerQR() {
   const route = useRoute<OrderRouterProps>();
+  const [codigo, setCodigo] = useState<string>("");
+  const { setOrderId } = useOrder();
   const navigation =
     useNavigation<NativeStackNavigationProp<StackParamsList>>();
+  const { costumerId, setCostumerId } = useCostumer();
 
   const [showCamera, setShowCamera] = useState(false);
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const cameraRef = useRef<CameraView | null>(null);
-
   
   useEffect(() => {
     if (showCamera) {
@@ -46,14 +51,13 @@ export default function LerQR() {
   async function confirmarComanda(id_mesa: string) {
     try {
       const response = await api.post("/order", {
-        table_id: id_mesa,
-        //   route.params?.table_id ??
-        //   Error("ID da mesa falhou"),
-        costumer_id:
-          route.params?.costumer_id ??
-          "9e7bab9c-c0d3-4da5-a396-262d2eec957f",
+        table_id: id_mesa ?? Error("Não há um id da mesa"),
+        costumer_id: costumerId ?? Error("Não há um id do cliente"),
       });
       console.log("Comanda criada:", response.data);
+
+          setOrderId(response.data.id);
+
     } catch (err: any) {
       console.error(
         "Erro ao criar comanda:",

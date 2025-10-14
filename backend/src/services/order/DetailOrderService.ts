@@ -10,23 +10,35 @@ class DetailOrderService {
         
         // Verifica se o pedido existe
         const orderExists = await prismaClient.order.findUnique({
-            where: { id: order_id }
+            where: { id: order_id },
+            select: { draft: true }
         });
 
         if (!orderExists) {
             throw new Error("Pedido não encontrado");
         }
 
+        const orders = await prismaClient.order.findFirst({
+            where: {
+                id: order_id
+            },
+            select: {
+                id: true,
+                draft: true
+            } 
+        })
+
         const items = await prismaClient.item.findMany({
-            where: { order_id: order_id },
+            where: { 
+                order_id: order_id 
+            },
             include: { 
-                items_additionals: true,
-                items_ingredients: true,
+                product: true, 
                 order: true
             }
         });
 
-        return items;
+        return orders;
     }
 }
 

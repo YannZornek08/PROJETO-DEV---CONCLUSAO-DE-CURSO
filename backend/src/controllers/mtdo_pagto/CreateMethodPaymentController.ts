@@ -1,4 +1,4 @@
-import e, { Request, Response } from "express";
+import { Request, Response } from "express";
 import { CreateMtdoPagtoService } from "../../services/mtdo_pagto/CreateMethodPaymentService";
 
 class CreateMtdoPagtoController {
