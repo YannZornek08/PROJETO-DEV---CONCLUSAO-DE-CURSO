@@ -31,7 +31,8 @@ class AllItemIngredientService {
     });
 
     const existingIds = new Set(
-      existingItems.map((item) => item.ingredient_product_id)
+      existingItems.map((item) => item.
+      ingredient_product_id)
     );
 
     // Filtrar apenas os ingredientes que ainda não foram adicionados

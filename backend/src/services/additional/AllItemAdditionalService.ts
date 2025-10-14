@@ -37,10 +37,10 @@ class AllItemAdditionalService {
     // Filtrar apenas os adicionais que ainda não foram adicionados
     const dataToInsert = adicionaisDaCategoria
       .filter((additional) => !existingIds.has(additional.id))
-      .map((ingredient) => ({
-        ingredient_product_id: ingredient.id,
+      .map((additional) => ({
+        categories_additionals_id: additional.id,
         order_id,
-        adicionado: true,
+        adicionado: false,
       }));
 
     // Preparar os dados para inserir em massa
@@ -51,11 +51,11 @@ class AllItemAdditionalService {
     // }));
 
     // Criar todos de uma vez
-    const created = await prismaClient.items_ingredients.createMany({
+    const created = await prismaClient.items_additionals.createMany({
       data: dataToInsert,
     });
 
-    console.log("Itens ingredientes criados:", created);
+    console.log("Itens adicionais criados:", created);
     return created;
   }
 }

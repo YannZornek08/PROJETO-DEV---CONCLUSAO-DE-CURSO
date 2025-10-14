@@ -182,6 +182,19 @@ function PizzaCard({ product }: PizzaCardProps) {
       console.log("Erro ao criar ingredientes do produto:", err);
     }
   }
+  async function criarTodosAdicionaisCategoria(id_categoria: string) {
+    // console.log("Criando ingredientes para o produto:", id_produto);
+    try {
+      await api.post('/item/all/additionals', {
+        category_id: id_categoria,
+        order_id: "e7611b30-2756-4346-9305-2bf30495c238"
+      });
+      console.log("Adicionais da categoria criados com sucesso!");
+    } catch (err) {
+      console.log("Id do da categoria", id_categoria);
+      console.log("Erro ao criar adicionais do produto:", err);
+    }
+  }
 
   return (
     <View style={styles.card}>
@@ -192,6 +205,7 @@ function PizzaCard({ product }: PizzaCardProps) {
         style={styles.addButton}
         onPress={() => {
           // console.log("Clicou em adicionar", product.id);
+          criarTodosAdicionaisCategoria(product.category_id);
           criarTodosIngredientsProduto(product.id);
           navigation.navigate("DetalhesProdutos", { product })
         }}

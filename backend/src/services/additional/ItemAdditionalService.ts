@@ -28,7 +28,7 @@ class ItemAdditionalService {
             data: {
                 order_id: order_id,
                 categories_additionals_id: categories_additionals_id,
-                adicionado: true,
+                adicionado: false,
             }
         })
 
