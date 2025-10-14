@@ -67,44 +67,6 @@ export default function DetalhesProdutos() {
 
   const { orderId } = useOrder();
 
-  // useEffect(() => {
-  //   async function verAdicionaisProduto() {
-  //     try {
-  //       //Chama a rota que retorna TODOS os ingredientes do produto
-  //       const response = await api.get('/product/ingredients', {
-  //         params: {
-  //           product_id: product.id,
-  //         }
-  //       });
-  //       console.log("API retornou:", response.data);
-  //       if (!response.data) {
-  //         setAdicionais([]);
-  //         return;
-  //       }
-  //       setAdicionais(Array.isArray(response.data) ? response.data : [response.data]);
-  //       const dataArray = Array.isArray(response.data) ? response.data : [response.data];
-  //       const formattedAdicionais: Additional[] = dataArray.map((item: any) => ({
-  //         ingredient_product_id: item.ingredient_product_id ?? "",
-  //         product_id: item.product_id ?? "",
-  //         ingredient_id: item.ingredient_id ?? "",
-  //         product: {
-  //           name: item.product?.name ?? "",
-  //         },
-  //         ingredient: {
-  //           name: item.ingredient?.name ?? "",
-  //         },
-  //         adicionado: item.adicionado ?? false,
-  //       }));
-  //       setAdicionais(formattedAdicionais);
-  //       console.log("Adicionais formatados:", formattedAdicionais);
-  //       // console.log("É array?", Array.isArray(response.data));
-  //     } catch (err) {
-  //       console.log("Erro ao buscar produtos:", err);
-  //     }
-  //   }
-  //   verAdicionaisProduto();
-  // }, [product.id]);
-
   useEffect(() => {
     async function bloquearPedidos() {
       if (!orderId) return;
@@ -199,28 +161,6 @@ export default function DetalhesProdutos() {
                 <TouchableOpacity
                   key={ingred.ingredient_id}
                   style={styles.adicionalItem}
-                // onPress={async () => {
-
-                //   //Atualiza localmente
-                //   setAdicionais((prev) =>
-                //     prev.map((item) =>
-                //       item.ingredient_product_id === ingred.ingredient_product_id
-                //         ? { ...item, adicionado: !item.adicionado }
-                //         : item
-                //     )
-                //   );
-                //   // Atualiza no banco via API
-                //   try {
-                //     await api.put(`/additional/update`, {
-                //       product_id: ingred.product_id,
-                //       ingredient_id: ingred.ingredient_id,
-                //     });
-                //     console.log("Adicional atualizado com sucesso", ingred, ingred.adicionado);
-
-                //   } catch (err) {
-                //     console.log("Erro ao atualizar adicional:", err);
-                //   }
-                // }}
                 >
                   <View
                     style={[
