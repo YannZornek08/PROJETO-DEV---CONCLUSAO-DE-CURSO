@@ -75,11 +75,8 @@ export default function HomeScreen() {
       <ScrollView style={styles.container}>
         <View style={styles.header}>
           <View style={styles.headerTop}>
-            <Text style={styles.headerText}>Seja bem-vindo{user?.name ? `, ${user.name}` : ""}.</Text>
+            <Text style={styles.headerText} numberOfLines={1} ellipsizeMode="tail">Seja bem-vindo{user?.name ? `, ${user.name}` : ""}.</Text>
 
-            <TouchableOpacity style={styles.signOutButton} onPress={signOut}>
-              <Text style={styles.signOutText}>Sair</Text>
-            </TouchableOpacity>
           </View>
 
           {/* Barra de busca */}
@@ -223,20 +220,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
   },
-
-  signOutButton: {
-    backgroundColor: "#5F4100",
-    paddingVertical: 6,
-    paddingHorizontal: 14,
-    borderRadius: 12,
-  },
-
-  signOutText: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 14,
-  },
-
   searchBar: {
     flexDirection: "row",
     alignItems: "center",
