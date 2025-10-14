@@ -131,7 +131,7 @@ useEffect(() => {
 
         <Text style={styles.title}>Pedido</Text>
 
-        {items.map((item) => (
+  {items.map((item) => (
   <View style={styles.orderItem} key={item.id}>
     <Image
       source={{ uri: item.product.banner }}

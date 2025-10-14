@@ -4,6 +4,8 @@ import { useNavigation } from "@react-navigation/native";
 import Cadastro from "../Cadastro";
 
 import { AuthContext } from "../../contexts/AuthContext";
+import { useCostumer } from "../../contexts/CostumerContext";
+import { api } from "../../services/api";
 
 export default function SignIn() {
     const { signIn, loadingAuth } = useContext(AuthContext)
@@ -11,14 +13,21 @@ export default function SignIn() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    async function handleLogin() {
-        
-        if(email === '' || password === '') {
-            return;
-        }
 
-        await signIn({ email, password})
-    }
+const { setCostumerId } = useCostumer();
+
+async function handleLogin() {
+  const response = await api.post("/session/costumers", {
+    email,
+    password,
+  });
+
+  // supondo que o backend retorne o ID do cliente
+  setCostumerId(response.data.id);
+  console.log("Costumer ID salvo:", response.data.id);
+
+  await signIn({ email, password });
+}
     
   const navigation = useNavigation();
 

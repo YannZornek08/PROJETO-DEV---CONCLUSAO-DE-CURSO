@@ -45,10 +45,16 @@ type Item = {
   amount: number;
 };
 
+type OrderAtual = {
+  id: string;
+  draft: boolean;
+}
+
 export default function DetalhesProdutos() {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
   const route = useRoute<DetalhesRouteProp>();
   const [adicionais, setAdicionais] = useState<Additional[]>([]);
+  const [orderAtual, setOrderAtual] = useState<OrderAtual | null>(null);
   // const [items, setItems] = useState<Item[]>([]);
 
   // Imprime aqui os produtos clicados em adicionar
@@ -98,6 +104,24 @@ export default function DetalhesProdutos() {
   //   }
   //   verAdicionaisProduto();
   // }, [product.id]);
+
+  useEffect(() => {
+    async function bloquearPedidos() {
+      if (!orderId) return;
+
+      const response = await api.get("/order/detail", {
+        params: {
+          order_id: orderId
+        }
+      })
+      setOrderAtual(response.data)
+      // console.log("A order atual é", orderAtual?.draft)
+      if (orderAtual?.draft == false) {
+      } else {
+      }
+    }
+    bloquearPedidos()
+  })
 
   async function adicionarItem() {
     try {
@@ -276,10 +300,10 @@ export default function DetalhesProdutos() {
             // Lógica para adicionar ao carrinho
             // Aqui você pode enviar os dados para o backend ou atualizar o estado global
             // Por enquanto, apenas mostramos um alerta
-            if(!orderId){
+            if (!orderId) {
               alert("Erro: Nenhum pedido ativo. Por favor, inicie um pedido antes de adicionar itens.");
               return;
-            }else {
+            } else {
               adicionarItem();
               alert(
                 `${product.name} adicionado! Tamanho: ${tamanhoSelecionado}, Quantidade: ${quantidade}, Adicionais: ${adicionais.join(
@@ -287,8 +311,9 @@ export default function DetalhesProdutos() {
                 ) || "Nenhum"}`
               );
               navigation.navigate("Carrinho");
-            }}
             }
+          }
+          }
         >
           <Text style={styles.addButtonText}>Adicionar</Text>
         </TouchableOpacity>

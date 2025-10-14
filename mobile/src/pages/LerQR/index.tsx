@@ -13,6 +13,7 @@ import { StackParamsList } from "../../routes/app.routes";
 import { api } from "../../services/api";
 import BottomNavBar from "../../components/navButton";
 import { useOrder } from "../../contexts/OrderContext"; 
+import { useCostumer } from "../../contexts/CostumerContext";
 
 
 type RouteDetailParams = {
@@ -28,14 +29,13 @@ export default function LerQR() {
   const route = useRoute<OrderRouterProps>();
   const [codigo, setCodigo] = useState<string>("");
   const { setOrderId } = useOrder();
-
   const navigation =
     useNavigation<NativeStackNavigationProp<StackParamsList>>();
+  const { costumerId, setCostumerId } = useCostumer();
 
   const [showCamera, setShowCamera] = useState(false);
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const cameraRef = useRef<CameraView | null>(null);
-
   
   useEffect(() => {
     if (showCamera) {
@@ -52,9 +52,7 @@ export default function LerQR() {
     try {
       const response = await api.post("/order", {
         table_id: id_mesa ?? Error("Não há um id da mesa"),
-        costumer_id:
-          route.params?.costumer_id ??
-          "a13648a4-97dd-4efd-ab10-b73399ba5a61",
+        costumer_id: costumerId ?? Error("Não há um id do cliente"),
       });
       console.log("Comanda criada:", response.data);
 

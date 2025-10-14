@@ -22,6 +22,7 @@ type DadosPagamentoRouteProp = RouteProp<StackParamsList, "DadosPagamento">;
 
 
 const Dados: React.FC = () => {
+  let pago = false;
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
   const { orderId } = useOrder();
   const [cpf, setCpf] = useState("");
@@ -40,6 +41,9 @@ const Dados: React.FC = () => {
   const Pagamento = () => {
     navigation.navigate("Pagamento");
   };
+  const resetOrder =
+  useOrder().resetOrder; // Reseta o pedido após o pagamento
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -94,7 +98,8 @@ const Dados: React.FC = () => {
               onPress={() => {
                 fazPagamento(orderId, id_mtdo_pagto);
                 enviarOrder(orderId);
-                navigation.navigate("Menu");
+                // resetOrder
+                navigation.navigate("StatusPedido");
               }}
             >
               <Text style={styles.buttonText}>Pagar</Text>

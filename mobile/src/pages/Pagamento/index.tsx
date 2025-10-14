@@ -25,7 +25,6 @@ export async function fazPagamento(id_order: string | null, id_mtdo_pagto: strin
   try {
     await api.post("/payments", {
       order_id: id_order,
-      table_id: "",
       mtdo_pagto_id: id_mtdo_pagto
     })
   } catch (err) {
@@ -53,7 +52,6 @@ const Pagamento: React.FC = () => {
   };
 
   const { orderId } = useOrder();
-  const id_mtdo_pagto = ""
 
   React.useEffect(() => {
     console.log("Order ID no Pagamento:", orderId);
@@ -98,6 +96,8 @@ const Pagamento: React.FC = () => {
   //   }
   // };
 
+  const resetOrder = useOrder().resetOrder; // Reseta o pedido após o pagamento
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -140,7 +140,11 @@ const Pagamento: React.FC = () => {
         </TouchableOpacity>
 
         <View style={styles.section}>
-          <TouchableOpacity style={styles.rowCard} onPress={chamarGarcom}>
+          <TouchableOpacity style={styles.rowCard} onPress={() => {
+            chamarGarcom
+            resetOrder
+            navigation.navigate("StatusPedido");
+          }}>
             <View style={styles.rowContent}>
               <Image
                 source={require('../../assets/person_alert_24dp_8D4E27_FILL0_wght400_GRAD0_opsz24.png')}
@@ -164,8 +168,6 @@ const Pagamento: React.FC = () => {
 };
 
 export default Pagamento;
-
-
 
 const styles = StyleSheet.create({
   container: {
