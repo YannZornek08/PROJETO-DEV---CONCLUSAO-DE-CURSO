@@ -28,18 +28,26 @@ export default function StatusPedido() {
   async function verOrder() {
     try {
       const response = await api.get(`/order/detail?${order_id}`);
+      // console.log("resultado", response.data)
 
-      if (Array.isArray(response.data) && response.data.length > 0) {
-        const pedido = response.data[0].order;
+      // if (Array.isArray(response.data.items) && response.data.items.length > 0) {
+
+      if (response.data.items.length > 0) {
+
+        // const pedido = response.data.orders.draft
+        // console.log(response.data.orders.draft)
+        // console.log("entrou 2 verificação")
 
         // Se o pedido ainda for um rascunho, não permite visualizar
-        if (pedido.draft) {
+        if (response.data.orders.draft === true) {
           setOrder(null);
           setLoading(false);
+          // console.log("entrou 3 verificação")
           return;
         }
 
-        setOrder(pedido);
+        setOrder(response.data.orders);
+        // console.log(order)
 
         // inicia animação suave
         Animated.timing(fadeAnim, {
@@ -60,6 +68,7 @@ export default function StatusPedido() {
 
   // atualiza o status automaticamente a cada 5 segundos
   useEffect(() => {
+    console.log(orderId)
     verOrder(); // busca inicial
 
     const interval = setInterval(() => {
@@ -79,7 +88,7 @@ export default function StatusPedido() {
   }
 
   // Caso o pedido ainda seja um rascunho (draft = true)
-  if (!order) {
+  if (order?.draft == true) {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Status do Pedido</Text>
@@ -106,12 +115,12 @@ export default function StatusPedido() {
       <Animated.View
         style={[
           styles.card,
-          { backgroundColor: order.status ? "#B9FBC0" : "#FFD6A5", opacity: fadeAnim },
+          { backgroundColor: order?.status ? "#B9FBC0" : "#FFD6A5", opacity: fadeAnim },
         ]}
       >
         <Text style={styles.statusLabel}>Seu pedido está:</Text>
-        <Text style={[styles.statusText, order.status ? styles.ready : styles.progress]}>
-          {order.status ? "✅ Pronto!" : "⌛ Em Andamento..."}
+        <Text style={[styles.statusText, order?.status ? styles.ready : styles.progress]}>
+          {order?.status ? "✅ Pronto!" : "⌛ Em Andamento..."}
         </Text>
       </Animated.View>
       <TouchableOpacity onPress={Menu}>

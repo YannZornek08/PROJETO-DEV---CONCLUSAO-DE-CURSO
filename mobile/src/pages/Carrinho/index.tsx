@@ -20,6 +20,8 @@ import Order from "../Order";
 import { useRoute, RouteProp } from "@react-navigation/native";
 import { useOrder } from "../../contexts/OrderContext";
 
+import { OrderAtual } from "../DetalhesProduto";
+
 export type Produto = {
   id: string;
   name: string;
@@ -50,6 +52,11 @@ const PedidoScreen: React.FC = () => {
   const [mesa, setMesa] = useState("05");
   const [nome, setNome] = useState("João M.");
   const [items, setItems] = useState<ItensPedido[]>([])
+  
+  //  REFATORAR, VER OS COMENTÁRIOS NO DETALHES PRODUTOS
+  const [orderAtual, setOrderAtual] = useState<OrderAtual | boolean>(Boolean);
+  const [bloquearTela, setBloquearTela] = useState(false);
+  
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
   const trash = require('../../assets/trash.png');
   const { orderId } = useOrder();
@@ -87,6 +94,26 @@ const PedidoScreen: React.FC = () => {
     navigation.navigate("Pagamento")
   };
 
+  async function bloquearPedidos() {
+    if (!orderId) return;
+    try {
+      const response = await api.get("/order/detail", {
+        params: { order_id: orderId },
+      });
+      setOrderAtual(response.data.orders.draft);
+      console.log("O draft da order atual é", orderAtual)
+      if (response.data.orders.draft == false) {
+        console.log("CARRINHO Tem que bloquear a TELA!!")
+        setBloquearTela(true);
+      } else {
+        console.log("CARRINHO Não bloqueia a tela")
+        setBloquearTela(false);
+      }
+    } catch (err) {
+      console.log("Erro ao buscar detalhes do pedido:", err);
+    }
+  }
+
 
   useEffect(() => {
     if (!orderId) return;
@@ -95,6 +122,7 @@ const PedidoScreen: React.FC = () => {
       setItems(response.data.items);
     }
     verPedidos();
+    bloquearPedidos();
   }, [orderId]);
 
 
@@ -139,6 +167,22 @@ const PedidoScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      {bloquearTela && (
+        <View style={styles.overlay}>
+          <View style={styles.overlayContent}>
+            <Text style={styles.overlayText}>
+              Este pedido já foi finalizado e não pode ser editado.
+            </Text>
+
+            <TouchableOpacity
+              style={styles.overlayButton}
+              onPress={() => navigation.goBack()}
+            >
+              <Text style={styles.overlayButtonText}>Voltar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
       <ScrollView style={styles.scrollView}>
         <TouchableOpacity onPress={VoltarMenu}>
           <Image
@@ -232,6 +276,48 @@ const PedidoScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  overlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 999, // cobre tudo
+  },
+  overlayContent: {
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    padding: 30,
+    width: "80%",
+    alignItems: "center",
+    elevation: 10,
+  },
+  overlayTitle: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#8D4F28",
+    marginBottom: 10,
+  },
+  overlayText: {
+    fontSize: 16,
+    color: "#333",
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  overlayButton: {
+    backgroundColor: "#8D4F28",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 25,
+  },
+  overlayButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
   safeArea: {
     flex: 1,
     backgroundColor: "#FFFFFF",

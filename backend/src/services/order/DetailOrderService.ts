@@ -24,7 +24,8 @@ class DetailOrderService {
             },
             select: {
                 id: true,
-                draft: true
+                draft: true,
+                status: true
             } 
         })
 
