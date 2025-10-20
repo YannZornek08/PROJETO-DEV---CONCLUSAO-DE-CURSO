@@ -98,7 +98,7 @@ export default function HomeScreen() {
                 />
               </TouchableOpacity>
               <TouchableOpacity>
-                
+
                 <SettingsButton />
 
               </TouchableOpacity>
@@ -173,8 +173,8 @@ function PizzaCard({ product }: PizzaCardProps) {
     // console.log("Criando ingredientes para o produto:", id_produto);
     try {
       await api.post('/item/all/ingredients', {
-        product_id: id_produto,
-        order_id: "e7611b30-2756-4346-9305-2bf30495c238"
+          product_id: id_produto,
+          order_id: "2eac5bcd-59f1-43e2-8b52-72a455b329ac"
       });
       console.log("Ingredientes do produto criados com sucesso!");
     } catch (err) {
@@ -186,12 +186,12 @@ function PizzaCard({ product }: PizzaCardProps) {
     // console.log("Criando ingredientes para o produto:", id_produto);
     try {
       await api.post('/item/all/additionals', {
-        category_id: id_categoria,
-        order_id: "e7611b30-2756-4346-9305-2bf30495c238"
+          category_id: id_categoria,
+          order_id: "2eac5bcd-59f1-43e2-8b52-72a455b329ac"
       });
       console.log("Adicionais da categoria criados com sucesso!");
     } catch (err) {
-      console.log("Id do da categoria", id_categoria);
+      console.log("Id da categoria", id_categoria);
       console.log("Erro ao criar adicionais do produto:", err);
     }
   }

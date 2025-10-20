@@ -31,6 +31,7 @@ type Ingredient = {
 
 type Additional = {
   id: string;
+  categories_additionals_id: string;
   additional: {
     name: string;
     price: number;
@@ -53,7 +54,7 @@ export default function DetalhesProdutos() {
   const [mostrarAdicionais, setMostrarAdicionais] = useState(false);
 
   const { product } = route.params;
-  const order_id = "e7611b30-2756-4346-9305-2bf30495c238";
+  const order_id = "2eac5bcd-59f1-43e2-8b52-72a455b329ac";
 
   //CODIGO DO COPILOT
   // const order_id = route.params?.order_id ?? null;
@@ -78,6 +79,7 @@ export default function DetalhesProdutos() {
     async function verIngredientesProduto() {
       try {
         //Chama a rota que retorna TODOS os ingredientes do produto
+        console.log()
         // console.log("Buscando ingredientes para o produto ID:", product);
         const response = await api.get('/product/all/ingredients', {
           params: {
@@ -85,7 +87,7 @@ export default function DetalhesProdutos() {
             order_id: order_id
           }
         });
-        // console.log("API retornou:", response.data);
+        console.log("API retornou:", response.data);
         setIngredients(Array.isArray(response.data) ? response.data : [response.data]);
         const dataArray = Array.isArray(response.data) ? response.data : [response.data];
         const formattedIngredients: Ingredient[] = dataArray.map((item: any) => ({
@@ -102,7 +104,7 @@ export default function DetalhesProdutos() {
           adicionado: item.adicionado ?? Error("Campo 'adicionado' não encontrado"),
         }));
         setIngredients(formattedIngredients);
-        // console.log("Ingredientes formatados:", ingredients)
+        console.log("Ingredientes formatados:", ingredients)
       } catch (err) {
         console.log("Erro ao buscar produtos:", err);
       }
@@ -275,6 +277,7 @@ export default function DetalhesProdutos() {
 
         {/* // Mensagem caso nenhum ingrediente seja encontrado */}
         {ingredients.length === 0 && (
+          console.log("Existem tantos ingredientes: ", ingredients.length),
           <Text style={[styles.sectionTitle]}>
             Nenhum ingrediente encontrado.
           </Text>
@@ -282,6 +285,7 @@ export default function DetalhesProdutos() {
 
         {/* Botão Ingredientes */}
         {ingredients.length > 0 && (
+          console.log("Existem tantos ingredientes: ", ingredients.length),
           <View style={styles.adicionaisContainer}>
             <TouchableOpacity
               style={styles.toggleButton}
@@ -316,14 +320,12 @@ export default function DetalhesProdutos() {
                       } else {
                         console.log("ID do ingrediente não encontrado, não foi possível atualizar");
                       }
-                    }}
-                  >
+                    }}>
                     <View
                       style={[
                         styles.checkbox,
                         ingred.adicionado && styles.checkboxSelecionado,
-                      ]}
-                    >
+                      ]}>
                       {ingred.adicionado && (
                         <Text style={styles.checkmark}>✓</Text>
                       )}
@@ -338,65 +340,71 @@ export default function DetalhesProdutos() {
           </View>
         )}
 
-        {/* Botão Adicionais */}
-        {/* {adicionais.length > 0 && (
-        <View style={styles.adicionaisContainer}>
-          <TouchableOpacity
-            style={styles.toggleButton}
-            onPress={() => setMostrarAdicionais(!mostrarAdicionais)}
-          >
-            <Text style={styles.toggleButtonText}>
-              {mostrarAdicionais
-                ? "Ocultar Adicionais ▲"
-                : "Ver Adicionais ▼"}
-            </Text>
-          </TouchableOpacity>
+        {/* // Mensagem caso nenhum ingrediente seja encontrado */}
+        {adicionais.length === 0 && (
+          console.log("Existem tantos ingredientes: ", adicionais.length),
+          <Text style={[styles.sectionTitle]}>
+            Nenhum adicional encontrado.
+          </Text>
+        )}
 
-          {mostrarAdicionais && (
-            <View style={styles.optionsContainer}>
-              {adicionais.map((ingred) => (
-                <TouchableOpacity
-                  key={`adicional-${ingred.ingredient_product_id}`}
-                  style={styles.adicionalItem}
-                  onPress={async () => {
-                    setAdicionais((prev) =>
-                      prev.map((item) =>
-                        item.ingredient_product_id ===
-                          ingred.ingredient_product_id
-                          ? { ...item, adicionado: !item.adicionado }
-                          : item
-                      )
-                    );
-                    try {
-                      await api.put(`/additional/update`, {
-                        product_id: ingred.product_id,
-                        ingredient_id: ingred.ingredient_id,
-                      });
-                    } catch (err) {
-                      console.log("Erro ao atualizar adicional:", err);
-                    }
-                  }}
-                >
-                  <View
-                    style={[
-                      styles.checkbox,
-                      ingred.adicionado && styles.checkboxSelecionado,
-                    ]}
-                  >
-                    {ingred.adicionado && (
-                      <Text style={styles.checkmark}>✓</Text>
-                    )}
-                  </View>
-                  <Text style={styles.adicionalText}>
-                    {ingred.ingredient?.name ?? "Sem adicional"}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          )}
-        </View>
-      )
-      } */}
+        {/* Botão Adicionais */}
+        {adicionais.length > 0 && (
+          <View style={styles.adicionaisContainer}>
+            <TouchableOpacity
+              style={styles.toggleButton}
+              onPress={() => setMostrarAdicionais(!mostrarAdicionais)}
+            >
+              <Text style={styles.toggleButtonText}>
+                {mostrarAdicionais
+                  ? "Ocultar Adicionais ▲"
+                  : "Ver Adicionais ▼"}
+              </Text>
+            </TouchableOpacity>
+
+            {mostrarAdicionais && (
+              <View style={styles.optionsContainer}>
+                {adicionais.map((adit) => (
+                  <TouchableOpacity
+                    key={`adicional-${adit.categories_additionals_id}`}
+                    style={styles.adicionalItem}
+                    onPress={async () => {
+                      setAdicionais((prev) =>
+                        prev.map((item) =>
+                          item.categories_additionals_id ===
+                            adit.categories_additionals_id
+                            ? { ...item, adicionado: !item.adicionado }
+                            : item
+                        )
+                      );
+                      console.log("Atualizando adicional ID:", adit.categories_additionals_id);
+                      if (adit.id) {
+                        await updateAdicional(adit.categories_additionals_id);
+                        console.log("Adicionais atualizado com sucesso", adit, adit.adicionado);
+                      } else {
+                        console.log("ID do adicional não encontrado, não foi possível atualizar");
+                      }
+                    }}>
+                    <View
+                      style={[
+                        styles.checkbox,
+                        adit.adicionado && styles.checkboxSelecionado,
+                      ]}
+                    >
+                      {adit.adicionado && (
+                        <Text style={styles.checkmark}>✓</Text>
+                      )}
+                    </View>
+                    <Text style={styles.adicionalText}>
+                      {adit.additional?.name ?? "Sem adicional"}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
+          </View>
+        )
+        }
 
         {/* Seletor de tamanho */}
         {/* <Text style={styles.sectionTitle}>Tamanho:</Text>
