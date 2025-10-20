@@ -22,6 +22,8 @@ import Carrinho from "./src/pages/Carrinho";
 import LerQR from "./src/pages/LerQR";
 import Status1 from "./src/pages/Status1";
 import Status2 from "./src/pages/Status2";
+import { OrderProvider } from "./src/contexts/OrderContext";
+import { CostumerProvider } from "./src/contexts/CostumerContext";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,8 +45,20 @@ export default function App() {
   }
 
   return (
+    // <NavigationContainer>
+    //   <OrderProvider>
+    //     <AppRoutes />
+    //   </OrderProvider>
+    // </NavigationContainer>
     <NavigationContainer>
-      <AppRoutes />
+      {/* <AppRoutes /> */}
+      <AuthProvider>
+      <CostumerProvider>
+      <OrderProvider>
+        <Routes />
+      </OrderProvider>
+      </CostumerProvider>
+      </AuthProvider>
     </NavigationContainer>
   );
 }

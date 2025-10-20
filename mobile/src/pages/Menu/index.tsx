@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   SafeAreaView,
   View,
@@ -11,19 +11,19 @@ import {
   Modal,
   Button
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
-import { SettingsButton } from "../../components/SettingsButton";
-import BottomNavBar from "../../components/navButton";
+import { formatarPreco } from "../../components/conversorDeMoeda/valoresEmReal";
 
 import { api } from "../../services/api";
 import { CategoryProps } from "../Order";
 import { ModalPicker } from "../../components/ModalPicker";
+import { SettingsButton } from "../../components/SettingsButton";
+import BottomNavBar from "../../components/navButton";
 
-
-// const status = require('../../assets/nav-icons/status.png')
-/////////////////
+import { AuthContext } from "../../contexts/AuthContext";
+import { useOrder } from "../../contexts/OrderContext";
 
 export type Produto = {
   id: string;
@@ -36,8 +36,8 @@ export type Produto = {
 
 type Order = {
   id: string;
-  status: boolean
-}
+  status: boolean;
+};
 
 export default function HomeScreen() {
   const [textInput1, onChangeTextInput1] = useState<string>("");
@@ -45,23 +45,48 @@ export default function HomeScreen() {
 
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
+  const { orderId } = useOrder();
+  const { user, signOut } = useContext(AuthContext);
 
   function Settings() {
-    navigation.navigate("Settings")
+    navigation.navigate("Settings");
   }
 
-  function Carrinho() {
-    navigation.navigate("Carrinho")
+  // function Carrinho() {
+  //   navigation.navigate("Carrinho");
+  // }
+
+  async function Carrinho() {
+    console.log("entrou na função do carrinho")
+    console.log("O id do pedido atual é", orderId)
+    if (!orderId) {
+      alert("Abra um pedido para poder visualizar o carrinho!\nNão esqueça de adicionar um item ao pedido.")
+      return;
+    }
+    try {
+      const response = await api.get("/order/detail", {
+        params: { order_id: orderId },
+      });
+      console.log("O id do pedido atual é", orderId)
+      console.log("Ele tem pedidos? Quantos?", response.data.items.length)
+      if (response.data.items.length > 0) {
+        navigation.navigate("Carrinho")
+      } else {
+        alert("Seu carrinho está vazio! Selecione um produto para adicionar primeiro.")
+      }
+    } catch (err) {
+      console.log("Erro ao buscar orders:", err);
+    }
   }
 
   async function Filtros() {
-    alert("blablabla")
+    alert("blablabla");
   }
 
   useEffect(() => {
     async function verProdutos() {
       try {
-        const response = await api.get('/product/all');
+        const response = await api.get("/product/all");
         setProdutos(response.data);
       } catch (err) {
         console.log("Erro ao buscar produtos:", err);
@@ -74,12 +99,15 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.headerText}>Seja bem vindo, João.</Text>
+          <View style={styles.headerTop}>
+            <Text style={styles.headerText} numberOfLines={1} ellipsizeMode="tail">Seja bem-vindo{user?.name ? `, ${user.name}` : ""}.</Text>
+
+          </View>
 
           {/* Barra de busca */}
           <View style={styles.searchBar}>
             <Image
-              source={require('../../assets/Search.png')}
+              source={require("../../assets/Search.png")}
               resizeMode="stretch"
               style={styles.searchIcon}
             />
@@ -92,7 +120,7 @@ export default function HomeScreen() {
             <View style={styles.searchIconsRight}>
               <TouchableOpacity onPress={Carrinho}>
                 <Image
-                  source={require('../../assets/Carrinho.png')}
+                  source={require("../../assets/Carrinho.png")}
                   resizeMode="stretch"
                   style={styles.iconRight}
                 />
@@ -100,11 +128,9 @@ export default function HomeScreen() {
               <TouchableOpacity>
 
                 <SettingsButton />
-
               </TouchableOpacity>
             </View>
           </View>
-
 
           <Modal
             animationType="slide"
@@ -112,18 +138,16 @@ export default function HomeScreen() {
             visible={modalVisible}
             onRequestClose={() => setModalVisible(false)}
           >
-            <Button
-              title="Fechar"
-              onPress={() => setModalVisible(false)}
-            />
+            <Button title="Fechar" onPress={() => setModalVisible(false)} />
           </Modal>
+
           <View style={styles.filtersWrapper}>
             <TouchableOpacity
               style={styles.filterButton}
               onPress={() => setModalVisible(true)}
             >
               <Image
-                source={require('../../assets/abawhite.png')}
+                source={require("../../assets/abawhite.png")}
                 resizeMode="stretch"
                 style={styles.filterIcon}
               />
@@ -136,28 +160,26 @@ export default function HomeScreen() {
 
         {/* Cards dinâmicos */}
         <View style={styles.cardsWrapper}>
-          {produtos.reduce((rows: Produto[][], produto, index) => {
-            if (index % 2 === 0) {
-              rows.push([produto]);
-            } else {
-              rows[rows.length - 1].push(produto);
-            }
-            return rows;
-          }, []).map((row, idx) => (
-            <View style={styles.row} key={idx}>
-              {row.map(prod => (
-                <PizzaCard
-                  key={prod.id}
-                  product={prod}
-                />
-              ))}
-            </View>
-          ))}
+          {produtos
+            .reduce((rows: Produto[][], produto, index) => {
+              if (index % 2 === 0) {
+                rows.push([produto]);
+              } else {
+                rows[rows.length - 1].push(produto);
+              }
+              return rows;
+            }, [])
+            .map((row, idx) => (
+              <View style={styles.row} key={idx}>
+                {row.map((prod) => (
+                  <PizzaCard key={prod.id} product={prod} />
+                ))}
+              </View>
+            ))}
         </View>
       </ScrollView>
 
       <BottomNavBar activeRoute="Menu" />
-
     </SafeAreaView>
   );
 }
@@ -166,15 +188,20 @@ type PizzaCardProps = {
   product: Produto;
 };
 
-function PizzaCard({ product }: PizzaCardProps) {
-  const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
+type CarrinhoRouteProp = RouteProp<StackParamsList, "Carrinho">;
 
-  async function criarTodosIngredientsProduto(id_produto: string) {
+function PizzaCard({ product }: PizzaCardProps) {
+  const { orderId } = useOrder();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<StackParamsList>>();
+  const route_car = useRoute<CarrinhoRouteProp>();
+
+  async function criarTodosIngredientsProduto(id_produto: string, order_id: string | null) {
     // console.log("Criando ingredientes para o produto:", id_produto);
     try {
       await api.post('/item/all/ingredients', {
           product_id: id_produto,
-          order_id: "2eac5bcd-59f1-43e2-8b52-72a455b329ac"
+          order_id: order_id
       });
       console.log("Ingredientes do produto criados com sucesso!");
     } catch (err) {
@@ -182,12 +209,12 @@ function PizzaCard({ product }: PizzaCardProps) {
       console.log("Erro ao criar ingredientes do produto:", err);
     }
   }
-  async function criarTodosAdicionaisCategoria(id_categoria: string) {
+  async function criarTodosAdicionaisCategoria(id_categoria: string, order_id: string | null) {
     // console.log("Criando ingredientes para o produto:", id_produto);
     try {
       await api.post('/item/all/additionals', {
           category_id: id_categoria,
-          order_id: "2eac5bcd-59f1-43e2-8b52-72a455b329ac"
+          order_id: order_id
       });
       console.log("Adicionais da categoria criados com sucesso!");
     } catch (err) {
@@ -198,21 +225,28 @@ function PizzaCard({ product }: PizzaCardProps) {
 
   return (
     <View style={styles.card}>
-      <Image source={{ uri: product.banner }} resizeMode="stretch" style={styles.cardImage} />
+      <Image
+        source={{ uri: product.banner }}
+        resizeMode="stretch"
+        style={styles.cardImage}
+      />
       <Text style={styles.cardTitle}>{product.name}</Text>
-      <Text style={styles.cardPrice}>R$ {product.price}</Text>
+      <Text style={styles.cardPrice}>
+        {formatarPreco(Number(product.price))}
+      </Text>
       <TouchableOpacity
         style={styles.addButton}
         onPress={() => {
           // console.log("Clicou em adicionar", product.id);
-          criarTodosAdicionaisCategoria(product.category_id);
-          criarTodosIngredientsProduto(product.id);
+          criarTodosAdicionaisCategoria(product.category_id, orderId );
+          criarTodosIngredientsProduto(product.id, orderId);
           navigation.navigate("DetalhesProdutos", { product })
         }}
       >
         <Image
-          source={require('../../assets/Plus.png')}
+          source={require("../../assets/Plus.png")}
           resizeMode="stretch"
+          style={{ width: 25, height: 25 }}
         />
         <Text style={styles.addText}>Adicionar</Text>
       </TouchableOpacity>
@@ -222,13 +256,22 @@ function PizzaCard({ product }: PizzaCardProps) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#FFFFFF" },
+
   header: {
     backgroundColor: "#FFFFFF",
     paddingTop: 86,
     paddingBottom: 7,
     marginBottom: 2,
   },
-  displayHidden: { display: "none" },
+
+  headerTop: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginHorizontal: 26,
+    marginBottom: 16,
+  },
+
   headerText: {
     color: "#000000",
     fontSize: 32,
@@ -245,65 +288,40 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginHorizontal: 26,
   },
-  searchIcon: {
-    width: 48,
-    height: 48,
-    marginRight: 4
-  },
-  searchInput: {
-    color: "#52443C",
-    fontSize: 16,
-    flex: 1,
-    paddingVertical: 12
-  },
-  searchIconsRight: {
-    flexDirection: "row"
-  },
-  iconRight: {
-    width: 48,
-    height: 48
-  },
-  filtersWrapper: {
-    alignItems: "center", paddingVertical: 8
-  },
+  searchIcon: { width: 48, height: 48, marginRight: 4 },
+  searchInput: { color: "#52443C", fontSize: 16, flex: 1, paddingVertical: 12 },
+  searchIconsRight: { flexDirection: "row" },
+  iconRight: { width: 48, height: 48 },
+  filtersWrapper: { alignItems: "center", paddingVertical: 8 },
   filterButton: {
-    flexDirection: "row", backgroundColor: "#8D4F28", borderRadius: 12, paddingVertical: 6, paddingHorizontal: 12
+    flexDirection: "row",
+    backgroundColor: "#8D4F28",
+    borderRadius: 12,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
   },
-  filterIcon: {
-    width: 20,
-    height: 20,
-    marginRight: 4
-  },
-  filterText: {
-    color: "#FFFFFF",
-    fontSize: 14,
-    fontWeight: "bold"
-  },
+  filterIcon: { width: 20, height: 20, marginRight: 4 },
+  filterText: { color: "#FFFFFF", fontSize: 14, fontWeight: "bold" },
   tableText: {
     color: "#000000",
     fontSize: 16,
     fontWeight: "bold",
-    marginBottom: 8, marginHorizontal: 26
+    marginBottom: 8,
+    marginHorizontal: 26,
   },
-  cardsWrapper: {
-    marginBottom: 44, marginHorizontal: 26
-  },
+  cardsWrapper: { marginBottom: 44, marginHorizontal: 26 },
   row: {
     flexDirection: "row",
     marginBottom: 30,
     gap: 10,
-    alignItems: "stretch"
+    alignItems: "stretch",
   },
-  card: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "space-between"
-  },
+  card: { flex: 1, alignItems: "center", justifyContent: "space-between" },
   cardImage: {
     height: 180,
     marginBottom: 8,
     width: "100%",
-    borderRadius: 90
+    borderRadius: 90,
   },
   cardTitle: {
     color: "#000000",
@@ -312,11 +330,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 4,
   },
-  cardPrice: {
-    color: "#000000",
-    fontSize: 16,
-    marginBottom: 7
-  },
+  cardPrice: { color: "#000000", fontSize: 16, marginBottom: 7 },
   addButton: {
     flexDirection: "row",
     backgroundColor: "#8D4F28",
@@ -328,9 +342,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  addText: {
-    color: "#FFFFFF",
-    fontSize: 14,
-    fontWeight: "bold",
-  },
+  addText: { color: "#FFFFFF", fontSize: 12, fontWeight: "bold" },
 });

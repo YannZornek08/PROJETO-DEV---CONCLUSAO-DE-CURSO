@@ -79,18 +79,18 @@ router.post('/users', new CreateUserController().handle)
 
 router.post('/session', new AuthUserController().handle)
 
-router.get('/me', isAuthenticated, new DetailUserController().handle)
+router.get('/me', new DetailUserController().handle)
 
 // -- ROTAS CATEGORY --
-router.post('/category', isAuthenticated, new CreateCategoryController().handle)
+router.post('/category', new CreateCategoryController().handle)
 
-router.get('/category', isAuthenticated, new ListCategoryController().handle)
+router.get('/category', new ListCategoryController().handle)
 
 // -- ROTAS PRODUCT --
 // router.post('/product', isAuthenticated, upload.single('file'), new CreateProductController().handle)
-router.post('/product', isAuthenticated, new CreateProductController().handle)
+router.post('/product', new CreateProductController().handle)
 
-router.get('/category/product', isAuthenticated, new ListByCategoryController().handle)
+router.get('/category/product', new ListByCategoryController().handle)
 
 router.get('/product/all', new ListProductController().handle)
 
@@ -100,13 +100,13 @@ router.get('/product/search', new SearchProductController().handle)
 
 // -- ROTAS ORDER --
 router.post('/order', new CreateOrderController().handle)
-router.delete('/order', isAuthenticated, new RemoveOrderController().handle)
+router.delete('/order', new RemoveOrderController().handle)
 
-router.post('/order/add', isAuthenticated, new AddItemController().handle)
-router.delete('/order/remove', isAuthenticated, new RemoveItemController().handle)
-router.put('/order/send', isAuthenticated, new SendOrderController().handle)
+router.post('/order/add', new AddItemController().handle)
+router.delete('/order/remove', new RemoveItemController().handle)
+router.put('/order/send', new SendOrderController().handle)
 
-router.get('/orders', isAuthenticated, new ListOrdersController().handle)
+router.get('/orders', new ListOrdersController().handle)
 router.get('/order/detail', new DetailOrderController().handle)
 
 router.put('/order/finish', new FinishOrderController().handle)
@@ -155,8 +155,8 @@ router.delete('/item/additional/delete', new RemoveItemAdditionalController().ha
 router.put('/item/additional', new UpdateAdditionalController().handle)
 
 // -- ROTAS TABLE --
-router.post('/table', isAuthenticated, new CreateTableController().handle)
-router.get('/tables', isAuthenticated, new ListTablesController().handle)
+router.post('/table', new CreateTableController().handle)
+router.get('/tables', new ListTablesController().handle)
 router.get('/table/detail', new DetailTableController().handle)
 
 // -- ROTAS METODO DE PAGAMENTO --
@@ -164,7 +164,7 @@ router.post('/mtdo_pagto', new CreateMtdoPagtoController().handle)
 router.get('/mtdo_pagtos', new ListMtdoPagtoController().handle)
 
 // -- ROTAS PAGAMENTO --
-router.post('/payment',  new CreatePaymentController().handle)
+router.post('/payments', new CreatePaymentController().handle)
 router.get('/payments', new ListPaymentsController().handle)
 router.put('/payment/cpf', new InputCPFController().handle)
 

@@ -12,6 +12,9 @@ import {
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
 import { api } from "../../services/api";
+import { formatarPreco } from "../../components/conversorDeMoeda/valoresEmReal";
+import { useOrder } from "../../contexts/OrderContext";
+
 
 type DetalhesRouteProp = RouteProp<StackParamsList, "DetalhesProdutos">;
 
@@ -19,7 +22,7 @@ type Ingredient = {
   id: string;
   ingredient_product_id: string;
   ingredient: {
-    name: string;
+    name: string | null;
   };
   product: {
     product_id: string;
@@ -44,6 +47,17 @@ type Additional = {
   order_id: string;
 }
 
+type Item = {
+  order_id: string;
+  ingredient_product_id: string;
+  amount: number;
+};
+
+export type OrderAtual = {
+  id: string;
+  draft: boolean;
+}
+
 export default function DetalhesProdutos() {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
   const route = useRoute<DetalhesRouteProp>();
@@ -53,18 +67,14 @@ export default function DetalhesProdutos() {
   const [mostrarIngredientes, setMostrarIngredientes] = useState(false);
   const [mostrarAdicionais, setMostrarAdicionais] = useState(false);
 
+  //REFATORAR DEPOIS PARA QUE AS VARIAVEIS SEJAM EXPORTADAS AO CARRINHO
+  const [bloquearTela, setBloquearTela] = useState(false);
+  const [orderAtual, setOrderAtual] = useState<OrderAtual | boolean>(Boolean);
+  // const [items, setItems] = useState<Item[]>([]);
+
   const { product } = route.params;
-  const order_id = "2eac5bcd-59f1-43e2-8b52-72a455b329ac";
-
-  //CODIGO DO COPILOT
-  // const order_id = route.params?.order_id ?? null;
-  // console.log("Produto selecionado:", product);
-  // console.log("Order ID:", order_id);
-
-  // const tamanhos = ["P", "M", "G"];
-  // const [tamanhoSelecionado, setTamanhoSelecionado] = useState<string>("M");
   const [quantidade, setQuantidade] = useState<number>(1);
-
+  const { orderId } = useOrder();
 
   const Menu = () => {
     navigation.navigate("Menu");
@@ -75,6 +85,31 @@ export default function DetalhesProdutos() {
     if (quantidade > 1) setQuantidade(quantidade - 1);
   };
 
+  //REFATORAR DEPOIS PARA QUE A FUNÇÃO SEJA EXPORTADA AO CARRINHO
+  async function bloquearPedidos() {
+    if (!orderId) return;
+    try {
+      const response = await api.get("/order/detail", {
+        params: { order_id: orderId },
+      });
+      setOrderAtual(response.data.orders.draft);
+      console.log("O id do pedido atual é", orderId)
+      if (response.data.orders.draft == false) {
+        console.log("DETALHES PRODUTOS Tem que bloquear a TELA!!")
+        setBloquearTela(true);
+      } else {
+        console.log("DETALHES PRODUTOS Não bloqueia a tela")
+        setBloquearTela(false);
+      }
+    } catch (err) {
+      console.log("Erro ao buscar detalhes do pedido:", err);
+    }
+  }
+
+  useEffect(() => {
+    bloquearPedidos();
+  }, [orderId]);
+
   useEffect(() => {
     async function verIngredientesProduto() {
       try {
@@ -84,7 +119,7 @@ export default function DetalhesProdutos() {
         const response = await api.get('/product/all/ingredients', {
           params: {
             product_id: product.id,
-            order_id: order_id
+            order_id: orderId
           }
         });
         console.log("API retornou:", response.data);
@@ -100,7 +135,7 @@ export default function DetalhesProdutos() {
             name: item.ingredient_product.product.name ?? "",
             product_id: item.ingredient_product.product.id ?? "",
           },
-          order_id: order_id,
+          order_id: orderId ?? "",
           adicionado: item.adicionado ?? Error("Campo 'adicionado' não encontrado"),
         }));
         setIngredients(formattedIngredients);
@@ -116,7 +151,7 @@ export default function DetalhesProdutos() {
         const response = await api.get('/category/all/additionals', {
           params: {
             category_id: product.category_id,
-            order_id: order_id
+            order_id: orderId
           }
         });
         console.log("API retornou:", response.data);
@@ -134,7 +169,7 @@ export default function DetalhesProdutos() {
             name: item.categories_additionals.additionals.name ?? "",
             price: item.categories_additionals.additionals.price ?? Error("Campo 'price' não encontrado"),
           },
-          order_id: order_id,
+          order_id: orderId ?? "",
           adicionado: item.adicionado ?? Error("Campo 'adicionado' não encontrado"),
         }));
         setAdicionais(formattedAdditionals);
@@ -147,23 +182,11 @@ export default function DetalhesProdutos() {
     verIngredientesProduto();
   }, [product.id]);
 
-  // async function criarItemIngrediente(id_ingredient_product: string) {
-  //   try {
-  //     await api.post('/item/ingredient/create', {
-  //       ingredient_product_id: id_ingredient_product,
-  //       order_id: order_id
-  //     })
-  //     console.log("Ingrediente dos itens criados com sucesso")
-  //   } catch (err) {
-  //     console.log("Não foi possível criar os ingredientes dos itens", err)
-  //   }
-  // }
-
   async function updateIngrediente(id_ingredient_product: string) {
     try {
       await api.put('/item/ingredient', {
         ingredient_product_id: id_ingredient_product,
-        order_id: order_id
+        order_id: orderId
       });
     } catch (err) {
       console.log("Erro ao atualizar ingrediente:", err);
@@ -174,7 +197,7 @@ export default function DetalhesProdutos() {
     try {
       await api.put('/item/additional', {
         categories_additionals_id: id_categories_additional,
-        order_id: order_id
+        order_id: orderId
       });
     } catch (err) {
       console.log("Erro ao atualizar adicional:", err);
@@ -184,23 +207,54 @@ export default function DetalhesProdutos() {
   async function adicionarItem() {
     try {
       const newItem = await api.post('/order/add', {
-        order_id: order_id,
+        order_id: orderId,
         items_ingredients_id: ingredients.map(ing => ing.id).join(", "), // Exemplo de como pegar os IDs dos ingredientes selecionados
-        items_additionals_id: adicionais.map(add => add.id).join(",") ?? "", // Exemplo de como pegar os IDs dos adicionais selecionados
+        items_additionals_id: adicionais.map(add => add.id).join(", "), // Exemplo de como pegar os IDs dos adicionais selecionados
         amount: quantidade,
       });
       console.log("Item adicionado:", newItem.data);
       // setItems((prevItems) => [...prevItems, newItem.data]);
     } catch (err) {
       console.log("Erro ao adicionar item:", err,
-        ingredients.map(ing => ing.id).join(","),
-        adicionais.map(add => add.id).join(",") ?? "Não está enviando adicionais",
+        "Ingredientes: ", ingredients.map(ing => ing.id).join(",") ?? "Não está enviando adicionais",
+        "Adicionais: ", adicionais.map(add => add.id).join(",") ?? "Não está enviando adicionais",
         quantidade);
     }
   }
 
+  // async function adicionarItem() {
+  //   try {
+  //     const newItem = await api.post('/order/add', {
+  //       order_id: orderId,
+  //       product_id: product.id,
+  //       amount: quantidade,
+  //     });
+  //     console.log("Item adicionado:", newItem.data);
+  //     // setItems((prevItems) => [...prevItems, newItem.data]);
+  //   } catch (err) {
+  //     console.log("Erro ao adicionar item:", err, product.id, quantidade);
+  //   }
+  // }
+
   return (
     <SafeAreaView style={styles.container}>
+      {/* //REFATORAR DEPOIS PARA QUE O BLOCO DE CÓDIGO SEJA EXPORTADO AO CARRINHO */}
+      {bloquearTela && (
+        <View style={styles.overlay}>
+          <View style={styles.overlayContent}>
+            <Text style={styles.overlayText}>
+              Este pedido já foi finalizado e não pode ser editado.
+            </Text>
+
+            <TouchableOpacity
+              style={styles.overlayButton}
+              onPress={() => navigation.goBack()}
+            >
+              <Text style={styles.overlayButtonText}>Voltar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
       <ScrollView style={styles.scrollView}>
         {/* Cabeçalho e imagem */}
         <View style={styles.imageContainer}>
@@ -221,7 +275,7 @@ export default function DetalhesProdutos() {
         {/* Nome e preço */}
         <Text style={styles.productName}>{product.name}</Text>
         <View style={styles.priceContainer}>
-          <Text style={styles.price}>R$ {product.price}</Text>
+          <Text style={styles.price}>{formatarPreco(Number(product.price))}</Text>
         </View>
 
         {/* Descrição */}
@@ -229,51 +283,6 @@ export default function DetalhesProdutos() {
 
         {/* Divisória */}
         <View style={styles.divider} />
-
-        {/* Ingredientes */}
-        {/* <View style={styles.adicionaisContainer}>
-          {ingredients.length > 0 && (
-            <Text style={styles.sectionTitle}>Ingredientes:</Text>
-          )}
-          {ingredients.map((ingred) => (
-            <TouchableOpacity
-              key={ingred.id}
-              style={styles.adicionalItem}
-              onPress={async () => {
-                alert("Adicional: " + (ingred.ingredient?.name ?? "Sem adicional"));
-
-                // Atualiza localmente
-                setIngredients((prev) =>
-                  prev.map((item) =>
-                    item.id === ingred.id
-                      ? { ...item, adicionado: !item.adicionado }
-                      : item
-                  )
-                );
-                // Atualiza no banco via API
-                console.log("Atualizando ingrediente ID:", ingred.ingredient_product_id);
-                if (ingred.id) {
-                  await updateIngrediente(ingred.ingredient_product_id);
-                  console.log("Ingrediente atualizado com sucesso", ingred, ingred.adicionado);
-                } else {
-                  console.log("ID do ingrediente não encontrado, não foi possível atualizar");
-                }
-
-              }
-              }
-            >
-              <View
-                style={[
-                  styles.checkbox,
-                  ingred.adicionado && styles.checkboxSelecionado,
-                ]}
-              >
-                {ingred.adicionado && <Text style={styles.checkmark}>✓</Text>}
-              </View>
-              <Text style={styles.adicionalText}>{ingred.ingredient?.name ?? "Sem adicional"}</Text>
-            </TouchableOpacity>
-          ))}
-        </View> */}
 
         {/* // Mensagem caso nenhum ingrediente seja encontrado */}
         {ingredients.length === 0 && (
@@ -396,7 +405,7 @@ export default function DetalhesProdutos() {
                       )}
                     </View>
                     <Text style={styles.adicionalText}>
-                      {adit.additional?.name ?? "Sem adicional"}
+                      {adit.additional?.name + " " + adit.additional.price}
                     </Text>
                   </TouchableOpacity>
                 ))}
@@ -405,31 +414,6 @@ export default function DetalhesProdutos() {
           </View>
         )
         }
-
-        {/* Seletor de tamanho */}
-        {/* <Text style={styles.sectionTitle}>Tamanho:</Text>
-        <View style={styles.sizeContainer}>
-          {tamanhos.map((tamanho) => (
-            <TouchableOpacity
-              key={tamanho}
-              onPress={() => setTamanhoSelecionado(tamanho)}
-              style={[
-                styles.sizeButton,
-                tamanhoSelecionado === tamanho && styles.selectedSizeButton,
-              ]}
-            >
-              <Text
-                style={[
-                  styles.sizeButtonText,
-                  tamanhoSelecionado === tamanho &&
-                    styles.selectedSizeButtonText,
-                ]}
-              >
-                {tamanho}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View> */}
       </ScrollView >
 
       {/* Área inferior */}
@@ -456,32 +440,90 @@ export default function DetalhesProdutos() {
             >
               <Text style={styles.quantityButtonText}>+</Text>
             </TouchableOpacity>
+            {/* Valor Somado do produto */}
+            <Text style={styles.price}> R${(product.price*quantidade)}</Text>
           </View>
         </View>
 
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => {
-            adicionarItem();
-            alert(
-              `Pizza adicionada! Quantidade: ${quantidade}`
-            );
-            navigation.navigate("Carrinho");
-          }}
+            // Lógica para adicionar ao carrinho
+            // Aqui você pode enviar os dados para o backend ou atualizar o estado global
+            if (!orderId) {
+              alert("Erro: Nenhum pedido ativo. Por favor, inicie um pedido antes de adicionar itens.");
+              return;
+            } else {
+              adicionarItem();
+              alert(
+                `${product.name} adicionado! Quantidade: ${quantidade}, Adicionais: ${adicionais.join(
+                  ", "
+                ) || "Nenhum"}`
+              );
+              navigation.navigate("Carrinho");
+            }
+          }
+          }
         >
           <Text style={styles.addButtonText}>Adicionar</Text>
         </TouchableOpacity>
-      </View >
-    </SafeAreaView >
+      </View>
+
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  overlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 999, // cobre tudo
+  },
+  overlayContent: {
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    padding: 30,
+    width: "80%",
+    alignItems: "center",
+    elevation: 10,
+  },
+  overlayTitle: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#8D4F28",
+    marginBottom: 10,
+  },
+  overlayText: {
+    fontSize: 16,
+    color: "#333",
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  overlayButton: {
+    backgroundColor: "#8D4F28",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 25,
+  },
+  overlayButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
   container: { flex: 1, backgroundColor: "#FFFFFF" },
   scrollView: { flex: 1, backgroundColor: "#FFFFFF" },
   imageContainer: { marginTop: 65, marginBottom: 2, marginHorizontal: 26 },
   smallImage: { width: 32, height: 32, marginBottom: 16 },
-  largeImage: { height: 360, borderRadius: 180 },
+  largeImage: {
+    height: 360,
+    borderRadius: 180,
+  },
   productName: {
     color: "#000000",
     fontSize: 32,

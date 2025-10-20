@@ -33,34 +33,34 @@ model Category {
 }
 
 model Product {
-  id                 String               @id @default(uuid())
-  name               String
-  price              String
-  description        String
-  banner             String
-  created_at         DateTime?            @default(now())
-  update_at          DateTime?            @default(now())
+  id          String    @id @default(uuid())
+  name        String
+  price       String
+  description String
+  banner      String
+  created_at  DateTime? @default(now())
+  update_at   DateTime? @default(now())
+
   category_id        String
-  ingredient_product Ingredient_product[]
   category           Category             @relation(fields: [category_id], references: [id])
+  ingredient_product Ingredient_product[] // relação muitos para muitos
+  Item               Item[]
 
   @@map("products")
 }
 
 model Order {
-  id                String              @id @default(uuid())
-  status            Boolean             @default(false)
-  draft             Boolean             @default(true)
-  created_at        DateTime?           @default(now())
-  update_at         DateTime?           @default(now())
-  costumer_id       String
-  table_id          String
-  costumer          Costumer            @relation(fields: [costumer_id], references: [id])
-  table             Table               @relation(fields: [table_id], references: [id])
-  items             Item[]
-  payments          Payment[]
-  items_additionals Items_additionals[]
-  items_ingredients Items_ingredients[]
+  id          String    @id @default(uuid())
+  status      Boolean   @default(false)
+  draft       Boolean   @default(true)
+  created_at  DateTime? @default(now())
+  update_at   DateTime? @default(now())
+  costumer_id String
+  table_id    String
+  costumer    Costumer  @relation(fields: [costumer_id], references: [id])
+  table       Table     @relation(fields: [table_id], references: [id])
+  items       Item[]
+  payments    Payment[]
 
   @@map("orders")
 }
@@ -80,13 +80,14 @@ model Item {
   amount     Int
   created_at DateTime? @default(now())
   update_at  DateTime? @default(now())
+  product_id String
+  product    Product   @relation(fields: [product_id], references: [id])
 
-  order                Order             @relation(fields: [order_id], references: [id])
-  items_additionals    Items_additionals @relation(fields: [items_additionals_id], references: [id])
-  items_ingredients    Items_ingredients @relation(fields: [items_ingredients_id], references: [id])
-  order_id             String // pega pelo login
-  items_additionals_id String // ele cria sozinho, se não quiser vem tudo como false
-  items_ingredients_id String // ele cria sozinho, vem tudo como true
+  order    Order  @relation(fields: [order_id], references: [id])
+  order_id String // pega pelo login
+
+  items_ingredients Items_ingredients[]
+  items_additionals Items_additionals[]
 
   @@map("items")
 }
@@ -148,7 +149,7 @@ model Ingredient_product {
   ingredient_id String
   product_id    String
 
-  items_ingredients Items_ingredients[]
+  Items_ingredients Items_ingredients[]
 
   @@map("ingredients_products")
 }
@@ -199,10 +200,8 @@ model Items_additionals {
   categories_additionals    categories_additionals @relation(fields: [categories_additionals_id], references: [id])
   categories_additionals_id String
 
-  order_id String
-  order    Order  @relation(fields: [order_id], references: [id])
-
-  item Item[]
+  item_id String
+  item    Item   @relation(fields: [item_id], references: [id])
 
   @@map("items_additionals")
 }
@@ -216,10 +215,8 @@ model Items_ingredients {
   ingredient_product    Ingredient_product @relation(fields: [ingredient_product_id], references: [id])
   ingredient_product_id String
 
-  order_id String
-  order    Order  @relation(fields: [order_id], references: [id])
-
-  item Item[]
+  item_id String
+  item    Item   @relation(fields: [item_id], references: [id])
 
   @@map("items_ingredients")
 }

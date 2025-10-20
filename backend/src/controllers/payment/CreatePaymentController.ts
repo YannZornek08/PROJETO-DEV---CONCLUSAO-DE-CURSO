@@ -3,19 +3,17 @@ import { CreatePaymentService } from "../../services/payment/CreatePaymentServic
 
 class CreatePaymentController {
     async handle(req: Request, res: Response) {
-
-        const { order_id, table_id, mtdo_pagto_id } = req.body;
+        const { order_id, mtdo_pagto_id } = req.body;
 
         const createPaymentService = new CreatePaymentService();
 
         const payment = await createPaymentService.execute({
-            mtdo_pagto_id,
             order_id,
-            table_id
+            mtdo_pagto_id
         });
 
-        res.json(payment)
+        res.json(payment);
     }
 }
 
-export { CreatePaymentController }
+export { CreatePaymentController };
