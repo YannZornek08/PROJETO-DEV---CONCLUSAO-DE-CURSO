@@ -74,15 +74,15 @@ router.post('/session', new AuthUserController().handle)
 router.get('/me', new DetailUserController().handle)
 
 // -- ROTAS CATEGORY --
-router.post('/category', isAuthenticated, new CreateCategoryController().handle)
+router.post('/category', new CreateCategoryController().handle)
 
-router.get('/category', isAuthenticated, new ListCategoryController().handle)
+router.get('/category', new ListCategoryController().handle)
 
 // -- ROTAS PRODUCT --
 // router.post('/product', isAuthenticated, upload.single('file'), new CreateProductController().handle)
-router.post('/product', isAuthenticated, new CreateProductController().handle)
+router.post('/product', new CreateProductController().handle)
 
-router.get('/category/product', isAuthenticated, new ListByCategoryController().handle)
+router.get('/category/product', new ListByCategoryController().handle)
 
 router.get('/product/all', new ListProductController().handle)
 

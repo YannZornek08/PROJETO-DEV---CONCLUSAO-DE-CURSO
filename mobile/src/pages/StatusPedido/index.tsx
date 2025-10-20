@@ -88,7 +88,7 @@ export default function StatusPedido() {
   }
 
   // Caso o pedido ainda seja um rascunho (draft = true)
-  if (order?.draft == true) {
+  if (order === null) {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Status do Pedido</Text>

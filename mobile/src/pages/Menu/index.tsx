@@ -23,6 +23,7 @@ import { SettingsButton } from "../../components/SettingsButton";
 import BottomNavBar from "../../components/navButton";
 
 import { AuthContext } from "../../contexts/AuthContext";
+import { useOrder } from "../../contexts/OrderContext";
 
 export type Produto = {
   id: string;
@@ -43,15 +44,38 @@ export default function HomeScreen() {
 
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
-
+  const { orderId } = useOrder();
   const { user, signOut } = useContext(AuthContext);
 
   function Settings() {
     navigation.navigate("Settings");
   }
 
-  function Carrinho() {
-    navigation.navigate("Carrinho");
+  // function Carrinho() {
+  //   navigation.navigate("Carrinho");
+  // }
+
+  async function Carrinho() {
+    console.log("entrou na função do carrinho")
+    console.log("O id do pedido atual é", orderId)
+    if (!orderId) {
+      alert("Abra um pedido para poder visualizar o carrinho!\nNão esqueça de adicionar um item ao pedido.")
+      return;
+    }
+    try {
+      const response = await api.get("/order/detail", {
+        params: { order_id: orderId },
+      });
+      console.log("O id do pedido atual é", orderId)
+      console.log("Ele tem pedidos? Quantos?", response.data.items.length)
+      if (response.data.items.length > 0) {
+        navigation.navigate("Carrinho")
+      } else {
+        alert("Seu carrinho está vazio! Selecione um produto para adicionar primeiro.")
+      }
+    } catch (err) {
+      console.log("Erro ao buscar orders:", err);
+    }
   }
 
   async function Filtros() {
@@ -189,7 +213,7 @@ function PizzaCard({ product }: PizzaCardProps) {
         <Image
           source={require("../../assets/Plus.png")}
           resizeMode="stretch"
-          style={{ width: 25, height: 25}}
+          style={{ width: 25, height: 25 }}
         />
         <Text style={styles.addText}>Adicionar</Text>
       </TouchableOpacity>
