@@ -51,8 +51,8 @@ export default function LerQR() {
   async function confirmarComanda(id_mesa: string) {
     try {
       const response = await api.post("/order", {
-        table_id: id_mesa ?? Error("Não há um id da mesa"),
-        costumer_id: costumerId ?? Error("Não há um id do cliente"),
+        table_id: id_mesa,
+        costumer_id: costumerId,
       });
       console.log("Comanda criada:", response.data);
 

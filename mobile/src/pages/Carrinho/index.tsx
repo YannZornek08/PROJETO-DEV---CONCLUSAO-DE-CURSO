@@ -60,7 +60,7 @@ const PedidoScreen: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
   const trash = require('../../assets/trash.png');
   const { orderId } = useOrder();
-
+ 
   //   useEffect(() => {
 
   //   async function verProdutosPedido() {
@@ -151,10 +151,8 @@ const PedidoScreen: React.FC = () => {
     console.log("Tentando atualizar observação ao item:", orderId);
     try {
       await api.put("/order/note", {
-        params: {
           order_id: orderId, 
           note: observacoes,
-        }
       });
       console.log("Resposta do backend: Observação atualizada com sucesso.", observacoes);
 
@@ -243,7 +241,7 @@ const PedidoScreen: React.FC = () => {
             value={observacoes}
             onChangeText={(text) => {
               setObservacoes(text);
-              atualizarObservacao();
+              // atualizarObservacao();
             }}
 
             multiline
@@ -267,7 +265,10 @@ const PedidoScreen: React.FC = () => {
           {/* <Text style={styles.detailValue}>{nome}</Text> */}
         </View>
 
-        <TouchableOpacity style={styles.payButton} onPress={handlePay}>
+        <TouchableOpacity style={styles.payButton} onPress={ () => {
+          handlePay();
+          atualizarObservacao();
+          }}>
           <Text style={styles.payButtonText}>Pagar</Text>
         </TouchableOpacity>
       </ScrollView>
