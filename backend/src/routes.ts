@@ -91,12 +91,12 @@ router.get('/product/especify', new DetailProductController().handle)
 router.get('/product/search', new SearchProductController().handle)
 
 // -- ROTAS ORDER --
-router.post('/order', new CreateOrderController().handle)
+router.post('/order', new CreateOrderController().handle.bind(new CreateOrderController()))
 router.delete('/order', new RemoveOrderController().handle)
 
 router.post('/order/add', new AddItemController().handle)
 router.delete('/order/remove', new RemoveItemController().handle)
-router.put('/order/send', new SendOrderController().handle)
+router.put('/order/send', new SendOrderController().handle.bind(new SendOrderController()))
 
 router.get('/orders', new ListOrdersController().handle)
 router.get('/order/detail', new DetailOrderController().handle)

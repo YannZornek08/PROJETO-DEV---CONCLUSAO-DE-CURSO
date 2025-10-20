@@ -4,11 +4,11 @@ interface DetailRequest {
     order_id: string;
 }
 
-// No seu backend, adicione uma verificação:
+
 class DetailOrderService {
     async execute({ order_id }: DetailRequest ) {
         
-        // Verifica se o pedido existe
+        
         const orderExists = await prismaClient.order.findUnique({
             where: { id: order_id },
             select: { draft: true }
@@ -19,15 +19,15 @@ class DetailOrderService {
         }
 
         const orders = await prismaClient.order.findFirst({
-            where: {
-                id: order_id
-            },
+            where: { id: order_id },
             select: {
                 id: true,
                 draft: true,
-                status: true
-            } 
-        })
+                status: true,
+                table_id: true,
+                costumer_id: true,
+            },
+        });
 
         const items = await prismaClient.item.findMany({
             where: { 
@@ -39,7 +39,8 @@ class DetailOrderService {
             }
         });
 
-        return { items, orders } ;
+    
+    return { ...orders, items } ;
     }
 }
 
