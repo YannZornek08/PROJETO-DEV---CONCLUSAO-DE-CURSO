@@ -108,7 +108,7 @@ export default function StatusPedido() {
           </Text>
         </Animated.View>
       </View>
-      <BottomNavBar activeRoute="Menu" />
+      <BottomNavBar activeRoute="StatusPedido" />
     </SafeAreaView>
   );
 }
