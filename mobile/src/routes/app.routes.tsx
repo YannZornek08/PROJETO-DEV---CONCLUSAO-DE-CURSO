@@ -46,7 +46,7 @@ export type StackParamsList = {
     StatusPedido: undefined;
     Settings: undefined;
     Pagamento: undefined;
-    DadosPagamento: undefined;
+    DadosPagamento: { id_mtdo_pagto: string };
     DetalhesProdutos: { product: Produto };
     VoltarMenu:undefined;
 

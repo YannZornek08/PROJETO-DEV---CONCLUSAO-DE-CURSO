@@ -13,6 +13,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
+import { useOrder } from "../../contexts/OrderContext";
 import { api } from "../../services/api";
 
 type Produto = {
@@ -26,22 +27,36 @@ export default function headerView() {
     const [textInput1, onChangeTextInput1] = useState<string>("");
     const [produtos, setProdutos] = useState<Produto[]>([]);
     const [produtosFiltrados, setProdutosFiltrados] = useState<Produto[]>([]);
+    // const [orderAtual, setOrderAtual] = useState(false);
+    const { orderId } = useOrder();
     const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
     function Settings() {
         navigation.navigate("Settings")
     }
 
-    function Carrinho() {
-        navigation.navigate("Carrinho")
+    async function Carrinho() {
+        console.log("entrou na função do carrinho")
+        console.log("O id do pedido atual é", orderId)
+        try {
+            const response = await api.get("/order/detail", {
+                params: { order_id: orderId },
+            });
+            console.log("O id do pedido atual é", orderId)
+            console.log("Ele tem pedidos? Quantos?", response.data.items.length)
+            if (response.data.items.length > 0) {
+                navigation.navigate("Carrinho")
+            } else {
+                alert("Seu carrinho está vazio! Selecione um produto para adicionar primeiro.")
+                console.log("Nenhum item encontrado para esse pedido.");
+            }
+        } catch (err) {
+            console.log("Erro ao buscar orders:", err);
+        }
     }
 
     function Cupons() {
         navigation.navigate("Cupons");
-    }
-
-    function Favoritos() {
-        navigation.navigate("Favoritos");
     }
 
     function LerQR() {
@@ -102,7 +117,10 @@ export default function headerView() {
                 style={styles.searchInput}
             />
             <View style={styles.searchIconsRight}>
-                <TouchableOpacity onPress={Carrinho}>
+                <TouchableOpacity onPress={() => {
+
+                    Carrinho
+                }}>
                     <Image
                         source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/7PVAoyURPb/tmmocg1t_expires_30_days.png" }}
                         resizeMode="stretch"
