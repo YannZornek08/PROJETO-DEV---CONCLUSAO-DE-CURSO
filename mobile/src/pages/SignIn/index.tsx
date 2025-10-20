@@ -6,6 +6,7 @@ import Cadastro from "../Cadastro";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useCostumer } from "../../contexts/CostumerContext";
 import { api } from "../../services/api";
+import { Alert } from "react-native"; // adicione este import no topo
 
 export default function SignIn() {
     const { signIn, loadingAuth } = useContext(AuthContext)
@@ -16,17 +17,36 @@ export default function SignIn() {
 
 const { setCostumerId } = useCostumer();
 
+
 async function handleLogin() {
-  const response = await api.post("/session/costumers", {
-    email,
-    password,
-  });
+  if (!email || !password) {
+    Alert.alert("Atenção", "Por favor, preencha email e senha.");
+    return;
+  }
 
-  // supondo que o backend retorne o ID do cliente
-  setCostumerId(response.data.id);
-  console.log("Costumer ID salvo:", response.data.id);
+  try {
+    const response = await api.post("/session/costumers", {
+      email,
+      password,
+    });
 
-  await signIn({ email, password });
+    // supondo que o backend retorne o ID do cliente
+    setCostumerId(response.data.id);
+    console.log("Costumer ID salvo:", response.data.id);
+
+    await signIn({ email, password });
+  } catch (err: any) {
+    console.log("Erro ao fazer login:", err.response?.data || err.message);
+
+    // Mostra alerta amigável ao usuário
+    if (err.response?.data?.error) {
+      Alert.alert("Erro", err.response.data.error);
+    } else if (err.response?.data?.message) {
+      Alert.alert("Erro", err.response.data.message);
+    } else {
+      Alert.alert("Erro", "Email ou senha incorretos!");
+    }
+  }
 }
     
   const navigation = useNavigation();

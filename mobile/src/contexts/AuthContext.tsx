@@ -37,26 +37,32 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const isAuthenticated = !!user;
 
   useEffect(() => {
-    async function loadUserStorage() {
-      try {
-        const storedUser = await AsyncStorage.getItem("@costumerdata");
-
-        if (storedUser) {
-          const parsedUser: UserProps = JSON.parse(storedUser);
-          setUser(parsedUser);
-
-          // Define o token nas requisições
-          api.defaults.headers.common["Authorization"] = `Bearer ${parsedUser.token}`;
-        }
-      } catch (err) {
-        console.log("Erro ao carregar dados do usuário:", err);
-      }
-
-      setLoading(false);
-    }
-
-    loadUserStorage();
+  AsyncStorage.removeItem("@costumerdata"); // limpa login salvo
+  setUser(null);
+  setLoading(false);
   }, []);
+
+  // useEffect(() => {
+  //   async function loadUserStorage() {
+  //     try {
+  //       const storedUser = await AsyncStorage.getItem("@costumerdata");
+
+  //       if (storedUser) {
+  //         const parsedUser: UserProps = JSON.parse(storedUser);
+  //         setUser(parsedUser);
+
+  //         // Define o token nas requisições
+  //         api.defaults.headers.common["Authorization"] = `Bearer ${parsedUser.token}`;
+  //       }
+  //     } catch (err) {
+  //       console.log("Erro ao carregar dados do usuário:", err);
+  //     }
+
+  //     setLoading(false);
+  //   }
+
+  //   loadUserStorage();
+  // }, []);
 
   async function signIn({ email, password }: SignInProps) {
     setLoadingAuth(true);
