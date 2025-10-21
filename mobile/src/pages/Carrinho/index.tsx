@@ -85,14 +85,14 @@ const PedidoScreen: React.FC = () => {
     calcularTotal();
   }, [items]);
 
-  const handlePay = () => {
-    Alert.alert(
-      "Resumo do Pedido",
-      `Mesa: ${mesa}\nNome: ${nome}\nTotal: ${formatarPreco((Number(total)))}\n\nObservações: ${observacoes || "Nenhuma observação adicionada"
-      }`
-    );
-    navigation.navigate("Pagamento")
-  };
+  // const handlePay = () => {
+  //   Alert.alert(
+  //     "Resumo do Pedido",
+  //     `Mesa: ${mesa}\nNome: ${nome}\nTotal: ${formatarPreco((Number(total)))}\n\nObservações: ${observacoes || "Nenhuma observação adicionada"
+  //     }`
+  //   );
+  //   navigation.navigate("Pagamento")
+  // };
 
   async function bloquearPedidos() {
     if (!orderId) return;
@@ -101,7 +101,7 @@ const PedidoScreen: React.FC = () => {
         params: { order_id: orderId },
       });
       // console.log("Detalhes do pedido para bloqueio:", response.data);
-      setOrderAtual(response.data.orders.draft);
+      setOrderAtual(response.data.draft);
       console.log("O draft da order atual é", orderAtual)
       if (response.data.draft == false) {
         console.log("CARRINHO Tem que bloquear a TELA!!")
@@ -267,7 +267,7 @@ const PedidoScreen: React.FC = () => {
         </View>
 
         <TouchableOpacity style={styles.payButton} onPress={ () => {
-          handlePay();
+          // handlePay();
           atualizarObservacao();
           }}>
           <Text style={styles.payButtonText}>Pagar</Text>

@@ -129,7 +129,7 @@ export default function LerQR() {
           style={[styles.botao, { marginTop: 20, backgroundColor: "#4B8B26" }]}
           onPress={() => confirmarComanda("f6a3cb7f-da61-486c-acff-3b5990e2fbae")}
         >
-          <Text style={styles.textoBotao}>Botao do yan (mocado)</Text>
+          <Text style={styles.textoBotao}>Botão para abrir sem QRCODE (mocado)</Text>
         </TouchableOpacity>
 
         <Text style={styles.link}>Problemas? Fale com o atendente!</Text>
