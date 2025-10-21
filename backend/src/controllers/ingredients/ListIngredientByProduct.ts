@@ -7,11 +7,11 @@ class ListIngredientByProductController {
 
         const listIngredientByProduct = new ListIngredientByProductService();
 
-        const ingredients = await listIngredientByProduct.execute({
+        const ingredient = await listIngredientByProduct.execute({
             product_id
         });
 
-        res.json(ingredients);
+        res.json(ingredient);
     }
 }
 

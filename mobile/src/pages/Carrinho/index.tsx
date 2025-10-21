@@ -60,7 +60,7 @@ const PedidoScreen: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
   const trash = require('../../assets/trash.png');
   const { orderId } = useOrder();
-
+ 
   //   useEffect(() => {
 
   //   async function verProdutosPedido() {
@@ -146,6 +146,23 @@ const PedidoScreen: React.FC = () => {
     }
   }
 
+  async function atualizarObservacao() {
+    // Alert.alert("Observação atualizada ao item.");
+    console.log("Tentando atualizar observação ao item:", orderId);
+    try {
+      await api.put("/order/note", {
+          order_id: orderId, 
+          note: observacoes,
+      });
+      console.log("Resposta do backend: Observação atualizada com sucesso.", observacoes);
+
+      // setItems((prev) => prev.filter((item) => item.id !== item_id));
+      // alert("Observação adicionada ao item.");
+    } catch (err) {
+      console.log("Erro ao adicionar observação ao item:", err);
+    }
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       {bloquearTela && (
@@ -222,7 +239,11 @@ const PedidoScreen: React.FC = () => {
             placeholder="Toque para adicionar observações:"
             placeholderTextColor="#52443C"
             value={observacoes}
-            onChangeText={setObservacoes}
+            onChangeText={(text) => {
+              setObservacoes(text);
+              atualizarObservacao();
+            }}
+
             multiline
             textAlignVertical="top"
           />
@@ -244,7 +265,10 @@ const PedidoScreen: React.FC = () => {
           {/* <Text style={styles.detailValue}>{nome}</Text> */}
         </View>
 
-        <TouchableOpacity style={styles.payButton} onPress={handlePay}>
+        <TouchableOpacity style={styles.payButton} onPress={ () => {
+          handlePay();
+          atualizarObservacao();
+          }}>
           <Text style={styles.payButtonText}>Pagar</Text>
         </TouchableOpacity>
       </ScrollView>

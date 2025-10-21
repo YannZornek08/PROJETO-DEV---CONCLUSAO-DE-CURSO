@@ -9,10 +9,10 @@ class SendOrderController {
         try {
             const order = await sendOrder.execute({ order_id });
             console.log('[SendOrderController] order updated:', order.id, 'draft:', order.draft);
-            return res.json(order);
+            res.json(order);
         } catch (err: any) {
             console.error('[SendOrderController] error closing order:', err.message || err);
-            return res.status(500).json({ error: 'Erro ao fechar a comanda', details: err.message || err });
+            res.status(500).json({ error: 'Erro ao fechar a comanda', details: err.message || err });
         }
     }
 }

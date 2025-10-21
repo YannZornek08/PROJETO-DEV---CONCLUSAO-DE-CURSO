@@ -21,6 +21,7 @@ import { RemoveOrderController } from './controllers/order/RemoveOrderController
 import { AddItemController } from './controllers/order/AddItemController';
 import { RemoveItemController } from './controllers/order/RemoveItemController';
 import { SendOrderController } from './controllers/order/SendOrderController';
+import { AddNoteController } from './controllers/order/AddNoteController';
 
 import { ListOrdersController } from './controllers/order/ListOrdersController';
 import { DetailOrderController } from './controllers/order/DetailOrderController';
@@ -33,16 +34,24 @@ import { CreateCostumerController } from './controllers/costumer/CreateCostumerC
 import { AuthCostumerController } from './controllers/costumer/AuthCostumerController';
 import { DetailCostumerController } from './controllers/costumer/DetailCostumerController';
 
+// ==============
+// INGREDIENTES
+// ==============
 import { CreateIngredientController } from './controllers/ingredients/CreateIngredientController';
 import { AddIngredientController } from './controllers/ingredients/AddIngredientController';
-import { ListIngredientByProductController } from './controllers/ingredients/ListIngredientByProductController';
+import { ListAllItemIngredientByProductController } from './controllers/ingredients/ListAllItemIngredientByProductController';
+import { ListIngredientByProductController } from './controllers/ingredients/ListIngredientByProduct';
+import { AllItemIngredientController } from './controllers/ingredients/AllItemIngredientController';
+import { UpdateIngredientController } from './controllers/ingredients/UpdateIngredientController';
 import { ItemIngredientController } from './controllers/ingredients/ItemIngredientController';
 import { RemoveItemIngredientController } from './controllers/ingredients/RemoveItemIngredientController';
-import { AllItemIngredientController } from './controllers/ingredients/AllItemIngredientController';
 
 import { CreateAdditionalController } from './controllers/additional/CreateAdditionalController';
-import { AddAdditionalController } from './controllers/additional/AddAdditionalController';
+import { AddAdditionalController } from './controllers/additional/RelationAdditionalController';
+import { ListAllItemAdditionalByCategoryController } from './controllers/additional/ListAllItemAdditionalByCategoryController';
 import { ListAdditionalByCategoryController } from './controllers/additional/ListAdditionalByCategoryController';
+import { AllItemAdditionalController } from './controllers/additional/AllItemAdditionalController';
+import { UpdateAdditionalController } from './controllers/additional/UpdateAdditionalController';
 import { ItemAdditionalController } from './controllers/additional/ItemAdditionalController';
 import { RemoveItemAdditionalController } from './controllers/additional/RemoveItemAdditionalController';
 
@@ -96,7 +105,8 @@ router.delete('/order', new RemoveOrderController().handle)
 
 router.post('/order/add', new AddItemController().handle)
 router.delete('/order/remove', new RemoveItemController().handle)
-router.put('/order/send', new SendOrderController().handle.bind(new SendOrderController()))
+router.put('/order/note', new AddNoteController().handle)
+router.put('/order/send', new SendOrderController().handle)
 
 router.get('/orders', new ListOrdersController().handle)
 router.get('/order/detail', new DetailOrderController().handle)
@@ -119,20 +129,32 @@ router.get('/me/costumers', new DetailCostumerController().handle)
 router.post('/ingredients', new CreateIngredientController().handle)
 //Relaciona o adicional no produto
 router.post('/ingredient/relation', new AddIngredientController().handle)
-//Puxa os ingredientes de um produto
+//Puxa os ingredientes do item de um produto
+router.get('/product/all/ingredients', new ListAllItemIngredientByProductController().handle)
 router.get('/product/ingredients', new ListIngredientByProductController().handle)
-router.post('/item/ingredient', new ItemIngredientController().handle)
-router.delete('/item/ingredient', new RemoveItemIngredientController().handle)
+// Lista todos os ingredientes de um item
 router.post('/item/all/ingredients', new AllItemIngredientController().handle)
+//Cria e remove um igrediente do item
+router.post('/item/ingredient/create', new ItemIngredientController().handle)
+router.delete('/item/ingredient/delete', new RemoveItemController().handle)
+//Atualiza o item ingrediente (adicionado: true ou false)
+router.put('/item/ingredient', new UpdateIngredientController().handle)
 
 // -- ROTAS ADDITIONAL --
-router.post('/additionals', new CreateAdditionalController().handle)
+// Cria um adicional
+router.post('/additional', new CreateAdditionalController().handle)
+//Cria todos os adicionais de uma categoria para um item
+router.post('/item/all/additionals', new AllItemAdditionalController().handle)
 //Relaciona o adicional na categoria
 router.post('/additional/relation', new AddAdditionalController().handle)
 //Puxa os adicionais de uma categoria
+router.get('/category/all/additionals', new ListAllItemAdditionalByCategoryController().handle)
 router.get('/category/additionals', new ListAdditionalByCategoryController().handle)
-router.post('/item/additional', new ItemAdditionalController().handle)
-router.delete('/item/additional', new RemoveItemAdditionalController().handle)
+//Cria e remove um adicional ao item
+router.post('/item/additional/create', new ItemAdditionalController().handle)
+router.delete('/item/additional/delete', new RemoveItemAdditionalController().handle)
+//Atualiza o item adicional (adicionado: true ou false)
+router.put('/item/additional', new UpdateAdditionalController().handle)
 
 // -- ROTAS TABLE --
 router.post('/table', new CreateTableController().handle)

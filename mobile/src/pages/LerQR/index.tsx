@@ -51,8 +51,8 @@ export default function LerQR() {
   async function confirmarComanda(id_mesa: string) {
     try {
       const response = await api.post("/order", {
-        table_id: id_mesa ?? Error("Não há um id da mesa"),
-        costumer_id: costumerId ?? Error("Não há um id do cliente"),
+        table_id: id_mesa,
+        costumer_id: costumerId,
       });
       console.log("Comanda criada:", response.data);
 
@@ -125,6 +125,12 @@ export default function LerQR() {
           onPress={() => setShowCamera(true)}
         >
           <Text style={styles.textoBotao}>Abrir Câmera</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.botao, { marginTop: 20, backgroundColor: "#4B8B26" }]}
+          onPress={() => confirmarComanda("f6a3cb7f-da61-486c-acff-3b5990e2fbae")}
+        >
+          <Text style={styles.textoBotao}>Botao do yan (mocado)</Text>
         </TouchableOpacity>
 
         <Text style={styles.link}>Problemas? Fale com o atendente!</Text>

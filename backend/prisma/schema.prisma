@@ -49,17 +49,19 @@ model Product {
 }
 
 model Order {
-  id          String    @id @default(uuid())
-  status      Boolean   @default(false)
-  draft       Boolean   @default(true)
-  created_at  DateTime? @default(now())
-  update_at   DateTime? @default(now())
-  costumer_id String
-  table_id    String
-  items       Item[]
-  costumer    Costumer  @relation(fields: [costumer_id], references: [id])
-  table       Table     @relation(fields: [table_id], references: [id])
-  payments    Payment[]
+  id                String              @id @default(uuid())
+  status            Boolean             @default(false)
+  draft             Boolean             @default(true)
+  note              String              @default("")
+  created_at        DateTime?           @default(now())
+  update_at         DateTime?           @default(now())
+  costumer_id       String
+  table_id          String
+  costumer          Costumer            @relation(fields: [costumer_id], references: [id])
+  table             Table               @relation(fields: [table_id], references: [id])
+  items             Item[]
+  payments          Payment[]
+
 
   @@map("orders")
 }
@@ -146,7 +148,7 @@ model Ingredient_product {
   ingredient   Ingredient @relation(fields: [ingredient_id], references: [id])
   product      Product    @relation(fields: [product_id], references: [id])
   ingredient_id String
-  product_id String
+  product_id    String
 
   // item        Item[]
 

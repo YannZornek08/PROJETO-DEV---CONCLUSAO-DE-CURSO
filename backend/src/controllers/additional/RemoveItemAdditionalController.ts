@@ -3,16 +3,20 @@ import { RemoveItemAdditionalService } from "../../services/additional/RemoveIte
 
 class RemoveItemAdditionalController {
     async handle(req: Request, res: Response) {
-        const item_additionals_id = req.query.item_additionals_id as string;
+        const { item_additional_id, order_id } = req.body;
 
-        const removeItemadditionalService = new RemoveItemAdditionalService();
+        const removeItemAdditionalService = new RemoveItemAdditionalService();
 
-        const item_additional = await removeItemadditionalService.execute({
-            item_additionals_id
-        });
-
-        res.json(item_additional)
+        try {
+            const result = await removeItemAdditionalService.execute({ 
+                item_additional_id, 
+                order_id 
+            });
+            res.json(result);
+        } catch (err: any) {
+            res.status(400).json({ error: err.message });
+        }
     }
 }
 
-export { RemoveItemAdditionalController }
+export { RemoveItemAdditionalController };

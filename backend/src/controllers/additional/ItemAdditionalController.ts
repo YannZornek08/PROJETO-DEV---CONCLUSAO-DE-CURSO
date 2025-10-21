@@ -3,17 +3,17 @@ import { ItemAdditionalService } from "../../services/additional/ItemAdditionalS
 
 class ItemAdditionalController {
     async handle(req: Request, res: Response) {
-        const { categories_additionals_id, adicionado } = req.body;
+        const { categories_additionals_id, order_id} = req.body;
 
-        const ItemAdditional = new ItemAdditionalService();
+        const itemAdditionalService = new ItemAdditionalService()
 
-        const additional = await ItemAdditional.execute({
-            categories_additionals_id,
-            adicionado
+        const additional = await itemAdditionalService.execute({
+           categories_additionals_id,
+           order_id
         });
 
         res.json(additional)
     }
 }
 
-export { ItemAdditionalController }
+export {ItemAdditionalController }

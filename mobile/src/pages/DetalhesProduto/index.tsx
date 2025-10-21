@@ -60,8 +60,15 @@ export default function DetalhesProdutos() {
   // const [items, setItems] = useState<Item[]>([]);
 
   const { product } = route.params;
-  const tamanhos = ["P", "M", "G"];
-  const [tamanhoSelecionado, setTamanhoSelecionado] = useState<string>("M");
+  const order_id = "e7611b30-2756-4346-9305-2bf30495c238";
+
+  //CODIGO DO COPILOT
+  // const order_id = route.params?.order_id ?? null;
+  // console.log("Produto selecionado:", product);
+  // console.log("Order ID:", order_id);
+
+  // const tamanhos = ["P", "M", "G"];
+  // const [tamanhoSelecionado, setTamanhoSelecionado] = useState<string>("M");
   const [quantidade, setQuantidade] = useState<number>(1);
 
   const { orderId } = useOrder();
@@ -217,7 +224,7 @@ export default function DetalhesProdutos() {
       </ScrollView>
 
       {/* Área inferior */}
-      <View style={styles.bottomContainer}>
+      < View style={styles.bottomContainer} >
         <View style={styles.quantityContainer}>
           <Text style={styles.quantityLabel}>Quantidade:</Text>
           <View style={styles.quantitySelector}>
@@ -256,11 +263,11 @@ export default function DetalhesProdutos() {
               return;
             } else {
               adicionarItem();
-              alert(
-                `${product.name} adicionado! Tamanho: ${tamanhoSelecionado}, Quantidade: ${quantidade}, Adicionais: ${adicionais.join(
-                  ", "
-                ) || "Nenhum"}`
-              );
+              // alert(
+                // `${product.name} adicionado! Tamanho: ${tamanhoSelecionado}, Quantidade: ${quantidade}, Adicionais: ${adicionais.join(
+                  // ", "
+                // ) || "Nenhum"}`
+              // );
               navigation.navigate("Carrinho");
             }
           }
@@ -341,7 +348,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 26,
     textAlign: "center",
     lineHeight: 22,
-    
+
   },
   divider: {
     height: 1,
