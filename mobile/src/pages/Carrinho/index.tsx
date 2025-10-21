@@ -100,9 +100,10 @@ const PedidoScreen: React.FC = () => {
       const response = await api.get("/order/detail", {
         params: { order_id: orderId },
       });
+      // console.log("Detalhes do pedido para bloqueio:", response.data);
       setOrderAtual(response.data.orders.draft);
       console.log("O draft da order atual é", orderAtual)
-      if (response.data.orders.draft == false) {
+      if (response.data.draft == false) {
         console.log("CARRINHO Tem que bloquear a TELA!!")
         setBloquearTela(true);
       } else {

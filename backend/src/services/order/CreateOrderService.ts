@@ -13,6 +13,14 @@ class CreateOrderService {
                     table_id,
                     costumer_id,
                 },
+                select: {
+                    id: true,
+                    table_id: true,
+                    costumer_id: true,
+                    draft: true,
+                    status: true,
+                    table: true,
+                },
             });
 
             return order;

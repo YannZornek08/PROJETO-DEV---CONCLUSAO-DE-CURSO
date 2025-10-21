@@ -141,7 +141,7 @@ const Pagamento: React.FC = () => {
         <View style={styles.row}>
           <TouchableOpacity style={styles.card} onPress={() => {
             navigation.navigate("DadosPagamento", {
-              id_mtdo_pagto: "9648814d-726c-4c9b-8b2e-440da4da29da"
+              id_mtdo_pagto: "77749534-d8af-4625-9669-6bcd176b359a"
             })
           }}>
             <Text style={styles.cardText}>

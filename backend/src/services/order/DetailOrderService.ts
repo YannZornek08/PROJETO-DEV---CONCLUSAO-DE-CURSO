@@ -35,7 +35,6 @@ class DetailOrderService {
             },
             include: { 
                 product: true, 
-                order: true
             }
         });
 

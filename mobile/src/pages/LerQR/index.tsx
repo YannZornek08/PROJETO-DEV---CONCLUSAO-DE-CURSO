@@ -55,9 +55,8 @@ export default function LerQR() {
         costumer_id: costumerId ?? Error("Não há um id do cliente"),
       });
       console.log("Comanda criada:", response.data);
-
-          setOrderId(response.data.id);
-
+      setOrderId(response.data.id);
+      alert("Comanda criada com sucesso!" + "\n" + "Sua mesa é a " + response.data.table.number);
     } catch (err: any) {
       console.error(
         "Erro ao criar comanda:",
