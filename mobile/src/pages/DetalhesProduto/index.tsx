@@ -406,7 +406,7 @@ export default function DetalhesProdutos() {
                       )}
                     </View>
                     <Text style={styles.adicionalText}>
-                      {adit.additional?.name + " " + adit.additional.price}
+                      {adit.additional?.name + " R$ " + formatarPreco(adit.additional.price)}
                     </Text>
                   </TouchableOpacity>
                 ))}

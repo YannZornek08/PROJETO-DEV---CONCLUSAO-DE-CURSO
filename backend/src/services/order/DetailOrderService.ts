@@ -47,7 +47,8 @@ class DetailOrderService {
                     select: {
                         additionals: {
                             select: {
-                                name: true
+                                name: true,
+                                price: true
                             }
                         }
                     }
@@ -74,7 +75,8 @@ class DetailOrderService {
 
             adicionais: item_additional.map(add => ({
                 name: add.categories_additionals.additionals.name,
-                adicionado: add.adicionado
+                adicionado: add.adicionado,
+                price: add.categories_additionals.additionals.price
             }))
         }));
 
