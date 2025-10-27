@@ -85,14 +85,13 @@ const PedidoScreen: React.FC = () => {
     calcularTotal();
   }, [items]);
 
-  // const handlePay = () => {
-  //   Alert.alert(
-  //     "Resumo do Pedido",
-  //     `Mesa: ${mesa}\nNome: ${nome}\nTotal: ${formatarPreco((Number(total)))}\n\nObservações: ${observacoes || "Nenhuma observação adicionada"
-  //     }`
-  //   );
-  //   navigation.navigate("Pagamento")
-  // };
+  const handlePay = () => {
+    Alert.alert(
+      "Resumo do Pedido",
+      `Mesa: ${mesa}\nNome: ${nome}\nTotal: ${formatarPreco((Number(total)))}`,
+    );
+    navigation.navigate("Pagamento")
+  };
 
   async function bloquearPedidos() {
     if (!orderId) return;
@@ -144,23 +143,6 @@ const PedidoScreen: React.FC = () => {
       alert("Item excluído do carrinho.");
     } catch (err) {
       console.log("Erro ao excluir item:", err);
-    }
-  }
-
-  async function atualizarObservacao() {
-    // Alert.alert("Observação atualizada ao item.");
-    console.log("Tentando atualizar observação ao item:", orderId);
-    try {
-      await api.put("/order/note", {
-          order_id: orderId, 
-          note: observacoes,
-      });
-      console.log("Resposta do backend: Observação atualizada com sucesso.", observacoes);
-
-      // setItems((prev) => prev.filter((item) => item.id !== item_id));
-      // alert("Observação adicionada ao item.");
-    } catch (err) {
-      console.log("Erro ao adicionar observação ao item:", err);
     }
   }
 
@@ -233,7 +215,7 @@ const PedidoScreen: React.FC = () => {
           ))}
         </View>
 
-
+{/* 
         <View style={styles.notesContainer}>
           <TextInput
             style={styles.notesInput}
@@ -242,13 +224,12 @@ const PedidoScreen: React.FC = () => {
             value={observacoes}
             onChangeText={(text) => {
               setObservacoes(text);
-              atualizarObservacao();
             }}
 
             multiline
             textAlignVertical="top"
           />
-        </View>
+        </View> */}
 
 
         <View style={styles.totalContainer}>
@@ -267,8 +248,7 @@ const PedidoScreen: React.FC = () => {
         </View>
 
         <TouchableOpacity style={styles.payButton} onPress={ () => {
-          // handlePay();
-          atualizarObservacao();
+          handlePay();
           }}>
           <Text style={styles.payButtonText}>Pagar</Text>
         </TouchableOpacity>
@@ -374,24 +354,24 @@ const styles = StyleSheet.create({
     width: 94,
     fontFamily: "BesleyRegular",
   },
-  notesContainer: {
-    backgroundColor: "#FFFFFF",
-    borderColor: "#52443C",
-    borderRadius: 18,
-    borderWidth: 4,
-    padding: 12,
-    marginBottom: 27,
-    marginHorizontal: 26,
-    minHeight: 120,
-    justifyContent: "flex-start",
-  },
-  notesInput: {
-    color: "#000000",
-    fontSize: 14,
-    flex: 1,
-    padding: 6,
-    textAlign: "center",
-  },
+  // notesContainer: {
+  //   backgroundColor: "#FFFFFF",
+  //   borderColor: "#52443C",
+  //   borderRadius: 18,
+  //   borderWidth: 4,
+  //   padding: 12,
+  //   marginBottom: 27,
+  //   marginHorizontal: 26,
+  //   minHeight: 120,
+  //   justifyContent: "flex-start",
+  // },
+  // notesInput: {
+  //   color: "#000000",
+  //   fontSize: 14,
+  //   flex: 1,
+  //   padding: 6,
+  //   textAlign: "center",
+  // },
   totalContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
