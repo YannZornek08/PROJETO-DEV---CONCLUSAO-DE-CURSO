@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback, useRef } from "react";
 import {
   SafeAreaView,
   View,
@@ -53,34 +53,35 @@ export default function HomeScreen() {
   const { orderId } = useOrder();
   const { user, signOut } = useContext(AuthContext);
 
-  function Settings() {
-    navigation.navigate("Settings");
-  }
+  const searchTimeout = useRef<NodeJS.Timeout | null>(null);
 
-  async function Carrinho() {
-    console.log("entrou na função do carrinho")
-    console.log("O id do pedido atual é", orderId)
-    if (!orderId) {
-      alert("Abra um pedido para poder visualizar o carrinho!\nNão esqueça de adicionar um item ao pedido.")
-      return;
+  // Função de busca dinâmica
+  const handleSearch = useCallback(async (text: string) => {
+    onChangeTextInput1(text);
+
+    // limpa timeout anterior (debounce)
+    if (searchTimeout.current) {
+      clearTimeout(searchTimeout.current);
     }
-    try {
-      const response = await api.get("/order/detail", {
-        params: { order_id: orderId },
-      });
-      console.log("O id do pedido atual é", orderId)
-      console.log("Ele tem pedidos? Quantos?", response.data.items.length)
-      if (response.data.items.length > 0) {
-        navigation.navigate("Carrinho")
-      } else {
-        alert("Seu carrinho está vazio! Selecione um produto para adicionar primeiro.")
+
+    searchTimeout.current = setTimeout(async () => {
+      try {
+        if (text.trim() === "") {
+          const response = await api.get("/product/all");
+          setProdutos(response.data);
+        } else {
+          const response = await api.get("/product/search", {
+            params: { name: text },
+          });
+          setProdutos(response.data);
+        }
+      } catch (err) {
+        console.log("Erro ao buscar produtos:", err);
       }
-    } catch (err) {
-      console.log("Erro ao buscar orders:", err);
-    }
-  }
+    }, 300); // atraso de 300 ms
+  }, []);
 
-  // Buscar categorias do backend
+  // Buscar categorias (mantém igual)
   useEffect(() => {
     async function carregarCategorias() {
       try {
@@ -93,7 +94,7 @@ export default function HomeScreen() {
     carregarCategorias();
   }, []);
 
-  // Buscar produtos do backend
+  // Buscar produtos inicialmente
   useEffect(() => {
     async function verProdutos() {
       try {
@@ -154,14 +155,14 @@ export default function HomeScreen() {
               resizeMode="stretch"
               style={styles.searchIcon}
             />
-            <TextInput
-              placeholder="O que busca?"
-              value={textInput1}
-              onChangeText={onChangeTextInput1}
-              style={styles.searchInput}
-            />
+             <TextInput
+                placeholder="O que busca?"
+                value={textInput1}
+                onChangeText={handleSearch}
+                style={styles.searchInput}
+              />
             <View style={styles.searchIconsRight}>
-              <TouchableOpacity onPress={Carrinho}>
+              <TouchableOpacity onPress={() => navigation.navigate("Carrinho")}>
                 <Image
                   source={require("../../assets/Carrinho.png")}
                   resizeMode="stretch"
@@ -320,6 +321,7 @@ const styles = StyleSheet.create({
     color: "#52443C",
     fontSize: 14,
     fontWeight: "600",
+    textTransform: "capitalize",
   },
   chipTextSelected: {
     color: "#FFFFFF",
@@ -359,6 +361,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     marginBottom: 4,
+    textTransform: "capitalize",
+    flexGrow: 1,
   },
   cardPrice: { color: "#000000", fontSize: 16, marginBottom: 7, fontFamily: "BesleyRegular", },
   addButton: {

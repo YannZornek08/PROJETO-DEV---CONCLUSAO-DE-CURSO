@@ -334,16 +334,17 @@ const styles = StyleSheet.create({
     fontFamily: "BesleyBold",
   },
   orderItemImage: {
-    width: 90,
-    height: 90,
+    width: 112,
+    height: 112,
     marginRight: 27,
-    borderRadius: 45,
+    borderRadius: 56,
   },
   orderItemDescription: {
     color: "#000000",
     fontSize: 16,
     marginBottom: 40,
     fontFamily: "BesleyRegular",
+    textTransform: "capitalize",
     flexShrink: 1,
   },
   orderItemPrice: {

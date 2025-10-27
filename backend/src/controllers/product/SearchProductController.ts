@@ -3,15 +3,16 @@ import { SearchProductService } from "../../services/product/SearchProductServic
 
 class SearchProductController {
   async handle(req: Request, res: Response) {
-    const { name } = req.query; // pegando o termo da barra de pesquisa (query params)
-
+    const name = req.query.name as string;
     const searchProductService = new SearchProductService();
 
-    const products = await searchProductService.execute({
-      name: String(name) // garante que o name é string
-    });
-
-    res.json(products);
+    try {
+      const products = await searchProductService.execute(name);
+      return res.json(products);
+    } catch (err) {
+      console.error("Erro ao buscar produtos:", err);
+      return res.status(500).json({ error: "Erro ao buscar produtos" });
+    }
   }
 }
 
