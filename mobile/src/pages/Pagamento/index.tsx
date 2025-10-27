@@ -180,7 +180,7 @@ const Pagamento: React.FC = () => {
                 resizeMode="stretch"
                 style={styles.icon}
               />
-              <Text style={styles.textPrimary}>Chamar um garçom</Text>
+              <Text style={styles.textPrimary}>Chamar um garçom (Dinheiro)</Text>
             </View>
             <Image
               source={require('../../assets/faz03frq_expires_30_days.png')}
@@ -224,8 +224,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#FFF8F5",
     borderColor: "#D7C2B8",
-    borderWidth: 1,
-    borderRadius: 12,
+    borderWidth: 5,
+    borderRadius: 18,
     paddingRight: 12,
     marginBottom: 12,
     marginTop: 16,

@@ -74,20 +74,6 @@ export default function Cupons() {
               </TouchableOpacity>
             </View>
           </View>
-
-          <View style={styles.filterWrapper}>
-            <TouchableOpacity
-              style={styles.filterButton}
-              onPress={(e: GestureResponderEvent) => alert("Filtros clicado!")}
-            >
-              <Image
-                source={require('../../assets/abawhite.png')}
-                resizeMode="stretch"
-                style={styles.filterIcon}
-              />
-              <Text style={styles.filterText}>Filtros</Text>
-            </TouchableOpacity>
-          </View>
         </View>
 
         <Text style={styles.couponTitle}>Seus cupons:</Text>
@@ -152,16 +138,6 @@ const styles = StyleSheet.create({
   searchIcon: { width: 48, height: 48, marginRight: 4 },
   searchInput: { color: "#52443C", fontSize: 16, flex: 1, paddingVertical: 12 },
   actionIcon: { width: 48, height: 48 },
-  filterWrapper: { alignItems: "center", paddingVertical: 8 },
-  filterButton: {
-    flexDirection: "row",
-    backgroundColor: "#8D4F28",
-    borderRadius: 12,
-    paddingVertical: 6,
-    paddingHorizontal: 11,
-  },
-  filterIcon: { width: 20, height: 20, marginRight: 4 },
-  filterText: { color: "#FFFFFF", fontSize: 14, fontWeight: "bold" },
   couponTitle: {
     color: "#000000",
     fontSize: 16,

@@ -147,23 +147,6 @@ const PedidoScreen: React.FC = () => {
     }
   }
 
-  async function atualizarObservacao() {
-    // Alert.alert("Observação atualizada ao item.");
-    console.log("Tentando atualizar observação ao item:", orderId);
-    try {
-      await api.put("/order/note", {
-          order_id: orderId, 
-          note: observacoes,
-      });
-      console.log("Resposta do backend: Observação atualizada com sucesso.", observacoes);
-
-      // setItems((prev) => prev.filter((item) => item.id !== item_id));
-      // alert("Observação adicionada ao item.");
-    } catch (err) {
-      console.log("Erro ao adicionar observação ao item:", err);
-    }
-  }
-
   return (
     <SafeAreaView style={styles.safeArea}>
       {bloquearTela && (
@@ -201,7 +184,7 @@ const PedidoScreen: React.FC = () => {
               style={styles.orderItemImage}
             />
             <Text style={styles.orderItemDescription}>
-              {item.product.name}{"\n"}Quantidade: {item.amount}
+              {item.product.name}{"\n"}Qtd: {item.amount}
             </Text>
 
             {/* Coluna para valor + botão */}
@@ -233,7 +216,7 @@ const PedidoScreen: React.FC = () => {
           ))}
         </View>
 
-
+{/* 
         <View style={styles.notesContainer}>
           <TextInput
             style={styles.notesInput}
@@ -242,13 +225,12 @@ const PedidoScreen: React.FC = () => {
             value={observacoes}
             onChangeText={(text) => {
               setObservacoes(text);
-              atualizarObservacao();
             }}
 
             multiline
             textAlignVertical="top"
           />
-        </View>
+        </View> */}
 
 
         <View style={styles.totalContainer}>
@@ -351,17 +333,21 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     paddingTop: 10,
     alignItems: "center",
+    fontFamily: "BesleyBold",
   },
   orderItemImage: {
-    width: 90,
-    height: 90,
+    width: 112,
+    height: 112,
     marginRight: 27,
-    borderRadius: 45,
+    borderRadius: 56,
   },
   orderItemDescription: {
     color: "#000000",
     fontSize: 16,
     marginBottom: 40,
+    fontFamily: "BesleyRegular",
+    textTransform: "capitalize",
+    flexShrink: 1,
   },
   orderItemPrice: {
     color: "#000000",
@@ -371,24 +357,24 @@ const styles = StyleSheet.create({
     width: 94,
     fontFamily: "BesleyRegular",
   },
-  notesContainer: {
-    backgroundColor: "#FFFFFF",
-    borderColor: "#52443C",
-    borderRadius: 18,
-    borderWidth: 4,
-    padding: 12,
-    marginBottom: 27,
-    marginHorizontal: 26,
-    minHeight: 120,
-    justifyContent: "flex-start",
-  },
-  notesInput: {
-    color: "#000000",
-    fontSize: 14,
-    flex: 1,
-    padding: 6,
-    textAlign: "center",
-  },
+  // notesContainer: {
+  //   backgroundColor: "#FFFFFF",
+  //   borderColor: "#52443C",
+  //   borderRadius: 18,
+  //   borderWidth: 4,
+  //   padding: 12,
+  //   marginBottom: 27,
+  //   marginHorizontal: 26,
+  //   minHeight: 120,
+  //   justifyContent: "flex-start",
+  // },
+  // notesInput: {
+  //   color: "#000000",
+  //   fontSize: 14,
+  //   flex: 1,
+  //   padding: 6,
+  //   textAlign: "center",
+  // },
   totalContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -437,10 +423,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   trash: {
-    backgroundColor: "#FF0000",
+    width: 24,
+    height: 24,
     padding: 18,
-    borderRadius: 25,
-    marginLeft: 45,
+    borderRadius: 0,
+    marginLeft: 64,
+    marginTop: 22,
   }
 });
 

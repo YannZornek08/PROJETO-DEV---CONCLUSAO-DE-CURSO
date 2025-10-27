@@ -21,7 +21,6 @@ import { RemoveOrderController } from './controllers/order/RemoveOrderController
 import { AddItemController } from './controllers/order/AddItemController';
 import { RemoveItemController } from './controllers/order/RemoveItemController';
 import { SendOrderController } from './controllers/order/SendOrderController';
-import { AddNoteController } from './controllers/order/AddNoteController';
 
 import { ListOrdersController } from './controllers/order/ListOrdersController';
 import { DetailOrderController } from './controllers/order/DetailOrderController';
@@ -67,13 +66,14 @@ import { InputCPFController } from './controllers/payment/InputCPFController';
 
 import { isAuthenticated } from './middlewares/isAuthenticated'
 import { isAuthenticatedClient } from './middlewares/isAuthenticatedClient'
-
 import uploadConfig from './config/multer'
 import { DetailTableController } from './controllers/table/DetailTableController';
 
 const router = Router()
 
 const upload = multer(uploadConfig.upload("./tmp"))
+
+const searchProductController = new SearchProductController();
 
 // -- ROTAS USER --
 router.post('/users', new CreateUserController().handle)
@@ -97,7 +97,8 @@ router.get('/product/all', new ListProductController().handle)
 
 router.get('/product/especify', new DetailProductController().handle)
 
-router.get('/product/search', new SearchProductController().handle)
+router.get("/product/search", searchProductController.handle.bind(searchProductController));
+
 
 // -- ROTAS ORDER --
 router.post('/order', new CreateOrderController().handle.bind(new CreateOrderController()))
@@ -105,7 +106,6 @@ router.delete('/order', new RemoveOrderController().handle)
 
 router.post('/order/add', new AddItemController().handle)
 router.delete('/order/remove', new RemoveItemController().handle)
-router.put('/order/note', new AddNoteController().handle)
 router.put('/order/send', new SendOrderController().handle)
 
 router.get('/orders', new ListOrdersController().handle)

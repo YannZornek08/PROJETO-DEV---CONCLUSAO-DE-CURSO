@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 36,
-    fontWeight: "bold",
+    fontFamily: "BesleyBold",
     color: "#5F4100",
     marginBottom: 30,
     textAlign: "center",
