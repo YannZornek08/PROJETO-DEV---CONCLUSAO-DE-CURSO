@@ -5,6 +5,7 @@ import Cadastro from "../Cadastro";
 
 import { AuthContext } from "../../contexts/AuthContext";
 import { useCostumer } from "../../contexts/CostumerContext";
+import { useOrder } from "../../contexts/OrderContext";
 import { api } from "../../services/api";
 import { Alert } from "react-native"; // adicione este import no topo
 
@@ -16,6 +17,7 @@ export default function SignIn() {
 
 
 const { setCostumerId } = useCostumer();
+const { resetOrder } = useOrder();
 
 
 async function handleLogin() {
@@ -30,11 +32,14 @@ async function handleLogin() {
       password,
     });
 
-    // supondo que o backend retorne o ID do cliente
-    setCostumerId(response.data.id);
-    console.log("Costumer ID salvo:", response.data.id);
+  // supondo que o backend retorne o ID do cliente
+  setCostumerId(response.data.id);
+  console.log("Costumer ID salvo:", response.data.id);
 
-    await signIn({ email, password });
+  // Limpa comanda anterior ao trocar/entrar com novo usuário
+  try { resetOrder(); } catch (e) { /* ignore if not mounted */ }
+
+  await signIn({ email, password });
   } catch (err: any) {
     console.log("Erro ao fazer login:", err.response?.data || err.message);
 

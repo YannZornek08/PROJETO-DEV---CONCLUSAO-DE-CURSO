@@ -141,7 +141,7 @@ const Pagamento: React.FC = () => {
         <View style={styles.row}>
           <TouchableOpacity style={styles.card} onPress={() => {
             navigation.navigate("DadosPagamento", {
-              id_mtdo_pagto: "3156c9d4-d7bf-4b19-b044-5e49905430c7"
+              id_mtdo_pagto: "9648814d-726c-4c9b-8b2e-440da4da29da"
             })
           }}>
             <Text style={styles.cardText}>
@@ -150,7 +150,7 @@ const Pagamento: React.FC = () => {
           </TouchableOpacity>
           <TouchableOpacity style={styles.card} onPress={() => {
             navigation.navigate("DadosPagamento", {
-              id_mtdo_pagto: "5b73e74c-985d-489c-b51c-7378bafb43c9"
+              id_mtdo_pagto: "a2511906-b547-4624-916c-b5fb42df972e"
             })
           }}>
             <Text style={styles.cardText}>
@@ -161,7 +161,7 @@ const Pagamento: React.FC = () => {
 
         <TouchableOpacity style={styles.card} onPress={() => {
           navigation.navigate("DadosPagamento", {
-            id_mtdo_pagto: "cb27bc1d-4df1-4e26-8e7c-e68c839dab45"
+            id_mtdo_pagto: "5939de73-70b2-44c0-97c7-1bdf6bd91fd4"
           })
         }}>
           <Text style={styles.cardText}>
