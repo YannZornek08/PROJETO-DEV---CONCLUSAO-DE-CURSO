@@ -127,6 +127,13 @@ export default function LerQR() {
           <Text style={styles.textoBotao}>Abrir Câmera</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity
+          style={[styles.botao, { marginTop: 20, backgroundColor: "#4B8B26" }]}
+          onPress={() => confirmarComanda("faea2cd6-86f7-4d84-9658-f3b6ce285525")}
+        >
+          <Text style={styles.textoBotao}>Botão Mocado</Text>
+        </TouchableOpacity>
+
         <Text style={styles.link}>Problemas? Fale com o atendente!</Text>
       </View>
       <BottomNavBar activeRoute="LerQR" />

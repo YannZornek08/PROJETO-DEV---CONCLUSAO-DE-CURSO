@@ -208,6 +208,7 @@ export default function DetalhesProdutos() {
     try {
       const newItem = await api.post('/order/add', {
         order_id: orderId,
+        product_id: product.id,
         items_ingredients_id: ingredients.map(ing => ing.id).join(", "), // Exemplo de como pegar os IDs dos ingredientes selecionados
         items_additionals_id: adicionais.map(add => add.id).join(", "), // Exemplo de como pegar os IDs dos adicionais selecionados
         amount: quantidade,

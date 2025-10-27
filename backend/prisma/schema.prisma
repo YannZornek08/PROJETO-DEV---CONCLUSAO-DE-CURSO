@@ -41,26 +41,28 @@ model Product {
   created_at  DateTime? @default(now())
   update_at   DateTime? @default(now())
 
-  category_id        String
-  category           Category             @relation(fields: [category_id], references: [id])
+  category    Category @relation(fields: [category_id], references: [id])
+  category_id String
   ingredient_product Ingredient_product[] // relação muitos para muitos
-  Item               Item[]
+  items       Item[]
 
   @@map("products")
 }
 
 model Order {
-  id          String    @id @default(uuid())
-  status      Boolean   @default(false)
-  draft       Boolean   @default(true)
-  created_at  DateTime? @default(now())
-  update_at   DateTime? @default(now())
-  costumer_id String
-  table_id    String
-  costumer    Costumer  @relation(fields: [costumer_id], references: [id])
-  table       Table     @relation(fields: [table_id], references: [id])
-  items       Item[]
-  payments    Payment[]
+  id                String              @id @default(uuid())
+  status            Boolean             @default(false)
+  draft             Boolean             @default(true)
+  created_at        DateTime?           @default(now())
+  update_at         DateTime?           @default(now())
+  costumer_id       String
+  table_id          String
+  costumer          Costumer            @relation(fields: [costumer_id], references: [id])
+  table             Table               @relation(fields: [table_id], references: [id])
+  items             Item[]
+  payments          Payment[]
+  items_additionals Items_additionals[]
+  items_ingredients Items_ingredients[]
 
   @@map("orders")
 }
@@ -83,11 +85,10 @@ model Item {
   product_id String
   product    Product   @relation(fields: [product_id], references: [id])
 
-  order    Order  @relation(fields: [order_id], references: [id])
-  order_id String // pega pelo login
-
-  items_ingredients Items_ingredients[]
-  items_additionals Items_additionals[]
+  order                Order             @relation(fields: [order_id], references: [id])
+  order_id             String // pega pelo login
+  items_additionals_id String // ele cria sozinho, se não quiser vem tudo como false
+  items_ingredients_id String // ele cria sozinho, vem tudo como true
 
   @@map("items")
 }
@@ -200,8 +201,8 @@ model Items_additionals {
   categories_additionals    categories_additionals @relation(fields: [categories_additionals_id], references: [id])
   categories_additionals_id String
 
-  item_id String
-  item    Item   @relation(fields: [item_id], references: [id])
+  order_id String
+  order    Order  @relation(fields: [order_id], references: [id])
 
   @@map("items_additionals")
 }
@@ -215,8 +216,8 @@ model Items_ingredients {
   ingredient_product    Ingredient_product @relation(fields: [ingredient_product_id], references: [id])
   ingredient_product_id String
 
-  item_id String
-  item    Item   @relation(fields: [item_id], references: [id])
+  order_id String
+  order    Order  @relation(fields: [order_id], references: [id])
 
   @@map("items_ingredients")
 }

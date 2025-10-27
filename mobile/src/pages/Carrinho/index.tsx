@@ -41,7 +41,16 @@ type ItensPedido = {
     name: string;
     banner: string;
     price: number;
+    description: string;
   }
+  ingredientes: {
+    name: string;
+    adicionado: boolean;
+  }[];
+  adicionais: {
+    name: string;
+    adicionado: boolean;
+  }[];
   amount: number;
 }
 
@@ -52,11 +61,11 @@ const PedidoScreen: React.FC = () => {
   const [mesa, setMesa] = useState("05");
   const [nome, setNome] = useState("João M.");
   const [items, setItems] = useState<ItensPedido[]>([])
-  
+
   //  REFATORAR, VER OS COMENTÁRIOS NO DETALHES PRODUTOS
   const [orderAtual, setOrderAtual] = useState<OrderAtual | boolean>(Boolean);
   const [bloquearTela, setBloquearTela] = useState(false);
-  
+
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
   const trash = require('../../assets/trash.png');
   const { orderId } = useOrder();
@@ -120,6 +129,7 @@ const PedidoScreen: React.FC = () => {
     async function verPedidos() {
       const response = await api.get('/order/detail', { params: { order_id: orderId } });
       setItems(response.data.items);
+      console.log("Itens do pedido:", response.data.items);
     }
     verPedidos();
     bloquearPedidos();
@@ -182,8 +192,21 @@ const PedidoScreen: React.FC = () => {
               resizeMode="stretch"
               style={styles.orderItemImage}
             />
-            <Text style={styles.orderItemDescription}>
-              {item.product.name}{"\n"}Quantidade: {item.amount}
+            <Text style={styles.orderItemDescription} ellipsizeMode="tail">
+
+              {item.product.name}{"\n"}
+              {item.product.description}{"\n"}
+              
+              Ingredientes:
+              {item.ingredientes.map((ing) => (
+                `\n${ing.name} - ${ing.adicionado ? "Usado" : "Removido"}`
+              ))}
+              {"\n"}
+              Adicionais:
+              {item.adicionais.map((add) => (
+                `\n${add.name} - ${add.adicionado ? "Adicionado" : "Removido"}`
+              ))}
+              {"\n"}Quantidade: {item.amount}
             </Text>
 
             {/* Coluna para valor + botão */}

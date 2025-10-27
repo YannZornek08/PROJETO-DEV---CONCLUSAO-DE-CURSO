@@ -32,8 +32,9 @@ export default function StatusPedido() {
   async function verOrder() {
     try {
       const response = await api.get(`/order/detail?${order_id}`);
+      console.log("Dados do pedido recebidos:", response.data);
       if (response.data.items.length > 0) {
-        if (response.data.orders.draft === true) {
+        if (response.data.draft === true) {
           setOrder(null);
           setLoading(false);
           return;
