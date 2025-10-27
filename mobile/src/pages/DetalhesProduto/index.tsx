@@ -8,6 +8,7 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
+  TextInput,
 } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
@@ -57,6 +58,7 @@ export default function DetalhesProdutos() {
   //REFATORAR DEPOIS PARA QUE AS VARIAVEIS SEJAM EXPORTADAS AO CARRINHO
   const [bloquearTela, setBloquearTela] = useState(false);
   const [orderAtual, setOrderAtual] = useState<OrderAtual | boolean>(Boolean);
+  const [observacoes, setObservacoes] = useState<string>("");
   // const [items, setItems] = useState<Item[]>([]);
 
   const { product } = route.params;
@@ -104,6 +106,7 @@ export default function DetalhesProdutos() {
         order_id: orderId,
         product_id: product.id,
         amount: quantidade,
+        note: observacoes,
       });
       console.log("Item adicionado:", newItem.data);
       // setItems((prevItems) => [...prevItems, newItem.data]);
@@ -222,9 +225,24 @@ export default function DetalhesProdutos() {
           ))}
         </View> */}
       </ScrollView>
+      
+      <View style={styles.notesContainer}>
+        <TextInput
+          style={styles.notesInput}
+          placeholder="Toque para adicionar observações:"
+          placeholderTextColor="#52443C"
+          value={observacoes}
+          onChangeText={(text) => {
+            setObservacoes(text);
+          }}
+
+          multiline
+          textAlignVertical="top"
+        />
+      </View>
 
       {/* Área inferior */}
-      < View style={styles.bottomContainer} >
+      <View style={styles.bottomContainer}>
         <View style={styles.quantityContainer}>
           <Text style={styles.quantityLabel}>Quantidade:</Text>
           <View style={styles.quantitySelector}>
@@ -490,6 +508,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
     marginRight: 13,
+  },
+  notesContainer: {
+    backgroundColor: "#FFFFFF",
+    borderColor: "#52443C",
+    borderRadius: 18,
+    borderWidth: 4,
+    padding: 12,
+    marginBottom: 27,
+    marginHorizontal: 26,
+    minHeight: 120,
+    justifyContent: "flex-start",
+  },
+  notesInput: {
+    color: "#000000",
+    fontSize: 14,
+    flex: 1,
+    padding: 6,
+    textAlign: "center",
   },
   addButtonText: { color: "#FFFFFF", fontSize: 16, fontWeight: "bold" },
 });
