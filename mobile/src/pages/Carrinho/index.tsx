@@ -201,7 +201,7 @@ const PedidoScreen: React.FC = () => {
               style={styles.orderItemImage}
             />
             <Text style={styles.orderItemDescription}>
-              {item.product.name}{"\n"}Quantidade: {item.amount}
+              {item.product.name}{"\n"}Qtd: {item.amount}
             </Text>
 
             {/* Coluna para valor + botão */}
@@ -351,6 +351,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     paddingTop: 10,
     alignItems: "center",
+    fontFamily: "BesleyBold",
   },
   orderItemImage: {
     width: 90,
@@ -362,6 +363,8 @@ const styles = StyleSheet.create({
     color: "#000000",
     fontSize: 16,
     marginBottom: 40,
+    fontFamily: "BesleyRegular",
+    flexShrink: 1,
   },
   orderItemPrice: {
     color: "#000000",
@@ -437,10 +440,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   trash: {
-    backgroundColor: "#FF0000",
+    width: 24,
+    height: 24,
     padding: 18,
-    borderRadius: 25,
-    marginLeft: 45,
+    borderRadius: 0,
+    marginLeft: 64,
+    marginTop: 22,
   }
 });
 

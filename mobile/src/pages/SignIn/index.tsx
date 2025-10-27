@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
   text_title: {
     fontSize: 22,
     marginBottom: 10,
+    fontFamily: "BesleyRegular",
   },
   text_placeholder: {
     fontSize: 14,
