@@ -350,10 +350,10 @@ const styles = StyleSheet.create({
   },
   card: { flex: 1, alignItems: "center", justifyContent: "space-between" },
   cardImage: {
-    height: 180,
+    height: 170,
     marginBottom: 8,
-    width: "100%",
-    borderRadius: 90,
+    width: 170,
+    borderRadius: 85,
   },
   cardTitle: {
     color: "#000000",
