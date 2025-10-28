@@ -12,7 +12,7 @@ class SearchProductService {
       where: {
         name: {
           contains: name,
-          mode: "insensitive", // ignora maiúsculas/minúsculas
+          mode: "insensitive",
         },
       },
       orderBy: { name: "asc" },
