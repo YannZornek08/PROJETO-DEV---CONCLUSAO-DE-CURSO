@@ -88,7 +88,8 @@ const PedidoScreen: React.FC = () => {
   const handlePay = () => {
     Alert.alert(
       "Resumo do Pedido",
-      `Mesa: ${mesa}\nNome: ${nome}\nTotal: ${formatarPreco((Number(total)))}`,
+      `Mesa: ${mesa}\nNome: ${nome}\nTotal: ${formatarPreco((Number(total)))}\n\nObservações: ${observacoes || "Nenhuma observação adicionada"
+      }`
     );
     navigation.navigate("Pagamento")
   };
@@ -249,6 +250,7 @@ const PedidoScreen: React.FC = () => {
 
         <TouchableOpacity style={styles.payButton} onPress={ () => {
           handlePay();
+          atualizarObservacao();
           }}>
           <Text style={styles.payButtonText}>Pagar</Text>
         </TouchableOpacity>

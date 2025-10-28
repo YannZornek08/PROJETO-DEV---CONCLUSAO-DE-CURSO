@@ -7,11 +7,13 @@ class RemoveOrderController {
 
         const removeOrder = new RemoveOrderService();
 
-        const order = await removeOrder.execute({
-            order_id
-        });
-
-        res.json(order)
+        try {
+            const order = await removeOrder.execute({ order_id });
+            return res.json(order);
+        } catch (err: any) {
+            console.error('[RemoveOrderController] error:', err.message || err);
+            return res.status(400).json({ error: err.message || 'Erro ao excluir comanda' });
+        }
     }
 }
 
