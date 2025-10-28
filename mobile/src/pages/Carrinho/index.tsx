@@ -76,9 +76,12 @@ const PedidoScreen: React.FC = () => {
 
   useEffect(() => {
     const calcularTotal = () => {
-      const soma = items.reduce((somatoria, item) => {
-        return somatoria + item.product.price * item.amount;
-      }, 0);
+        const soma = items.reduce((somatoria, item) => {
+          const priceRaw = item?.product?.price ?? 0;
+          // price may be stored as string with comma (e.g. "12,00") or dot ("12.00"); normalize to number
+          const priceNumber = Number(String(priceRaw).replace(',', '.')) || 0;
+          return somatoria + priceNumber * (item.amount || 0);
+        }, 0);
       setTotal(soma);
     };
 
@@ -117,11 +120,18 @@ const PedidoScreen: React.FC = () => {
 
 
   useEffect(() => {
-    if (!orderId) return;
+    // If there's no open order, block the cart UI until an order is created/opened
+    if (!orderId) {
+      setItems([]);
+      setBloquearTela(true);
+      return;
+    }
+
     async function verPedidos() {
       const response = await api.get('/order/detail', { params: { order_id: orderId } });
       setItems(response.data.items);
     }
+
     verPedidos();
     bloquearPedidos();
   }, [orderId]);
@@ -153,7 +163,7 @@ const PedidoScreen: React.FC = () => {
         <View style={styles.overlay}>
           <View style={styles.overlayContent}>
             <Text style={styles.overlayText}>
-              Este pedido já foi finalizado e não pode ser editado.
+              Este pedido precisa ser aberto para adicionar ou remover itens.
             </Text>
 
             <TouchableOpacity
@@ -190,7 +200,7 @@ const PedidoScreen: React.FC = () => {
             {/* Coluna para valor + botão */}
             <View>
               <Text style={styles.orderItemPrice}>
-                {formatarPreco(item.product.price * item.amount)}
+                {formatarPreco((Number(String(item.product.price).replace(',', '.')) || 0) * (item.amount || 0))}
               </Text>
               <TouchableOpacity onPress={() => excluir(item.id)}>
                 <Image source={trash} style={styles.trash} />
@@ -250,7 +260,7 @@ const PedidoScreen: React.FC = () => {
 
         <TouchableOpacity style={styles.payButton} onPress={ () => {
           handlePay();
-          atualizarObservacao();
+          // atualizarObservacao();
           }}>
           <Text style={styles.payButtonText}>Pagar</Text>
         </TouchableOpacity>

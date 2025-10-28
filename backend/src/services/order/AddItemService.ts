@@ -10,16 +10,20 @@ interface ItemRequest {
 class AddItemService {
     async execute({ order_id, product_id, amount, note }: ItemRequest ) {
 
-        const order = await prismaClient.item.create({
+        const item = await prismaClient.item.create({
             data: {
                 order_id: order_id,
                 product_id: product_id,
                 amount: amount,
-                note: note
+                // note may not exist on item model in Prisma; include if present in DB
+                ...(note ? { note } : {}),
+            },
+            include: {
+                product: true,
             }
         })
 
-        return order;
+        return item;
 
     }
 }

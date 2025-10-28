@@ -163,7 +163,7 @@ export default function DetalhesProdutos() {
         {/* Nome e preço */}
         <Text style={styles.productName}>{product.name}</Text>
         <View style={styles.priceContainer}>
-          <Text style={styles.price}>{formatarPreco(Number(product.price))}</Text>
+          <Text style={styles.price}>{formatarPreco(Number(String(product.price).replace(',', '.')) || 0)}</Text>
         </View>
 
         {/* Descrição */}

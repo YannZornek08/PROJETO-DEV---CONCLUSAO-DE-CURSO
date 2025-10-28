@@ -240,7 +240,7 @@ function PizzaCard({ product }: PizzaCardProps) {
       />
       <Text style={styles.cardTitle}>{product.name}</Text>
       <Text style={styles.cardPrice}>
-        {formatarPreco(Number(product.price))}
+        {formatarPreco(Number(String(product.price).replace(',', '.')) || 0)}
       </Text>
       <TouchableOpacity
         style={styles.addButton}
