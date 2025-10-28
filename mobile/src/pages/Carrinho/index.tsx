@@ -88,7 +88,8 @@ const PedidoScreen: React.FC = () => {
   const handlePay = () => {
     Alert.alert(
       "Resumo do Pedido",
-      `Mesa: ${mesa}\nNome: ${nome}\nTotal: ${formatarPreco((Number(total)))}`,
+      `Mesa: ${mesa}\nNome: ${nome}\nTotal: ${formatarPreco((Number(total)))}\n\nObservações: ${observacoes || "Nenhuma observação adicionada"
+      }`
     );
     navigation.navigate("Pagamento")
   };
@@ -183,7 +184,7 @@ const PedidoScreen: React.FC = () => {
               style={styles.orderItemImage}
             />
             <Text style={styles.orderItemDescription}>
-              {item.product.name}{"\n"}Quantidade: {item.amount}
+              {item.product.name}{"\n"}Qtd: {item.amount}
             </Text>
 
             {/* Coluna para valor + botão */}
@@ -249,6 +250,7 @@ const PedidoScreen: React.FC = () => {
 
         <TouchableOpacity style={styles.payButton} onPress={ () => {
           handlePay();
+          atualizarObservacao();
           }}>
           <Text style={styles.payButtonText}>Pagar</Text>
         </TouchableOpacity>
@@ -331,17 +333,21 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     paddingTop: 10,
     alignItems: "center",
+    fontFamily: "BesleyBold",
   },
   orderItemImage: {
-    width: 90,
-    height: 90,
+    width: 112,
+    height: 112,
     marginRight: 27,
-    borderRadius: 45,
+    borderRadius: 56,
   },
   orderItemDescription: {
     color: "#000000",
     fontSize: 16,
     marginBottom: 40,
+    fontFamily: "BesleyRegular",
+    textTransform: "capitalize",
+    flexShrink: 1,
   },
   orderItemPrice: {
     color: "#000000",
@@ -417,10 +423,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   trash: {
-    backgroundColor: "#FF0000",
+    width: 24,
+    height: 24,
     padding: 18,
-    borderRadius: 25,
-    marginLeft: 45,
+    borderRadius: 0,
+    marginLeft: 64,
+    marginTop: 22,
   }
 });
 

@@ -127,7 +127,7 @@ export default function LerQR() {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.botao, { marginTop: 20, backgroundColor: "#4B8B26" }]}
-          onPress={() => confirmarComanda("f6a3cb7f-da61-486c-acff-3b5990e2fbae")}
+          onPress={() => confirmarComanda("37f0c3d8-646d-4216-80d8-7abab6fd7bf4")}
         >
           <Text style={styles.textoBotao}>Botão para abrir sem QRCODE (mocado)</Text>
         </TouchableOpacity>

@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 
 type costumerContextType = {
   costumerId: string | null;
-  setCostumerId: (id: string) => void;
+  setCostumerId: (id: string | null) => void;
 };
 
 const CostumerContext = createContext<costumerContextType>({

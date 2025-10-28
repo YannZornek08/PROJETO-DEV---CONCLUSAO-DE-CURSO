@@ -357,8 +357,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontFamily: "BesleyBold",
   },
-  priceContainer: { alignItems: "center", marginVertical: 10 },
-  price: { color: "#000000", fontSize: 22, fontWeight: "bold" },
+  priceContainer: { alignItems: "center", marginVertical: 4 },
+  price: { color: "#000000", fontSize: 18, fontFamily: "BesleyRegular" },
   description: {
     color: "#000000ab",
     fontSize: 18,
@@ -490,6 +490,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     lineHeight: 36,
+    marginTop: -1,
   },
   quantityText: {
     color: "#000000",

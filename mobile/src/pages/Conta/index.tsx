@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   SafeAreaView,
   View,
@@ -7,9 +7,63 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from "react-native";
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { StackParamsList } from "../../routes/app.routes";
+import { useOrder } from "../../contexts/OrderContext";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useCostumer } from "../../contexts/CostumerContext";
+import { api } from "../../services/api";
 
 const MinhaConta: React.FC = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
+  const { orderId, resetOrder } = useOrder();
+  const { signOut } = useContext(AuthContext);
+  const { setCostumerId } = useCostumer();
+  const signOutFlow = async () => {
+    try { setCostumerId(null); } catch (e) { /* ignore */ }
+    try { resetOrder(); } catch (e) { /* ignore */ }
+    try { await signOut(); } catch (e) { /* ignore */ }
+  };
+
+  const handleDeleteAndSignOut = async () => {
+    try {
+      if (orderId) {
+        await api.delete('/order', { params: { order_id: orderId } });
+        console.log('Comanda excluída ao sair:', orderId);
+
+        Alert.alert('Sucesso', 'Comanda excluída com sucesso.', [
+          { text: 'OK', onPress: () => { void signOutFlow(); } }
+        ]);
+        return;
+      }
+
+      // No order to delete — just sign out
+      await signOutFlow();
+      return;
+    } catch (err) {
+      console.log('Erro ao excluir comanda no logout:', err);
+      // Ask user if they still want to sign out
+      Alert.alert('Erro', 'Não foi possível excluir a comanda. Deseja sair mesmo assim?', [
+        { text: 'Cancelar', style: 'cancel' },
+        { text: 'Sair', style: 'destructive', onPress: () => { void signOutFlow(); } }
+      ]);
+      return;
+    }
+  };
+
+  const confirmDeleteAndLogout = () => {
+    Alert.alert(
+      'Tem certeza?',
+      'Tem certeza que deseja excluir a comanda atual e sair?',
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        { text: 'Excluir e Sair', style: 'destructive', onPress: () => { void handleDeleteAndSignOut(); } },
+      ],
+    );
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
@@ -75,7 +129,7 @@ const MinhaConta: React.FC = () => {
 
         {/* Log out + Deletar conta */}
         <View style={styles.section}>
-          <View style={styles.rowCard}>
+          <TouchableOpacity style={styles.rowCard} onPress={confirmDeleteAndLogout}>
             <View style={styles.rowContent}>
               <Image
                 source={require('../../assets/Internet.png')}
@@ -89,7 +143,7 @@ const MinhaConta: React.FC = () => {
               resizeMode="stretch"
               style={styles.iconSmall}
             />
-          </View>
+          </TouchableOpacity>
 
           <View style={[styles.rowCard, styles.deleteRow]}>
             <View style={styles.rowContent}>
