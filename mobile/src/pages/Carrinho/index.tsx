@@ -70,7 +70,7 @@ const PedidoScreen: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
   const trash = require('../../assets/trash.png');
   const { orderId } = useOrder();
- 
+
   //   useEffect(() => {
 
   //   async function verProdutosPedido() {
@@ -86,12 +86,12 @@ const PedidoScreen: React.FC = () => {
 
   useEffect(() => {
     const calcularTotal = () => {
-        const soma = items.reduce((somatoria, item) => {
-          const priceRaw = item?.product?.price ?? 0;
-          // price may be stored as string with comma (e.g. "12,00") or dot ("12.00"); normalize to number
-          const priceNumber = Number(String(priceRaw).replace(',', '.')) || 0;
-          return somatoria + priceNumber * (item.amount || 0);
-        }, 0);
+      const soma = items.reduce((somatoria, item) => {
+        const priceRaw = item?.product?.price ?? 0;
+        // price may be stored as string with comma (e.g. "12,00") or dot ("12.00"); normalize to number
+        const priceNumber = Number(String(priceRaw).replace(',', '.')) || 0;
+        return somatoria + priceNumber * (item.amount || 0);
+      }, 0);
       setTotal(soma);
     };
 
@@ -247,7 +247,6 @@ const PedidoScreen: React.FC = () => {
           </View>
         ))}
 
-
         <View>
           {produtos.map((produto) => (
             <View key={produto.id} style={styles.orderItem}>
@@ -264,23 +263,6 @@ const PedidoScreen: React.FC = () => {
           ))}
         </View>
 
-{/* 
-        <View style={styles.notesContainer}>
-          <TextInput
-            style={styles.notesInput}
-            placeholder="Toque para adicionar observações:"
-            placeholderTextColor="#52443C"
-            value={observacoes}
-            onChangeText={(text) => {
-              setObservacoes(text);
-            }}
-
-            multiline
-            textAlignVertical="top"
-          />
-        </View> */}
-
-
         <View style={styles.totalContainer}>
           <Text style={styles.totalLabel}>Total:</Text>
           <Text style={styles.totalValue}> {formatarPreco(total)}</Text>
@@ -296,14 +278,14 @@ const PedidoScreen: React.FC = () => {
           {/* <Text style={styles.detailValue}>{nome}</Text> */}
         </View>
 
-        <TouchableOpacity style={styles.payButton} onPress={ () => {
-          if(items.length === 0) {
+        <TouchableOpacity style={styles.payButton} onPress={() => {
+          if (items.length === 0) {
             Alert.alert("Seu carrinho está vazio. Adicione itens antes de pagar.");
             return;
           }
           handlePay();
           // atualizarObservacao();
-          }}>
+        }}>
           <Text style={styles.payButtonText}>Pagar</Text>
         </TouchableOpacity>
       </ScrollView>

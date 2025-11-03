@@ -47,7 +47,7 @@ export default function StatusPedido() {
       setLoading(false);
       return;
     }
-    console.log("usuario", id_usuario)
+    console.log("usuario", id_usuario);
     try {
       setLoading(true);
       const response = await api.get(`/orders/costumer?costumer_id=${id_usuario}`);
@@ -55,14 +55,12 @@ export default function StatusPedido() {
       const allOrders: Order[] = Array.isArray(response.data) ? response.data : [];
 
       // Mostrar apenas pedidos efetivos (não rascunhos)
-      const visible = allOrders
-      // .filter((o) => o.draft === false);
+      const visible = allOrders.filter((ordem) => !ordem.draft);
       setOrder(visible);
     } catch (err) {
       console.log("Erro ao buscar orders do usuário:", err);
       setOrder([]);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   }
@@ -79,24 +77,8 @@ export default function StatusPedido() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-
-
-        {/* <View style={styles.centerContent}>
-          <Text style={styles.title}>Seus Pedidos</Text>
-          <Animated.View
-            style={[
-              styles.card,
-              { backgroundColor: order?.status ? "#B9FBC0" : "#FFD6A5", opacity: fadeAnim },
-            ]}
-          >
-            <Text style={styles.statusLabel}>Seu pedido está:</Text>
-            <Text style={[styles.statusText, order?.status ? styles.ready : styles.progress]}>
-              {order?.status ? "✅ Pronto!" : "⌛ Em Andamento..."}
-            </Text>
-          </Animated.View>
-        </View> */}
         <View style={styles.centerContent}>
-          <Text style={styles.title}>Seus Pedidos</Text>
+          <Text style={styles.title}>Seus Pedidos Anteriores</Text>
 
           {loading ? (
             <View style={{ marginTop: 10 }}>
@@ -106,7 +88,10 @@ export default function StatusPedido() {
           ) : order.length === 0 ? (
             <View style={styles.overlayContent}>
               <Text style={styles.overlayText}>Nenhum pedido encontrado.</Text>
-              <TouchableOpacity style={styles.overlayButton} onPress={() => navigation.goBack()}>
+              <TouchableOpacity
+                style={styles.overlayButton}
+                onPress={() => navigation.goBack()}
+              >
                 <Text style={styles.overlayButtonText}>Voltar</Text>
               </TouchableOpacity>
             </View>
@@ -114,19 +99,28 @@ export default function StatusPedido() {
             order.map((ordem, index) => (
               <View key={ordem.id} style={[styles.card, styles.gap]}>
                 <Text style={styles.statusLabel}>Pedido {index + 1} está:</Text>
-                <Text style={[styles.statusText, ordem.status ? styles.ready : styles.progress]}>
-                  {ordem.status ? "✅ Pronto!" : "⌛ Em Andamento..."}{"\n"}
-                  {ordem.items && ordem.items.length > 0 ? `Itens: ${ordem.items.length}` : "Nenhum item no pedido."}
+                <Text
+                  style={[
+                    styles.statusText,
+                    ordem.status ? styles.ready : styles.progress,
+                  ]}
+                >
+                  {ordem.status
+                    ? "✅ Pronto!"
+                    : "⏳ Em Preparo..."}
+                  {"\n"}
+                  {ordem.items && ordem.items.length > 0
+                    ? `Itens: ${ordem.items.length}`
+                    : "Nenhum item no pedido."}
                 </Text>
               </View>
             ))
           )}
-
         </View>
       </ScrollView>
 
       <BottomNavBar activeRoute="StatusPedido" />
-    </SafeAreaView >
+    </SafeAreaView>
   );
 }
 
@@ -140,7 +134,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.6)",
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 999, // cobre tudo
+    zIndex: 999,
   },
   overlayContent: {
     backgroundColor: "#fff",
@@ -223,10 +217,13 @@ const styles = StyleSheet.create({
   ready: {
     color: "#008000",
   },
+  open: {
+    color: "#000000",
+  },
   progress: {
     color: "#D2691E",
   },
   gap: {
     marginBottom: 20,
-  }
+  },
 });
