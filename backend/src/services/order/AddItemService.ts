@@ -6,22 +6,28 @@ interface ItemRequest {
     items_ingredients_id: string;
     items_additionals_id: string;
     amount: number;
+    note: string;
 }
 
 class AddItemService {
-    async execute({ order_id, product_id, items_ingredients_id, items_additionals_id, amount }: ItemRequest ) {
+    async execute({ order_id, product_id, items_ingredients_id, items_additionals_id, amount, note }: ItemRequest ) {
 
-        const order = await prismaClient.item.create({
+        const item = await prismaClient.item.create({
             data: {
                 order_id: order_id,
                 product_id: product_id,
                 items_ingredients_id: items_ingredients_id,
                 items_additionals_id: items_additionals_id,
-                amount
+                amount,
+                // note may not exist on item model in Prisma; include if present in DB
+                ...(note ? { note } : {}),
+            },
+            include: {
+                product: true,
             }
         })
 
-        return order;
+        return item;
 
     }
 }

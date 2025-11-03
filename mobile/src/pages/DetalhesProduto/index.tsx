@@ -8,6 +8,7 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
+  TextInput,
 } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
@@ -70,6 +71,7 @@ export default function DetalhesProdutos() {
   //REFATORAR DEPOIS PARA QUE AS VARIAVEIS SEJAM EXPORTADAS AO CARRINHO
   const [bloquearTela, setBloquearTela] = useState(false);
   const [orderAtual, setOrderAtual] = useState<OrderAtual | boolean>(Boolean);
+  const [observacoes, setObservacoes] = useState<string>("");
   // const [items, setItems] = useState<Item[]>([]);
 
   const { product } = route.params;
@@ -212,6 +214,7 @@ export default function DetalhesProdutos() {
         items_ingredients_id: ingredients.map(ing => ing.id).join(", "), // Exemplo de como pegar os IDs dos ingredientes selecionados
         items_additionals_id: adicionais.map(add => add.id).join(", "), // Exemplo de como pegar os IDs dos adicionais selecionados
         amount: quantidade,
+        note: observacoes,
       });
       console.log("Item adicionado:", newItem.data);
       // setItems((prevItems) => [...prevItems, newItem.data]);
@@ -223,19 +226,6 @@ export default function DetalhesProdutos() {
     }
   }
 
-  // async function adicionarItem() {
-  //   try {
-  //     const newItem = await api.post('/order/add', {
-  //       order_id: orderId,
-  //       product_id: product.id,
-  //       amount: quantidade,
-  //     });
-  //     console.log("Item adicionado:", newItem.data);
-  //     // setItems((prevItems) => [...prevItems, newItem.data]);
-  //   } catch (err) {
-  //     console.log("Erro ao adicionar item:", err, product.id, quantidade);
-  //   }
-  // }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -276,7 +266,7 @@ export default function DetalhesProdutos() {
         {/* Nome e preço */}
         <Text style={styles.productName}>{product.name}</Text>
         <View style={styles.priceContainer}>
-          <Text style={styles.price}>{formatarPreco(Number(product.price))}</Text>
+          <Text style={styles.price}>{formatarPreco(Number(String(product.price).replace(',', '.')) || 0)}</Text>
         </View>
 
         {/* Descrição */}
@@ -418,7 +408,7 @@ export default function DetalhesProdutos() {
       </ScrollView >
 
       {/* Área inferior */}
-      < View style={styles.bottomContainer} >
+      <View style={styles.bottomContainer}>
         <View style={styles.quantityContainer}>
           <Text style={styles.quantityLabel}>Quantidade:</Text>
           <View style={styles.quantitySelector}>
@@ -532,8 +522,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontFamily: "BesleyBold",
   },
-  priceContainer: { alignItems: "center", marginVertical: 10 },
-  price: { color: "#000000", fontSize: 22, fontWeight: "bold" },
+  priceContainer: { alignItems: "center", marginVertical: 4 },
+  price: { color: "#000000", fontSize: 18, fontFamily: "BesleyRegular" },
   description: {
     color: "#000000ab",
     fontSize: 18,
@@ -665,6 +655,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     lineHeight: 36,
+    marginTop: -1,
   },
   quantityText: {
     color: "#000000",
@@ -683,6 +674,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
     marginRight: 13,
+  },
+  notesContainer: {
+    backgroundColor: "#FFFFFF",
+    borderColor: "#52443C",
+    borderRadius: 18,
+    borderWidth: 4,
+    padding: 12,
+    marginBottom: 27,
+    marginHorizontal: 26,
+    minHeight: 120,
+    justifyContent: "flex-start",
+  },
+  notesInput: {
+    color: "#000000",
+    fontSize: 14,
+    flex: 1,
+    padding: 6,
+    textAlign: "center",
   },
   addButtonText: { color: "#FFFFFF", fontSize: 16, fontWeight: "bold" },
 });

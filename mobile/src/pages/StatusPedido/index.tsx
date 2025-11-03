@@ -30,9 +30,15 @@ export default function StatusPedido() {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
   async function verOrder() {
+    if(!orderId) {
+      setLoading(false);
+      console.log("Nenhuma order existente encontrado.");
+      return;
+    }
     try {
       const response = await api.get(`/order/detail?${order_id}`);
       console.log("Dados do pedido recebidos:", response.data);
+      console.log("Resposta da API:", response.data);
       if (response.data.items.length > 0) {
         if (response.data.draft === true) {
           setOrder(null);
@@ -40,7 +46,7 @@ export default function StatusPedido() {
           return;
         }
 
-        setOrder(response.data.orders);
+        setOrder(response.data);
 
         Animated.timing(fadeAnim, {
           toValue: 1,
@@ -82,9 +88,9 @@ export default function StatusPedido() {
         <View style={styles.centerContent}>
           <Text style={styles.title}>Status do Pedido</Text>
           <View style={styles.card}>
-            <Text style={styles.statusLabel}>O pedido ainda não foi finalizado.</Text>
+            <Text style={styles.statusLabel}>O pedido ainda não foi finalizado ou criado</Text>
             <Text style={[styles.statusText, styles.progress]}>
-              Pague seu pedido para ver o andamento
+              Termine e pague seu pedido para ver o andamento
             </Text>
           </View>
         </View>
@@ -127,7 +133,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 36,
-    fontWeight: "bold",
+    fontFamily: "BesleyBold",
     color: "#5F4100",
     marginBottom: 30,
     textAlign: "center",

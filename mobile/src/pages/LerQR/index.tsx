@@ -28,7 +28,7 @@ type OrderRouterProps = RouteProp<RouteDetailParams, "Order">;
 export default function LerQR() {
   const route = useRoute<OrderRouterProps>();
   const [codigo, setCodigo] = useState<string>("");
-  const { setOrderId } = useOrder();
+  const { orderId, setOrderId } = useOrder();
   const navigation =
     useNavigation<NativeStackNavigationProp<StackParamsList>>();
   const { costumerId, setCostumerId } = useCostumer();
@@ -49,15 +49,18 @@ export default function LerQR() {
 
  
   async function confirmarComanda(id_mesa: string) {
+    if (orderId) {
+      alert('Já existe uma comanda aberta. Feche ou exclua a comanda atual antes de abrir outra.');
+      return;
+    }
     try {
       const response = await api.post("/order", {
-        table_id: id_mesa ?? Error("Não há um id da mesa"),
-        costumer_id: costumerId ?? Error("Não há um id do cliente"),
+        table_id: id_mesa,
+        costumer_id: costumerId,
       });
       console.log("Comanda criada:", response.data);
-
-          setOrderId(response.data.id);
-
+      setOrderId(response.data.id);
+      alert("Comanda criada com sucesso!" + "\n" + "Sua mesa é a " + response.data.table.number);
     } catch (err: any) {
       console.error(
         "Erro ao criar comanda:",
@@ -122,16 +125,27 @@ export default function LerQR() {
 
         <TouchableOpacity
           style={[styles.botao, { marginTop: 20, backgroundColor: "#4B8B26" }]}
-          onPress={() => setShowCamera(true)}
+          onPress={() => {
+            if (orderId) {
+              alert('Você já possui uma comanda aberta. Feche ou exclua-a antes de abrir um novo QR.');
+              return;
+            }
+            setShowCamera(true);
+          }}
         >
           <Text style={styles.textoBotao}>Abrir Câmera</Text>
         </TouchableOpacity>
-
         <TouchableOpacity
           style={[styles.botao, { marginTop: 20, backgroundColor: "#4B8B26" }]}
-          onPress={() => confirmarComanda("faea2cd6-86f7-4d84-9658-f3b6ce285525")}
+          onPress={() => {
+            if (orderId) {
+              alert('Já existe uma comanda aberta.');
+              return;
+            }
+            confirmarComanda("37f0c3d8-646d-4216-80d8-7abab6fd7bf4");
+          }}
         >
-          <Text style={styles.textoBotao}>Botão Mocado</Text>
+          <Text style={styles.textoBotao}>Botão para abrir sem QRCODE (mocado)</Text>
         </TouchableOpacity>
 
         <Text style={styles.link}>Problemas? Fale com o atendente!</Text>

@@ -70,7 +70,7 @@ const PedidoScreen: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
   const trash = require('../../assets/trash.png');
   const { orderId } = useOrder();
-
+ 
   //   useEffect(() => {
 
   //   async function verProdutosPedido() {
@@ -86,9 +86,12 @@ const PedidoScreen: React.FC = () => {
 
   useEffect(() => {
     const calcularTotal = () => {
-      const soma = items.reduce((somatoria, item) => {
-        return somatoria + item.product.price * item.amount;
-      }, 0);
+        const soma = items.reduce((somatoria, item) => {
+          const priceRaw = item?.product?.price ?? 0;
+          // price may be stored as string with comma (e.g. "12,00") or dot ("12.00"); normalize to number
+          const priceNumber = Number(String(priceRaw).replace(',', '.')) || 0;
+          return somatoria + priceNumber * (item.amount || 0);
+        }, 0);
       setTotal(soma);
     };
 
@@ -110,9 +113,10 @@ const PedidoScreen: React.FC = () => {
       const response = await api.get("/order/detail", {
         params: { order_id: orderId },
       });
-      setOrderAtual(response.data.orders.draft);
+      // console.log("Detalhes do pedido para bloqueio:", response.data);
+      setOrderAtual(response.data.draft);
       console.log("O draft da order atual é", orderAtual)
-      if (response.data.orders.draft == false) {
+      if (response.data.draft == false) {
         console.log("CARRINHO Tem que bloquear a TELA!!")
         setBloquearTela(true);
       } else {
@@ -126,12 +130,19 @@ const PedidoScreen: React.FC = () => {
 
 
   useEffect(() => {
-    if (!orderId) return;
+    // If there's no open order, block the cart UI until an order is created/opened
+    if (!orderId) {
+      setItems([]);
+      setBloquearTela(true);
+      return;
+    }
+
     async function verPedidos() {
       const response = await api.get('/order/detail', { params: { order_id: orderId } });
       setItems(response.data.items);
       console.log("Itens do pedido:", response.data.items);
     }
+
     verPedidos();
     bloquearPedidos();
   }, [orderId]);
@@ -163,7 +174,7 @@ const PedidoScreen: React.FC = () => {
         <View style={styles.overlay}>
           <View style={styles.overlayContent}>
             <Text style={styles.overlayText}>
-              Este pedido já foi finalizado e não pode ser editado.
+              Este pedido precisa ser aberto para adicionar ou remover itens.
             </Text>
 
             <TouchableOpacity
@@ -209,11 +220,14 @@ const PedidoScreen: React.FC = () => {
               ))}
               {"\n"}Quantidade: {item.amount}
             </Text>
+            <Text style={styles.orderItemDescription}>
+              {item.product.name}{"\n"}Qtd: {item.amount}
+            </Text>
 
             {/* Coluna para valor + botão */}
             <View>
               <Text style={styles.orderItemPrice}>
-                {formatarPreco(item.product.price * item.amount)}
+                {formatarPreco((Number(String(item.product.price).replace(',', '.')) || 0) * (item.amount || 0))}
               </Text>
               <TouchableOpacity onPress={() => excluir(item.id)}>
                 <Image source={trash} style={styles.trash} />
@@ -239,18 +253,21 @@ const PedidoScreen: React.FC = () => {
           ))}
         </View>
 
-
+{/* 
         <View style={styles.notesContainer}>
           <TextInput
             style={styles.notesInput}
             placeholder="Toque para adicionar observações:"
             placeholderTextColor="#52443C"
             value={observacoes}
-            onChangeText={setObservacoes}
+            onChangeText={(text) => {
+              setObservacoes(text);
+            }}
+
             multiline
             textAlignVertical="top"
           />
-        </View>
+        </View> */}
 
 
         <View style={styles.totalContainer}>
@@ -268,7 +285,10 @@ const PedidoScreen: React.FC = () => {
           {/* <Text style={styles.detailValue}>{nome}</Text> */}
         </View>
 
-        <TouchableOpacity style={styles.payButton} onPress={handlePay}>
+        <TouchableOpacity style={styles.payButton} onPress={ () => {
+          handlePay();
+          // atualizarObservacao();
+          }}>
           <Text style={styles.payButtonText}>Pagar</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -350,17 +370,21 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     paddingTop: 10,
     alignItems: "center",
+    fontFamily: "BesleyBold",
   },
   orderItemImage: {
-    width: 90,
-    height: 90,
+    width: 112,
+    height: 112,
     marginRight: 27,
-    borderRadius: 45,
+    borderRadius: 56,
   },
   orderItemDescription: {
     color: "#000000",
     fontSize: 16,
     marginBottom: 40,
+    fontFamily: "BesleyRegular",
+    textTransform: "capitalize",
+    flexShrink: 1,
   },
   orderItemPrice: {
     color: "#000000",
@@ -370,24 +394,24 @@ const styles = StyleSheet.create({
     width: 94,
     fontFamily: "BesleyRegular",
   },
-  notesContainer: {
-    backgroundColor: "#FFFFFF",
-    borderColor: "#52443C",
-    borderRadius: 18,
-    borderWidth: 4,
-    padding: 12,
-    marginBottom: 27,
-    marginHorizontal: 26,
-    minHeight: 120,
-    justifyContent: "flex-start",
-  },
-  notesInput: {
-    color: "#000000",
-    fontSize: 14,
-    flex: 1,
-    padding: 6,
-    textAlign: "center",
-  },
+  // notesContainer: {
+  //   backgroundColor: "#FFFFFF",
+  //   borderColor: "#52443C",
+  //   borderRadius: 18,
+  //   borderWidth: 4,
+  //   padding: 12,
+  //   marginBottom: 27,
+  //   marginHorizontal: 26,
+  //   minHeight: 120,
+  //   justifyContent: "flex-start",
+  // },
+  // notesInput: {
+  //   color: "#000000",
+  //   fontSize: 14,
+  //   flex: 1,
+  //   padding: 6,
+  //   textAlign: "center",
+  // },
   totalContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -436,10 +460,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   trash: {
-    backgroundColor: "#FF0000",
+    width: 24,
+    height: 24,
     padding: 18,
-    borderRadius: 25,
-    marginLeft: 45,
+    borderRadius: 0,
+    marginLeft: 64,
+    marginTop: 22,
   }
 });
 

@@ -6,15 +6,28 @@ interface OrderRequest {
 }
 
 class CreateOrderService {
-    async execute({ table_id, costumer_id }: OrderRequest ) {
-        const order = await prismaClient.order.create({
-            data: {
-                table_id,
-                costumer_id,
-            }
-        });
+    async execute({ table_id, costumer_id }: OrderRequest) {
+        try {
+            const order = await prismaClient.order.create({
+                data: {
+                    table_id,
+                    costumer_id,
+                },
+                select: {
+                    id: true,
+                    table_id: true,
+                    costumer_id: true,
+                    draft: true,
+                    status: true,
+                    table: true,
+                },
+            });
 
-        return order;
+            return order;
+        } catch (err: any) {
+            console.error('[CreateOrderService] failed to create order:', err.message || err);
+            throw new Error('Erro ao criar order: ' + (err.message || err));
+        }
     }
 }
 

@@ -7,13 +7,23 @@ interface OrderRequest {
 class RemoveOrderService {
     async execute({ order_id }: OrderRequest) {
 
-        const order = await prismaClient.order.delete({
-            where: {
-                id: order_id,
-            }
-        })
+        try {
+            // Delete payments and items first to avoid foreign key constraint errors
+            const deletePayments = prismaClient.payment.deleteMany({ where: { order_id } });
+            const deleteItems = prismaClient.item.deleteMany({ where: { order_id } });
+            const deleteOrder = prismaClient.order.delete({ where: { id: order_id } });
 
-        return order;
+            const [_, __, order] = await prismaClient.$transaction([
+                deletePayments,
+                deleteItems,
+                deleteOrder,
+            ]);
+
+            return order;
+        } catch (err: any) {
+            console.error('[RemoveOrderService] failed to remove order:', err.message || err);
+            throw new Error('Não foi possível excluir a comanda');
+        }
 
     }
 }
