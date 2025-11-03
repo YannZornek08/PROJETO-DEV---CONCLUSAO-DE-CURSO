@@ -25,6 +25,7 @@ import { SendOrderController } from './controllers/order/SendOrderController';
 import { ListOrdersController } from './controllers/order/ListOrdersController';
 import { DetailOrderController } from './controllers/order/DetailOrderController';
 import { FinishOrderController } from './controllers/order/FinishOrderController';
+import { ListOrderByCostumerController } from './controllers/order/ListOrderByCostumerController';
 
 import { CreateRoleController } from './controllers/role/CreateRoleController';
 import { ListRoleController } from './controllers/role/ListCategoryController';
@@ -112,6 +113,7 @@ router.get('/orders', new ListOrdersController().handle)
 router.get('/order/detail', new DetailOrderController().handle)
 
 router.put('/order/finish', new FinishOrderController().handle)
+router.get('/orders/costumer', new ListOrderByCostumerController().handle)
 
 // -- ROTAS ROLE --
 router.post('/role', new CreateRoleController().handle)

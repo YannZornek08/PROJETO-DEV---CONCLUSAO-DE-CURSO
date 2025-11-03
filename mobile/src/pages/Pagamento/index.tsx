@@ -117,7 +117,7 @@ const Pagamento: React.FC = () => {
   
   const chamarGarcom = async () => {
     try {
-      await fazPagamento(orderId, "0576eb90-5087-4f8b-b8ab-eb2f773de20d");
+      await fazPagamento(orderId, "971611e7-4ea5-4a50-acda-5426a433ca31");
       await enviarOrder(orderId);
       Alert.alert('Atenção', 'Um garçom foi chamado para sua mesa.', [{ text: 'OK' }]);
       navigation.navigate("StatusPedido");
@@ -140,7 +140,7 @@ const Pagamento: React.FC = () => {
         <View style={styles.row}>
           <TouchableOpacity style={styles.card} onPress={() => {
             navigation.navigate("DadosPagamento", {
-              id_mtdo_pagto: "9648814d-726c-4c9b-8b2e-440da4da29da"
+              id_mtdo_pagto: "e038a920-de56-4ed0-8e79-239fd0d9cbb0"
             })
           }}>
             <Text style={styles.cardText}>
@@ -149,7 +149,7 @@ const Pagamento: React.FC = () => {
           </TouchableOpacity>
           <TouchableOpacity style={styles.card} onPress={() => {
             navigation.navigate("DadosPagamento", {
-              id_mtdo_pagto: "a2511906-b547-4624-916c-b5fb42df972e"
+              id_mtdo_pagto: "00650f38-4fa6-4e11-8550-aa7f4ec853a7"
             })
           }}>
             <Text style={styles.cardText}>
@@ -160,7 +160,7 @@ const Pagamento: React.FC = () => {
 
         <TouchableOpacity style={styles.card} onPress={() => {
           navigation.navigate("DadosPagamento", {
-            id_mtdo_pagto: "5939de73-70b2-44c0-97c7-1bdf6bd91fd4"
+            id_mtdo_pagto: "f99cfd35-d323-4b83-8210-e2e0edf62717"
           })
         }}>
           <Text style={styles.cardText}>
