@@ -8,6 +8,7 @@ import {
   Easing,
   SafeAreaView,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { api } from "../../services/api";
 import { useOrder } from "../../contexts/OrderContext";
@@ -32,7 +33,7 @@ type Order = {
 export default function StatusPedido() {
   const [fadeAnim] = useState(new Animated.Value(0));
   const [order, setOrder] = useState<Order[]>([]);
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const { orderId } = useOrder();
   const { costumerId } = useCostumer();
   const order_id = `order_id=${orderId}`;
@@ -42,130 +43,45 @@ export default function StatusPedido() {
     console.log("ID do usuário:", id_usuario);
     if (!id_usuario) {
       console.log("Nenhum ID de usuário fornecido.");
+      setOrder([]);
+      setLoading(false);
       return;
     }
     console.log("usuario", id_usuario)
     try {
+      setLoading(true);
       const response = await api.get(`/orders/costumer?costumer_id=${id_usuario}`);
       console.log("Resposta da API:", response.data);
-      if (response.data.length > 0) {
-        const ongoingOrder = response.data.find((order: Order) => order.draft === false && order.status === false);
-        // setOrder(response.data);
+      const allOrders: Order[] = Array.isArray(response.data) ? response.data : [];
 
-        if (ongoingOrder) {
-          setOrder([ongoingOrder]);
-        } else {
-          setOrder(response.data);
-        }
-      } else {
-        setOrder([]);
-      }
+      // Mostrar apenas pedidos efetivos (não rascunhos)
+      const visible = allOrders
+      // .filter((o) => o.draft === false);
+      setOrder(visible);
     } catch (err) {
       console.log("Erro ao buscar orders do usuário:", err);
+      setOrder([]);
+    }
+    finally {
+      setLoading(false);
     }
   }
 
-
   useEffect(() => {
     verOrderUsuario(costumerId);
+    const interval = setInterval(() => {
+      verOrderUsuario(costumerId);
+    }, 5000);
+
+    return () => clearInterval(interval);
   }, [costumerId]);
-
-  // async
-
-  // async function verOrder() {
-  //   if (!orderId) {
-  //     setLoading(false);
-  //     console.log("Nenhuma order existente encontrado.");
-  //     return;
-  //   }
-
-  //   try {
-  //     const response = await api.get(`/order/detail?${order_id}`);
-  //     console.log("Resposta da API:", response.data);
-  //     if (response.data.items.length > 0) {
-  //       if (response.data.draft === true) {
-  //         setOrder(null);
-  //         setLoading(false);
-  //         return;
-  //       }
-  //       setOrder(response.data);
-
-  //       Animated.timing(fadeAnim, {
-  //         toValue: 1,
-  //         duration: 1000,
-  //         easing: Easing.ease,
-  //         useNativeDriver: true,
-  //       }).start();
-  //     }
-  //   } catch (err) {
-  //     console.log("Erro ao buscar orders:", err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   verOrder();
-  //   const interval = setInterval(() => {
-  //     verOrder();
-  //   }, 5000);
-  //   return () => clearInterval(interval);
-  // }, [orderId]);
-
-  // if (loading) {
-  //   return (
-  //     <SafeAreaView style={styles.container}>
-  //       <View style={styles.centerContent}>
-  //         <ActivityIndicator size="large" color="#5F4100" />
-  //         <Text style={styles.loadingText}>Carregando informações do pedido...</Text>
-  //       </View>
-  //       <BottomNavBar activeRoute="StatusPedido" />
-  //     </SafeAreaView>
-  //   );
-  // }
-
-  if (!orderId) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.overlay}>
-          <View style={styles.overlayContent}>
-            <Text style={styles.overlayText}>
-              Nenhum pedido em andamento. Por favor, crie um pedido primeiro.
-            </Text>
-            <TouchableOpacity
-              style={styles.overlayButton}
-              onPress={() => navigation.goBack()}
-            >
-              <Text style={styles.overlayButtonText}>Voltar</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </SafeAreaView>
-    )
-  }
-
-  // if (order === null) {
-  //   return (
-  //     <SafeAreaView style={styles.container}>
-  //       <View style={styles.centerContent}>
-
-  //         <Text style={styles.title}>Status do Pedido</Text>
-  //         <View style={styles.card}>
-  //           <Text style={styles.statusLabel}>O pedido ainda não foi finalizado</Text>
-  //           <Text style={[styles.statusText, styles.progress]}>
-  //             Termine o seu pedido para ver o andamento
-  //           </Text>
-  //         </View>
-  //       </View>
-  //       <BottomNavBar activeRoute="StatusPedido" />
-  //     </SafeAreaView>
-  //   );
-  // }
 
   return (
     <SafeAreaView style={styles.container}>
+      <ScrollView>
 
-      {/* <View style={styles.centerContent}>
+
+        {/* <View style={styles.centerContent}>
           <Text style={styles.title}>Seus Pedidos</Text>
           <Animated.View
             style={[
@@ -179,22 +95,36 @@ export default function StatusPedido() {
             </Text>
           </Animated.View>
         </View> */}
-      <View style={styles.centerContent}>
-        <Text style={styles.title}>Seus Pedidos</Text>
-        {order.map((ordem, index) => (
-          <View key={ordem.id} style={[styles.card, styles.gap]}>
-            <Text style={styles.statusLabel}>
-              Pedido {index + 1} está:
-            </Text>
-            <Text style={[styles.statusText, ordem.status ? styles.ready : styles.progress]}>
-              {ordem.status ? "✅ Pronto!" : "⌛ Em Andamento..."} {"\n"}
-              {ordem.items && ordem.items.length > 0 ? `Itens: ${ordem.items.length}` : "Nenhum item no pedido."}
-              
-            </Text>
-          </View>
-        ))}
+        <View style={styles.centerContent}>
+          <Text style={styles.title}>Seus Pedidos</Text>
 
-      </View>
+          {loading ? (
+            <View style={{ marginTop: 10 }}>
+              <ActivityIndicator size="large" color="#5F4100" />
+              <Text style={styles.loadingText}>Carregando pedidos...</Text>
+            </View>
+          ) : order.length === 0 ? (
+            <View style={styles.overlayContent}>
+              <Text style={styles.overlayText}>Nenhum pedido encontrado.</Text>
+              <TouchableOpacity style={styles.overlayButton} onPress={() => navigation.goBack()}>
+                <Text style={styles.overlayButtonText}>Voltar</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            order.map((ordem, index) => (
+              <View key={ordem.id} style={[styles.card, styles.gap]}>
+                <Text style={styles.statusLabel}>Pedido {index + 1} está:</Text>
+                <Text style={[styles.statusText, ordem.status ? styles.ready : styles.progress]}>
+                  {ordem.status ? "✅ Pronto!" : "⌛ Em Andamento..."}{"\n"}
+                  {ordem.items && ordem.items.length > 0 ? `Itens: ${ordem.items.length}` : "Nenhum item no pedido."}
+                </Text>
+              </View>
+            ))
+          )}
+
+        </View>
+      </ScrollView>
+
       <BottomNavBar activeRoute="StatusPedido" />
     </SafeAreaView >
   );
@@ -258,6 +188,12 @@ const styles = StyleSheet.create({
     fontFamily: "BesleyBold",
     color: "#5F4100",
     marginBottom: 30,
+    textAlign: "center",
+  },
+  loadingText: {
+    marginTop: 12,
+    fontSize: 16,
+    color: "#5F4100",
     textAlign: "center",
   },
   card: {

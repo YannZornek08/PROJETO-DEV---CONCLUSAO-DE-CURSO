@@ -122,11 +122,7 @@ const Pagamento: React.FC = () => {
   
   const chamarGarcom = async () => {
     try {
-<<<<<<< HEAD
       await fazPagamento(orderId, "971611e7-4ea5-4a50-acda-5426a433ca31");
-=======
-      await fazPagamento(orderId, "33819095-afe2-4733-bfdb-6648849825b8", navigation, resetOrder);
->>>>>>> 377c343a4152c669483939271d379c31a9cca071
       await enviarOrder(orderId);
       navigation.navigate("StatusPedido");
     } catch (err) {
@@ -148,11 +144,7 @@ const Pagamento: React.FC = () => {
         <View style={styles.row}>
           <TouchableOpacity style={styles.card} onPress={() => {
             navigation.navigate("DadosPagamento", {
-<<<<<<< HEAD
               id_mtdo_pagto: "e038a920-de56-4ed0-8e79-239fd0d9cbb0"
-=======
-              id_mtdo_pagto: "b79aed1b-00c3-48c5-8a22-b8005a6aca09"
->>>>>>> 377c343a4152c669483939271d379c31a9cca071
             })
           }}>
             <Text style={styles.cardText}>

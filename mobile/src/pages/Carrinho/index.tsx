@@ -198,38 +198,49 @@ const PedidoScreen: React.FC = () => {
         <Text style={styles.title}>Pedido</Text>
 
         {items.map((item) => (
-          <View style={styles.orderItem} key={item.id}>
+          <View style={[styles.orderItem, styles.orderCard]} key={item.id}>
             <Image
               source={{ uri: item.product.banner }}
-              resizeMode="stretch"
+              resizeMode="cover"
               style={styles.orderItemImage}
             />
-            <Text style={styles.orderItemDescription} ellipsizeMode="tail">
 
-              {item.product.name}{"\n"}
-              {item.product.description}{"\n"}
-              
-              Ingredientes:
-              {item.ingredientes.map((ing) => (
-                `\n${ing.name} - ${ing.adicionado ? "Usado" : "Removido"}`
-              ))}
-              {"\n"}
-              Adicionais:
-              {item.adicionais.map((add) => (
-                `\n${add.name} - ${add.adicionado ? "Adicionado" : "Removido"}`
-              ))}
-              {"\n"}Quantidade: {item.amount}
-            </Text>
-            <Text style={styles.orderItemDescription}>
-              {item.product.name}{"\n"}Qtd: {item.amount}
-            </Text>
+            <View style={styles.orderItemInfo}>
+              <Text style={styles.orderItemTitle}>{item.product.name}</Text>
+              <Text style={styles.orderItemDescription} numberOfLines={2} ellipsizeMode="tail">
+                {item.product.description}
+              </Text>
 
-            {/* Coluna para valor + botão */}
-            <View>
+              <Text style={styles.subHeading}>Ingredientes</Text>
+              {item.ingredientes && item.ingredientes.filter((ing) => ing.adicionado).length > 0 ? (
+                item.ingredientes
+                  .filter((ing) => ing.adicionado)
+                  .map((ing) => (
+                    <Text key={ing.name} style={styles.subText}>• {ing.name}</Text>
+                  ))
+              ) : (
+                <Text style={styles.subText}>Nenhum ingrediente adicionado</Text>
+              )}
+
+              <Text style={[styles.subHeading, { marginTop: 6 }]}>Adicionais</Text>
+              {item.adicionais && item.adicionais.filter((add) => add.adicionado).length > 0 ? (
+                item.adicionais
+                  .filter((add) => add.adicionado)
+                  .map((add) => (
+                    <Text key={add.name} style={styles.subText}>• {add.name}{add.price ? ` (+ ${formatarPreco(add.price)})` : ''}</Text>
+                  ))
+              ) : (
+                <Text style={styles.subText}>Nenhum adicional</Text>
+              )}
+
+              <Text style={styles.subText}>Quantidade: {item.amount}</Text>
+            </View>
+
+            <View style={styles.rightColumn}>
               <Text style={styles.orderItemPrice}>
                 {formatarPreco((Number(String(item.product.price).replace(',', '.')) || 0) * (item.amount || 0))}
               </Text>
-              <TouchableOpacity onPress={() => excluir(item.id)}>
+              <TouchableOpacity onPress={() => excluir(item.id)} style={styles.trashButton}>
                 <Image source={trash} style={styles.trash} />
               </TouchableOpacity>
             </View>
@@ -385,7 +396,7 @@ const styles = StyleSheet.create({
   orderItemDescription: {
     color: "#000000",
     fontSize: 16,
-    marginBottom: 40,
+    marginBottom: 8,
     fontFamily: "BesleyRegular",
     textTransform: "capitalize",
     flexShrink: 1,
@@ -470,6 +481,46 @@ const styles = StyleSheet.create({
     borderRadius: 0,
     marginLeft: 64,
     marginTop: 22,
+  }
+  ,
+  /* new layout styles for item card */
+  orderCard: {
+    backgroundColor: "#FFF8F0",
+    borderRadius: 12,
+    padding: 12,
+    marginHorizontal: 18,
+    marginBottom: 12,
+    alignItems: "flex-start",
+  },
+  orderItemInfo: {
+    flex: 1,
+    paddingRight: 8,
+  },
+  orderItemTitle: {
+    fontSize: 18,
+    fontFamily: "BesleyBold",
+    color: "#000",
+    marginBottom: 4,
+  },
+  subHeading: {
+    fontSize: 14,
+    fontFamily: "BesleyBold",
+    color: "#423828",
+    marginTop: 6,
+  },
+  subText: {
+    fontSize: 14,
+    color: "#333",
+    fontFamily: "BesleyRegular",
+    marginLeft: 6,
+  },
+  rightColumn: {
+    alignItems: "flex-end",
+    justifyContent: "space-between",
+  },
+  trashButton: {
+    marginTop: 8,
+    padding: 6,
   }
 });
 
