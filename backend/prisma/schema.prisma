@@ -61,8 +61,10 @@ model Order {
   table             Table               @relation(fields: [table_id], references: [id])
   items             Item[]
   payments          Payment[]
+
   items_additionals Items_additionals[]
   items_ingredients Items_ingredients[]
+
 
   @@map("orders")
 }
@@ -80,6 +82,7 @@ model Table {
 model Item {
   id         String    @id @default(uuid())
   amount     Int
+  note       String    @default("")
   created_at DateTime? @default(now())
   update_at  DateTime? @default(now())
   product_id String

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback, useRef } from "react";
 import {
   SafeAreaView,
   View,
@@ -6,10 +6,9 @@ import {
   Text,
   Image,
   TextInput,
-  TouchableOpacity,
+  TouchableOpacity, 
   StyleSheet,
-  Modal,
-  Button
+  FlatList
 } from "react-native";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -39,50 +38,63 @@ type Order = {
   status: boolean;
 };
 
+type Category = {
+  id: string;
+  name: string;
+};
+
 export default function HomeScreen() {
   const [textInput1, onChangeTextInput1] = useState<string>("");
   const [produtos, setProdutos] = useState<Produto[]>([]);
+  const [categorias, setCategorias] = useState<Category[]>([]);
+  const [categoriaSelecionada, setCategoriaSelecionada] = useState<string>("todas");
 
-  const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
   const { orderId } = useOrder();
   const { user, signOut } = useContext(AuthContext);
 
-  function Settings() {
-    navigation.navigate("Settings");
-  }
+  const searchTimeout = useRef<NodeJS.Timeout | null>(null);
 
-  // function Carrinho() {
-  //   navigation.navigate("Carrinho");
-  // }
+  // Função de busca dinâmica
+  const handleSearch = useCallback(async (text: string) => {
+    onChangeTextInput1(text);
 
-  async function Carrinho() {
-    console.log("entrou na função do carrinho")
-    console.log("O id do pedido atual é", orderId)
-    if (!orderId) {
-      alert("Abra um pedido para poder visualizar o carrinho!\nNão esqueça de adicionar um item ao pedido.")
-      return;
+    // limpa timeout anterior (debounce)
+    if (searchTimeout.current) {
+      clearTimeout(searchTimeout.current);
     }
-    try {
-      const response = await api.get("/order/detail", {
-        params: { order_id: orderId },
-      });
-      console.log("O id do pedido atual é", orderId)
-      console.log("Ele tem pedidos? Quantos?", response.data.items.length)
-      if (response.data.items.length > 0) {
-        navigation.navigate("Carrinho")
-      } else {
-        alert("Seu carrinho está vazio! Selecione um produto para adicionar primeiro.")
+
+    searchTimeout.current = setTimeout(async () => {
+      try {
+        if (text.trim() === "") {
+          const response = await api.get("/product/all");
+          setProdutos(response.data);
+        } else {
+          const response = await api.get("/product/search", {
+            params: { name: text },
+          });
+          setProdutos(response.data);
+        }
+      } catch (err) {
+        console.log("Erro ao buscar produtos:", err);
       }
-    } catch (err) {
-      console.log("Erro ao buscar orders:", err);
+    }, 300); // atraso de 300 ms
+  }, []);
+
+  // Buscar categorias (mantém igual)
+  useEffect(() => {
+    async function carregarCategorias() {
+      try {
+        const response = await api.get("/category");
+        setCategorias(response.data);
+      } catch (err) {
+        console.log("Erro ao buscar categorias:", err);
+      }
     }
-  }
+    carregarCategorias();
+  }, []);
 
-  async function Filtros() {
-    alert("blablabla");
-  }
-
+  // Buscar produtos inicialmente
   useEffect(() => {
     async function verProdutos() {
       try {
@@ -95,13 +107,45 @@ export default function HomeScreen() {
     verProdutos();
   }, []);
 
+  // Filtrar produtos por categoria
+  const produtosFiltrados = produtos.filter((produto) => {
+    if (categoriaSelecionada === "todas") return true;
+    return produto.category_id === categoriaSelecionada;
+  });
+
+  const renderChip = ({ item }: { item: Category | { id: string; name: string } }) => (
+    <TouchableOpacity
+      style={[
+        styles.chip,
+        categoriaSelecionada === item.id && styles.chipSelected,
+      ]}
+      onPress={() => setCategoriaSelecionada(item.id)}
+    >
+      <Text
+        style={[
+          styles.chipText,
+          categoriaSelecionada === item.id && styles.chipTextSelected,
+        ]}
+      >
+        {item.name}
+      </Text>
+    </TouchableOpacity>
+  );
+
+  // Adiciona "Todas" no início da lista de categorias
+  const categoriasComTodas = [
+    { id: "todas", name: "Todas" },
+    ...categorias
+  ];
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <View style={styles.header}>
           <View style={styles.headerTop}>
-            <Text style={styles.headerText} numberOfLines={1} ellipsizeMode="tail">Seja bem-vindo{user?.name ? `, ${user.name}` : ""}.</Text>
-
+            <Text style={styles.headerText} numberOfLines={1} ellipsizeMode="tail">
+              Seja bem-vindo{user?.name ? `, ${user.name}` : ""}.
+            </Text>
           </View>
 
           {/* Barra de busca */}
@@ -111,14 +155,14 @@ export default function HomeScreen() {
               resizeMode="stretch"
               style={styles.searchIcon}
             />
-            <TextInput
-              placeholder="O que busca?"
-              value={textInput1}
-              onChangeText={onChangeTextInput1}
-              style={styles.searchInput}
-            />
+             <TextInput
+                placeholder="O que busca?"
+                value={textInput1}
+                onChangeText={handleSearch}
+                style={styles.searchInput}
+              />
             <View style={styles.searchIconsRight}>
-              <TouchableOpacity onPress={Carrinho}>
+              <TouchableOpacity onPress={() => navigation.navigate("Carrinho")}>
                 <Image
                   source={require("../../assets/Carrinho.png")}
                   resizeMode="stretch"
@@ -132,50 +176,43 @@ export default function HomeScreen() {
             </View>
           </View>
 
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => setModalVisible(false)}
-          >
-            <Button title="Fechar" onPress={() => setModalVisible(false)} />
-          </Modal>
-
-          <View style={styles.filtersWrapper}>
-            <TouchableOpacity
-              style={styles.filterButton}
-              onPress={() => setModalVisible(true)}
-            >
-              <Image
-                source={require("../../assets/abawhite.png")}
-                resizeMode="stretch"
-                style={styles.filterIcon}
-              />
-              <Text style={styles.filterText}>Filtros</Text>
-            </TouchableOpacity>
+          {/* Lista horizontal de chips de categorias */}
+          <View style={styles.categoriesWrapper}>
+            <FlatList
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              data={categoriasComTodas}
+              renderItem={renderChip}
+              keyExtractor={(item) => item.id}
+              contentContainerStyle={styles.categoriesList}
+            />
           </View>
         </View>
 
         <Text style={styles.tableText}>Sua mesa: 05</Text>
 
-        {/* Cards dinâmicos */}
+        {/* Cards dinâmicos - produtos filtrados */}
         <View style={styles.cardsWrapper}>
-          {produtos
-            .reduce((rows: Produto[][], produto, index) => {
-              if (index % 2 === 0) {
-                rows.push([produto]);
-              } else {
-                rows[rows.length - 1].push(produto);
-              }
-              return rows;
-            }, [])
-            .map((row, idx) => (
-              <View style={styles.row} key={idx}>
-                {row.map((prod) => (
-                  <PizzaCard key={prod.id} product={prod} />
-                ))}
-              </View>
-            ))}
+          {produtosFiltrados.length === 0 ? (
+            <Text style={styles.emptyText}>Nenhum produto encontrado nesta categoria.</Text>
+          ) : (
+            produtosFiltrados
+              .reduce((rows: Produto[][], produto, index) => {
+                if (index % 2 === 0) {
+                  rows.push([produto]);
+                } else {
+                  rows[rows.length - 1].push(produto);
+                }
+                return rows;
+              }, [])
+              .map((row, idx) => (
+                <View style={styles.row} key={idx}>
+                  {row.map((prod) => (
+                    <PizzaCard key={prod.id} product={prod} />
+                  ))}
+                </View>
+              ))
+          )}
         </View>
       </ScrollView>
 
@@ -232,7 +269,7 @@ function PizzaCard({ product }: PizzaCardProps) {
       />
       <Text style={styles.cardTitle}>{product.name}</Text>
       <Text style={styles.cardPrice}>
-        {formatarPreco(Number(product.price))}
+        {formatarPreco(Number(String(product.price).replace(',', '.')) || 0)}
       </Text>
       <TouchableOpacity
         style={styles.addButton}
@@ -278,6 +315,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 26,
     fontFamily: "BesleyBold",
+    // fontSize: 24,
+    // fontFamily: "BesleyBold",
+    // textAlign: "center",
   },
   searchBar: {
     flexDirection: "row",
@@ -292,22 +332,50 @@ const styles = StyleSheet.create({
   searchInput: { color: "#52443C", fontSize: 16, flex: 1, paddingVertical: 12 },
   searchIconsRight: { flexDirection: "row" },
   iconRight: { width: 48, height: 48 },
-  filtersWrapper: { alignItems: "center", paddingVertical: 8 },
-  filterButton: {
-    flexDirection: "row",
-    backgroundColor: "#8D4F28",
-    borderRadius: 12,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
+  
+  categoriesWrapper: {
+    paddingVertical: 8,
   },
-  filterIcon: { width: 20, height: 20, marginRight: 4 },
-  filterText: { color: "#FFFFFF", fontSize: 14, fontWeight: "bold" },
+  categoriesList: {
+    paddingHorizontal: 26,
+    gap: 8,
+  },
+  chip: {
+    backgroundColor: "#F6E5DD",
+    borderRadius: 20,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    marginRight: 8,
+    borderWidth: 2,
+    borderColor: "transparent",
+  },
+  chipSelected: {
+    backgroundColor: "#8D4F28",
+    borderColor: "#8D4F28",
+  },
+  chipText: {
+    color: "#52443C",
+    fontSize: 14,
+    fontWeight: "600",
+    textTransform: "capitalize",
+  },
+  chipTextSelected: {
+    color: "#FFFFFF",
+    fontWeight: "bold",
+  },
+  
   tableText: {
     color: "#000000",
     fontSize: 16,
     fontWeight: "bold",
     marginBottom: 8,
     marginHorizontal: 26,
+  },
+  emptyText: {
+    color: "#52443C",
+    fontSize: 16,
+    textAlign: "center",
+    marginTop: 40,
   },
   cardsWrapper: { marginBottom: 44, marginHorizontal: 26 },
   row: {
@@ -318,19 +386,21 @@ const styles = StyleSheet.create({
   },
   card: { flex: 1, alignItems: "center", justifyContent: "space-between" },
   cardImage: {
-    height: 180,
+    height: 170,
     marginBottom: 8,
-    width: "100%",
-    borderRadius: 90,
+    width: 170,
+    borderRadius: 85,
   },
   cardTitle: {
     color: "#000000",
-    fontWeight: "bold",
+    fontFamily: "BesleyRegular",
     fontSize: 18,
     textAlign: "center",
     marginBottom: 4,
+    textTransform: "capitalize",
+    flexGrow: 1,
   },
-  cardPrice: { color: "#000000", fontSize: 16, marginBottom: 7 },
+  cardPrice: { color: "#000000", fontSize: 16, marginBottom: 7, fontFamily: "BesleyRegular", },
   addButton: {
     flexDirection: "row",
     backgroundColor: "#8D4F28",

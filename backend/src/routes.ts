@@ -66,13 +66,14 @@ import { InputCPFController } from './controllers/payment/InputCPFController';
 
 import { isAuthenticated } from './middlewares/isAuthenticated'
 import { isAuthenticatedClient } from './middlewares/isAuthenticatedClient'
-
 import uploadConfig from './config/multer'
 import { DetailTableController } from './controllers/table/DetailTableController';
 
 const router = Router()
 
 const upload = multer(uploadConfig.upload("./tmp"))
+
+const searchProductController = new SearchProductController();
 
 // -- ROTAS USER --
 router.post('/users', new CreateUserController().handle)
@@ -96,10 +97,11 @@ router.get('/product/all', new ListProductController().handle)
 
 router.get('/product/especify', new DetailProductController().handle)
 
-router.get('/product/search', new SearchProductController().handle)
+router.get("/product/search", searchProductController.handle.bind(searchProductController));
+
 
 // -- ROTAS ORDER --
-router.post('/order', new CreateOrderController().handle)
+router.post('/order', new CreateOrderController().handle.bind(new CreateOrderController()))
 router.delete('/order', new RemoveOrderController().handle)
 
 router.post('/order/add', new AddItemController().handle)

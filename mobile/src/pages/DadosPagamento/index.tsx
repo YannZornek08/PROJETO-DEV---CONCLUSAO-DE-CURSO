@@ -16,6 +16,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
 import { useOrder } from "../../contexts/OrderContext";
 import { fazPagamento, enviarOrder } from "../Pagamento";
+import { api } from "../../services/api";
 import { RouteProp, useRoute } from "@react-navigation/native";
 
 type DadosPagamentoRouteProp = RouteProp<StackParamsList, "DadosPagamento">;
@@ -24,7 +25,7 @@ type DadosPagamentoRouteProp = RouteProp<StackParamsList, "DadosPagamento">;
 const Dados: React.FC = () => {
   let pago = false;
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
-  const { orderId } = useOrder();
+  const { orderId, setOrderId } = useOrder();
   const [cpf, setCpf] = useState("");
   const {id_mtdo_pagto} = useRoute<DadosPagamentoRouteProp>().params;
 
@@ -42,7 +43,7 @@ const Dados: React.FC = () => {
     navigation.navigate("Pagamento");
   };
   const resetOrder =
-  useOrder().resetOrder; // Reseta o pedido após o pagamento
+  useOrder().resetOrder; 
 
 
   return (
@@ -96,12 +97,20 @@ const Dados: React.FC = () => {
           {/* 🔹 Botão pagar (corrigido) */}
           <View style={styles.buttonContainer}>
             <TouchableOpacity
-              style={styles.button} // <-- adicionado aqui
-              onPress={() => {
-                fazPagamento(orderId, id_mtdo_pagto);
-                enviarOrder(orderId);
-                // resetOrder
-                navigation.navigate("StatusPedido");
+              style={styles.button}
+              onPress={async () => {
+                if (!orderId) {
+                  Alert.alert('Erro', 'Pedido inválido.');
+                  return;
+                }
+
+                try {
+                 
+                  await fazPagamento(orderId, id_mtdo_pagto, navigation, setOrderId);
+                } catch (err) {
+                  console.log('Erro no pagamento:', err);
+                  Alert.alert('Erro', 'Não foi possível processar o pagamento.');
+                }
               }}
             >
               <Text style={styles.buttonText}>Pagar</Text>

@@ -1,11 +1,5 @@
-import React from "react";
-import { View, ActivityIndicator } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useFonts } from "expo-font";
+import { View, StatusBar, ActivityIndicator } from 'react-native';
 
-import Routes from "./src/routes";
-import { AuthProvider } from "./src/contexts/AuthContext";
 import AppRoutes from "./src/routes/app.routes";
 
 // Import pages (not directly used here but may be referenced elsewhere)
@@ -22,8 +16,13 @@ import Carrinho from "./src/pages/Carrinho";
 import LerQR from "./src/pages/LerQR";
 import Status1 from "./src/pages/Status1";
 import Status2 from "./src/pages/Status2";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Routes from './src/routes';
+import { AuthProvider } from './src/contexts/AuthContext';
 import { OrderProvider } from "./src/contexts/OrderContext";
 import { CostumerProvider } from "./src/contexts/CostumerContext";
+import { useFonts } from 'expo-font';
 
 const Stack = createNativeStackNavigator();
 
