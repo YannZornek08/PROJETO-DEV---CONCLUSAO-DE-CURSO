@@ -3,8 +3,7 @@ import { DetailCostumerService } from "../../services/costumer/DetailCostumerSer
 
 class DetailCostumerController {
     async handle(req: Request, res: Response) {
-
-        const costumer_id = req.costumer_id
+        const costumer_id = req.query.costumer_id as string
 
         const detailCostumerService = new DetailCostumerService()
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   View,
@@ -18,6 +18,7 @@ import { useOrder } from "../../contexts/OrderContext";
 import { fazPagamento, enviarOrder } from "../Pagamento";
 import { api } from "../../services/api";
 import { RouteProp, useRoute } from "@react-navigation/native";
+import { useCostumer } from "../../contexts/CostumerContext";
 
 type DadosPagamentoRouteProp = RouteProp<StackParamsList, "DadosPagamento">;
 
@@ -27,7 +28,9 @@ const Dados: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
   const { orderId, setOrderId } = useOrder();
   const [cpf, setCpf] = useState("");
-  const {id_mtdo_pagto} = useRoute<DadosPagamentoRouteProp>().params;
+  const { id_mtdo_pagto } = useRoute<DadosPagamentoRouteProp>().params;
+
+  const { costumerId } = useCostumer();
 
   const Menu = () => {
     if (!cpf) {
@@ -43,7 +46,46 @@ const Dados: React.FC = () => {
     navigation.navigate("Pagamento");
   };
   const resetOrder =
-  useOrder().resetOrder; 
+    useOrder().resetOrder;
+
+  useEffect(() => {
+    async function verUsuario() {
+      try {
+        const costumer = await api.get(`/me/costumers`, {
+          params: { costumer_id: costumerId },
+        });
+        console.log("Dados do usuário recebidos:", costumer.data);
+        setCpf(costumer.data.cpf)
+        return
+      } catch (err) {
+        console.log("Erro ao buscar usuário:", err);
+      }
+    }
+    verUsuario();
+  }, []);
+
+  async function colocarCPF(cpf_costumer: string) {
+    try {
+      const response = await api.put("/payment/cpf", {
+        costumer_id: costumerId,
+        cpf: cpf_costumer,
+      });
+
+      console.log("CPF enviado com sucesso:", response.data);
+      setCpf(cpf_costumer);
+      return true;
+    } catch (err: any) {
+      console.log("Erro ao enviar CPF:", err);
+
+      if (err.response && err.response.data) {
+        Alert.alert("Erro", err.response.data.error || "Erro ao enviar CPF");
+      } else {
+        Alert.alert("Erro", "Não foi possível conectar ao servidor.");
+      }
+
+      return false;
+    }
+  }
 
 
   return (
@@ -79,7 +121,7 @@ const Dados: React.FC = () => {
               keyboardType="numeric"
               maxLength={11} // limite para CPF
             />
-          
+
             {/* 🔹 Ícone virou botão para limpar o campo */}
             <TouchableOpacity onPress={() => setCpf("")}>
               <Image
@@ -104,23 +146,36 @@ const Dados: React.FC = () => {
                   return;
                 }
 
+                if (!cpf.trim()) {
+                  Alert.alert("Erro", "Por favor, informe o CPF.");
+                  return;
+                }
+
+                const sucesso = await colocarCPF(cpf);
+
+                if (!sucesso) {
+                  // para o fluxo e não tenta cobrar
+                  return;
+                }
+
                 try {
-                 
+                  await colocarCPF(cpf);
                   await fazPagamento(orderId, id_mtdo_pagto, navigation, setOrderId);
                 } catch (err) {
                   console.log('Erro no pagamento:', err);
                   Alert.alert('Erro', 'Não foi possível processar o pagamento.');
                 }
               }}
+
             >
               <Text style={styles.buttonText}>Pagar</Text>
             </TouchableOpacity>
           </View>
         </View>
 
-      
 
-        
+
+
       </ScrollView>
     </SafeAreaView>
   );
