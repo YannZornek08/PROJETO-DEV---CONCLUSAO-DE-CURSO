@@ -55,6 +55,8 @@ import { UpdateAdditionalController } from './controllers/additional/UpdateAddit
 import { ItemAdditionalController } from './controllers/additional/ItemAdditionalController';
 import { RemoveItemAdditionalController } from './controllers/additional/RemoveItemAdditionalController';
 
+import { UpdateItemAmountController } from './controllers/order/UpdateAmountItemController';
+
 import { CreateTableController } from './controllers/table/CreateTableController';
 import { ListTablesController } from './controllers/table/ListTablesController';
 
@@ -74,6 +76,7 @@ const router = Router()
 
 const upload = multer(uploadConfig.upload("./tmp"))
 
+const updateItemAmountController = new UpdateItemAmountController();
 const searchProductController = new SearchProductController();
 
 // -- ROTAS USER --
@@ -114,6 +117,9 @@ router.get('/order/detail', new DetailOrderController().handle)
 
 router.put('/order/finish', new FinishOrderController().handle)
 router.get('/orders/costumer', new ListOrderByCostumerController().handle)
+
+router.put("/item/increase", (req, res) => updateItemAmountController.handle(req, res));
+router.put("/item/decrease", (req, res) => updateItemAmountController.handle(req, res));
 
 // -- ROTAS ROLE --
 router.post('/role', new CreateRoleController().handle)

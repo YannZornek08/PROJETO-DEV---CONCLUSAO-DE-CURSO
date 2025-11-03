@@ -80,18 +80,17 @@ model Table {
 }
 
 model Item {
-  id         String    @id @default(uuid())
-  amount     Int
-  note       String    @default("")
-  created_at DateTime? @default(now())
-  update_at  DateTime? @default(now())
-  product_id String
-  product    Product   @relation(fields: [product_id], references: [id])
-
-  order                Order             @relation(fields: [order_id], references: [id])
-  order_id             String // pega pelo login
-  items_additionals_id String // ele cria sozinho, se não quiser vem tudo como false
-  items_ingredients_id String // ele cria sozinho, vem tudo como true
+  id                 String              @id @default(uuid())
+  amount             Int                 @default(1)
+  note               String              @default("")
+  created_at         DateTime?           @default(now())
+  update_at          DateTime?           @default(now())
+  product_id         String
+  product            Product             @relation(fields: [product_id], references: [id])
+  order              Order               @relation(fields: [order_id], references: [id])
+  order_id           String
+  items_additionals  Items_additionals[]
+  items_ingredients  Items_ingredients[]
 
   @@map("items")
 }
@@ -206,6 +205,8 @@ model Items_additionals {
 
   order_id String
   order    Order  @relation(fields: [order_id], references: [id])
+  item_id  String
+  item     Item   @relation(fields: [item_id], references: [id])
 
   @@map("items_additionals")
 }
@@ -221,6 +222,9 @@ model Items_ingredients {
 
   order_id String
   order    Order  @relation(fields: [order_id], references: [id])
+  
+  item_id  String
+  item     Item   @relation(fields: [item_id], references: [id])
 
   @@map("items_ingredients")
 }
