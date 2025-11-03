@@ -50,6 +50,7 @@ type ItensPedido = {
   adicionais: {
     name: string;
     adicionado: boolean;
+    price: number;
   }[];
   amount: number;
 }
