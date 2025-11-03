@@ -286,6 +286,10 @@ const PedidoScreen: React.FC = () => {
         </View>
 
         <TouchableOpacity style={styles.payButton} onPress={ () => {
+          if(items.length === 0) {
+            Alert.alert("Seu carrinho está vazio. Adicione itens antes de pagar.");
+            return;
+          }
           handlePay();
           // atualizarObservacao();
           }}>

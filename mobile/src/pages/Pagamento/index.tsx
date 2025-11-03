@@ -32,7 +32,9 @@ export async function fazPagamento(
       order_id: id_order,
       mtdo_pagto_id: id_mtdo_pagto
     })
-
+    // if (id_mtdo_pagto === "33819095-afe2-4733-bfdb-6648849825b8") {
+    //   Alert.alert("Pagamento em Dinheiro", "Um garçom está vindo para finalizar o pagamento em dinheiro.");
+    // }
  
     if (navigation && setOrderId) {
       Alert.alert(
@@ -42,6 +44,7 @@ export async function fazPagamento(
           {
             text: "Não",
             onPress: async () => {
+              setOrderId("")
               try {
                 await enviarOrder(id_order);
                 navigation.navigate("StatusPedido");
@@ -67,8 +70,10 @@ export async function fazPagamento(
 
                 const detailResp = await api.get('/order/detail', { params: { order_id: id_order } });
                 const orderDetail = detailResp.data;
-                const table_id = orderDetail.table_id;
-                const costumer_id = orderDetail.costumer_id;
+                const table_id = orderDetail.order.table_id;
+                const costumer_id = orderDetail.order.costumer_id;
+                console.log('Detalhes da comanda para nova comanda:', { table_id, costumer_id });
+
 
               
                 const createResp = await api.post('/order', { table_id, costumer_id });
@@ -117,9 +122,12 @@ const Pagamento: React.FC = () => {
   
   const chamarGarcom = async () => {
     try {
+<<<<<<< HEAD
       await fazPagamento(orderId, "971611e7-4ea5-4a50-acda-5426a433ca31");
+=======
+      await fazPagamento(orderId, "33819095-afe2-4733-bfdb-6648849825b8", navigation, resetOrder);
+>>>>>>> 377c343a4152c669483939271d379c31a9cca071
       await enviarOrder(orderId);
-      Alert.alert('Atenção', 'Um garçom foi chamado para sua mesa.', [{ text: 'OK' }]);
       navigation.navigate("StatusPedido");
     } catch (err) {
       console.log('Erro ao chamar garçom:', err);
@@ -140,7 +148,11 @@ const Pagamento: React.FC = () => {
         <View style={styles.row}>
           <TouchableOpacity style={styles.card} onPress={() => {
             navigation.navigate("DadosPagamento", {
+<<<<<<< HEAD
               id_mtdo_pagto: "e038a920-de56-4ed0-8e79-239fd0d9cbb0"
+=======
+              id_mtdo_pagto: "b79aed1b-00c3-48c5-8a22-b8005a6aca09"
+>>>>>>> 377c343a4152c669483939271d379c31a9cca071
             })
           }}>
             <Text style={styles.cardText}>
