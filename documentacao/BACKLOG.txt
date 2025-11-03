@@ -1,0 +1,49 @@
+BACKLOG - G3
+
+Andamento do pedido - Prioridade Alta
+Como usuário, eu quero saber como está o andamento do meu pedido para que eu possa me situar enquanto ao tempo de demora para ele estar pronto.
+
+Avaliação/Feedback - Prioridade Média
+Como usuário, eu quero poder avaliar o serviço do local que eu estou comendo para que eu possa ajudar a melhorar o serviço e a qualidade para a próxima vez que eu for pedir.
+
+Central de Ajuda - Prioridade Média
+Como usuário, eu quero poder ser atendido caso haja algum erro no meu pedido ou no aplicativo para que a pizzaria corrija e melhore meu atendimento.
+
+Recomendação de Pedidos/Histórico - Prioridade Leve
+Como usuário, eu desejo lembrar os meus pedidos antigos para que eu possa escolher mais rápido os sabores parecidos que correspondem aos meus gostos.
+
+Barra de Pesquisa - Prioridade Média
+Como cliente, eu gostaria de pesquisar os produtos disponíveis, pois assim seria mais fácil de buscar os meus produtos preferidos ou algo que eu esteja buscando.
+
+Filtro - Prioridade Média
+Como usuário, eu quero filtrar os produtos disponíveis em categorias e classificações para que eu possa ver todos os itens listados de acordo com minhas especificações.
+
+Tela de Login - Prioridade importante
+Como usuário, eu gostaria de ter uma boa tela de login, que seja intuitiva e fácil, para que assim eu possa fazer o login mais rápido e poder ver minhas informações ou personalizar o meu perfil.
+
+Carrinho - Prioridade importante
+Como cliente, eu quero adicionar produtos ao meu carrinho para que eu possa revisar e finalizar minha compra com facilidade.
+
+Gorjeta - Prioridade leve
+Como cliente, eu quero poder adicionar uma gorjeta no momento do pagamento para que eu possa entregar um feedback pessoal e uma recompensa pelo bom atendimento. 
+
+Pagamentos - Prioridade Alta
+Como cliente necessito que tenha pagamentos convencionais como cartões e pix. Além de mostrar visivelmente a área desse mesmo pagamento, para que eu veja qual a melhor opção.
+
+Cardápio - Prioridade Alta
+Como cliente desejo ter a visualização dos produtos no cardápio, tendo imagem dos produtos, informações nutricionais e destaque de promoções e produtos mais pedidos para que possa ter base e certeza do que desejo.
+
+Escolha de Produtos - Prioridade Alta
+Como cliente quero escolher sabores, tamanhos e opção de pedir bebidas em uma tela intuitiva para que o meu agrado seja satisfeito em escolher diferentes preferências sem me confundir com a interface.
+
+Observações do pedido - Prioridade Média
+Como cliente, posso adicionar observações no pedido, que são comentários que necessitam de atenção seja no momento da produção ou da entrega da comida, como "pepperoni extra", "sem cogumelo" ou "favor tocar campainha".
+
+NAV - Prioridade Alta
+O site necessita de um menu com as principais opções no topo da tela de forma organizada, como "cardápio", "contato", "restaurantes", "carrinho". Dessa forma, posso acessar as principais funcionalidades sem precisar olhar em lugares diferentes.
+
+Opção Delivery - Prioridade Alta
+Como cliente, posso ter a opção de delivery para comer pizza onde eu quiser, desde que eu a peça por ligação ou online. 
+
+Localização - Prioridade Leve
+Como cliente, posso encontrar a localização exata de todos os restaurantes dentro do site de forma fácil, caso queira visitá-los.
