@@ -1,0 +1,223 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String    @id @default(uuid())
+  name       String
+  email      String
+  password   String
+  created_at DateTime? @default(now())
+  update_at  DateTime? @default(now())
+  role_id    String
+  role       Role      @relation(fields: [role_id], references: [id])
+
+  @@map("users")
+}
+
+model Category {
+  id                     String                   @id @default(uuid())
+  name                   String
+  created_at             DateTime?                @default(now())
+  update_at              DateTime?                @default(now())
+  products               Product[]
+  categories_additionals categories_additionals[]
+
+  @@map("categories")
+}
+
+model Product {
+  id          String    @id @default(uuid())
+  name        String
+  price       String
+  description String
+  banner      String
+  created_at  DateTime? @default(now())
+  update_at   DateTime? @default(now())
+
+  category    Category @relation(fields: [category_id], references: [id])
+  category_id String
+  ingredient_product Ingredient_product[] // relação muitos para muitos
+  items       Item[]
+
+  @@map("products")
+}
+
+model Order {
+  id                String              @id @default(uuid())
+  status            Boolean             @default(false)
+  draft             Boolean             @default(true)
+  created_at        DateTime?           @default(now())
+  update_at         DateTime?           @default(now())
+  costumer_id       String
+  table_id          String
+  costumer          Costumer            @relation(fields: [costumer_id], references: [id])
+  table             Table               @relation(fields: [table_id], references: [id])
+  items             Item[]
+  payments          Payment[]
+  items_additionals Items_additionals[]
+  items_ingredients Items_ingredients[]
+
+  @@map("orders")
+}
+
+model Table {
+  id         String    @id @default(uuid())
+  number     Int
+  created_at DateTime? @default(now())
+  update_at  DateTime? @default(now())
+  orders     Order[]
+
+  @@map("tables")
+}
+
+model Item {
+  id         String    @id @default(uuid())
+  amount     Int
+  created_at DateTime? @default(now())
+  update_at  DateTime? @default(now())
+  product_id String
+  product    Product   @relation(fields: [product_id], references: [id])
+
+  order                Order             @relation(fields: [order_id], references: [id])
+  order_id             String // pega pelo login
+  items_additionals_id String // ele cria sozinho, se não quiser vem tudo como false
+  items_ingredients_id String // ele cria sozinho, vem tudo como true
+
+  @@map("items")
+}
+
+model Role {
+  id         String    @id @default(uuid())
+  name       String
+  created_at DateTime? @default(now())
+  update_at  DateTime? @default(now())
+  users      User[]
+
+  @@map("roles")
+}
+
+model Costumer {
+  id         String   @id @default(uuid())
+  dt_nasc    String
+  email      String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  name       String
+  password   String
+  cpf        BigInt?  @unique
+  orders     Order[]
+
+  @@map("costumers")
+}
+
+model Payment {
+  id            String     @id @default(uuid())
+  order_id      String
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @default(now())
+  mtdo_pagto_id String
+  pago          Boolean    @default(true)
+  mtdo_pagto    Mtdo_pagto @relation(fields: [mtdo_pagto_id], references: [id])
+  order         Order      @relation(fields: [order_id], references: [id])
+
+  @@map("payments")
+}
+
+model Ingredient {
+  id                 String               @id @default(uuid())
+  name               String
+  created_at         DateTime             @default(now())
+  updated_at         DateTime             @default(now())
+  ingredient_product Ingredient_product[]
+
+  @@map("ingredients")
+}
+
+model Ingredient_product {
+  id         String   @id @default(uuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  ingredient    Ingredient @relation(fields: [ingredient_id], references: [id])
+  product       Product    @relation(fields: [product_id], references: [id])
+  ingredient_id String
+  product_id    String
+
+  Items_ingredients Items_ingredients[]
+
+  @@map("ingredients_products")
+}
+
+model Mtdo_pagto {
+  id         String    @id @default(uuid())
+  name       String
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
+  payments   Payment[]
+
+  @@map("payment_methods")
+}
+
+model Additionals {
+  id         String   @id @default(uuid())
+  name       String
+  price      String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  categories_additionals categories_additionals[]
+
+  @@map("additionals")
+}
+
+model categories_additionals {
+  id         String   @id @default(uuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  additionals    Additionals @relation(fields: [additionals_id], references: [id])
+  additionals_id String
+  category       Category    @relation(fields: [category_id], references: [id])
+  category_id    String
+
+  items_additionals Items_additionals[]
+
+  @@map("categories_additionals")
+}
+
+model Items_additionals {
+  id         String   @id @default(uuid())
+  adicionado Boolean  @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  categories_additionals    categories_additionals @relation(fields: [categories_additionals_id], references: [id])
+  categories_additionals_id String
+
+  order_id String
+  order    Order  @relation(fields: [order_id], references: [id])
+
+  @@map("items_additionals")
+}
+
+model Items_ingredients {
+  id         String   @id @default(uuid())
+  adicionado Boolean  @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  ingredient_product    Ingredient_product @relation(fields: [ingredient_product_id], references: [id])
+  ingredient_product_id String
+
+  order_id String
+  order    Order  @relation(fields: [order_id], references: [id])
+
+  @@map("items_ingredients")
+}
