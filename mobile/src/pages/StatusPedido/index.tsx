@@ -47,11 +47,11 @@ export default function StatusPedido() {
       setLoading(false);
       return;
     }
-    console.log("usuario", id_usuario);
+    // console.log("usuario", id_usuario);
     try {
       setLoading(true);
       const response = await api.get(`/orders/costumer?costumer_id=${id_usuario}`);
-      console.log("Resposta da API:", response.data);
+      // console.log("Resposta da API:", response.data);
       const allOrders: Order[] = Array.isArray(response.data) ? response.data : [];
 
       // Mostrar apenas pedidos efetivos (não rascunhos)

@@ -3,14 +3,15 @@ import { RemoveItemAdditionalService } from "../../services/additional/RemoveIte
 
 class RemoveItemAdditionalController {
     async handle(req: Request, res: Response) {
-        const { item_additional_id, order_id } = req.body;
+    const { item_additional_id, order_id, item_id } = req.body;
 
         const removeItemAdditionalService = new RemoveItemAdditionalService();
 
         try {
             const result = await removeItemAdditionalService.execute({ 
                 item_additional_id, 
-                order_id 
+                order_id,
+                item_id,
             });
             res.json(result);
         } catch (err: any) {

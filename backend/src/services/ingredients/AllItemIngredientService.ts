@@ -7,10 +7,11 @@ interface AllItemIngredientRequest {
 
 interface OrderRequest {
   order_id: string;
+  item_id?: string;
 }
 
 class AllItemIngredientService {
-  async execute({ product_id }: AllItemIngredientRequest, { order_id }: OrderRequest) {
+  async execute({ product_id }: AllItemIngredientRequest, { order_id, item_id }: OrderRequest) {
     // Reaproveitando o service que lista ingredientes
     const listIngredientByProductService = new ListIngredientByProductService();
     const ingredientesDoProduto = await listIngredientByProductService.execute({ product_id });
@@ -41,6 +42,7 @@ class AllItemIngredientService {
       .map((ingredient) => ({
         ingredient_product_id: ingredient.id,
         order_id,
+        item_id: item_id ?? "",
         adicionado: true,
       }));
 

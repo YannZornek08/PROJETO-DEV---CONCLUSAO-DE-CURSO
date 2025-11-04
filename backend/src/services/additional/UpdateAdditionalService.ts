@@ -3,33 +3,39 @@ import prismaClient from "../../prisma";
 interface AdditionalRequest {
   categories_additionals_id: string;
   order_id: string;
+  item_id: string;
 }
 
 class UpdateAdditionalService {
-  async execute({ categories_additionals_id, order_id }: AdditionalRequest) {
-    // Buscar o registro específico
-    const additional = await prismaClient.items_additionals.findFirst({
+  // Toggle behavior implemented as create (when not exists) or delete (when exists)
+  async execute({ categories_additionals_id, order_id, item_id }: AdditionalRequest) {
+    // Buscar o registro específico para este item/order/adicional
+    const existing = await prismaClient.items_additionals.findFirst({
       where: {
         categories_additionals_id: categories_additionals_id,
-        order_id: order_id
-      }
+        order_id: order_id,
+        item_id: item_id,
+      },
     });
 
-    if (!additional) {
-      throw new Error("Adicional não encontrado.");
+    if (existing) {
+      // se existir, remove (deseleciona)
+      const deleted = await prismaClient.items_additionals.delete({
+        where: { id: existing.id },
+      });
+      return { action: "deleted", record: deleted };
     }
 
-    // Alternar o valor de 'adicionado'
-    const updated = await prismaClient.items_additionals.update({
-      where: {
-        id: additional.id
-      },
+    // se não existir, cria (seleciona)
+    const created = await prismaClient.items_additionals.create({
       data: {
-        adicionado: !additional.adicionado
-      }
+        order_id,
+        categories_additionals_id,
+        item_id,
+      },
     });
 
-    return updated;
+    return { action: "created", record: created };
   }
 }
 

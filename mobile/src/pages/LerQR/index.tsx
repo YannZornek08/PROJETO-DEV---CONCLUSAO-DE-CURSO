@@ -142,7 +142,7 @@ export default function LerQR() {
               alert('Já existe uma comanda aberta.');
               return;
             }
-            confirmarComanda("3f9c58c5-3a85-4d6d-8909-a2ea00066c80");
+            confirmarComanda("4165a545-4fdd-4cc8-b5ad-c542bfe5a53f");
           }}
         >
           <Text style={styles.textoBotao}>Botão para abrir sem QRCODE (mocado)</Text>

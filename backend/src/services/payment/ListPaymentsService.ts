@@ -7,7 +7,6 @@ class ListPaymentService{
             select: {
                 id: true,
                 order_id: true,
-                table_id: true,
                 mtdo_pagto_id: true,
             }
         })

@@ -39,10 +39,9 @@ class DetailOrderService {
         const formattedItems = await Promise.all(items.map(async (item) => {
 
             const ingredientes = await prismaClient.items_ingredients.findMany({
-                where: { order_id, },
+                where: { order_id, item_id: item.id },
                 select: {
                     id: true,
-                    adicionado: true,
                     ingredient_product: {
                         select: {
                             ingredient: {
@@ -54,10 +53,9 @@ class DetailOrderService {
             });
 
             const adicionais = await prismaClient.items_additionals.findMany({
-                where: { order_id, },
+                where: { order_id, item_id: item.id },
                 select: {
                     id: true,
-                    adicionado: true,
                     categories_additionals: {
                         select: {
                             additionals: {
@@ -72,16 +70,17 @@ class DetailOrderService {
                 id: item.id,
                 product: item.product,
                 amount: item.amount,
+                adicionado: item.adicionado,
 
                 ingredientes: ingredientes.map(ing => ({
                     name: ing.ingredient_product.ingredient.name,
-                    adicionado: ing.adicionado
+                    adicionado: true
                 })),
 
                 adicionais: adicionais.map(add => ({
                     name: add.categories_additionals.additionals.name,
                     price: add.categories_additionals.additionals.price,
-                    adicionado: add.adicionado
+                    adicionado: true
                 }))
             };
         }));

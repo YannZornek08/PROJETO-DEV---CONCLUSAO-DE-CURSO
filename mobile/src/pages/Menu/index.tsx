@@ -6,7 +6,7 @@ import {
   Text,
   Image,
   TextInput,
-  TouchableOpacity, 
+  TouchableOpacity,
   StyleSheet,
   FlatList
 } from "react-native";
@@ -155,12 +155,12 @@ export default function HomeScreen() {
               resizeMode="stretch"
               style={styles.searchIcon}
             />
-             <TextInput
-                placeholder="O que busca?"
-                value={textInput1}
-                onChangeText={handleSearch}
-                style={styles.searchInput}
-              />
+            <TextInput
+              placeholder="O que busca?"
+              value={textInput1}
+              onChangeText={handleSearch}
+              style={styles.searchInput}
+            />
             <View style={styles.searchIconsRight}>
               <TouchableOpacity onPress={() => navigation.navigate("Carrinho")}>
                 <Image
@@ -233,12 +233,25 @@ function PizzaCard({ product }: PizzaCardProps) {
     useNavigation<NativeStackNavigationProp<StackParamsList>>();
   const route_car = useRoute<CarrinhoRouteProp>();
 
+  async function adicionarItem() {
+    try {
+      const newItem = await api.post('/order/add', {
+        order_id: orderId,
+        product_id: product.id,
+      });
+      console.log("Item adicionado:", newItem.data);
+      return newItem.data;
+    } catch (err) {
+      console.log("Erro ao adicionar item:", err);
+    }
+  }
+
   async function criarTodosIngredientsProduto(id_produto: string, order_id: string | null) {
     // console.log("Criando ingredientes para o produto:", id_produto);
     try {
       await api.post('/item/all/ingredients', {
-          product_id: id_produto,
-          order_id: order_id
+        product_id: id_produto,
+        order_id: order_id
       });
       console.log("Ingredientes do produto criados com sucesso!");
     } catch (err) {
@@ -250,8 +263,8 @@ function PizzaCard({ product }: PizzaCardProps) {
     // console.log("Criando ingredientes para o produto:", id_produto);
     try {
       await api.post('/item/all/additionals', {
-          category_id: id_categoria,
-          order_id: order_id
+        category_id: id_categoria,
+        order_id: order_id
       });
       console.log("Adicionais da categoria criados com sucesso!");
     } catch (err) {
@@ -273,11 +286,14 @@ function PizzaCard({ product }: PizzaCardProps) {
       </Text>
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => {
+        onPress={async () => {
+          const itemCriado = await adicionarItem(); // aguarda o retorno
+          if (!itemCriado) return; // evita navegação se falhou
+          navigation.navigate("DetalhesProdutos", { product, item: itemCriado });
+
           // console.log("Clicou em adicionar", product.id);
-          criarTodosAdicionaisCategoria(product.category_id, orderId );
-          criarTodosIngredientsProduto(product.id, orderId);
-          navigation.navigate("DetalhesProdutos", { product })
+          // criarTodosAdicionaisCategoria(product.category_id, orderId);
+          // criarTodosIngredientsProduto(product.id, orderId);
         }}
       >
         <Image
@@ -332,7 +348,7 @@ const styles = StyleSheet.create({
   searchInput: { color: "#52443C", fontSize: 16, flex: 1, paddingVertical: 12 },
   searchIconsRight: { flexDirection: "row" },
   iconRight: { width: 48, height: 48 },
-  
+
   categoriesWrapper: {
     paddingVertical: 8,
   },
@@ -363,7 +379,7 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontWeight: "bold",
   },
-  
+
   tableText: {
     color: "#000000",
     fontSize: 16,

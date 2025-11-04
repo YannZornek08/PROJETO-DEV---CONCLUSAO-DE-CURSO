@@ -37,6 +37,7 @@ export type Order = {
 
 type ItensPedido = {
   id: string;
+  adicionado: boolean;
   product: {
     name: string;
     banner: string;
@@ -138,9 +139,15 @@ const PedidoScreen: React.FC = () => {
     }
 
     async function verPedidos() {
+      console.log("Buscando itens do pedido para order_id:", orderId);
+      try {
       const response = await api.get('/order/detail', { params: { order_id: orderId } });
-      setItems(response.data.items);
-      console.log("Itens do pedido:", response.data.items);
+      
+      setItems(response.data.items.filter((item: any) => item.adicionado === true));
+      console.log("Itens do pedido:", response.data.items.filter((item: any) => item.adicionado === true));
+      } catch (err) {
+        console.log("Erro ao buscar itens do pedido:", err);
+      }
     }
 
     verPedidos();
@@ -157,7 +164,7 @@ const PedidoScreen: React.FC = () => {
     console.log("Tentando excluir item:", item_id);
     try {
       const response = await api.delete("/order/remove", {
-        params: { item_id }
+        params: { item_id: item_id }
       });
       console.log("Resposta do backend:", response.data);
 

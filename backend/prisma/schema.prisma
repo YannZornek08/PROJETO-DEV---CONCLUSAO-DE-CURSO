@@ -83,6 +83,7 @@ model Item {
   id                 String              @id @default(uuid())
   amount             Int                 @default(1)
   note               String              @default("")
+  adicionado         Boolean             @default(false)
   created_at         DateTime?           @default(now())
   update_at          DateTime?           @default(now())
   product_id         String
@@ -196,7 +197,6 @@ model categories_additionals {
 
 model Items_additionals {
   id         String   @id @default(uuid())
-  adicionado Boolean  @default(false)
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
@@ -208,6 +208,7 @@ model Items_additionals {
   item_id  String
   item     Item   @relation(fields: [item_id], references: [id])
 
+  @@unique([item_id, categories_additionals_id])
   @@map("items_additionals")
 }
 

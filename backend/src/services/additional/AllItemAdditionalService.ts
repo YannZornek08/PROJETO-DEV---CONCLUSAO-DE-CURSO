@@ -7,10 +7,11 @@ interface AllItemAdditionalRequest {
 
 interface OrderRequest {
   order_id: string;
+  item_id?: string;
 }
 
 class AllItemAdditionalService {
-  async execute({ category_id }: AllItemAdditionalRequest, { order_id }: OrderRequest) {
+  async execute({ category_id }: AllItemAdditionalRequest, { order_id, item_id }: OrderRequest) {
     // Reaproveitando o service que lista adicionais
     const listAdditionalByCategoryService = new ListAdditionalByCategoryService();
     const adicionaisDaCategoria = await listAdditionalByCategoryService.execute({ category_id });
@@ -40,7 +41,7 @@ class AllItemAdditionalService {
       .map((additional) => ({
         categories_additionals_id: additional.id,
         order_id,
-        adicionado: false,
+        item_id: item_id ?? "",
       }));
 
     // Preparar os dados para inserir em massa

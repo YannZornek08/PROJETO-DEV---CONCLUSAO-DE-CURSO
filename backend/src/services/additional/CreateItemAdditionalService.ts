@@ -1,18 +1,20 @@
 import prismaClient from "../../prisma";
 
 interface ItemAdditionalRequest {
+    item_id: string;
     categories_additionals_id: string;
     order_id: string;
 }
 
 class ItemAdditionalService {
-    async execute({ categories_additionals_id, order_id }: ItemAdditionalRequest) {
+    async execute({ categories_additionals_id, order_id, item_id }: ItemAdditionalRequest) {
 
         // Verifica se já existe um registro igual
         const existingItem = await prismaClient.items_additionals.findFirst({
             where: {
                 categories_additionals_id: categories_additionals_id,
-                order_id: order_id
+                order_id: order_id,
+                item_id: item_id
             },
         });
 
@@ -28,7 +30,7 @@ class ItemAdditionalService {
             data: {
                 order_id: order_id,
                 categories_additionals_id: categories_additionals_id,
-                adicionado: false,
+                item_id: item_id,
             }
         })
 

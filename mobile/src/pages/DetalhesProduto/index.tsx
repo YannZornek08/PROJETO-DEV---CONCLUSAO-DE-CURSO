@@ -16,6 +16,8 @@ import { api } from "../../services/api";
 import { formatarPreco } from "../../components/conversorDeMoeda/valoresEmReal";
 import { useOrder } from "../../contexts/OrderContext";
 
+import Checkbox from "../../components/Checkbox"; // Certifique-se de que o caminho está correto
+
 
 type DetalhesRouteProp = RouteProp<StackParamsList, "DetalhesProdutos">;
 
@@ -34,25 +36,19 @@ type Ingredient = {
 }
 
 type Additional = {
-  id: string;
-  categories_additionals_id: string;
-  additional: {
-    name: string;
-    price: number;
-  };
-  category: {
-    category_id: string;
-    name: string;
-  };
-  adicionado: boolean;
-  order_id: string;
+  id: number;
+  selected: boolean;
+  name: string;
+  price: number;
+  // Adicionando as propriedades necessárias
+  adicionado?: boolean;
 }
 
-type Item = {
-  order_id: string;
-  ingredient_product_id: string;
-  amount: number;
-};
+type AdditionalAtt = {
+  additional: Additional;
+  adicionado: boolean;
+
+}
 
 export type OrderAtual = {
   id: string;
@@ -64,6 +60,7 @@ export default function DetalhesProdutos() {
   const route = useRoute<DetalhesRouteProp>();
   const [adicionais, setAdicionais] = useState<Additional[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+  const [addAtt, setAddAtt] = useState<AdditionalAtt[]>([]);
 
   const [mostrarIngredientes, setMostrarIngredientes] = useState(false);
   const [mostrarAdicionais, setMostrarAdicionais] = useState(false);
@@ -74,7 +71,7 @@ export default function DetalhesProdutos() {
   const [observacoes, setObservacoes] = useState<string>("");
   // const [items, setItems] = useState<Item[]>([]);
 
-  const { product } = route.params;
+  const { product, item } = route.params;
   const [quantidade, setQuantidade] = useState<number>(1);
   const { orderId } = useOrder();
 
@@ -82,11 +79,30 @@ export default function DetalhesProdutos() {
     navigation.navigate("Menu");
   };
 
-  const aumentarQuantidade = () => setQuantidade(quantidade + 1);
-  const diminuirQuantidade = () => {
-    if (quantidade > 1) setQuantidade(quantidade - 1);
-  };
-
+  // async function formatarObservacoes() {
+  //   try {
+  //     await api.put('/item/notes', {
+  //       item_id: item.id,
+  //       notes: observacoes,
+  //     });
+  //   } catch (err) {
+  //     console.log("Erro ao formatar observações:", err);
+  //   }
+  // }
+  async function aumentarQuantidade() {
+    const novaQuantidade = await api.put('/item/increase', {
+      item_id: item.id,
+      action: "increase",
+    });
+    setQuantidade(novaQuantidade.data.amount);
+  }
+  async function diminuirQuantidade() {
+    const novaQuantidade = await api.put('/item/decrease', {
+      item_id: item.id,
+      action: "decrease",
+    });
+    setQuantidade(novaQuantidade.data.amount);
+  }
   //REFATORAR DEPOIS PARA QUE A FUNÇÃO SEJA EXPORTADA AO CARRINHO
   async function bloquearPedidos() {
     if (!orderId) return;
@@ -94,23 +110,20 @@ export default function DetalhesProdutos() {
       const response = await api.get("/order/detail", {
         params: { order_id: orderId },
       });
-      setOrderAtual(response.data.orders.draft);
       console.log("O id do pedido atual é", orderId)
-      if (response.data.orders.draft == false) {
-        console.log("DETALHES PRODUTOS Tem que bloquear a TELA!!")
+      // console.log("resposta da apiiiiiiii", response.data)
+      setOrderAtual(response.data.order.draft);
+      if (response.data.order.draft == false) {
+        // console.log("DETALHES PRODUTOS Tem que bloquear a TELA!!")
         setBloquearTela(true);
       } else {
-        console.log("DETALHES PRODUTOS Não bloqueia a tela")
+        // console.log("DETALHES PRODUTOS Não bloqueia a tela")
         setBloquearTela(false);
       }
     } catch (err) {
       console.log("Erro ao buscar detalhes do pedido:", err);
     }
   }
-
-  useEffect(() => {
-    bloquearPedidos();
-  }, [orderId]);
 
   useEffect(() => {
     async function verIngredientesProduto() {
@@ -146,43 +159,77 @@ export default function DetalhesProdutos() {
         console.log("Erro ao buscar produtos:", err);
       }
     }
+    // async function verAdicionaisCategoria() {
+
+    //   try {
+    //     //Chama a rota que retorna TODOS os adicionais da categoria
+    //     console.log("Buscando adicionais para a categoria:", product.category_id);
+    //     const response = await api.get('/category/all/additionals', {
+    //       params: {
+    //         category_id: product.category_id,
+    //         order_id: orderId,
+    //         item_id: item.id,
+    //       }
+    //     });
+    //     console.log("API retornou:", response.data);
+    //     setAdicionais(Array.isArray(response.data) ? response.data : [response.data]);
+    //     const dataArray = Array.isArray(response.data) ? response.data : [response.data];
+    //     const formattedAdditionals: Additional[] = dataArray.map((add: any) => ({
+    //       id: add.id,
+    //       selected: true, // Definindo um valor padrão para selected
+    //       name: add.additional?.name,
+    //       price: add.additional?.price,
+    //       adicionado: add.adicionado,
+    //       additional: add.additional
+    //     }));
+    //     setAdicionais(formattedAdditionals);
+    //     console.log("Adicionais formatados:", adicionais)
+    //   } catch (err) {
+    //     console.log("Erro ao buscar categorias/adicionais:", err);
+    //   }
+    // }
+    // verAdicionaisCategoria();
     async function verAdicionaisCategoria() {
+      console.log("Adicionais ANTES DE TODO O PRCESSO", adicionais)
       try {
-        //Chama a rota que retorna TODOS os adicionais da categoria
-        console.log("Buscando adicionais para a categoria:", product.category_id);
+        // console.log("Buscando adicionais para a categoria:", product.category_id);
+        // console.log("Id do ITEMIJDOIASDJIAS", item.id)
         const response = await api.get('/category/all/additionals', {
           params: {
             category_id: product.category_id,
-            order_id: orderId
+            order_id: orderId,
+            item_id: item.id,
           }
         });
-        console.log("API retornou:", response.data);
-        setAdicionais(Array.isArray(response.data) ? response.data : [response.data]);
+
         const dataArray = Array.isArray(response.data) ? response.data : [response.data];
-        const formattedAdditionals: Additional[] = dataArray.map((item: any) => ({
-          id: item.id ?? "",
-          categories_additionals_id: item.categories_additionals_id ?? Error("Campo 'categories_additionals_id' não encontrado"),
-          category: {
-            // NOME DA CATEGORIA TA RETORNANDO NULL, VERIFICAR
-            name: item.categories_additionals.category.name ?? "",
-            category_id: item.categories_additionals.id ?? "",
-          },
-          additional: {
-            name: item.categories_additionals.additionals.name ?? "",
-            price: item.categories_additionals.additionals.price ?? Error("Campo 'price' não encontrado"),
-          },
-          order_id: orderId ?? "",
-          adicionado: item.adicionado ?? Error("Campo 'adicionado' não encontrado"),
+        // console.log("API retornou:", dataArray);
+
+        const formattedAdditionals: Additional[] = dataArray.map((add: any) => ({
+          id: add.id,
+          selected: add.adicionado, // ✅ Respeita o valor do DB
+          name: add.categories_additionals.additionals.name,
+          price: add.categories_additionals.additionals.price,
         }));
+
         setAdicionais(formattedAdditionals);
-        console.log("Adicionais formatados:", adicionais)
+        console.log("Adicionais formatados:", formattedAdditionals);
+
       } catch (err) {
         console.log("Erro ao buscar categorias/adicionais:", err);
       }
     }
-    verAdicionaisCategoria();
-    verIngredientesProduto();
-  }, [product.id]);
+
+    async function loadingAdditionals() {
+      setAdicionais([]);
+
+      await verAdicionaisCategoria();
+      console.log("Adicionais após todo o processo", adicionais)
+    }
+    // atualizarAdicionaisItem()
+    bloquearPedidos();
+    loadingAdditionals();
+  }, [item.id, orderId, product.id]);
 
   async function updateIngrediente(id_ingredient_product: string) {
     try {
@@ -195,37 +242,88 @@ export default function DetalhesProdutos() {
     }
   }
 
+  async function atualizarAdicionaisItem() {
+    try {
+      const addAtt = await api.get('/item/additionals', {
+        params: {
+          item_id: item.id
+        }
+      })
+
+      // setAddAtt()
+      console.log("Resposta da FUnçao dos adicionais", addAtt.data)
+    } catch (err) {
+      console.log("Erro ao selecionar adicionais atualizados", err)
+    }
+  }
   async function updateAdicional(id_categories_additional: string) {
     try {
-      await api.put('/item/additional', {
+      const aditResponse = await api.put('/item/additional', {
         categories_additionals_id: id_categories_additional,
-        order_id: orderId
-      });
+        order_id: orderId,
+        item_id: item.id,
+      })
+      return aditResponse.data
     } catch (err) {
       console.log("Erro ao atualizar adicional:", err);
     }
   }
 
-  async function adicionarItem() {
+  async function manterItem() {
     try {
-      const newItem = await api.post('/order/add', {
-        order_id: orderId,
-        product_id: product.id,
-        items_ingredients_id: ingredients.map(ing => ing.id).join(", "), // Exemplo de como pegar os IDs dos ingredientes selecionados
-        items_additionals_id: adicionais.map(add => add.id).join(", "), // Exemplo de como pegar os IDs dos adicionais selecionados
-        amount: quantidade,
-        note: observacoes,
+      await api.put('/item/stay', {
+        item_id: item.id,
       });
-      console.log("Item adicionado:", newItem.data);
-      // setItems((prevItems) => [...prevItems, newItem.data]);
     } catch (err) {
-      console.log("Erro ao adicionar item:", err,
-        "Ingredientes: ", ingredients.map(ing => ing.id).join(",") ?? "Não está enviando adicionais",
-        "Adicionais: ", adicionais.map(add => add.id).join(",") ?? "Não está enviando adicionais",
-        quantidade);
+      console.log("Erro ao manter item no pedido:", err);
     }
   }
 
+  async function criarAdicionaisDoItem() {
+    try {
+      await api.post('/item/additional/create', {
+        item_id: item.id,
+        product_id: product.id,
+        order_id: orderId,
+      });
+    } catch (err) {
+      console.log("Erro ao criar adicionais do item:", err);
+    }
+  }
+
+  async function removerAdicionaisDoItem() {
+    try {
+      await api.delete('/item/additional/delete', {
+        data: {
+          item_id: item.id,
+          product_id: product.id,
+          order_id: orderId,
+        }
+      });
+    } catch (err) {
+      console.log("Erro ao remover adicionais do item:", err);
+    }
+  }
+
+  // useEffect(() => {
+  //   const fetchAdditionals = async () => {
+  //     const response = await api.get(`/additionals/${item.id}`);
+  //     setAdditionals(response.data);
+  //   };
+  //   // fetchAdditionals();
+  // }, [item.id]);
+
+  // const handleToggle = async (additionalId: number) => {
+  //   const updatedAdditionals = additionals.map((additional: Additional) => {
+  //     if (additional.id === additionalId) {
+  //       return { ...additional, selected: !additional.selected };
+  //     }
+  //     return additional;
+  //   });
+  //   setAdditionals(updatedAdditionals);
+  //   const additional = updatedAdditionals.find(a => a.id === additionalId);
+  //   await api.post(`/update-additional`, { additionalId, selected: additional?.selected });
+  // };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -277,7 +375,6 @@ export default function DetalhesProdutos() {
 
         {/* // Mensagem caso nenhum ingrediente seja encontrado */}
         {ingredients.length === 0 && (
-          console.log("Existem tantos ingredientes: ", ingredients.length),
           <Text style={[styles.sectionTitle]}>
             Nenhum ingrediente encontrado.
           </Text>
@@ -366,37 +463,41 @@ export default function DetalhesProdutos() {
               <View style={styles.optionsContainer}>
                 {adicionais.map((adit) => (
                   <TouchableOpacity
-                    key={`adicional-${adit.categories_additionals_id}`}
+                    key={`adicional-${adit.id}`}
                     style={styles.adicionalItem}
                     onPress={async () => {
-                      setAdicionais((prev) =>
-                        prev.map((item) =>
-                          item.categories_additionals_id ===
-                            adit.categories_additionals_id
-                            ? { ...item, adicionado: !item.adicionado }
-                            : item
-                        )
-                      );
-                      console.log("Atualizando adicional ID:", adit.categories_additionals_id);
-                      if (adit.id) {
-                        await updateAdicional(adit.categories_additionals_id);
-                        console.log("Adicionais atualizado com sucesso", adit, adit.adicionado);
-                      } else {
-                        console.log("ID do adicional não encontrado, não foi possível atualizar");
+                      if (!adit.id) {
+                        console.log("ID inválido, não é possível atualizar.");
+                        return;
                       }
-                    }}>
-                    <View
-                      style={[
-                        styles.checkbox,
-                        adit.adicionado && styles.checkboxSelecionado,
-                      ]}
-                    >
-                      {adit.adicionado && (
-                        <Text style={styles.checkmark}>✓</Text>
-                      )}
+
+                      // Atualiza imediatamente no front para feedback visual rápido
+                      setAdicionais(prev => {
+                        const updated = prev.map(item =>
+                          item.id === adit.id
+                            ? { ...item, selected: !item.selected }
+                            : item
+                        );
+
+                        console.log("NOVO ESTADO DE ADICIONAIS:", updated); // ✅ Aqui já está atualizado!
+                        return updated;
+                      });
+                      // console.log("Estado do selected", item.selected)
+
+                      // Chama backend para criar/remover no banco
+                      // await atualizarAdicionaisItem()
+                      await updateAdicional(adit.id.toString());
+
+                      console.log("Adicional atualizado:", adit.id);
+                    }}
+
+                  >
+                    <View style={[styles.checkbox, adit.selected && styles.checkboxSelecionado]}>
+                      {adit.selected && <Text style={styles.checkmark}>✓</Text>}
                     </View>
+
                     <Text style={styles.adicionalText}>
-                      {adit.additional?.name + " R$ " + formatarPreco(adit.additional.price)}
+                      {adit.id ? adit.name + " R$ " + formatarPreco(adit.price) : 'Adicional não disponível'}
                     </Text>
                   </TouchableOpacity>
                 ))}
@@ -432,7 +533,7 @@ export default function DetalhesProdutos() {
               <Text style={styles.quantityButtonText}>+</Text>
             </TouchableOpacity>
             {/* Valor Somado do produto */}
-            <Text style={styles.price}> R${(product.price*quantidade)}</Text>
+            <Text style={styles.price}> R${(product.price * quantidade)}</Text>
           </View>
         </View>
 
@@ -445,7 +546,7 @@ export default function DetalhesProdutos() {
               alert("Erro: Nenhum pedido ativo. Por favor, inicie um pedido antes de adicionar itens.");
               return;
             } else {
-              adicionarItem();
+              manterItem();
               alert(
                 `${product.name} adicionado! Quantidade: ${quantidade}, Adicionais: ${adicionais.join(
                   ", "

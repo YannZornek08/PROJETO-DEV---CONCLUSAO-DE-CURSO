@@ -3,10 +3,11 @@ import prismaClient from "../../prisma";
 interface ItemIngredientRequest {
     ingredient_product_id: string;
     order_id: string;
+    item_id: string;
 }
 
 class ItemIngredientService {
-    async execute({ ingredient_product_id, order_id }: ItemIngredientRequest) {
+    async execute({ ingredient_product_id, order_id, item_id }: ItemIngredientRequest) {
 
         // Verifica se já existe um registro igual
         const existingItem = await prismaClient.items_ingredients.findFirst({
@@ -28,6 +29,7 @@ class ItemIngredientService {
             data: {
                 order_id: order_id,
                 ingredient_product_id: ingredient_product_id,
+                item_id: item_id,
                 adicionado: true,
             }
         })

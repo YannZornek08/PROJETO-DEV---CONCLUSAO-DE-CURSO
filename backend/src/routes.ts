@@ -21,6 +21,7 @@ import { RemoveOrderController } from './controllers/order/RemoveOrderController
 import { AddItemController } from './controllers/order/AddItemController';
 import { RemoveItemController } from './controllers/order/RemoveItemController';
 import { SendOrderController } from './controllers/order/SendOrderController';
+import { StayItemInOrderController } from './controllers/order/StayItemInOrderContoller';
 
 import { ListOrdersController } from './controllers/order/ListOrdersController';
 import { DetailOrderController } from './controllers/order/DetailOrderController';
@@ -52,8 +53,9 @@ import { ListAllItemAdditionalByCategoryController } from './controllers/additio
 import { ListAdditionalByCategoryController } from './controllers/additional/ListAdditionalByCategoryController';
 import { AllItemAdditionalController } from './controllers/additional/AllItemAdditionalController';
 import { UpdateAdditionalController } from './controllers/additional/UpdateAdditionalController';
-import { ItemAdditionalController } from './controllers/additional/ItemAdditionalController';
+import { ItemAdditionalController } from './controllers/additional/CreateItemAdditionalController';
 import { RemoveItemAdditionalController } from './controllers/additional/RemoveItemAdditionalController';
+import { ListAdditionalByItemController } from './controllers/additional/ListAllAdditionalByItemController';
 
 import { UpdateItemAmountController } from './controllers/order/UpdateAmountItemController';
 
@@ -117,6 +119,7 @@ router.get('/order/detail', new DetailOrderController().handle)
 
 router.put('/order/finish', new FinishOrderController().handle)
 router.get('/orders/costumer', new ListOrderByCostumerController().handle)
+router.put("/item/stay", new StayItemInOrderController().handle)
 
 router.put("/item/increase", (req, res) => updateItemAmountController.handle(req, res));
 router.put("/item/decrease", (req, res) => updateItemAmountController.handle(req, res));
@@ -163,6 +166,8 @@ router.post('/item/additional/create', new ItemAdditionalController().handle)
 router.delete('/item/additional/delete', new RemoveItemAdditionalController().handle)
 //Atualiza o item adicional (adicionado: true ou false)
 router.put('/item/additional', new UpdateAdditionalController().handle)
+
+router.get('/item/additionals', new ListAdditionalByItemController().handle);
 
 // -- ROTAS TABLE --
 router.post('/table', new CreateTableController().handle)
