@@ -141,10 +141,11 @@ const PedidoScreen: React.FC = () => {
     async function verPedidos() {
       console.log("Buscando itens do pedido para order_id:", orderId);
       try {
-      const response = await api.get('/order/detail', { params: { order_id: orderId } });
-      
-      setItems(response.data.items.filter((item: any) => item.adicionado === true));
-      console.log("Itens do pedido:", response.data.items.filter((item: any) => item.adicionado === true));
+        const response = await api.get('/order/detail', {
+          params: { order_id: orderId }
+        });
+        setItems(response.data.items.filter((item: any) => item.adicionado === true));
+        console.log("Itens do pedido:", response.data.items.filter((item: any) => item.adicionado === true));
       } catch (err) {
         console.log("Erro ao buscar itens do pedido:", err);
       }
@@ -218,7 +219,7 @@ const PedidoScreen: React.FC = () => {
                 {item.product.description}
               </Text>
 
-              <Text style={styles.subHeading}>Ingredientes</Text>
+              <Text style={styles.subHeading}>Ingredientes Removidos</Text>
               {item.ingredientes && item.ingredientes.filter((ing) => ing.adicionado).length > 0 ? (
                 item.ingredientes
                   .filter((ing) => ing.adicionado)
@@ -226,10 +227,10 @@ const PedidoScreen: React.FC = () => {
                     <Text key={ing.name} style={styles.subText}>• {ing.name}</Text>
                   ))
               ) : (
-                <Text style={styles.subText}>Nenhum ingrediente adicionado</Text>
+                <Text style={styles.subText}>Nenhum ingrediente removido</Text>
               )}
 
-              <Text style={[styles.subHeading, { marginTop: 6 }]}>Adicionais</Text>
+              <Text style={[styles.subHeading, { marginTop: 6 }]}>Adicionais Adicionados</Text>
               {item.adicionais && item.adicionais.filter((add) => add.adicionado).length > 0 ? (
                 item.adicionais
                   .filter((add) => add.adicionado)
@@ -237,7 +238,7 @@ const PedidoScreen: React.FC = () => {
                     <Text key={add.name} style={styles.subText}>• {add.name}{add.price ? ` (+ ${formatarPreco(add.price)})` : ''}</Text>
                   ))
               ) : (
-                <Text style={styles.subText}>Nenhum adicional</Text>
+                <Text style={styles.subText}>Nenhum adicional adicionado.</Text>
               )}
 
               <Text style={styles.subText}>Quantidade: {item.amount}</Text>
@@ -245,7 +246,18 @@ const PedidoScreen: React.FC = () => {
 
             <View style={styles.rightColumn}>
               <Text style={styles.orderItemPrice}>
-                {formatarPreco((Number(String(item.product.price).replace(',', '.')) || 0) * (item.amount || 0))}
+                {(() => {
+                  const basePrice = Number(String(item.product?.price ?? 0).replace(',', '.')) || 0;
+                  const adicionaisTotal = Array.isArray(item.adicionais)
+                    ? item.adicionais
+                        .filter((a) => a && a.adicionado)
+                        .reduce(
+                          (sum, a) => sum + (Number(String(a.price ?? 0).replace(',', '.')) || 0),
+                          0
+                        )
+                    : 0;
+                  return formatarPreco((basePrice + adicionaisTotal) * (item.amount || 0));
+                })()}
               </Text>
               <TouchableOpacity onPress={() => excluir(item.id)} style={styles.trashButton}>
                 <Image source={trash} style={styles.trash} />

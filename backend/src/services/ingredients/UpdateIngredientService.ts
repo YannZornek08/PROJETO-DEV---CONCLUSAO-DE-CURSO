@@ -3,35 +3,40 @@ import prismaClient from "../../prisma";
 interface IngredientRequest {
   ingredient_product_id: string;
   order_id: string;
+  item_id: string;
 }
 
 class UpdateIngredientService {
-  async execute({ ingredient_product_id, order_id }: IngredientRequest) {
+  // Toggle: cria se não existir, remove se existir
+  async execute({ ingredient_product_id, order_id, item_id }: IngredientRequest) {
     // Buscar o registro específico
-    const ingredient = await prismaClient.items_ingredients.findFirst({
+    const existing = await prismaClient.items_ingredients.findFirst({
       where: {
-        ingredient_product_id: ingredient_product_id,
-        order_id: order_id
-      }
+        ingredient_product_id,
+        order_id,
+        item_id,
+      },
     });
 
-    if (!ingredient) {
-      throw new Error("Ingrediente não encontrado.");
+    if (existing) {
+      // Se existir, remove (deseleciona)
+      const deleted = await prismaClient.items_ingredients.delete({
+        where: { id: existing.id },
+      });
+      return { action: "deleted", record: deleted };
     }
 
-    // Alternar o valor de 'adicionado'
-    const updated = await prismaClient.items_ingredients.update({
-      where: {
-        id: ingredient.id
-      },
+    // Se não existir, cria (seleciona)
+    const created = await prismaClient.items_ingredients.create({
       data: {
-        adicionado: !ingredient.adicionado
-      }
+        ingredient_product_id,
+        order_id,
+        item_id,
+      },
     });
 
-    console.log("Ingrediente atualizado:", updated);
-    return updated;
+    return { action: "created", record: created };
   }
 }
 
-export { UpdateIngredientService }
+export { UpdateIngredientService };

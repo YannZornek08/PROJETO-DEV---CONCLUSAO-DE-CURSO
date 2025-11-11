@@ -40,7 +40,7 @@ import { DetailCostumerController } from './controllers/costumer/DetailCostumerC
 // ==============
 import { CreateIngredientController } from './controllers/ingredients/CreateIngredientController';
 import { AddIngredientController } from './controllers/ingredients/AddIngredientController';
-import { ListAllItemIngredientByProductController } from './controllers/ingredients/ListAllItemIngredientByProductController';
+import { ListAllIngredientsByProductController } from './controllers/ingredients/ListAllIngredientsByProductController';
 import { ListIngredientByProductController } from './controllers/ingredients/ListIngredientByProduct';
 import { AllItemIngredientController } from './controllers/ingredients/AllItemIngredientController';
 import { UpdateIngredientController } from './controllers/ingredients/UpdateIngredientController';
@@ -141,7 +141,7 @@ router.post('/ingredients', new CreateIngredientController().handle)
 //Relaciona o adicional no produto
 router.post('/ingredient/relation', new AddIngredientController().handle)
 //Puxa os ingredientes do item de um produto
-router.get('/product/all/ingredients', new ListAllItemIngredientByProductController().handle)
+router.get('/product/all/ingredients', new ListAllIngredientsByProductController().handle.bind(new ListAllIngredientsByProductController()))
 router.get('/product/ingredients', new ListIngredientByProductController().handle)
 // Lista todos os ingredientes de um item
 router.post('/item/all/ingredients', new AllItemIngredientController().handle)

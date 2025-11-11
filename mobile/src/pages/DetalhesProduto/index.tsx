@@ -21,18 +21,27 @@ import Checkbox from "../../components/Checkbox"; // Certifique-se de que o cami
 
 type DetalhesRouteProp = RouteProp<StackParamsList, "DetalhesProdutos">;
 
+// type Ingredient = {
+//   id: string;
+//   ingredient_product_id: string;
+//   selected: boolean;
+//   ingredient: {
+//     name: string | null;
+//   };
+//   product: {
+//     product_id: string;
+//     name: string;
+//   };
+//   adicionado: boolean;
+//   order_id: string;
+// }
+
 type Ingredient = {
-  id: string;
-  ingredient_product_id: string;
-  ingredient: {
-    name: string | null;
-  };
-  product: {
-    product_id: string;
-    name: string;
-  };
-  adicionado: boolean;
-  order_id: string;
+  id: number;
+  selected: boolean;
+  name: string;
+  // Adicionando as propriedades necessárias
+  adicionado?: boolean;
 }
 
 type Additional = {
@@ -128,37 +137,30 @@ export default function DetalhesProdutos() {
   useEffect(() => {
     async function verIngredientesProduto() {
       try {
-        //Chama a rota que retorna TODOS os ingredientes do produto
-        console.log()
-        // console.log("Buscando ingredientes para o produto ID:", product);
         const response = await api.get('/product/all/ingredients', {
           params: {
             product_id: product.id,
-            order_id: orderId
+            order_id: orderId,
+            item_id: item.id,
           }
         });
-        console.log("API retornou:", response.data);
-        setIngredients(Array.isArray(response.data) ? response.data : [response.data]);
+
         const dataArray = Array.isArray(response.data) ? response.data : [response.data];
-        const formattedIngredients: Ingredient[] = dataArray.map((item: any) => ({
-          id: item.id ?? "",
-          ingredient_product_id: item.ingredient_product_id ?? "",
-          ingredient: {
-            name: item.ingredient_product.ingredient.name ?? "",
-          },
-          product: {
-            name: item.ingredient_product.product.name ?? "",
-            product_id: item.ingredient_product.product.id ?? "",
-          },
-          order_id: orderId ?? "",
-          adicionado: item.adicionado ?? Error("Campo 'adicionado' não encontrado"),
+
+        const formattedIngredients: Ingredient[] = dataArray.map((ing: any) => ({
+          id: ing.id,
+          selected: ing.adicionado, // ✅ mantém consistência com adicionais
+          name: ing.ingredient_product.ingredient.name,
         }));
+
         setIngredients(formattedIngredients);
-        console.log("Ingredientes formatados:", ingredients)
+        console.log("Ingredientes formatados:", formattedIngredients);
+
       } catch (err) {
-        console.log("Erro ao buscar produtos:", err);
+        console.log("Erro ao buscar ingredientes:", err);
       }
     }
+
     // async function verAdicionaisCategoria() {
 
     //   try {
@@ -222,7 +224,9 @@ export default function DetalhesProdutos() {
 
     async function loadingAdditionals() {
       setAdicionais([]);
+      setIngredients([]);
 
+      await verIngredientesProduto();
       await verAdicionaisCategoria();
       console.log("Adicionais após todo o processo", adicionais)
     }
@@ -402,22 +406,31 @@ export default function DetalhesProdutos() {
                     key={`ingred-${ingred.id}`}
                     style={styles.adicionalItem}
                     onPress={async () => {
-                      setIngredients((prev) =>
-                        prev.map((item) =>
-                          item.id ===
-                            ingred.id
-                            ? { ...item, adicionado: !item.adicionado }
-                            : item
-                        )
-                      );
-                      console.log("Atualizando ingrediente ID:", ingred.ingredient_product_id);
-                      if (ingred.id) {
-                        await updateIngrediente(ingred.ingredient_product_id);
-                        console.log("Ingrediente atualizado com sucesso", ingred, ingred.adicionado);
-                      } else {
-                        console.log("ID do ingrediente não encontrado, não foi possível atualizar");
+                      if (!ingred.id) {
+                        console.log("ID inválido, não é possível atualizar.");
+                        return;
                       }
-                    }}>
+
+                      // Atualiza imediatamente no front para feedback visual rápido
+                      setIngredients(prev => {
+                        const updated = prev.map(item =>
+                          item.id === ingred.id
+                            ? { ...item, selected: item.selected }
+                            : item
+                        );
+
+                        console.log("NOVO ESTADO DE ADICIONAIS:", updated); // ✅ Aqui já está atualizado!
+                        return updated;
+                      });
+                      // console.log("Estado do selected", item.selected)
+
+                      // Chama backend para criar/remover no banco
+                      // await atualizarAdicionaisItem()
+                      await updateIngrediente(ingred.id.toString());
+
+                      console.log("Ingrediente atualizado:", ingred.id);
+                    }}
+                  >
                     <View
                       style={[
                         styles.checkbox,
@@ -428,7 +441,7 @@ export default function DetalhesProdutos() {
                       )}
                     </View>
                     <Text style={styles.adicionalText}>
-                      {ingred.ingredient?.name}
+                      {ingred.name}
                     </Text>
                   </TouchableOpacity>
                 ))}

@@ -33,7 +33,7 @@ class ListAllItemIngredientByProductService {
                         },
                     }
                 },
-                adicionado: true,
+                adicionado: false,
             }
         });
 

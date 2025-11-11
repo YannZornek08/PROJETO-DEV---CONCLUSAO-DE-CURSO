@@ -3,7 +3,7 @@ import { ListAllItemAdditionalByCategoryService } from '../../services/additiona
 
 class ListAllItemAdditionalByCategoryController {
     async handle(req: Request, res: Response) {
-        const { category_id, order_id } = req.query as { category_id: string, order_id: string };
+        const { category_id, order_id, item_id } = req.query as { category_id: string, order_id: string, item_id: string };
 
         const listAllItemAdditionalByCategoryService = new ListAllItemAdditionalByCategoryService();
 

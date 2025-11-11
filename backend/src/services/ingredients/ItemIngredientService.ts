@@ -14,6 +14,7 @@ class ItemIngredientService {
             where: {
                 ingredient_product_id,
                 order_id,
+                item_id
             },
         });
 
@@ -30,7 +31,7 @@ class ItemIngredientService {
                 order_id: order_id,
                 ingredient_product_id: ingredient_product_id,
                 item_id: item_id,
-                adicionado: true,
+                adicionado: false,
             }
         })
 
