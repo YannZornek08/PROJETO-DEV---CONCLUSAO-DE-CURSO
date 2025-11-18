@@ -143,7 +143,7 @@ export default function HomeScreen() {
       <ScrollView style={styles.container}>
         <View style={styles.header}>
           <View style={styles.headerTop}>
-            <Text style={styles.headerText} numberOfLines={1} ellipsizeMode="tail">
+            <Text style={styles.headerText}>
               Seja bem-vindo{user?.name ? `, ${user.name}` : ""}.
             </Text>
           </View>
@@ -169,9 +169,13 @@ export default function HomeScreen() {
                   style={styles.iconRight}
                 />
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => signOut()}>
+                <Image
+                  source={require("../../assets/door.png")}
+                  resizeMode="stretch"
+                  style={styles.logoutRight}
+                />
 
-                <SettingsButton />
               </TouchableOpacity>
             </View>
           </View>
@@ -428,5 +432,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  addText: { color: "#FFFFFF", fontSize: 12, fontWeight: "bold" },
+  addText: { 
+    color: "#FFFFFF", 
+    fontSize: 12, 
+    fontWeight: "bold" },
+  logoutRight: { 
+    width: 32, 
+    height: 32, 
+    marginTop: 8,
+    marginRight: 10},
 });
