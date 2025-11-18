@@ -54,7 +54,7 @@ Semana 2 - (08 e 09/09)
 =====================================================================
 
 
-Semana 3 - (16 e 017/09)
+Semana 3 - (16 e 17/09)
     Objetivo: Integrar os produtos com o código, começar o cardápio e a tela ao escolher o produto
 	
 	- Integração dos produtos no banco de dados
@@ -128,7 +128,7 @@ Semana 6 - (06 e 07/10)
 	Responsável: Leonardo, Fantato
 	
 	- Carrinho 1/2
-		-Descrição: Reunir os pedidos de um cliente dento do carrinho
+		-Descrição: Reunir os pedidos de um cliente dentro do carrinho
 		
 	Responsável: João, Vinicius, Yann 
 	
@@ -186,7 +186,7 @@ Semana 9 - (27 e 28/10)
 =====================================================================
 =====================================================================
 
-Semana 10 - (03 e 04/09)
+Semana 10 - (03 e 04/11)
     Objetivo: Criar o cardápio para exibição dos produtos e o carrinho.
 	
 	- Central de Ajuda
@@ -202,7 +202,7 @@ Semana 10 - (03 e 04/09)
 =====================================================================
 =====================================================================
 
-Semana 11 - (10 e 11/09)
+Semana 11 - (10 e 11/11)
     Objetivo: Criar o cardápio para exibição dos produtos e o carrinho.
 	
 	- Finalizar a documentação (upar no github)

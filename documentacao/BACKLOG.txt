@@ -47,3 +47,31 @@ Como cliente, posso ter a opção de delivery para comer pizza onde eu quiser, d
 
 Localização - Prioridade Leve
 Como cliente, posso encontrar a localização exata de todos os restaurantes dentro do site de forma fácil, caso queira visitá-los.
+
+------------------------------------------------------------------------------------------------------
+
+O que é necessário para POC (13/10/2025) - IMPORTANTE:
+
+CRUD - Prioridade Alta
+Como cliente, quero criar, ler, atualizar e deletar meus pedidos, para ter uma boa experiência nos meus pedidos.
+
+ACESSAR CARDÁPIO - Prioridade Alta
+Como cliente, quero poder acessar o cardapio dos itens, para escolher os itens do meu pedido.
+
+ESCOLHER UM PRODUTO - Prioridade Alta
+Como cliente, quero poder selecionar o produto que gostaria para poder consumir esse produto.
+
+CUSTOMIZAR PRODUTO - Prioridade Alta
+Como cliente, quero poder costumizar o produto que eu selecionei, para que assim eu possa adicionar ou retirar ingredientes caso eu deseje.
+
+FAZER VÁRIOS PEDIDOS - Prioridade Alta
+Como cliente, quero poder fzr vários pedidos, caso eu deseje consumir mais alguma coisa que não consumi no primeiro pedido.
+
+ACOMPANHAR STATUS DO PEDIDO - Prioridade Média
+Como cliente, quero poder acompanhar o status do meu pedido, para que assim eu possa saber em que fase do preparo ele está.
+
+FECHAR A CONTA - Prioridade Alta
+Como cliente, quero poder fechar minha conta para poder ir para o pagamento.
+
+PAGAR - Prioridade Alta
+Como cliente, quero poder pagar minha conta com várias opções de pagamento, para assim eu poder ir embora do restaurante com tudo pago.

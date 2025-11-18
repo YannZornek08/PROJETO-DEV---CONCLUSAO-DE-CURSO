@@ -1,8 +1,9 @@
 ############################
 # GIT IGNORE do Backend
 ############################
-
+backend/.env
 backend/node_modules/
+backend/src/generated/
 
 # Keep environment variables out of version control
 
@@ -98,3 +99,6 @@ mobile/.env*.local
 
 # typescript
 mobile/*.tsbuildinfo
+
+# não subir o ip
+mobile/src/services/api.ts

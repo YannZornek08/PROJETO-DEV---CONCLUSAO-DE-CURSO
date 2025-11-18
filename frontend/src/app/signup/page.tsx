@@ -4,32 +4,43 @@ import styles from '../page.module.scss'
 import logoImg from '../../../public/logo.svg'
 import { api } from '@/services/api'
 import { redirect } from "next/navigation"
+import { toast } from 'sonner'
 
-export default function Signup() {
+interface RolesProps{
+    id: string;
+    name: string;
+}
 
+interface Props {
+    roles: RolesProps[]
+}
+
+export default function Signup({ roles }: Props) {
     async function handleRegister(formData: FormData){
         "use server"
 
+        const role = formData.get("role")
         const name = formData.get("name")
         const email = formData.get("email")
         const password = formData.get("password")
 
-        if( name === "" || email === "" || password === ""){
+        if( name === "" || email === "" || password === "" || !role){
             console.log("PREENCHA TODOS OS CAMPOS")
             return;
-        }
+        } 
 
         try {
             await api.post("/users", {
                 name,
                 email,
-                password
+                password,
+                role
             })
         } catch(err) {
             console.log("erro")
             console.log(err)
         }
-
+        toast.success("Usuário Registrado com Sucesso!")
         redirect("/")
     }
     
@@ -67,6 +78,14 @@ export default function Signup() {
                             placeholder="********"
                             className={styles.input}
                         />
+                        {/* <input
+                            type="text"
+                            required
+                            name="role"
+                            placeholder="Digite sua função gerente"
+                            className={styles.input}
+                        /> */}
+                        
                         <button type='submit'>
                             Cadastrar
                         </button>
