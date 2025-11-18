@@ -30,6 +30,25 @@ type Order = {
   }>;
 };
 
+
+//ATUALIZAR STATUS DE CADA ITEM PARA QUE A LISTA SÓ APAREÇA QUANDO OS STATUS DE TODOS OS ITENS ESTIVEREM EM ENTREGUE (3)
+// DIREICIONAR O USUÁRIO DIRETO PARA A TELA DE LERQR CODE APÓS LOGAR
+export enum OrderStatus {
+  PENDENTE = 0,
+  PREPARANDO = 1,
+  A_CAMINHO = 2,
+  ENTREGUE = 3,
+}
+
+export interface IOrder {
+  id: string;
+  status: OrderStatus; // aqui você garante que só pode ser 0–4
+  // outros campos do pedido...
+}
+
+
+
+
 export default function StatusPedido() {
   const [fadeAnim] = useState(new Animated.Value(0));
   const [order, setOrder] = useState<Order[]>([]);

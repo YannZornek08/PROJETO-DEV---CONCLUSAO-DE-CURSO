@@ -27,6 +27,7 @@ import { ListOrdersController } from './controllers/order/ListOrdersController';
 import { DetailOrderController } from './controllers/order/DetailOrderController';
 import { FinishOrderController } from './controllers/order/FinishOrderController';
 import { ListOrderByCostumerController } from './controllers/order/ListOrderByCostumerController';
+import { UpdateStatusItemController } from './controllers/order/UpdateStatusItemController';
 
 import { CreateRoleController } from './controllers/role/CreateRoleController';
 import { ListRoleController } from './controllers/role/ListCategoryController';
@@ -124,6 +125,7 @@ router.put("/item/stay", new StayItemInOrderController().handle)
 router.put("/item/increase", (req, res) => updateItemAmountController.handle(req, res));
 router.put("/item/decrease", (req, res) => updateItemAmountController.handle(req, res));
 
+router.put("/item/status/update", new UpdateStatusItemController().handle);
 // -- ROTAS ROLE --
 router.post('/role', new CreateRoleController().handle)
 
