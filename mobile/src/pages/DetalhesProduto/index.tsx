@@ -161,8 +161,6 @@ export default function DetalhesProdutos() {
       }
     }
 
-    // async function verAdicionaisCategoria() {
-
     //   try {
     //     //Chama a rota que retorna TODOS os adicionais da categoria
     //     console.log("Buscando adicionais para a categoria:", product.category_id);
@@ -192,7 +190,6 @@ export default function DetalhesProdutos() {
     // }
     // verAdicionaisCategoria();
     async function verAdicionaisCategoria() {
-      console.log("Adicionais ANTES DE TODO O PRCESSO", adicionais)
       try {
         // console.log("Buscando adicionais para a categoria:", product.category_id);
         // console.log("Id do ITEMIJDOIASDJIAS", item.id)
@@ -239,25 +236,11 @@ export default function DetalhesProdutos() {
     try {
       await api.put('/item/ingredient', {
         ingredient_product_id: id_ingredient_product,
-        order_id: orderId
+        order_id: orderId,
+        item_id: item.id,
       });
     } catch (err) {
       console.log("Erro ao atualizar ingrediente:", err);
-    }
-  }
-
-  async function atualizarAdicionaisItem() {
-    try {
-      const addAtt = await api.get('/item/additionals', {
-        params: {
-          item_id: item.id
-        }
-      })
-
-      // setAddAtt()
-      console.log("Resposta da FUnçao dos adicionais", addAtt.data)
-    } catch (err) {
-      console.log("Erro ao selecionar adicionais atualizados", err)
     }
   }
   async function updateAdicional(id_categories_additional: string) {
@@ -308,6 +291,12 @@ export default function DetalhesProdutos() {
       console.log("Erro ao remover adicionais do item:", err);
     }
   }
+
+  // Calcula o total dos adicionais selecionados e o preço total do item
+  const adicionaisTotal = adicionais.reduce((sum, a) => sum + (a.selected ? Number(a.price) : 0), 0);
+  const productPriceNumber = Number(String(product.price).replace(',', '.')) || 0;
+  const unitTotalPrice = productPriceNumber + adicionaisTotal;
+  const totalPrice = unitTotalPrice * quantidade;
 
   // useEffect(() => {
   //   const fetchAdditionals = async () => {
@@ -413,14 +402,14 @@ export default function DetalhesProdutos() {
 
                       // Atualiza imediatamente no front para feedback visual rápido
                       setIngredients(prev => {
-                        const updated = prev.map(item =>
+                        const updated2 = prev.map(item =>
                           item.id === ingred.id
-                            ? { ...item, selected: item.selected }
+                            ? { ...item, selected: !item.selected }
                             : item
                         );
 
-                        console.log("NOVO ESTADO DE ADICIONAIS:", updated); // ✅ Aqui já está atualizado!
-                        return updated;
+                        console.log("NOVO ESTADO DE ADICIONAIS:", updated2); // ✅ Aqui já está atualizado!
+                        return updated2;
                       });
                       // console.log("Estado do selected", item.selected)
 
@@ -431,15 +420,11 @@ export default function DetalhesProdutos() {
                       console.log("Ingrediente atualizado:", ingred.id);
                     }}
                   >
-                    <View
-                      style={[
-                        styles.checkbox,
-                        ingred.adicionado && styles.checkboxSelecionado,
-                      ]}>
-                      {ingred.adicionado && (
-                        <Text style={styles.checkmark}>✓</Text>
-                      )}
+
+                    <View style={[styles.checkbox, !ingred.selected && styles.checkboxSelecionado]}>
+                      {!ingred.selected && <Text style={styles.checkmark}>✓</Text>}
                     </View>
+
                     <Text style={styles.adicionalText}>
                       {ingred.name}
                     </Text>
@@ -546,7 +531,7 @@ export default function DetalhesProdutos() {
               <Text style={styles.quantityButtonText}>+</Text>
             </TouchableOpacity>
             {/* Valor Somado do produto */}
-            <Text style={styles.price}> R${(product.price * quantidade)}</Text>
+            <Text style={styles.price}> {formatarPreco(totalPrice)}</Text>
           </View>
         </View>
 
@@ -560,10 +545,9 @@ export default function DetalhesProdutos() {
               return;
             } else {
               manterItem();
+              const selecionados = adicionais.filter(a => a.selected).map(a => a.name).join(", ") || "Nenhum";
               alert(
-                `${product.name} adicionado! Quantidade: ${quantidade}, Adicionais: ${adicionais.join(
-                  ", "
-                ) || "Nenhum"}`
+                `${product.name} adicionado! Quantidade: ${quantidade}, Adicionais: ${selecionados}, Total: R$ ${formatarPreco(totalPrice)}`
               );
               navigation.navigate("Carrinho");
             }
