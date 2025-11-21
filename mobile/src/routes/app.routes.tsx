@@ -43,7 +43,7 @@ export type StackParamsList = {
   Status1: undefined;
   Status2: undefined;
   LerQR: undefined;
-  Carrinho: undefined;
+  Carrinho: any;
   StatusPedido: undefined;
   Settings: undefined;
   Pagamento: undefined;
@@ -71,7 +71,7 @@ function AppRoutes() {
         component={LerQR}
         options={{ headerShown: false }}
       />
-      
+
       <Stack.Screen
         name="Dashboard"
         component={Dashboard}

@@ -545,11 +545,11 @@ export default function DetalhesProdutos() {
               return;
             } else {
               manterItem();
-              const selecionados = adicionais.filter(a => a.selected).map(a => a.name).join(", ") || "Nenhum";
-              alert(
-                `${product.name} adicionado! Quantidade: ${quantidade}, Adicionais: ${selecionados}, Total: R$ ${formatarPreco(totalPrice)}`
-              );
-              navigation.navigate("Carrinho");
+              // const selecionados = adicionais.filter(a => a.selected).map(a => a.name).join(", ") || "Nenhum";
+              // alert(
+              //   `${product.name} adicionado! Quantidade: ${quantidade}, Adicionais: ${selecionados}, Total: R$ ${formatarPreco(totalPrice)}`
+              // );
+              navigation.navigate("Carrinho", totalPrice);
             }
           }
           }

@@ -14,6 +14,7 @@ import { api } from "../../services/api";
 import BottomNavBar from "../../components/navButton";
 import { useOrder } from "../../contexts/OrderContext"; 
 import { useCostumer } from "../../contexts/CostumerContext";
+import BackButton from "../../components/cart";
 
 
 type RouteDetailParams = {
@@ -90,6 +91,7 @@ export default function LerQR() {
       return (
         <View style={styles.center}>
           <Text>Permissão da câmera negada.</Text>
+          <BackButton to="LerQR" />
         </View>
       );
     }
@@ -142,7 +144,7 @@ export default function LerQR() {
               alert('Já existe uma comanda aberta.');
               return;
             }
-            confirmarComanda("4165a545-4fdd-4cc8-b5ad-c542bfe5a53f");
+            confirmarComanda("33fc7f94-9bbd-47ca-800c-54e6676b98ba");
           }}
         >
           <Text style={styles.textoBotao}>Botão para abrir sem QRCODE (mocado)</Text>

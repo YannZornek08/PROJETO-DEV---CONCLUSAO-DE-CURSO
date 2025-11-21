@@ -24,6 +24,7 @@ import BottomNavBar from "../../components/navButton";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useOrder } from "../../contexts/OrderContext";
 
+
 export type Produto = {
   id: string;
   name: string;
@@ -277,8 +278,17 @@ function PizzaCard({ product }: PizzaCardProps) {
     }
   }
 
+
+  // dentro do seu componente Card
   return (
-    <View style={styles.card}>
+    <TouchableOpacity
+      style={styles.card} // aplica o layout do card
+      onPress={async () => {
+        const itemCriado = await adicionarItem(); // aguarda o retorno
+        if (!itemCriado) return;
+        navigation.navigate("DetalhesProdutos", { product, item: itemCriado });
+      }}
+    >
       <Image
         source={{ uri: product.banner }}
         resizeMode="stretch"
@@ -288,27 +298,51 @@ function PizzaCard({ product }: PizzaCardProps) {
       <Text style={styles.cardPrice}>
         {formatarPreco(Number(String(product.price).replace(',', '.')) || 0)}
       </Text>
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={async () => {
-          const itemCriado = await adicionarItem(); // aguarda o retorno
-          if (!itemCriado) return; // evita navegação se falhou
-          navigation.navigate("DetalhesProdutos", { product, item: itemCriado });
 
-          // console.log("Clicou em adicionar", product.id);
-          // criarTodosAdicionaisCategoria(product.category_id, orderId);
-          // criarTodosIngredientsProduto(product.id, orderId);
-        }}
-      >
+      {/* Mantém botão “Adicionar” visual, mas sem onPress */}
+      <View style={styles.addButton}>
         <Image
           source={require("../../assets/Plus.png")}
           resizeMode="stretch"
           style={{ width: 25, height: 25 }}
         />
         <Text style={styles.addText}>Adicionar</Text>
-      </TouchableOpacity>
-    </View>
+      </View>
+    </TouchableOpacity>
   );
+
+  // return (
+  //   <View style={styles.card}>
+  //       <Image
+  //         source={{ uri: product.banner }}
+  //         resizeMode="stretch"
+  //         style={styles.cardImage}
+  //       />
+  //       <Text style={styles.cardTitle}>{product.name}</Text>
+  //       <Text style={styles.cardPrice}>
+  //         {formatarPreco(Number(String(product.price).replace(',', '.')) || 0)}
+  //       </Text>
+  //     <TouchableOpacity
+  //       style={styles.addButton}
+  //       onPress={async () => {
+  //         const itemCriado = await adicionarItem(); // aguarda o retorno
+  //         if (!itemCriado) return; // evita navegação se falhou
+  //         navigation.navigate("DetalhesProdutos", { product, item: itemCriado });
+
+  //         // console.log("Clicou em adicionar", product.id);
+  //         // criarTodosAdicionaisCategoria(product.category_id, orderId);
+  //         // criarTodosIngredientsProduto(product.id, orderId);
+  //       }}>
+  //       <Image
+  //         source={require("../../assets/Plus.png")}
+  //         resizeMode="stretch"
+  //         style={{ width: 25, height: 25 }}
+  //       />
+
+  //       <Text style={styles.addText}>Adicionar</Text>
+  //     </TouchableOpacity>
+  //   </View>
+  // );
 }
 
 const styles = StyleSheet.create({
@@ -432,13 +466,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  addText: { 
-    color: "#FFFFFF", 
-    fontSize: 12, 
-    fontWeight: "bold" },
-  logoutRight: { 
-    width: 32, 
-    height: 32, 
+  addText: {
+    color: "#FFFFFF",
+    fontSize: 12,
+    fontWeight: "bold"
+  },
+  logoutRight: {
+    width: 32,
+    height: 32,
     marginTop: 8,
-    marginRight: 10},
+    marginRight: 10
+  },
 });
