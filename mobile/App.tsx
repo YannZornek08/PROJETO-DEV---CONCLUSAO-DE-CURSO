@@ -14,8 +14,6 @@ import DadosPagamentoPix from "./src/pages/DadosPagamentoPix";
 import Cupons from "./src/pages/Cupons";
 import Carrinho from "./src/pages/Carrinho";
 import LerQR from "./src/pages/LerQR";
-import Status1 from "./src/pages/Status1";
-import Status2 from "./src/pages/Status2";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Routes from './src/routes';

@@ -28,7 +28,7 @@ interface BottomNavBarProps {
     };
 
     const goToHome = () => orderOpen ? navigation.navigate('Menu') : warn();
-    const goToStatusPedido = () => orderOpen ? navigation.navigate('StatusPedido') : warn();
+    const goToStatusPedido = () => navigation.navigate('StatusPedido');
     const goToCupons = () => orderOpen ? navigation.navigate('Cupons') : warn();
     const goToLerQR = () => navigation.navigate('LerQR'); // sempre permitido
 

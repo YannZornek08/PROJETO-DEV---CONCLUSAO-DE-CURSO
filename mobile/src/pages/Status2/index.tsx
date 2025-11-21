@@ -22,11 +22,18 @@ enum OrderStatus {
 }
 
 // Interface para o tipo de pedido
+interface PedidoItem {
+  id: string;
+  name: string;
+  amount: number;
+  status: OrderStatus;
+}
+
 interface Pedido {
   id: string;
   numero: string;
   status: OrderStatus;
-  itens?: string[];
+  itens?: PedidoItem[];
 }
 
 const PedidoStatus: React.FC = () => {
@@ -41,38 +48,20 @@ const PedidoStatus: React.FC = () => {
   const pedidos: Pedido[] = [
     {
       id: "1",
-      numero: "#" + "12345",
+      numero: "#12345",
       status: OrderStatus.PREPARANDO,
-      //ABAIXO: AUTOMATIZAR ITENS DO PEDIDO
-      itens: [" "]
+      itens: [
+        { id: 'a', name: 'Pizza Marguerita', amount: 1, status: OrderStatus.PREPARANDO },
+        { id: 'b', name: 'Refrigerante', amount: 2, status: OrderStatus.PRONTO },
+      ],
     },
     {
       id: "2",
       numero: "#12346",
       status: OrderStatus.PRONTO,
-      //ABAIXO: AUTOMATIZAR ITENS DO PEDIDO
-      itens: [""]
-    },
-    {
-      id: "3",
-      numero: "#12347",
-      status: OrderStatus.FEITO,
-      //ABAIXO: AUTOMATIZAR ITENS DO PEDIDO
-      itens: [""]
-    },
-    {
-      id: "4",
-      numero: "#12348",
-      status: OrderStatus.PREPARANDO,
-      //ABAIXO: AUTOMATIZAR ITENS DO PEDIDO
-      itens: [""]
-    },
-    {
-      id: "5",
-      numero: "#12349",
-      status: OrderStatus.ENTREGUE,
-      //ABAIXO: AUTOMATIZAR ITENS DO PEDIDO
-      itens: [""]
+      itens: [
+        { id: 'c', name: 'Calabresa', amount: 1, status: OrderStatus.PRONTO },
+      ],
     },
   ];
 
@@ -93,9 +82,14 @@ const PedidoStatus: React.FC = () => {
         
         {/* Itens do pedido (opcional) */}
         {pedido.itens && pedido.itens.length > 0 && (
-          <Text style={styles.pedidoItens}>
-            {pedido.itens.join(", ")}
-          </Text>
+          <View style={{ marginTop: 8 }}>
+            {pedido.itens.map(it => (
+              <View key={it.id} style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 }}>
+                <Text style={styles.pedidoItens}>{it.name} x{it.amount}</Text>
+                <Text style={[styles.stepTextActive, { fontSize: 14 }]}>{it.status}</Text>
+              </View>
+            ))}
+          </View>
         )}
 
         {/* Status do pedido */}

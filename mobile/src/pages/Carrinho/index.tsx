@@ -112,11 +112,11 @@ const PedidoScreen: React.FC = () => {
 
 
   const handlePay = () => {
-    Alert.alert(
-      "Resumo do Pedido",
-      `Mesa: ${mesa}\nNome: ${nome}\nTotal: ${formatarPreco((Number(total)))}\n\nObservações: ${observacoes || "Nenhuma observação adicionada"
-      }`
-    );
+    // Alert.alert(
+    //   "Resumo do Pedido",
+    //   `Mesa: ${mesa}\nNome: ${nome}\nTotal: ${formatarPreco((Number(total)))}\n\nObservações: ${observacoes || "Nenhuma observação adicionada"
+    //   }`
+    // );
     navigation.navigate("Pagamento")
   };
 
