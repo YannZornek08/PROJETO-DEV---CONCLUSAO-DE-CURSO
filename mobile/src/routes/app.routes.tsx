@@ -67,6 +67,12 @@ function AppRoutes() {
   return (
     <Stack.Navigator>
       <Stack.Screen
+        name="LerQR"
+        component={LerQR}
+        options={{ headerShown: false }}
+      />
+      
+      <Stack.Screen
         name="Dashboard"
         component={Dashboard}
         options={{ headerShown: false }}
@@ -108,11 +114,6 @@ function AppRoutes() {
         options={{ headerShown: false }}
       />
 
-      <Stack.Screen
-        name="LerQR"
-        component={LerQR}
-        options={{ headerShown: false }}
-      />
 
       <Stack.Screen
         name="Carrinho"
@@ -131,7 +132,7 @@ function AppRoutes() {
         component={DadosPagamento}
         options={{ headerShown: false }}
       />
-      
+
       <Stack.Screen
         name="Settings"
         component={Settings}

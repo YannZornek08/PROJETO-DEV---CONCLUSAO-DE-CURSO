@@ -150,7 +150,9 @@ export default function LerQR() {
 
         <Text style={styles.link}>Problemas? Fale com o atendente!</Text>
       </View>
-      <BottomNavBar activeRoute="LerQR" />
+      <BottomNavBar activeRoute="LerQR">
+        
+        </BottomNavBar>
     </SafeAreaView>
   );
 }
