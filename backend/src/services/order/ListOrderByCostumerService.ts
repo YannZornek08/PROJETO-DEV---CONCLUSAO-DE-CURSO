@@ -16,6 +16,7 @@ class ListOrderByCostumerService {
                 table: true,
                 status: true,
                 draft: true,
+                created_at: true,
             },
             orderBy: {
                 created_at: 'desc',
@@ -29,8 +30,10 @@ class ListOrderByCostumerService {
                     select: {
                         id: true,
                         amount: true,
+                        status: true,
                         product: {
                             select: {
+                                id: true,
                                 name: true,
                                 banner: true,
                                 price: true,

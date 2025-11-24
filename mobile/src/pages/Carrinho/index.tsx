@@ -88,23 +88,35 @@ const PedidoScreen: React.FC = () => {
   useEffect(() => {
     const calcularTotal = () => {
       const soma = items.reduce((somatoria, item) => {
-        const priceRaw = item?.product?.price ?? 0;
-        // price may be stored as string with comma (e.g. "12,00") or dot ("12.00"); normalize to number
-        const priceNumber = Number(String(priceRaw).replace(',', '.')) || 0;
-        return somatoria + priceNumber * (item.amount || 0);
+        const basePrice = Number(String(item?.product?.price ?? 0).replace(',', '.')) || 0;
+
+        // soma dos adicionais do item
+        const adicionaisTotal = Array.isArray(item.adicionais)
+          ? item.adicionais
+            .filter((a) => a && a.adicionado)
+            .reduce(
+              (sum, a) => sum + (Number(String(a.price ?? 0).replace(',', '.')) || 0),
+              0
+            )
+          : 0;
+
+        const totalItem = (basePrice + adicionaisTotal) * (item.amount || 0);
+        return somatoria + totalItem;
       }, 0);
+
       setTotal(soma);
     };
 
     calcularTotal();
   }, [items]);
 
+
   const handlePay = () => {
-    Alert.alert(
-      "Resumo do Pedido",
-      `Mesa: ${mesa}\nNome: ${nome}\nTotal: ${formatarPreco((Number(total)))}\n\nObservações: ${observacoes || "Nenhuma observação adicionada"
-      }`
-    );
+    // Alert.alert(
+    //   "Resumo do Pedido",
+    //   `Mesa: ${mesa}\nNome: ${nome}\nTotal: ${formatarPreco((Number(total)))}\n\nObservações: ${observacoes || "Nenhuma observação adicionada"
+    //   }`
+    // );
     navigation.navigate("Pagamento")
   };
 
@@ -250,11 +262,11 @@ const PedidoScreen: React.FC = () => {
                   const basePrice = Number(String(item.product?.price ?? 0).replace(',', '.')) || 0;
                   const adicionaisTotal = Array.isArray(item.adicionais)
                     ? item.adicionais
-                        .filter((a) => a && a.adicionado)
-                        .reduce(
-                          (sum, a) => sum + (Number(String(a.price ?? 0).replace(',', '.')) || 0),
-                          0
-                        )
+                      .filter((a) => a && a.adicionado)
+                      .reduce(
+                        (sum, a) => sum + (Number(String(a.price ?? 0).replace(',', '.')) || 0),
+                        0
+                      )
                     : 0;
                   return formatarPreco((basePrice + adicionaisTotal) * (item.amount || 0));
                 })()}

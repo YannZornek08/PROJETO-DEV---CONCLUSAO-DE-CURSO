@@ -21,8 +21,7 @@ import DadosPagamento from "../pages/DadosPagamento"
 import DadosPagamentoPix from "../pages/DadosPagamentoPix"
 
 //////////////
-import Status1 from "../pages/Status1";
-import Status2 from "../pages/Status2";
+
 
 // Botões da busca
 
@@ -40,10 +39,9 @@ export type StackParamsList = {
   Dashboard: undefined;
   Menu: undefined;
   Cupons: undefined;
-  Status1: undefined;
-  Status2: undefined;
+  
   LerQR: undefined;
-  Carrinho: undefined;
+  Carrinho: any;
   StatusPedido: undefined;
   Settings: undefined;
   Pagamento: undefined;
@@ -66,6 +64,12 @@ const Stack = createNativeStackNavigator<StackParamsList>();
 function AppRoutes() {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="LerQR"
+        component={LerQR}
+        options={{ headerShown: false }}
+      />
+
       <Stack.Screen
         name="Dashboard"
         component={Dashboard}
@@ -90,17 +94,8 @@ function AppRoutes() {
         options={{ headerShown: false }}
       />
 
-      <Stack.Screen
-        name="Status1"
-        component={Status1}
-        options={{ headerShown: false }}
-      />
-
-      <Stack.Screen
-        name="Status2"
-        component={Status2}
-        options={{ headerShown: false }}
-      />
+      
+      
 
       <Stack.Screen
         name="StatusPedido"
@@ -108,11 +103,6 @@ function AppRoutes() {
         options={{ headerShown: false }}
       />
 
-      <Stack.Screen
-        name="LerQR"
-        component={LerQR}
-        options={{ headerShown: false }}
-      />
 
       <Stack.Screen
         name="Carrinho"
@@ -131,7 +121,7 @@ function AppRoutes() {
         component={DadosPagamento}
         options={{ headerShown: false }}
       />
-      
+
       <Stack.Screen
         name="Settings"
         component={Settings}

@@ -14,6 +14,7 @@ const OrderContext = createContext<OrderContextType>({
 
 export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const [orderId, setOrderId] = useState<string | null>(null);
+  const orderOpen = !!orderId; // true se orderId não for null
 
   const resetOrder = () => {
     setOrderId(null);

@@ -32,8 +32,8 @@ export default function Cupons() {
     navigation.navigate("Cupons");
   }
 
-  function Status1() {
-    navigation.navigate("Status1");
+  function goToStatusPedido() {
+    navigation.navigate("StatusPedido");
   }
 
   function LerQR() {

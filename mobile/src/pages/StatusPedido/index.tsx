@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
   StyleSheet,
   ActivityIndicator,
-  Animated,
-  Easing,
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
+  Platform,
+  ToastAndroid,
+  Alert,
 } from "react-native";
 import { api } from "../../services/api";
 import { useOrder } from "../../contexts/OrderContext";
@@ -20,24 +21,56 @@ import BottomNavBar from "../../components/navButton";
 
 type Order = {
   id: string;
-  status: boolean;
+  status: number | boolean;
   draft: boolean;
+  table?: string | null;
+  created_at?: string;
   items: Array<{
     id: string;
-    name: string;
     amount: number;
-    price: number;
+    status?: number;
+    product?: {
+      id?: string;
+      name?: string;
+      price?: number;
+      banner?: string | null;
+    };
   }>;
 };
 
+
+//ATUALIZAR STATUS DE CADA ITEM PARA QUE A LISTA SÓ APAREÇA QUANDO OS STATUS DE TODOS OS ITENS ESTIVEREM EM ENTREGUE (3)
+// DIREICIONAR O USUÁRIO DIRETO PARA A TELA DE LERQR CODE APÓS LOGAR
+export enum OrderStatus {
+  PENDENTE = 0,
+  PREPARANDO = 1,
+  A_CAMINHO = 2,
+  ENTREGUE = 3,
+}
+
+export interface IOrder {
+  id: string;
+  status: OrderStatus; // aqui você garante que só pode ser 0–4
+  // outros campos do pedido...
+}
+
+
+
+
 export default function StatusPedido() {
-  const [fadeAnim] = useState(new Animated.Value(0));
   const [order, setOrder] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const { orderId } = useOrder();
   const { costumerId } = useCostumer();
   const order_id = `order_id=${orderId}`;
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
+  const prevOrdersRef = useRef<Order[]>([]);
+  const notifiedOrdersRef = useRef<Set<string>>(new Set());
+
+  function isOrderAllDelivered(o: Order) {
+    if (!o.items || o.items.length === 0) return false;
+    return o.items.every(it => it.status === 3);
+  }
 
   async function verOrderUsuario(id_usuario: string | null) {
     console.log("ID do usuário:", id_usuario);
@@ -51,12 +84,46 @@ export default function StatusPedido() {
     try {
       setLoading(true);
       const response = await api.get(`/orders/costumer?costumer_id=${id_usuario}`);
-      // console.log("Resposta da API:", response.data);
-      const allOrders: Order[] = Array.isArray(response.data) ? response.data : [];
+      const allOrders = Array.isArray(response.data) ? response.data : [];
 
       // Mostrar apenas pedidos efetivos (não rascunhos)
-      const visible = allOrders.filter((ordem) => !ordem.draft);
+      const visible: Order[] = allOrders.filter((ordem: any) => !ordem.draft);
+
+      // detectar mudanças: se um pedido passou a estar entregue, mostrar toast com número e data
+      try {
+        const prev = prevOrdersRef.current;
+
+        // Se for a primeira vez que carregamos a lista, não devemos disparar toasts
+        if (!prev || prev.length === 0) {
+          // marcar como notificados os pedidos que já estão entregues para evitar notificações futuras
+          visible.forEach(o => { if (isOrderAllDelivered(o)) notifiedOrdersRef.current.add(o.id); });
+        } else {
+          visible.forEach((newOrd, idx) => {
+            const oldOrd = prev.find((p) => p.id === newOrd.id);
+            const newDelivered = isOrderAllDelivered(newOrd);
+            const oldDelivered = oldOrd ? isOrderAllDelivered(oldOrd) : false;
+
+            // se transição de não entregue -> entregue e ainda não notificado, então notifica
+            if (!oldDelivered && newDelivered && !notifiedOrdersRef.current.has(newOrd.id)) {
+              const idShort = newOrd.id ? newOrd.id.slice(0, 3).toUpperCase() : `${idx + 1}`;
+              const dateLabel = newOrd.created_at ? formatDate(newOrd.created_at) : "";
+              const msg = `Pedido ${idShort} entregue${dateLabel ? ` — ${dateLabel}` : ""}`;
+              if (Platform.OS === "android") {
+                ToastAndroid.show(msg, ToastAndroid.SHORT);
+              } else {
+                Alert.alert("Pedido entregue", msg);
+              }
+              notifiedOrdersRef.current.add(newOrd.id);
+            }
+          });
+        }
+      } catch (e) {
+        // não bloquear em caso de erro na detecção
+        console.log("Erro comparando pedidos anteriores:", e);
+      }
+
       setOrder(visible);
+      prevOrdersRef.current = visible;
     } catch (err) {
       console.log("Erro ao buscar orders do usuário:", err);
       setOrder([]);
@@ -73,6 +140,36 @@ export default function StatusPedido() {
 
     return () => clearInterval(interval);
   }, [costumerId]);
+
+  function getOrderStatusLabel(status: number | boolean | undefined) {
+    if (typeof status === "boolean") return status ? "Entregue" : "Em preparo";
+    switch (status) {
+      case OrderStatus.PENDENTE:
+        return "Pendente";
+      case OrderStatus.PREPARANDO:
+        return "Em preparo";
+      case OrderStatus.A_CAMINHO:
+        return "A caminho";
+      case OrderStatus.ENTREGUE:
+        return "Entregue";
+      default:
+        return "Desconhecido";
+    }
+  }
+
+  function getStatusEmoji(status: number | boolean | undefined) {
+    if (typeof status === "boolean") return status ? "✅" : "⏳";
+    return status === OrderStatus.ENTREGUE ? "✅" : status === OrderStatus.A_CAMINHO ? "🚚" : "⏳";
+  }
+
+  function formatDate(dateStr: string) {
+    try {
+      const d = new Date(dateStr);
+      return d.toLocaleString();
+    } catch (e) {
+      return dateStr;
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -96,25 +193,71 @@ export default function StatusPedido() {
               </TouchableOpacity>
             </View>
           ) : (
-            order.map((ordem, index) => (
-              <View key={ordem.id} style={[styles.card, styles.gap]}>
-                <Text style={styles.statusLabel}>Pedido {index + 1} está:</Text>
-                <Text
-                  style={[
-                    styles.statusText,
-                    ordem.status ? styles.ready : styles.progress,
-                  ]}
-                >
-                  {ordem.status
-                    ? "✅ Pronto!"
-                    : "⏳ Em Preparo..."}
-                  {"\n"}
-                  {ordem.items && ordem.items.length > 0
-                    ? `Itens: ${ordem.items.length}`
-                    : "Nenhum item no pedido."}
-                </Text>
-              </View>
-            ))
+            // split orders into today and older
+            (() => {
+              const today = new Date();
+              const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+              const todayOrders = order.filter(o => {
+                const d = o.created_at ? new Date(o.created_at) : null;
+                return d ? d >= startOfToday : false;
+              });
+
+              const olderOrders = order.filter(o => {
+                const d = o.created_at ? new Date(o.created_at) : null;
+                return d ? d < startOfToday : true;
+              });
+
+              function renderOrders(list: Order[]) {
+                return list.map((ordem, index) => (
+                  <View key={ordem.id} style={[styles.card, styles.gap]}>
+                    <View style={styles.cardHeader}>
+                      <Text style={styles.statusLabel}>Pedido {ordem.id ? ordem.id.slice(0,3).toUpperCase() : index + 1}</Text>
+                      <Text style={styles.orderDate}>{ordem.created_at ? formatDate(ordem.created_at) : ''}</Text>
+                    </View>
+
+                    {(() => {
+                      const orderDelivered = isOrderAllDelivered(ordem);
+                      return (
+                        <Text style={[styles.statusText, orderDelivered ? styles.ready : styles.progress]}>
+                          {getStatusEmoji(orderDelivered)} {getOrderStatusLabel(orderDelivered as any)}
+                        </Text>
+                      );
+                    })()}
+
+                    <Text style={styles.itemsCount}>
+                      {ordem.items && ordem.items.length > 0 ? `Itens: ${ordem.items.length}` : "Nenhum item no pedido."}
+                    </Text>
+
+                    {ordem.items && ordem.items.length > 0 && (
+                      <View style={styles.itemsList}>
+                        {ordem.items.map((it) => (
+                          <View key={it.id} style={styles.itemRow}>
+                            <Text style={styles.itemName}>{it.product?.name ?? 'Item'}</Text>
+                            <Text style={styles.itemQty}>x{it.amount}</Text>
+                            <View style={styles.itemStatusBadge}>
+                              <Text style={styles.itemStatusText}>{getStatusEmoji(it.status)} {getOrderStatusLabel(it.status)}</Text>
+                            </View>
+                          </View>
+                        ))}
+                      </View>
+                    )}
+                  </View>
+                ));
+              }
+
+              return (
+                <>
+                  <Text style={styles.sectionTitle}>Pedidos de Hoje</Text>
+                  {todayOrders.length > 0 ? renderOrders(todayOrders) : <Text style={styles.emptySection}>Nenhum pedido hoje.</Text>}
+
+                  <View style={styles.divider} />
+
+                  <Text style={styles.sectionTitle}>Pedidos Antigos</Text>
+                  {olderOrders.length > 0 ? renderOrders(olderOrders) : <Text style={styles.emptySection}>Nenhum pedido antigo.</Text>}
+                </>
+              );
+            })()
           )}
         </View>
       </ScrollView>
@@ -213,6 +356,71 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: "bold",
     textAlign: "center",
+  },
+  itemsCount: {
+    marginTop: 8,
+    fontSize: 14,
+    color: "#5F4100",
+    textAlign: "center",
+  },
+  itemsList: {
+    marginTop: 12,
+    width: "100%",
+  },
+  cardHeader: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  orderDate: {
+    fontSize: 12,
+    color: "#666",
+  },
+  sectionTitle: {
+    width: "90%",
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#5F4100",
+    marginBottom: 12,
+  },
+  emptySection: {
+    color: "#666",
+    marginBottom: 12,
+  },
+  divider: {
+    width: "90%",
+    height: 1,
+    backgroundColor: "#E0CFC0",
+    marginVertical: 16,
+  },
+  itemRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "#FFFDF8",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+    marginBottom: 8,
+  },
+  itemName: {
+    flex: 1,
+    fontSize: 16,
+    color: "#423828",
+  },
+  itemQty: {
+    fontSize: 14,
+    color: "#666",
+    marginHorizontal: 8,
+  },
+  itemStatusBadge: {
+    backgroundColor: "transparent",
+  },
+  itemStatusText: {
+    fontSize: 13,
+    color: "#333",
   },
   ready: {
     color: "#008000",

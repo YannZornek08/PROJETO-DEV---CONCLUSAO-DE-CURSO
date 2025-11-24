@@ -35,7 +35,7 @@ export async function fazPagamento(
     // if (id_mtdo_pagto === "33819095-afe2-4733-bfdb-6648849825b8") {
     //   Alert.alert("Pagamento em Dinheiro", "Um garçom está vindo para finalizar o pagamento em dinheiro.");
     // }
- 
+
     if (navigation && setOrderId) {
       Alert.alert(
         "Pedido Finalizado",
@@ -57,7 +57,7 @@ export async function fazPagamento(
           },
           {
             text: "Sim",
-              onPress: async () => {
+            onPress: async () => {
               try {
                 // fechar a comanda atual antes de abrir uma nova
                 const closed = await enviarOrder(id_order);
@@ -75,7 +75,7 @@ export async function fazPagamento(
                 console.log('Detalhes da comanda para nova comanda:', { table_id, costumer_id });
 
 
-              
+
                 const createResp = await api.post('/order', { table_id, costumer_id });
                 const newOrderId = createResp.data.id;
                 setOrderId(newOrderId);
@@ -119,10 +119,11 @@ const Pagamento: React.FC = () => {
   React.useEffect(() => {
     console.log("Order ID no Pagamento:", orderId);
   }, [orderId]);
-  
+
   const chamarGarcom = async () => {
     try {
-      await fazPagamento(orderId, "971611e7-4ea5-4a50-acda-5426a433ca31");
+      //ID DO SUPABASE
+      await fazPagamento(orderId, "3a005984-618b-4f67-8f7b-d822048391ea");
       await enviarOrder(orderId);
       navigation.navigate("StatusPedido");
     } catch (err) {
@@ -144,7 +145,8 @@ const Pagamento: React.FC = () => {
         <View style={styles.row}>
           <TouchableOpacity style={styles.card} onPress={() => {
             navigation.navigate("DadosPagamento", {
-              id_mtdo_pagto: "e038a920-de56-4ed0-8e79-239fd0d9cbb0"
+              //ID DO SUPABASE
+              id_mtdo_pagto: "51edbf4d-8dcf-42f0-9abf-66ed44a8f6ca"
             })
           }}>
             <Text style={styles.cardText}>
@@ -153,7 +155,8 @@ const Pagamento: React.FC = () => {
           </TouchableOpacity>
           <TouchableOpacity style={styles.card} onPress={() => {
             navigation.navigate("DadosPagamento", {
-              id_mtdo_pagto: "00650f38-4fa6-4e11-8550-aa7f4ec853a7"
+              //ID DO SUPABASE
+              id_mtdo_pagto: "1daf2f54-81d9-45c4-81a2-9a8759f5d453"
             })
           }}>
             <Text style={styles.cardText}>
@@ -164,7 +167,8 @@ const Pagamento: React.FC = () => {
 
         <TouchableOpacity style={styles.card} onPress={() => {
           navigation.navigate("DadosPagamento", {
-            id_mtdo_pagto: "f99cfd35-d323-4b83-8210-e2e0edf62717"
+            //ID DO SUPABASE
+            id_mtdo_pagto: "6d0d7514-cd56-43c4-9726-ad940e68213b"
           })
         }}>
           <Text style={styles.cardText}>
