@@ -321,6 +321,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
+    marginTop: 36,
     fontSize: 36,
     fontFamily: "BesleyBold",
     color: "#5F4100",
