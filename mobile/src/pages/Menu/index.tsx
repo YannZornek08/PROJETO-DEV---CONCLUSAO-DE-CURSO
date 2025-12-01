@@ -194,7 +194,7 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        <Text style={styles.tableText}>Sua mesa: 05</Text>
+        {/* <Text style={styles.tableText}>Sua mesa: </Text> */}
 
         {/* Cards dinâmicos - produtos filtrados */}
         <View style={styles.cardsWrapper}>

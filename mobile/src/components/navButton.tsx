@@ -29,7 +29,7 @@ interface BottomNavBarProps {
 
     const goToHome = () => orderOpen ? navigation.navigate('Menu') : warn();
     const goToStatusPedido = () => navigation.navigate('StatusPedido');
-    const goToCupons = () => orderOpen ? navigation.navigate('Cupons') : warn();
+    // const goToCupons = () => orderOpen ? navigation.navigate('Cupons') : warn();
     const goToLerQR = () => navigation.navigate('LerQR'); // sempre permitido
 
     return (
@@ -61,7 +61,7 @@ interface BottomNavBarProps {
         </TouchableOpacity>
 
         {/* Cupons */}
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={goToCupons}
           style={[styles.nav, activeRoute === 'Cupons' && styles.currentNav]}
         >
@@ -70,7 +70,7 @@ interface BottomNavBarProps {
             style={[styles.imagesNav, { tintColor: activeRoute === 'Cupons' ? '#fff' : '#52443C' }]}
           />
           <Text style={[styles.navText, activeRoute === 'Cupons' && styles.currentNavText]}>Cupons</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         {/* Ler QR */}
         <TouchableOpacity

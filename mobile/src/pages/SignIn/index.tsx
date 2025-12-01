@@ -81,7 +81,7 @@ async function handleLogin() {
           value={password}
           onChangeText={setPassword}
         />
-        <Text style={styles.space_google}> Entrar Com Google</Text>
+        {/* <Text style={styles.space_google}> Entrar Com Google</Text> */}
         
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.text_button}> Entrar </Text>

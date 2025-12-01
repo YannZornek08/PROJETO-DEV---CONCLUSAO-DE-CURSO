@@ -12,10 +12,12 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamsList } from "../../routes/app.routes";
 import { api } from "../../services/api";
 import BottomNavBar from "../../components/navButton";
-import { useOrder } from "../../contexts/OrderContext"; 
+import { useOrder } from "../../contexts/OrderContext";
 import { useCostumer } from "../../contexts/CostumerContext";
 import BackButton from "../../components/cart";
-
+import { Image } from "react-native";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 
 type RouteDetailParams = {
   Order: {
@@ -27,6 +29,8 @@ type RouteDetailParams = {
 type OrderRouterProps = RouteProp<RouteDetailParams, "Order">;
 
 export default function LerQR() {
+    const { user, signOut } = useContext(AuthContext);
+  
   const route = useRoute<OrderRouterProps>();
   const [codigo, setCodigo] = useState<string>("");
   const { orderId, setOrderId } = useOrder();
@@ -37,7 +41,7 @@ export default function LerQR() {
   const [showCamera, setShowCamera] = useState(false);
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const cameraRef = useRef<CameraView | null>(null);
-  
+
   useEffect(() => {
     if (showCamera) {
       console.log("Abrindo câmera para leitura de QR Code...");
@@ -48,7 +52,7 @@ export default function LerQR() {
     }
   }, [showCamera]);
 
- 
+
   async function confirmarComanda(id_mesa: string) {
     if (orderId) {
       alert('Já existe uma comanda aberta. Feche ou exclua a comanda atual antes de abrir outra.');
@@ -70,7 +74,7 @@ export default function LerQR() {
     }
   }
 
-  
+
   const handleBarCodeScanned = (result: any) => {
     setShowCamera(false);
     console.log("QR Code detectado! Dados:", result.data);
@@ -122,22 +126,35 @@ export default function LerQR() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.titulo}>Ler QR Code da Comanda</Text>
+        {/* <View>
+          <Text >
+            Seja bem-vindo{user?.name ? `, ${user.name}` : ""}.
+          </Text>
+        </View> */}
+        <View style={styles.content}>
+          {/* Logout button - estilo abaixo em `styles.logoutButton` / `styles.logoutIcon` */}
+          <TouchableOpacity style={styles.logoutButton} onPress={() => signOut()} accessibilityLabel="Logout">
+            <Image
+              source={require("../../assets/door.png")}
+              resizeMode="contain"
+              style={styles.logoutIcon}
+            />
+          </TouchableOpacity>
+          <Text style={styles.titulo}>Ler QR Code da Comanda</Text>
 
-        <TouchableOpacity
-          style={[styles.botao, { marginTop: 20, backgroundColor: "#4B8B26" }]}
-          onPress={() => {
-            if (orderId) {
-              alert('Você já possui uma comanda aberta. Feche ou exclua-a antes de abrir um novo QR.');
-              return;
-            }
-            setShowCamera(true);
-          }}
-        >
-          <Text style={styles.textoBotao}>Abrir Câmera</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+          <TouchableOpacity
+            style={[styles.botao, { marginTop: 20, backgroundColor: "#4B8B26" }]}
+            onPress={() => {
+              if (orderId) {
+                alert('Você já possui uma comanda aberta. Feche ou exclua-a antes de abrir um novo QR.');
+                return;
+              }
+              setShowCamera(true);
+            }}
+          >
+            <Text style={styles.textoBotao}>Abrir Câmera</Text>
+          </TouchableOpacity>
+          {/* <TouchableOpacity
           style={[styles.botao, { marginTop: 20, backgroundColor: "#4B8B26" }]}
           onPress={() => {
             if (orderId) {
@@ -148,21 +165,68 @@ export default function LerQR() {
           }}
         >
           <Text style={styles.textoBotao}>Botão para abrir sem QRCODE (mocado)</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
-        <Text style={styles.link}>Problemas? Fale com o atendente!</Text>
-      </View>
-      <BottomNavBar activeRoute="LerQR">
-        
+          <Text style={styles.link}>Problemas? Fale com o atendente!</Text>
+        </View>
+        <BottomNavBar activeRoute="LerQR">
+
         </BottomNavBar>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+    headerTop: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginHorizontal: 26,
+    marginBottom: 16,
+  },
+    headerText: {
+    color: "#000000",
+    fontSize: 32,
+    textAlign: "center",
+    marginBottom: 26,
+    fontFamily: "BesleyBold",
+    // fontSize: 24,
+    // fontFamily: "BesleyBold",
+    // textAlign: "center",
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
+  },
+  logoutRight: {
+    width: 32,
+    height: 32,
+    marginTop: 8,
+    marginRight: 10
+  },
+  /* -----------------------
+     Logout button CSS
+     - `logoutButton`: posiciona o botão no canto superior direito
+     - `logoutIcon`: define tamanho e espaçamento da imagem
+  ----------------------- */
+  logoutButton: {
+    position: 'absolute',
+    top: 90,
+    right: 30,
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 6,
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logoutIcon: {
+    width: 28,
+    height: 28,
   },
   content: {
     flex: 1,
