@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from "react-native";
 import { Camera, CameraView } from "expo-camera";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
@@ -55,7 +56,7 @@ export default function LerQR() {
 
   async function confirmarComanda(id_mesa: string) {
     if (orderId) {
-      alert('Já existe uma comanda aberta. Feche ou exclua a comanda atual antes de abrir outra.');
+      Alert.alert("Erro",'Já existe uma comanda aberta. Feche ou exclua a comanda atual antes de abrir outra.');
       return;
     }
     try {
@@ -65,7 +66,7 @@ export default function LerQR() {
       });
       console.log("Comanda criada:", response.data);
       setOrderId(response.data.id);
-      alert("Comanda criada com sucesso!" + "\n" + "Sua mesa é a " + response.data.table.number);
+      Alert.alert("Sucesso","Comanda criada com sucesso!" + "\n" + "Sua mesa é a " + response.data.table.number);
     } catch (err: any) {
       console.error(
         "Erro ao criar comanda:",
@@ -146,7 +147,7 @@ export default function LerQR() {
             style={[styles.botao, { marginTop: 20, backgroundColor: "#4B8B26" }]}
             onPress={() => {
               if (orderId) {
-                alert('Você já possui uma comanda aberta. Feche ou exclua-a antes de abrir um novo QR.');
+                Alert.alert("",'Você já possui uma comanda aberta. Feche ou exclua-a antes de abrir um novo QR.');
                 return;
               }
               setShowCamera(true);
