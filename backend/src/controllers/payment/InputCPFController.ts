@@ -8,13 +8,12 @@ class InputCPFController {
 
         const inputCPFService = new InputCPFService();
 
-        const inputCPF = await inputCPFService.execute({
-            cpf,
-
-            costumer_id
-        });
-
-        res.json(inputCPF);
+        try {
+            const inputCPF = await inputCPFService.execute({ cpf, costumer_id });
+            return res.json(inputCPF);
+        } catch (error: any) {
+            return res.status(400).json({ error: error.message });
+        }
     }
 }
 

@@ -31,6 +31,7 @@ class ListOrderByCostumerService {
                         id: true,
                         amount: true,
                         status: true,
+                        adicionado: true,
                         product: {
                             select: {
                                 id: true,

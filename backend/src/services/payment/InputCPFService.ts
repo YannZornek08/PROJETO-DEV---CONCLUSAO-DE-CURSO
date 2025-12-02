@@ -25,16 +25,17 @@ class InputCPFService {
             throw new Error("CPF inválido");
         }
 
-        // // Verificar se o CPF já está cadastrado na plataforma
-        // const userAlreadyExists = await prismaClient.costumer.findFirst({
-        //     where: { 
-        //         cpf: BigInt(cpfStr) // Converte para BigInt antes de comparar
-        //     },
-        // });
+        // Verificar se o CPF já está cadastrado na plataforma por outro cliente
+        const userAlreadyExists = await prismaClient.costumer.findFirst({
+            where: { 
+                cpf: BigInt(cpfStr) // Converte para BigInt antes de comparar
+            },
+            select: { id: true }
+        });
 
-        // if (userAlreadyExists) {
-        //     throw new Error("Costumer_cpf already exists");
-        // }
+        if (userAlreadyExists && userAlreadyExists.id !== costumer_id) {
+            throw new Error("CPF já cadastrado em outro usuário");
+        }
 
         // Atualizar o CPF do cliente
         const inputCPF = await prismaClient.costumer.update({

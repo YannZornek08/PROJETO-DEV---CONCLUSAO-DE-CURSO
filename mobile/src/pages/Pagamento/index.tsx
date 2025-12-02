@@ -147,6 +147,9 @@ const Pagamento: React.FC = () => {
             navigation.navigate("DadosPagamento", {
               //ID DO SUPABASE
               id_mtdo_pagto: "51edbf4d-8dcf-42f0-9abf-66ed44a8f6ca"
+
+              //ID BEEKEPER VINI CREDITO
+              // id_mtdo_pagto: "51edbf4d-8dcf-42f0-9abf-66ed44a8f6ca"
             })
           }}>
             <Text style={styles.cardText}>

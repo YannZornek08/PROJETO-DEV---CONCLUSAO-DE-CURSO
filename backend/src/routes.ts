@@ -183,6 +183,6 @@ router.get('/mtdo_pagtos', new ListMtdoPagtoController().handle)
 // -- ROTAS PAGAMENTO --
 router.post('/payments', new CreatePaymentController().handle)
 router.get('/payments', new ListPaymentsController().handle)
-router.put('/payment/cpf', new InputCPFController().handle)
+router.put('/payment/cpf', new InputCPFController().handle.bind(new InputCPFController()))
 
 export { router }

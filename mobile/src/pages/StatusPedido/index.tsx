@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, use } from "react";
 import {
   View,
   Text,
@@ -28,6 +28,7 @@ type Order = {
   items: Array<{
     id: string;
     amount: number;
+    adicionado: boolean;
     status?: number;
     product?: {
       id?: string;
@@ -66,6 +67,7 @@ export default function StatusPedido() {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
   const prevOrdersRef = useRef<Order[]>([]);
   const notifiedOrdersRef = useRef<Set<string>>(new Set());
+  const pollIntervalRef = useRef<number | null>(null);
 
   function isOrderAllDelivered(o: Order) {
     if (!o.items || o.items.length === 0) return false;
@@ -82,7 +84,9 @@ export default function StatusPedido() {
     }
     // console.log("usuario", id_usuario);
     try {
-      setLoading(true);
+      // Mostrar loader apenas na primeira carga (evita piscar o loader durante polling)
+      const showLoader = prevOrdersRef.current.length === 0;
+      if (showLoader) setLoading(true);
       const response = await api.get(`/orders/costumer?costumer_id=${id_usuario}`);
       const allOrders = Array.isArray(response.data) ? response.data : [];
 
@@ -128,18 +132,55 @@ export default function StatusPedido() {
       console.log("Erro ao buscar orders do usuário:", err);
       setOrder([]);
     } finally {
-      setLoading(false);
+      // Só esconder loader se ele foi mostrado
+      if (prevOrdersRef.current.length === 0) {
+        setLoading(false);
+      } else {
+        // garantir que loading seja false em caso raro de inconsistência
+        setLoading(false);
+      }
     }
   }
 
   useEffect(() => {
+    // Carrega pedidos ao montar
     verOrderUsuario(costumerId);
-    const interval = setInterval(() => {
-      verOrderUsuario(costumerId);
-    }, 5000);
 
-    return () => clearInterval(interval);
-  }, [costumerId]);
+    // Quando a tela recebe foco: garante fetch imediato e inicia polling leve
+    const onFocus = () => {
+      verOrderUsuario(costumerId);
+
+      // não iniciar mais de um interval
+      if (pollIntervalRef.current == null) {
+        // setInterval returns number in browsers; in React Native it's number too
+        const id = setInterval(() => {
+          verOrderUsuario(costumerId);
+        }, 3000) as unknown as number;
+        pollIntervalRef.current = id;
+      }
+    };
+
+    // Ao perder foco, para o polling para economizar recursos
+    const onBlur = () => {
+      if (pollIntervalRef.current != null) {
+        clearInterval(pollIntervalRef.current as any);
+        pollIntervalRef.current = null;
+      }
+    };
+
+    const unsubFocus = navigation.addListener("focus", onFocus);
+    const unsubBlur = navigation.addListener("blur", onBlur);
+
+    // cleanup ao desmontar
+    return () => {
+      unsubFocus();
+      unsubBlur();
+      if (pollIntervalRef.current != null) {
+        clearInterval(pollIntervalRef.current as any);
+        pollIntervalRef.current = null;
+      }
+    };
+  }, [costumerId, navigation]);
 
   function getOrderStatusLabel(status: number | boolean | undefined) {
     if (typeof status === "boolean") return status ? "Entregue" : "Em preparo";
@@ -225,23 +266,32 @@ export default function StatusPedido() {
                       );
                     })()}
 
-                    <Text style={styles.itemsCount}>
-                      {ordem.items && ordem.items.length > 0 ? `Itens: ${ordem.items.length}` : "Nenhum item no pedido."}
-                    </Text>
+                    {/* Mostrar apenas os itens que têm `adicionado === true` */}
+                    {(() => {
+                      const filteredItems = ordem.items ? ordem.items.filter(i => i.adicionado) : [];
 
-                    {ordem.items && ordem.items.length > 0 && (
-                      <View style={styles.itemsList}>
-                        {ordem.items.map((it) => (
-                          <View key={it.id} style={styles.itemRow}>
-                            <Text style={styles.itemName}>{it.product?.name ?? 'Item'}</Text>
-                            <Text style={styles.itemQty}>x{it.amount}</Text>
-                            <View style={styles.itemStatusBadge}>
-                              <Text style={styles.itemStatusText}>{getStatusEmoji(it.status)} {getOrderStatusLabel(it.status)}</Text>
+                      return (
+                        <>
+                          <Text style={styles.itemsCount}>
+                            {filteredItems.length > 0 ? `Itens: ${filteredItems.length}` : "Nenhum item no pedido."}
+                          </Text>
+
+                          {filteredItems.length > 0 && (
+                            <View style={styles.itemsList}>
+                              {filteredItems.map((it) => (
+                                <View key={it.id} style={styles.itemRow}>
+                                  <Text style={styles.itemName}>{it.product?.name ?? 'Item'}</Text>
+                                  <Text style={styles.itemQty}>x{it.amount}</Text>
+                                  <View style={styles.itemStatusBadge}>
+                                    <Text style={styles.itemStatusText}>{getStatusEmoji(it.status)} {getOrderStatusLabel(it.status)}</Text>
+                                  </View>
+                                </View>
+                              ))}
                             </View>
-                          </View>
-                        ))}
-                      </View>
-                    )}
+                          )}
+                        </>
+                      );
+                    })()}
                   </View>
                 ));
               }
